@@ -1,0 +1,105 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+}
+
+.nav[data-show='true'] {
+  background: rgba(253, 252, 250, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: var(--c-line);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 64px;
+  padding: 0 clamp(20px, 3.5vw, 40px);
+}
+
+.brand {
+  display: inline-flex;
+}
+.brand span {
+  font-family: var(--f-display);
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: #fff;
+  transition: color 0.4s;
+}
+.nav[data-show='true'] .brand span {
+  color: var(--c-dark);
+}
+
+.desktop {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 400;
+  transition: color 0.3s;
+  padding: 6px 2px;
+}
+.nav[data-show='true'] .link {
+  color: var(--c-text2);
+}
+.link[data-active='true'] {
+  color: var(--c-gold) !important;
+  font-weight: 600;
+}
+.link:hover { color: var(--c-gold); }
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+}
+.burger span {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: #fff;
+  transition: transform 0.3s, background 0.4s;
+}
+.nav[data-show='true'] .burger span { background: var(--c-dark); }
+.burger span[data-open='true']:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+.burger span[data-open='true']:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+.overlay {
+  display: none;
+  flex-direction: column;
+  background: rgba(253, 252, 250, 0.98);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--c-line);
+  padding: 12px 0;
+}
+.overlayLink {
+  padding: 14px clamp(24px, 5vw, 40px);
+  font-size: 15px;
+  color: var(--c-text);
+  border-bottom: 1px solid var(--c-line);
+}
+.overlayLink:last-child { border-bottom: none; }
+
+@media (max-width: 800px) {
+  .desktop { display: none; }
+  .burger { display: flex; }
+  .overlay { display: flex; }
+}

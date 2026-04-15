@@ -1,0 +1,179 @@
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+}
+.heroBg { position: absolute; inset: 0; }
+.heroOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+}
+.heroContent {
+  position: relative; z-index: 2; height: 100%;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 0 clamp(32px, 6vw, 100px) clamp(60px, 10vh, 120px);
+  max-width: 1300px; margin: 0 auto;
+}
+.heroEyebrow {
+  font-size: 13px; color: var(--c-gold-l); letter-spacing: 4px;
+  margin-bottom: 20px; opacity: 0; transition: opacity 0.6s ease 0.4s;
+}
+.heroEyebrow[data-loaded='true'] { opacity: 1; }
+.heroTitle {
+  font-family: var(--f-heading); font-size: clamp(38px, 6.4vw, 72px);
+  font-weight: 600; letter-spacing: -0.03em;
+  color: #fff; line-height: 1.15; margin: 0 0 24px; max-width: 600px;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 1.2s var(--ease-out) 0.6s, transform 1.2s var(--ease-out) 0.6s;
+}
+.heroTitle[data-loaded='true'] { opacity: 1; transform: none; }
+.heroSub {
+  font-size: 15px; color: rgba(255,255,255,0.55); font-weight: 300; line-height: 1.8;
+  margin: 0 0 36px; max-width: 360px;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.9s ease 1s, transform 0.9s ease 1s;
+}
+.heroSub[data-loaded='true'] { opacity: 1; transform: none; }
+.heroCtas {
+  display: flex; gap: 18px; flex-wrap: wrap; align-items: center;
+  opacity: 0; transition: opacity 0.8s ease 1.3s;
+}
+.heroCtas[data-loaded='true'] { opacity: 1; }
+.heroCta {
+  font-size: 13px; color: #fff; letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px;
+  transition: border-color 0.3s;
+}
+.heroCta:hover { border-bottom-color: var(--c-gold-l); }
+
+/* ===== STORY ===== */
+.story {
+  background: var(--c-bg);
+  padding: clamp(80px, 10vw, 140px) clamp(24px, 5vw, 80px);
+}
+.storyGrid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 5fr 4fr;
+  gap: clamp(40px, 5vw, 80px); align-items: center;
+}
+.storyTitle {
+  font-family: var(--f-heading); font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 600; letter-spacing: -0.025em;
+  color: var(--c-dark); line-height: 1.5; margin: 0 0 28px;
+}
+.storyText {
+  font-size: 15px; color: var(--c-text2); line-height: 2; font-weight: 300; margin: 0 0 32px;
+}
+.storyImg { border-radius: 2px; overflow: hidden; aspect-ratio: 4/5; }
+
+.underline {
+  font-size: 13px; color: var(--c-text2);
+  border-bottom: 1px solid var(--c-text3); padding-bottom: 3px;
+  display: inline-block;
+}
+.underline:hover { color: var(--c-gold); border-bottom-color: var(--c-gold); }
+
+/* ===== TREATMENTS ===== */
+.tx {
+  background: var(--c-warm); padding: clamp(60px, 8vw, 100px) 0;
+}
+.txHead { padding: 0 clamp(24px, 5vw, 80px); max-width: 1100px; margin: 0 auto; }
+.sectionHead {
+  display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px;
+}
+.h2 {
+  font-family: var(--f-heading); font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 600; letter-spacing: -0.02em;
+  color: var(--c-dark);
+}
+.moreLink {
+  font-size: 13px; color: var(--c-text3);
+  border-bottom: 1px solid var(--c-line); padding-bottom: 2px;
+}
+.moreLink:hover { color: var(--c-gold); }
+.txGrid {
+  padding: 0 clamp(24px, 5vw, 80px); max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+.txCard {
+  position: relative; overflow: hidden; aspect-ratio: 3/4; display: block;
+}
+.txOverlay {
+  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.25); transition: background 0.4s;
+}
+.txCard:hover .txOverlay { background: rgba(0, 0, 0, 0.1); }
+.txLabel {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 0 24px 28px; z-index: 2;
+}
+.txEn {
+  font-family: var(--f-display); font-size: 13px; color: rgba(255,255,255,0.5);
+  letter-spacing: 2px; display: block; margin-bottom: 6px;
+}
+.txKo {
+  font-size: 20px; color: #fff; font-weight: 500;
+}
+
+/* ===== DOCTOR ===== */
+.doctor {
+  background: var(--c-bg);
+  display: grid; grid-template-columns: 1fr 1fr; min-height: 520px;
+}
+.doctorBody {
+  padding: clamp(48px, 6vw, 80px) clamp(32px, 4vw, 60px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.eyebrow {
+  font-size: 12px; color: var(--c-text3); letter-spacing: 3px; margin-bottom: 16px;
+}
+.doctorTitle {
+  font-family: var(--f-heading); font-size: clamp(22px, 2.3vw, 28px);
+  font-weight: 600; letter-spacing: -0.025em;
+  color: var(--c-dark); line-height: 1.5; margin: 0 0 16px;
+}
+.doctorText {
+  font-size: 14px; color: var(--c-text2); line-height: 1.9;
+  font-weight: 300; margin: 0 0 28px; max-width: 340px;
+}
+
+/* ===== FACILITY ===== */
+.facility {
+  background: var(--c-warm);
+  padding: clamp(60px, 8vw, 100px) clamp(24px, 5vw, 80px);
+}
+.facilityInner { max-width: 1100px; margin: 0 auto; }
+.facilityGrid {
+  display: grid; grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr; gap: 3px; height: 480px;
+}
+
+/* ===== LOCATION ===== */
+.location {
+  background: var(--c-bg);
+  padding: clamp(60px, 8vw, 100px) clamp(24px, 5vw, 80px);
+}
+.locationRow {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.locTitle {
+  font-family: var(--f-heading); font-size: clamp(19px, 2.2vw, 25px);
+  font-weight: 600; letter-spacing: -0.02em;
+  color: var(--c-dark); margin: 0 0 8px;
+}
+.locSub {
+  font-size: 14px; color: var(--c-text2); font-weight: 300;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .storyGrid { grid-template-columns: 1fr; }
+  .doctor { grid-template-columns: 1fr; }
+  .txGrid { grid-template-columns: 1fr; }
+  .facilityGrid { grid-template-columns: 1fr; grid-template-rows: auto auto auto; height: auto; }
+  .facilityGrid > :first-child { grid-row: auto !important; min-height: 280px; }
+  .facilityGrid > :not(:first-child) { min-height: 220px; }
+}
