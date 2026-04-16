@@ -8,7 +8,7 @@ import { TREATMENTS } from '@/lib/copy';
 export const metadata: Metadata = {
   title: '진료과목',
   description:
-    '임플란트, 심미보철, 교정, 충치·신경치료, 잇몸·스케일링, 미백, 턱관절, 사랑니 발치 등 아트에이치치과의 진료 영역.',
+    '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
 };
 
 export default function TreatmentsPage() {

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     '송도국제업무단지 C8-2블럭. 한 분에게 충분한 시간을 드리는 치과, 아트에이치치과입니다.',
-  keywords: ['송도치과', '아트에이치치과', '송도국제업무단지', '임플란트', '교정', '심미보철'],
+  keywords: ['송도치과', '아트에이치치과', '송도국제업무단지', '임플란트', '신경치료', '사랑니발치', '턱관절', '수면마취'],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',

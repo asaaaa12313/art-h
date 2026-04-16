@@ -3,7 +3,7 @@ import { V } from './visuals';
 export const SITE = {
   name: '아트에이치치과',
   nameEn: 'Art H Dental',
-  slogan: '치료가 예술이 되는 곳.',
+  slogan: '진료 너머, 사람의 고귀함을 생각합니다',
   phone: '032-000-0000',
   address: '인천광역시 연수구 송도동 송도국제업무단지 C8-2블럭',
   hours: [
@@ -25,14 +25,13 @@ export const NAV_ITEMS = [
 ] as const;
 
 export const TREATMENTS = [
-  { en: 'Implant', ko: '임플란트', d: '디지털 가이드를 활용한 정밀 식립. 뼈이식이 필요한 고난도 케이스도 안전하게.', bg: V.implant },
-  { en: 'Aesthetics', ko: '심미보철', d: '라미네이트, 올세라믹. 원데이 CEREC 시스템으로 당일 완성 가능.', bg: V.chair },
-  { en: 'Orthodontics', ko: '교정치료', d: '인비절라인, 클리피씨 등 라이프스타일에 맞는 최적의 교정.', bg: V.ortho },
-  { en: 'General', ko: '충치 · 신경치료', d: '미세현미경 정밀 치료. 자연치아 최대 보존이 원칙.', bg: V.gen },
+  { en: 'Implant', ko: '임플란트', d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.', bg: V.implant },
+  { en: 'Root Canal', ko: '신경치료', d: '미세현미경으로 근관을 정밀하게. 자연치아 최대 보존이 원칙입니다.', bg: V.gen },
+  { en: 'Oral Surgery', ko: '사랑니 발치', d: '3D CT 기반 정밀 진단. 매복 사랑니도 안전하게.', bg: V.equip },
+  { en: 'TMJ', ko: '턱관절치료', d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.', bg: V.scan },
+  { en: 'Sedation', ko: '의식하진정', d: '수면마취 하 편안한 진료. 치과 공포가 있는 분도 안심하고 치료받으실 수 있습니다.', bg: V.surg },
   { en: 'Periodontics', ko: '잇몸 · 스케일링', d: '에어플로우 스케일링과 체계적 치주 관리.', bg: V.white },
   { en: 'Whitening', ko: '치아미백', d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.', bg: V.consult },
-  { en: 'TMJ', ko: '턱관절치료', d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.', bg: V.scan },
-  { en: 'Oral Surgery', ko: '사랑니 발치', d: '3D CT 기반 정밀 진단. 매복 사랑니도 안전하게.', bg: V.equip },
 ];
 
 export const DOCTOR = {

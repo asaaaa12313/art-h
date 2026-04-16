@@ -33,10 +33,10 @@ export default function Home() {
         <div className={styles.heroContent}>
           <p className={styles.heroEyebrow} data-loaded={loaded}>송도 국제도시</p>
           <h1 className={styles.heroTitle} data-loaded={loaded}>
-            치료가 예술이<br />되는 곳.
+            진료 너머,<br />사람의 고귀함을<br />생각합니다
           </h1>
           <p className={styles.heroSub} data-loaded={loaded}>
-            아트에이치치과는 당신의 미소에<br />시간과 정성을 들입니다.
+            한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 약속합니다.
           </p>
           <div className={styles.heroCtas} data-loaded={loaded}>
             <Link href="/about" className={styles.heroCta}>의원소개</Link>
@@ -87,8 +87,8 @@ export default function Home() {
         <div className={styles.txGrid}>
           {[
             { en: 'Implant', ko: '임플란트', bg: V.implant },
-            { en: 'Orthodontics', ko: '교정치료', bg: V.ortho },
-            { en: 'Aesthetics', ko: '심미보철', bg: V.chair },
+            { en: 'Root Canal', ko: '신경치료', bg: V.gen },
+            { en: 'Oral Surgery', ko: '사랑니 발치', bg: V.equip },
           ].map((t, i) => (
             <Reveal key={t.en} delay={0.1 + i * 0.12} duration="1s" from="scale(0.96)">
               <Link href="/treatments" className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>

@@ -4,7 +4,6 @@ export const V = {
   chair: 'var(--v-chair)',
   doc: 'var(--v-doc)',
   implant: 'var(--v-implant)',
-  ortho: 'var(--v-ortho)',
   gen: 'var(--v-gen)',
   wait: 'var(--v-wait)',
   surg: 'var(--v-surg)',
