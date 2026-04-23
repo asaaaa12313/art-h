@@ -17,8 +17,9 @@
   max-width: 1300px; margin: 0 auto;
 }
 .heroEyebrow {
-  font-size: 13px; color: var(--c-gold-l); letter-spacing: 4px;
+  font-size: 13px; color: var(--c-gold-l); letter-spacing: 4px; font-weight: 500;
   margin-bottom: 20px; opacity: 0; transition: opacity 0.6s ease 0.4s;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.5);
 }
 .heroEyebrow[data-loaded='true'] { opacity: 1; }
 .heroTitle {
@@ -27,13 +28,15 @@
   color: #fff; line-height: 1.15; margin: 0 0 24px; max-width: 600px;
   opacity: 0; transform: translateY(30px);
   transition: opacity 1.2s var(--ease-out) 0.6s, transform 1.2s var(--ease-out) 0.6s;
+  text-shadow: 0 2px 24px rgba(15, 26, 53, 0.55), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .heroTitle[data-loaded='true'] { opacity: 1; transform: none; }
 .heroSub {
-  font-size: 15px; color: rgba(255,255,255,0.55); font-weight: 300; line-height: 1.8;
-  margin: 0 0 36px; max-width: 360px;
+  font-size: 16px; color: rgba(255, 255, 255, 0.92); font-weight: 400; line-height: 1.8;
+  margin: 0 0 36px; max-width: 420px;
   opacity: 0; transform: translateY(16px);
   transition: opacity 0.9s ease 1s, transform 0.9s ease 1s;
+  text-shadow: 0 1px 12px rgba(15, 26, 53, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .heroSub[data-loaded='true'] { opacity: 1; transform: none; }
 .heroCtas {
@@ -42,11 +45,12 @@
 }
 .heroCtas[data-loaded='true'] { opacity: 1; }
 .heroCta {
-  font-size: 13px; color: #fff; letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px;
-  transition: border-color 0.3s;
+  font-size: 14px; color: #fff; letter-spacing: 0.5px; font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6); padding-bottom: 4px;
+  transition: border-color 0.3s, color 0.3s;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.5);
 }
-.heroCta:hover { border-bottom-color: var(--c-gold-l); }
+.heroCta:hover { border-bottom-color: var(--c-gold-l); color: var(--c-gold-l); }
 
 /* ===== STORY ===== */
 .story {
@@ -101,19 +105,25 @@
   position: relative; overflow: hidden; aspect-ratio: 3/4; display: block;
 }
 .txOverlay {
-  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.25); transition: background 0.4s;
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(15, 26, 53, 0.15) 0%, rgba(15, 26, 53, 0.55) 100%);
+  transition: background 0.4s;
 }
-.txCard:hover .txOverlay { background: rgba(0, 0, 0, 0.1); }
+.txCard:hover .txOverlay {
+  background: linear-gradient(180deg, rgba(15, 26, 53, 0.05) 0%, rgba(15, 26, 53, 0.35) 100%);
+}
 .txLabel {
   position: absolute; bottom: 0; left: 0; right: 0;
   padding: 0 24px 28px; z-index: 2;
 }
 .txEn {
-  font-family: var(--f-display); font-size: 13px; color: rgba(255,255,255,0.5);
+  font-family: var(--f-display); font-size: 13px; color: var(--c-gold-l);
   letter-spacing: 2px; display: block; margin-bottom: 6px;
+  text-shadow: 0 1px 6px rgba(15, 26, 53, 0.5);
 }
 .txKo {
-  font-size: 20px; color: #fff; font-weight: 500;
+  font-size: 20px; color: #fff; font-weight: 600;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.55);
 }
 
 /* ===== DOCTOR ===== */

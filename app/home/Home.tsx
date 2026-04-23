@@ -192,8 +192,8 @@ export default function Home() {
         <div className={styles.locationRow}>
           <div>
             <Reveal duration="0.6s"><p className={styles.eyebrow}>LOCATION</p></Reveal>
-            <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>송도국제업무단지 C8-2블럭</h2></Reveal>
-            <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천광역시 연수구 송도동</p></Reveal>
+            <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>힐스테이트 송도 더스카이</h2></Reveal>
+            <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천 연수구 인천타워대로 365 · 국제업무지구역 3번 출구 202m</p></Reveal>
           </div>
           <Reveal delay={0.2} duration="0.5s">
             <Link href="/location" className={styles.underline}>오시는길 안내</Link>

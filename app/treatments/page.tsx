@@ -60,9 +60,9 @@ export default function TreatmentsPage() {
           padding: 24px 32px; display: flex; flex-direction: column; justify-content: center;
         }
         .txHead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-        .txEn { font-family: var(--f-display); font-size: 18px; color: var(--c-dark); transition: color 0.3s; }
-        .txKo { font-size: 14px; color: var(--c-text3); }
-        .txD { font-size: 13px; color: var(--c-text2); line-height: 1.7; font-weight: 300; margin: 0; }
+        .txEn { font-family: var(--f-display); font-size: 18px; color: var(--c-navy); transition: color 0.3s; }
+        .txKo { font-size: 15px; color: var(--c-text2); font-weight: 500; }
+        .txD { font-size: 14px; color: var(--c-text); line-height: 1.75; font-weight: 400; margin: 0; }
         @media (max-width: 600px) {
           .txRow { grid-template-columns: 1fr; }
           .txImg { height: 180px; }

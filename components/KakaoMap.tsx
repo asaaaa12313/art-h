@@ -16,9 +16,9 @@ type Props = {
   label?: string;
 };
 
-// 송도 C8-2블럭 가안 좌표 (개원 시 정확한 좌표로 교체)
-const DEFAULT_LAT = 37.3862;
-const DEFAULT_LNG = 126.6438;
+// 힐스테이트 송도 더스카이 좌표 (인천 연수구 인천타워대로 365)
+const DEFAULT_LAT = 37.3894;
+const DEFAULT_LNG = 126.6506;
 
 export default function KakaoMap({
   lat = DEFAULT_LAT,

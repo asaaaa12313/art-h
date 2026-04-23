@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import FloatingCta from '@/components/FloatingCta';
 import { SITE } from '@/lib/copy';
 import './globals.css';
 
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main id="main">{children}</main>
         <Footer />
+        <FloatingCta />
       </body>
     </html>
   );

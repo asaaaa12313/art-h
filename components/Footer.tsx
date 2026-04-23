@@ -10,7 +10,7 @@ export default function Footer() {
         <div className={styles.brand}>
           <span className={styles.name}>Art H</span>
           <span className={styles.meta}>
-            {SITE.address.replace('인천광역시 연수구 송도동 ', '인천 연수구 송도동 ')} · {SITE.phone}
+            {SITE.address} · {SITE.phone}
           </span>
         </div>
         <div className={styles.links}>

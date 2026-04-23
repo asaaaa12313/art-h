@@ -23,7 +23,7 @@ export default function LocationPage() {
               <div style={{ marginBottom: 36 }}>
                 <p className="label">ADDRESS</p>
                 <p style={{ fontSize: 16, color: 'var(--c-text)', fontWeight: 400, margin: 0, lineHeight: 1.8 }}>
-                  인천광역시 연수구 송도동<br />송도국제업무단지 C8-2블럭<br />업무복합시설
+                  인천 연수구 인천타워대로 365<br />힐스테이트 송도 더스카이<br />송도국제업무단지
                 </p>
               </div>
             </Reveal>
@@ -45,8 +45,8 @@ export default function LocationPage() {
             <Reveal delay={0.2} duration="0.7s">
               <div>
                 <p className="label">PARKING · TRANSIT</p>
-                <p style={{ fontSize: 14, color: 'var(--c-text2)', fontWeight: 300, margin: 0, lineHeight: 1.8 }}>
-                  건물 내 지하주차장 무료<br />1호선 국제업무지구역<br />버스 203, 205, 223, 304번
+                <p style={{ fontSize: 14, color: 'var(--c-text)', fontWeight: 400, margin: 0, lineHeight: 1.8 }}>
+                  건물 내 지하주차장 이용<br />인천1호선 국제업무지구역<br />3번 출구에서 202m
                 </p>
               </div>
             </Reveal>
