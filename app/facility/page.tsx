@@ -201,6 +201,7 @@ export default function FacilityPage() {
           display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
         }
         .roomCard {
+          display: block; width: 100%;
           position: relative; overflow: hidden; aspect-ratio: 16/10;
           padding: 0; border: none; cursor: pointer;
           background: var(--c-warm);
