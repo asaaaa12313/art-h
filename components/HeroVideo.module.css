@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #0a0e1a;
+  background: var(--c-navy-d);
 }
 
 .video {

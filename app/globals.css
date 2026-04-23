@@ -1,5 +1,5 @@
 :root {
-  /* colors */
+  /* colors — Art H Dental Clinic 브랜드 컬러 (네이비 + 골드) */
   --c-bg: #FDFCFA;
   --c-white: #FFFFFF;
   --c-warm: #F5F2ED;
@@ -7,12 +7,21 @@
   --c-text: #2E2E2E;
   --c-text2: #6B6B6B;
   --c-text3: #9A9A9A;
-  --c-gold: #A68B5B;
-  --c-gold-l: #C4AA7A;
+
+  /* Brand: Navy (로고 배경) */
+  --c-navy: #1A2647;         /* 메인 네이비 */
+  --c-navy-d: #0F1A35;       /* 더 짙은 네이비 */
+  --c-navy-l: #2D3B60;       /* 밝은 네이비 */
+
+  /* Brand: Gold (로고 링/왕관) */
+  --c-gold: #C9A553;         /* 메인 골드 */
+  --c-gold-l: #D4B062;       /* 밝은 골드 (히어로/텍스트용) */
+  --c-gold-d: #A88942;       /* 짙은 골드 */
+
   --c-line: rgba(0, 0, 0, 0.07);
 
   /* gradient visuals */
-  --v-hero: linear-gradient(135deg, #2C3E50 0%, #1a1a2e 40%, #16213e 100%);
+  --v-hero: linear-gradient(135deg, #1A2647 0%, #0F1A35 60%, #0A1230 100%);
   --v-clinic: linear-gradient(160deg, #e8e0d4 0%, #d4c5b0 50%, #c9b896 100%);
   --v-chair: linear-gradient(145deg, #dce3e8 0%, #b8c6d0 50%, #a3b5c4 100%);
   --v-doc: linear-gradient(170deg, #e0ddd8 0%, #c4bfb6 60%, #b0a999 100%);
@@ -23,7 +32,7 @@
   --v-consult: linear-gradient(160deg, #e4e0dc 0%, #ccc4b8 50%, #b8ac9c 100%);
   --v-equip: linear-gradient(135deg, #dee2e6 0%, #b8c4cc 50%, #98aab8 100%);
   --v-scan: linear-gradient(155deg, #e0e4e8 0%, #c4ccd4 50%, #aab8c4 100%);
-  --v-city: linear-gradient(145deg, #2c3e50 0%, #34495e 40%, #1a2530 100%);
+  --v-city: linear-gradient(145deg, #1A2647 0%, #2D3B60 40%, #0F1A35 100%);
   --v-white: linear-gradient(160deg, #f0ece4 0%, #e0d8cc 50%, #d4c8b4 100%);
 
   /* fonts */
