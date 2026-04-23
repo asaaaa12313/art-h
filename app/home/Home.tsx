@@ -29,11 +29,15 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.1}px)`, height: '115%' }}>
           <HeroVideo
-            srcMp4="/media/video/hero.mp4"
-            srcWebm="/media/video/hero.webm"
-            srcMobileMp4="/media/video/hero-720.mp4"
+            videos={[
+              { mp4: '/media/video/hero-1.mp4', webm: '/media/video/hero-1.webm', mp4Mobile: '/media/video/hero-1-720.mp4' },
+              { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' },
+              { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' },
+              { mp4: '/media/video/hero-4.mp4', mp4Mobile: '/media/video/hero-4-720.mp4' },
+              { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' },
+            ]}
             poster="/media/video/hero-poster.jpg"
-            alt="아트에이치치과 외관 및 간판"
+            alt="아트에이치치과 병원 소개 영상"
           />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
