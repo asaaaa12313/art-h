@@ -37,19 +37,41 @@ export const TREATMENTS = [
   { en: 'Whitening', ko: '치아미백', d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.', bg: V.consult },
 ];
 
-export const DOCTOR = {
-  name: 'OOO 원장',
-  specialty: 'OO과 전문의',
-  quote: '"빠르게 많은 환자를 보는 것보다,\n한 분에게 충분한 시간을 드리는 것이\n더 좋은 결과를 만든다고 믿습니다."',
-  career: [
-    'OO대학교 치의학과 졸업',
-    'OO대학교 대학원 석사',
-    'OO대학병원 인턴 · 레지던트 수료',
-    '대한치과의사협회 정회원',
-    '대한구강악안면외과학회 정회원',
-    '전) OO치과의원 진료원장',
-  ],
-};
+export const DOCTORS = [
+  {
+    name: '최종원',
+    title: '대표원장',
+    specialty: '구강외과 전문의',
+    focus: '임플란트 · 사랑니 발치 · 턱관절 · 의식하진정(수면마취)',
+    photo: '/media/images/doctor/doctor-01.jpg',
+    objectPosition: 'center 30%',
+    quote: '"수술은 정교하게, 자연치아는 끝까지.\n한 분 한 분의 치아를 제 작품처럼 대합니다."',
+    career: [
+      '구강악안면외과 전문의',
+      '대한치과의사협회 정회원',
+      '대한구강악안면외과학회 정회원',
+      '대한치과이식임플란트학회 정회원',
+    ],
+  },
+  {
+    name: '강지수',
+    title: '진료원장',
+    specialty: '보존과 전문의',
+    focus: '신경치료 · 충치 치료 · 잇몸 · 치아미백',
+    photo: '/media/images/doctor/doctor-female-placeholder.svg',
+    objectPosition: 'center center',
+    quote: '"환자분의 이야기에 귀 기울이며,\n자연치아를 최대한 보존하는 진료를 약속합니다."',
+    career: [
+      '치과보존과 전문의',
+      '대한치과의사협회 정회원',
+      '대한치과보존학회 정회원',
+      '대한치과근관치료학회 정회원',
+    ],
+  },
+];
+
+// 호환 alias (기존 참조 유지)
+export const DOCTOR = DOCTORS[0];
 
 export const SYSTEM_ITEMS = [
   { t: '멸균 시스템', d: '9단계 감염 관리 프로토콜. 기구 세척부터 멸균, 진료수 관리까지 눈에 보이지 않는 곳까지 철저하게.' },

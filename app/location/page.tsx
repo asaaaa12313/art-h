@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
-import KakaoMap from '@/components/KakaoMap';
+import MapEmbed from '@/components/MapEmbed';
 import { SITE } from '@/lib/copy';
 
 export const metadata: Metadata = {
@@ -66,7 +66,7 @@ export default function LocationPage() {
             </Reveal>
             <Reveal delay={0.45} duration="1s" from="scale(0.97)">
               <div className="mapBox">
-                <KakaoMap label={SITE.name} />
+                <MapEmbed label={SITE.name} naverPlaceUrl={SITE.naverPlace} />
               </div>
             </Reveal>
           </div>
@@ -88,7 +88,8 @@ export default function LocationPage() {
           font-size: 14px;
         }
         .mapBox {
-          border-radius: 2px; overflow: hidden; aspect-ratio: 16/10;
+          border-radius: 2px; overflow: hidden; min-height: 380px;
+          display: flex; flex-direction: column;
         }
         @media (max-width: 768px) {
           .locGrid { grid-template-columns: 1fr; }

@@ -135,16 +135,17 @@ export default function Home() {
         </Reveal>
         <div className={styles.doctorBody}>
           <Reveal delay={0.2} duration="0.6s">
-            <p className={styles.eyebrow}>DOCTOR</p>
+            <p className={styles.eyebrow}>DOCTORS</p>
           </Reveal>
           <Reveal delay={0.3} duration="0.7s">
             <h2 className={styles.doctorTitle}>
-              환자분의 치아가<br />제 작품이라는 마음으로.
+              구강외과 · 보존과<br />전문의 협진
             </h2>
           </Reveal>
           <Reveal delay={0.4} duration="0.8s">
             <p className={styles.doctorText}>
-              OOO 원장은 하나의 치료에도 충분한 시간을 들이고, 그 결과가 자연스럽고 오래가도록 끝까지 책임집니다.
+              수술은 정교하게, 자연치아는 끝까지.<br />
+              <strong style={{ color: 'var(--c-navy)', fontWeight: 600 }}>최종원 원장</strong>(구강외과)과 <strong style={{ color: 'var(--c-navy)', fontWeight: 600 }}>강지수 원장</strong>(보존과)이 한 자리에서 정확하게 진단하고 끝까지 책임집니다.
             </p>
           </Reveal>
           <Reveal delay={0.5} duration="0.5s">
