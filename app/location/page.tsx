@@ -28,10 +28,9 @@ export default function LocationPage() {
             <Reveal delay={0.1} duration="0.7s">
               <div style={{ marginBottom: 36 }}>
                 <p className="label">CONTACT</p>
-                <p style={{ fontFamily: 'var(--f-heading)', fontSize: 28, color: 'var(--c-navy)', fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 4px' }}>
+                <p style={{ fontFamily: 'var(--f-heading)', fontSize: 28, color: 'var(--c-navy)', fontWeight: 600, letterSpacing: '-0.01em', margin: 0 }}>
                   <a href={`tel:${SITE.phone.replace(/-/g, '')}`}>{SITE.phone}</a>
                 </p>
-                <p style={{ fontSize: 12, color: 'var(--c-text3)', margin: 0 }}>* 개원 시 확정</p>
               </div>
             </Reveal>
             <Reveal delay={0.2} duration="0.7s">

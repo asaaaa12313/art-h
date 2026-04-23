@@ -56,6 +56,10 @@ export default function Home() {
             <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCta}>전화문의</a>
           </div>
         </div>
+        <div className={styles.scrollHint} data-loaded={loaded} aria-hidden="true">
+          <span>SCROLL</span>
+          <div className={styles.scrollHintLine} />
+        </div>
       </section>
 
       {/* STORY — asymmetric 5:4 */}

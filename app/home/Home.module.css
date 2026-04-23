@@ -1,9 +1,13 @@
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 600px;
+  height: 88vh;
+  min-height: 560px;
+  max-height: 860px;
   overflow: hidden;
+}
+@media (max-width: 768px) {
+  .hero { height: 82vh; min-height: 520px; }
 }
 .heroBg { position: absolute; inset: 0; }
 .heroOverlay {
@@ -51,6 +55,39 @@
   text-shadow: 0 1px 8px rgba(15, 26, 53, 0.5);
 }
 .heroCta:hover { border-bottom-color: var(--c-gold-l); color: var(--c-gold-l); }
+
+/* 스크롤 인디케이터 */
+.scrollHint {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 10px;
+  letter-spacing: 3px;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.8s ease 1.6s, color 0.3s ease;
+  pointer-events: none;
+}
+.scrollHint[data-loaded='true'] { opacity: 1; }
+.scrollHintLine {
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8));
+  animation: scrollHintPulse 2s ease-in-out infinite;
+}
+@keyframes scrollHintPulse {
+  0%, 100% { transform: translateY(-4px); opacity: 0.6; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrollHintLine { animation: none; }
+}
 
 /* ===== STORY ===== */
 .story {

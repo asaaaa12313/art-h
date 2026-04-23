@@ -4,7 +4,7 @@ export const SITE = {
   name: '아트에이치치과',
   nameEn: 'Art H Dental',
   slogan: '진료 너머, 사람의 고귀함을 생각합니다',
-  phone: '032-000-0000',
+  phone: '032-381-3877',
   address: '인천 연수구 인천타워대로 365 힐스테이트 송도 더스카이',
   addressShort: '송도국제업무단지 · 국제업무지구역 3번 출구 202m',
   transit: '인천1호선 국제업무지구역 3번 출구에서 202m',
