@@ -21,11 +21,11 @@ export default function AboutPage() {
           <Reveal duration="1.1s" from="translateY(24px)">
             <div className="greetImg">
               <Photo
-                src="/media/images/doctor/doctor-choi-profile.jpg"
-                label="대표원장 최종원"
-                alt="최종원 대표원장 — 구강악안면외과 전문의"
+                src="/media/images/doctor/doctor-01.jpg"
+                label="대표원장 최종원 · 진료 중"
+                alt="최종원 대표원장 진료 장면"
                 sizes="(max-width: 768px) 100vw, 40vw"
-                objectPosition="center 15%"
+                objectPosition="center 25%"
               />
             </div>
           </Reveal>
@@ -124,8 +124,8 @@ export default function AboutPage() {
         }
         .greetBody { padding: 8px 0; }
         .greetEyebrow {
-          font-size: 11px; color: var(--c-gold); letter-spacing: 4px;
-          font-weight: 600; margin: 0 0 18px;
+          font-size: 11px; color: var(--c-navy); letter-spacing: 4px;
+          font-weight: 700; opacity: 0.85; margin: 0 0 18px;
         }
         .greetHeadline {
           font-family: var(--f-heading); font-size: clamp(24px, 3vw, 34px);
@@ -145,7 +145,7 @@ export default function AboutPage() {
           margin-top: 36px; padding-top: 28px;
           border-top: 1px solid var(--c-line);
         }
-        .signLine { width: 40px; height: 1px; background: var(--c-gold); flex-shrink: 0; }
+        .signLine { width: 40px; height: 1px; background: var(--c-navy); flex-shrink: 0; }
         .signRole {
           font-size: 11px; color: var(--c-text3); letter-spacing: 3px;
           margin: 0 0 4px; font-weight: 500;
@@ -162,8 +162,8 @@ export default function AboutPage() {
         /* Promise */
         .promiseHead { text-align: center; margin-bottom: clamp(48px, 6vw, 72px); }
         .promiseEyebrow {
-          font-size: 11px; color: var(--c-gold); letter-spacing: 4px;
-          font-weight: 600; margin: 0 0 14px;
+          font-size: 11px; color: var(--c-navy); letter-spacing: 4px;
+          font-weight: 700; opacity: 0.85; margin: 0 0 14px;
         }
         .promiseTitle {
           font-family: var(--f-heading); font-size: clamp(26px, 3.2vw, 38px);
@@ -187,8 +187,8 @@ export default function AboutPage() {
         }
         .promiseCard:hover { background: #FCFAF5; }
         .promiseNo {
-          font-family: var(--f-display); font-size: 15px; color: var(--c-gold);
-          letter-spacing: 4px; font-weight: 400;
+          font-family: var(--f-display); font-size: 15px; color: var(--c-navy);
+          letter-spacing: 4px; font-weight: 400; opacity: 0.85;
         }
         .promiseCardTitle {
           font-family: var(--f-heading); font-size: clamp(17px, 1.8vw, 21px);
@@ -206,7 +206,7 @@ export default function AboutPage() {
           display: flex; flex-direction: column; align-items: center; gap: 28px;
         }
         .closingDivider {
-          width: 36px; height: 1px; background: var(--c-gold);
+          width: 36px; height: 1px; background: var(--c-navy);
         }
         .closingText {
           font-family: var(--f-heading); font-size: clamp(16px, 1.9vw, 22px);

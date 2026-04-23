@@ -18,7 +18,7 @@ export default function DoctorPage() {
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto 80px', textAlign: 'center' }}>
           <Reveal duration="0.8s">
-            <p style={{ fontSize: 12, color: 'var(--c-gold)', letterSpacing: 4, margin: '0 0 14px', fontWeight: 500 }}>
+            <p style={{ fontSize: 12, color: 'var(--c-navy)', letterSpacing: 4, margin: '0 0 14px', fontWeight: 500 }}>
               PROFESSIONAL COLLABORATION
             </p>
           </Reveal>
@@ -73,7 +73,7 @@ export default function DoctorPage() {
               </Reveal>
               {doc.career.map((c, j) => (
                 <Reveal key={c} delay={0.4 + j * 0.05} duration="0.5s">
-                  <p className="docCareer" style={{ borderLeftColor: j === 0 ? 'var(--c-gold)' : 'var(--c-line)' }}>
+                  <p className="docCareer" style={{ borderLeftColor: j === 0 ? 'var(--c-navy)' : 'var(--c-line)' }}>
                     {c}
                   </p>
                 </Reveal>
@@ -107,8 +107,8 @@ export default function DoctorPage() {
           padding-top: 12px;
         }
         .docRole {
-          font-size: 11px; color: var(--c-gold); letter-spacing: 3px;
-          margin: 0 0 14px; font-weight: 600;
+          font-size: 11px; color: var(--c-navy); letter-spacing: 3px;
+          margin: 0 0 14px; font-weight: 700; opacity: 0.85;
         }
         .docName {
           display: flex; align-items: baseline; gap: 12px;
@@ -131,7 +131,7 @@ export default function DoctorPage() {
         }
         .docQuote {
           background: var(--c-warm); padding: 24px 28px; border-radius: 2px;
-          border-left: 2px solid var(--c-gold);
+          border-left: 2px solid var(--c-navy);
           margin-bottom: 32px;
         }
         .docQuote p {

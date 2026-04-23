@@ -1,6 +1,6 @@
 .footer {
-  background: var(--c-dark);
-  padding: 44px clamp(24px, 5vw, 80px) 28px;
+  background: var(--c-navy-d);
+  padding: 48px clamp(24px, 5vw, 80px) 32px;
 }
 
 .row {
@@ -10,40 +10,43 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 .name {
   font-family: var(--f-display);
-  font-size: 16px;
+  font-size: 20px;
   color: #fff;
+  letter-spacing: 0.5px;
 }
 .meta {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.25);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 400;
 }
 
 .links {
   display: flex;
-  gap: 20px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+  gap: 22px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
 }
-.links a { transition: color 0.2s; }
+.links a { transition: color 0.25s; }
 .links a:hover { color: var(--c-gold-l); }
 
 .copy {
   max-width: 1100px;
-  margin: 20px auto 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 14px;
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.22);
+  margin: 24px auto 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 18px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
 }

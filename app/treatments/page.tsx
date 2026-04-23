@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
@@ -30,7 +31,7 @@ export default function TreatmentsPage() {
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           {TREATMENTS.map((t, i) => (
             <Reveal key={t.en} delay={0.03 + i * 0.04} duration="0.6s">
-              <article className="txRow">
+              <Link href={`/treatments/${t.slug}`} className="txRow" aria-label={`${t.ko} 상세 보기`}>
                 <div className="txImg">
                   <Photo src={TX_SRC[t.en]} alt={`${t.ko} 이미지`} sizes="200px" />
                 </div>
@@ -41,7 +42,8 @@ export default function TreatmentsPage() {
                   </div>
                   <p className="txD">{t.d}</p>
                 </div>
-              </article>
+                <span className="txArrow" aria-hidden="true">→</span>
+              </Link>
             </Reveal>
           ))}
         </div>
@@ -49,12 +51,16 @@ export default function TreatmentsPage() {
 
       <style>{`
         .txRow {
-          display: grid; grid-template-columns: 200px 1fr;
+          display: grid; grid-template-columns: 200px 1fr auto;
+          gap: 0;
           border-bottom: 1px solid var(--c-line);
           transition: background 0.3s;
+          text-decoration: none; color: inherit;
+          align-items: center;
         }
         .txRow:hover { background: var(--c-warm); }
-        .txRow:hover .txEn { color: var(--c-gold); }
+        .txRow:hover .txEn { color: var(--c-navy); }
+        .txRow:hover .txArrow { transform: translateX(4px); color: var(--c-navy); }
         .txImg { overflow: hidden; height: 140px; }
         .txBody {
           padding: 24px 32px; display: flex; flex-direction: column; justify-content: center;
@@ -63,10 +69,16 @@ export default function TreatmentsPage() {
         .txEn { font-family: var(--f-display); font-size: 18px; color: var(--c-navy); transition: color 0.3s; }
         .txKo { font-size: 15px; color: var(--c-text2); font-weight: 500; }
         .txD { font-size: 14px; color: var(--c-text); line-height: 1.75; font-weight: 400; margin: 0; }
+        .txArrow {
+          padding-right: 28px; font-size: 22px; color: var(--c-text3);
+          transition: transform 0.3s var(--ease-out), color 0.3s;
+          font-family: var(--f-display);
+        }
         @media (max-width: 600px) {
           .txRow { grid-template-columns: 1fr; }
           .txImg { height: 180px; }
           .txBody { padding: 20px 24px; }
+          .txArrow { display: none; }
         }
       `}</style>
     </>

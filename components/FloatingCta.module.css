@@ -55,16 +55,17 @@
   color: inherit;
 }
 
-/* 전화 버튼 — 브랜드 골드 강조 */
+/* 전화 버튼 — 브랜드 네이비 강조 */
 .primary {
-  background: linear-gradient(135deg, var(--c-gold-l) 0%, var(--c-gold) 100%);
+  background: linear-gradient(135deg, var(--c-navy-l) 0%, var(--c-navy) 100%);
   color: #fff;
-  border-color: var(--c-gold);
-  box-shadow: 0 6px 20px rgba(201, 165, 83, 0.3), 0 2px 4px rgba(15, 26, 53, 0.08);
+  border-color: var(--c-navy);
+  box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 2px 4px rgba(15, 26, 53, 0.08);
 }
 .primary:hover,
 .primary:focus-visible {
-  box-shadow: 0 12px 28px rgba(201, 165, 83, 0.4), 0 4px 8px rgba(15, 26, 53, 0.12);
+  background: linear-gradient(135deg, var(--c-navy) 0%, var(--c-navy-d) 100%);
+  box-shadow: 0 12px 28px rgba(15, 26, 53, 0.38), 0 4px 8px rgba(15, 26, 53, 0.12);
 }
 
 /* 일반 버튼 — 호버 시 네이비 반전 */

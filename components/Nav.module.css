@@ -57,10 +57,14 @@
   color: var(--c-text2);
 }
 .link[data-active='true'] {
-  color: var(--c-gold) !important;
+  color: var(--c-navy) !important;
   font-weight: 600;
 }
-.link:hover { color: var(--c-gold); }
+.nav:not([data-show='true']) .link[data-active='true'] {
+  color: var(--c-gold-l) !important;
+}
+.link:hover { color: var(--c-navy); }
+.nav:not([data-show='true']) .link:hover { color: var(--c-gold-l); }
 
 .burger {
   display: none;
