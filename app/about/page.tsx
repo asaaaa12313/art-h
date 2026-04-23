@@ -21,11 +21,11 @@ export default function AboutPage() {
           <Reveal duration="1.1s" from="translateY(24px)">
             <div className="greetImg">
               <Photo
-                src="/media/images/doctor/doctor-03.jpg"
+                src="/media/images/doctor/doctor-choi-profile.jpg"
                 label="대표원장 최종원"
-                alt="최종원 대표원장"
+                alt="최종원 대표원장 — 구강악안면외과 전문의"
                 sizes="(max-width: 768px) 100vw, 40vw"
-                objectPosition="center 25%"
+                objectPosition="center 15%"
               />
             </div>
           </Reveal>

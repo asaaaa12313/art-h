@@ -41,10 +41,10 @@ export const DOCTORS = [
   {
     name: '최종원',
     title: '대표원장',
-    specialty: '구강외과 전문의',
+    specialty: '구강악안면외과 전문의',
     focus: '임플란트 · 사랑니 발치 · 턱관절 · 의식하진정(수면마취)',
-    photo: '/media/images/doctor/doctor-01.jpg',
-    objectPosition: 'center 30%',
+    photo: '/media/images/doctor/doctor-choi-profile.jpg',
+    objectPosition: 'center 20%',
     quote: '"수술은 정교하게, 자연치아는 끝까지.\n한 분 한 분의 치아를 제 작품처럼 대합니다."',
     career: [
       '구강악안면외과 전문의',
@@ -56,10 +56,10 @@ export const DOCTORS = [
   {
     name: '강지수',
     title: '진료원장',
-    specialty: '보존과 전문의',
+    specialty: '치과보존과 전문의',
     focus: '신경치료 · 충치 치료 · 잇몸 · 치아미백',
-    photo: '/media/images/doctor/doctor-female-placeholder.svg',
-    objectPosition: 'center center',
+    photo: '/media/images/doctor/doctor-kang-profile.jpg',
+    objectPosition: 'center 20%',
     quote: '"환자분의 이야기에 귀 기울이며,\n자연치아를 최대한 보존하는 진료를 약속합니다."',
     career: [
       '치과보존과 전문의',
