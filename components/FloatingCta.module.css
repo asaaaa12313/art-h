@@ -74,6 +74,27 @@
   border-color: var(--c-navy);
 }
 
+/* 네이버 플레이스 버튼 — 네이버 그린 강조 */
+.place {
+  background: #03C75A;
+  color: #fff;
+  border-color: #03C75A;
+  box-shadow: 0 6px 20px rgba(3, 199, 90, 0.28), 0 2px 4px rgba(15, 26, 53, 0.08);
+}
+.place:hover,
+.place:focus-visible {
+  background: #02b150;
+  color: #fff;
+  border-color: #02b150;
+  box-shadow: 0 12px 28px rgba(3, 199, 90, 0.38), 0 4px 8px rgba(15, 26, 53, 0.12);
+}
+/* .btn:not selector의 place 예외 처리 */
+.btn.place:not(.primary):hover {
+  background: #02b150;
+  color: #fff;
+  border-color: #02b150;
+}
+
 /* TOP 버튼 */
 .top {
   background: var(--c-warm);

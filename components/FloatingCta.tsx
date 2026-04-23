@@ -5,7 +5,7 @@ import { SITE } from '@/lib/copy';
 import styles from './FloatingCta.module.css';
 
 const PLACE_URL =
-  process.env.NEXT_PUBLIC_NAVER_PLACE_URL || 'https://naver.me/GWW5jD4j';
+  process.env.NEXT_PUBLIC_NAVER_PLACE_URL || 'https://m.place.naver.com/hospital/2032805546/home?entry=pll';
 
 export default function FloatingCta() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,16 +47,16 @@ export default function FloatingCta() {
         href={PLACE_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className={styles.btn}
+        className={`${styles.btn} ${styles.place}`}
         aria-label="네이버 플레이스 바로가기"
       >
         <svg viewBox="0 0 24 24" className={styles.icon} aria-hidden="true">
           <path
             fill="currentColor"
-            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"
+            d="M19 4H5a1 1 0 00-1 1v14a1 1 0 001 1h7v-7h-2v-2h2V9.5A2.5 2.5 0 0114.5 7H17v2h-2a.5.5 0 00-.5.5V11h2.5l-.5 2h-2v7h4a1 1 0 001-1V5a1 1 0 00-1-1z"
           />
         </svg>
-        <span className={styles.label}>오시는길</span>
+        <span className={styles.label}>플레이스</span>
       </a>
 
       <button
