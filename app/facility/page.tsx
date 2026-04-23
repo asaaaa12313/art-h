@@ -68,15 +68,36 @@ export default function FacilityPage() {
 
           {EQUIPMENTS.map((eq, i) => (
             <Reveal key={eq.n} delay={0.05 + i * 0.06} duration="0.6s">
-              <div className="eqRow">
-                <div className="eqImg">
-                  <Photo src={EQ_SRC[eq.n]} alt={`${eq.n} 이미지`} sizes="160px" />
+              <details className="eqAcc">
+                <summary className="eqRow">
+                  <div className="eqImg">
+                    <Photo src={EQ_SRC[eq.n]} alt={`${eq.n} 이미지`} sizes="160px" />
+                  </div>
+                  <div className="eqInfo">
+                    <h3 className="eqN">{eq.n}</h3>
+                    <p className="eqD">{eq.d}</p>
+                  </div>
+                  <span className="eqArrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                      <path fill="currentColor" d="M7 10l5 5 5-5z"/>
+                    </svg>
+                  </span>
+                </summary>
+                <div className="eqDetail">
+                  {eq.brand && <p className="eqBrand">{eq.brand}</p>}
+                  <ul className="eqFeatures">
+                    {eq.features.map((f) => (
+                      <li key={f}>{f}</li>
+                    ))}
+                  </ul>
+                  {eq.uses && (
+                    <div className="eqUses">
+                      <span className="eqUsesLabel">활용 분야</span>
+                      <span>{eq.uses}</span>
+                    </div>
+                  )}
                 </div>
-                <div className="eqInfo">
-                  <h3 className="eqN">{eq.n}</h3>
-                  <p className="eqD">{eq.d}</p>
-                </div>
-              </div>
+              </details>
             </Reveal>
           ))}
         </div>
@@ -117,12 +138,23 @@ export default function FacilityPage() {
         }
         .roomK { font-size: 20px; color: #fff; font-weight: 700; letter-spacing: -0.02em; }
 
-        /* 보유 장비 수평 리스트 */
-        .eqRow {
-          display: grid; grid-template-columns: 140px 1fr;
-          gap: 24px; padding: 24px 0;
-          border-bottom: 1px solid var(--c-line); align-items: center;
+        /* 보유 장비 아코디언 */
+        .eqAcc {
+          border-bottom: 1px solid var(--c-line);
+          transition: background 0.3s ease;
         }
+        .eqAcc:hover { background: rgba(255, 255, 255, 0.5); }
+        .eqAcc[open] { background: #fff; }
+
+        .eqRow {
+          display: grid; grid-template-columns: 140px 1fr 32px;
+          gap: 24px; padding: 22px 12px;
+          align-items: center;
+          cursor: pointer;
+          list-style: none;
+        }
+        .eqRow::-webkit-details-marker { display: none; }
+
         .eqImg { border-radius: 2px; overflow: hidden; aspect-ratio: 4/3; }
         .eqInfo { min-width: 0; }
         .eqN {
@@ -133,10 +165,62 @@ export default function FacilityPage() {
           font-size: 14px; color: var(--c-text); font-weight: 400;
           line-height: 1.75; margin: 0;
         }
+        .eqArrow {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 32px; height: 32px; border-radius: 50%;
+          background: var(--c-warm); color: var(--c-navy);
+          transition: transform 0.3s var(--ease-out), background 0.3s;
+        }
+        .eqAcc[open] .eqArrow {
+          transform: rotate(-180deg);
+          background: var(--c-navy); color: #fff;
+        }
+
+        .eqDetail {
+          padding: 4px 12px 28px 176px;
+          animation: eqReveal 0.35s ease;
+        }
+        @keyframes eqReveal {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: none; }
+        }
+        .eqBrand {
+          font-family: var(--f-display); font-size: 12px;
+          color: var(--c-navy); opacity: 0.7;
+          letter-spacing: 3px; margin: 0 0 14px; font-weight: 500;
+        }
+        .eqFeatures {
+          list-style: none; padding: 0; margin: 0 0 20px;
+          display: flex; flex-direction: column; gap: 10px;
+        }
+        .eqFeatures li {
+          position: relative; padding-left: 18px;
+          font-size: 14px; color: var(--c-text); line-height: 1.75;
+          font-weight: 400;
+        }
+        .eqFeatures li::before {
+          content: ''; position: absolute; left: 0; top: 10px;
+          width: 6px; height: 6px; border-radius: 50%;
+          background: var(--c-navy);
+        }
+        .eqUses {
+          display: flex; gap: 12px; align-items: flex-start;
+          padding: 14px 16px;
+          background: var(--c-warm); border-radius: 2px;
+          font-size: 13px; color: var(--c-text2); line-height: 1.7;
+        }
+        .eqUsesLabel {
+          flex-shrink: 0;
+          font-size: 11px; letter-spacing: 2px; font-weight: 700;
+          color: var(--c-navy); opacity: 0.8;
+          padding-top: 2px;
+        }
 
         @media (max-width: 768px) {
           .roomGrid { grid-template-columns: 1fr; }
-          .eqRow { grid-template-columns: 100px 1fr; gap: 16px; padding: 20px 0; }
+          .eqRow { grid-template-columns: 100px 1fr 28px; gap: 16px; padding: 18px 8px; }
+          .eqDetail { padding: 4px 8px 22px 8px; }
+          .eqUses { flex-direction: column; gap: 6px; }
         }
       `}</style>
     </>
