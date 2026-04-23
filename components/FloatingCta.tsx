@@ -5,7 +5,7 @@ import { SITE } from '@/lib/copy';
 import styles from './FloatingCta.module.css';
 
 const PLACE_URL =
-  process.env.NEXT_PUBLIC_NAVER_PLACE_URL || 'https://m.place.naver.com/hospital/2032805546/home?entry=pll';
+  process.env.NEXT_PUBLIC_NAVER_PLACE_URL || 'https://naver.me/GWW5jD4j';
 
 export default function FloatingCta() {
   const [scrolled, setScrolled] = useState(false);

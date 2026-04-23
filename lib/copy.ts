@@ -8,7 +8,7 @@ export const SITE = {
   address: '인천 연수구 인천타워대로 365 힐스테이트 송도 더스카이',
   addressShort: '송도국제업무단지 · 국제업무지구역 3번 출구 202m',
   transit: '인천1호선 국제업무지구역 3번 출구에서 202m',
-  naverPlace: 'https://m.place.naver.com/hospital/2032805546/home?entry=pll',
+  naverPlace: 'https://naver.me/GWW5jD4j',
   hours: [
     { day: '월·화·수·금', time: '09:30 — 18:30', highlight: false },
     { day: '목 (야간진료)', time: '09:30 — 20:30', highlight: true },
