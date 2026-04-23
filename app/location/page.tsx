@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import KakaoMap from '@/components/KakaoMap';
-import BookingLink from '@/components/BookingLink';
-import { V } from '@/lib/visuals';
 import { SITE } from '@/lib/copy';
 
 export const metadata: Metadata = {
@@ -30,16 +28,10 @@ export default function LocationPage() {
             <Reveal delay={0.1} duration="0.7s">
               <div style={{ marginBottom: 36 }}>
                 <p className="label">CONTACT</p>
-                <p style={{ fontFamily: 'var(--f-heading)', fontSize: 28, color: 'var(--c-dark)', fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 4px' }}>
+                <p style={{ fontFamily: 'var(--f-heading)', fontSize: 28, color: 'var(--c-navy)', fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 4px' }}>
                   <a href={`tel:${SITE.phone.replace(/-/g, '')}`}>{SITE.phone}</a>
                 </p>
                 <p style={{ fontSize: 12, color: 'var(--c-text3)', margin: 0 }}>* 개원 시 확정</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.15} duration="0.7s">
-              <div style={{ marginBottom: 28 }}>
-                <p className="label">BOOKING</p>
-                <BookingLink variant="gold">네이버 예약</BookingLink>
               </div>
             </Reveal>
             <Reveal delay={0.2} duration="0.7s">
@@ -65,12 +57,12 @@ export default function LocationPage() {
                     }}
                   >
                     <span style={{ color: 'var(--c-text)' }}>{h.day}</span>
-                    <span style={{ color: h.highlight ? 'var(--c-gold)' : 'var(--c-text)', fontWeight: h.highlight ? 600 : 300 }}>
+                    <span style={{ color: h.highlight ? 'var(--c-gold)' : 'var(--c-text)', fontWeight: h.highlight ? 600 : 400 }}>
                       {h.time}
                     </span>
                   </div>
                 ))}
-                <p style={{ fontSize: 12, color: 'var(--c-text3)', marginTop: 8 }}>* 개원 시 확정</p>
+                <p style={{ fontSize: 12, color: 'var(--c-text3)', marginTop: 8 }}>* 점심시간은 토요일에 적용되지 않습니다</p>
               </div>
             </Reveal>
             <Reveal delay={0.45} duration="1s" from="scale(0.97)">

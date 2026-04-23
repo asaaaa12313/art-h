@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
-import BookingLink from '@/components/BookingLink';
 import HeroVideo from '@/components/HeroVideo';
 import { V } from '@/lib/visuals';
+import { SITE } from '@/lib/copy';
 import styles from './Home.module.css';
 
 export default function Home() {
@@ -53,7 +53,7 @@ export default function Home() {
             <Link href="/about" className={styles.heroCta}>의원소개</Link>
             <Link href="/treatments" className={styles.heroCta}>진료과목</Link>
             <Link href="/location" className={styles.heroCta}>오시는길</Link>
-            <BookingLink variant="ghost">예약하기</BookingLink>
+            <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCta}>전화문의</a>
           </div>
         </div>
       </section>

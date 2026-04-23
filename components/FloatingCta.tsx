@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { SITE } from '@/lib/copy';
 import styles from './FloatingCta.module.css';
 
-const BOOKING_URL =
-  process.env.NEXT_PUBLIC_NAVER_BOOKING_URL || 'https://booking.naver.com/';
 const PLACE_URL =
   process.env.NEXT_PUBLIC_NAVER_PLACE_URL || 'https://naver.me/GWW5jD4j';
 
@@ -43,22 +41,6 @@ export default function FloatingCta() {
           />
         </svg>
         <span className={styles.label}>전화하기</span>
-      </a>
-
-      <a
-        href={BOOKING_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.btn}
-        aria-label="네이버 예약"
-      >
-        <svg viewBox="0 0 24 24" className={styles.icon} aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"
-          />
-        </svg>
-        <span className={styles.label}>예약하기</span>
       </a>
 
       <a

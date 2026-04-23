@@ -3,7 +3,7 @@ import { SITE } from '@/lib/copy';
 import styles from './Footer.module.css';
 
 export default function Footer() {
-  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL;
+  const tel = SITE.phone.replace(/-/g, '');
   return (
     <footer className={styles.footer}>
       <div className={styles.row}>
@@ -16,13 +16,7 @@ export default function Footer() {
         <div className={styles.links}>
           <Link href="/about">의원소개</Link>
           <Link href="/location">오시는길</Link>
-          {bookingUrl ? (
-            <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-              예약
-            </a>
-          ) : (
-            <span>예약</span>
-          )}
+          <a href={`tel:${tel}`}>전화문의</a>
         </div>
       </div>
       <div className={styles.copy}>
