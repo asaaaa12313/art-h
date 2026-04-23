@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import BookingLink from '@/components/BookingLink';
+import HeroVideo from '@/components/HeroVideo';
 import { V } from '@/lib/visuals';
 import styles from './Home.module.css';
 
@@ -26,8 +27,14 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className={styles.hero}>
-        <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.1}px)` }}>
-          <Photo bg={V.hero} alt="아트에이치치과 메인 이미지" style={{ height: '115%' }} />
+        <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.1}px)`, height: '115%' }}>
+          <HeroVideo
+            srcMp4="/media/video/hero.mp4"
+            srcWebm="/media/video/hero.webm"
+            srcMobileMp4="/media/video/hero-720.mp4"
+            poster="/media/video/hero-poster.jpg"
+            alt="아트에이치치과 외관 및 간판"
+          />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>
@@ -68,7 +75,11 @@ export default function Home() {
           </div>
           <Reveal delay={0.2} duration="1.2s" from="translateX(40px)">
             <div className={styles.storyImg}>
-              <Photo bg={V.clinic} label="의원 내부" alt="아트에이치치과 의원 내부" />
+              <Photo
+                src="/media/images/waiting/waiting-01.jpg"
+                alt="아트에이치치과 대기실"
+                sizes="(max-width: 768px) 100vw, 45vw"
+              />
             </div>
           </Reveal>
         </div>
@@ -86,13 +97,13 @@ export default function Home() {
         </div>
         <div className={styles.txGrid}>
           {[
-            { en: 'Implant', ko: '임플란트', bg: V.implant },
-            { en: 'Root Canal', ko: '신경치료', bg: V.gen },
-            { en: 'Oral Surgery', ko: '사랑니 발치', bg: V.equip },
+            { en: 'Implant', ko: '임플란트', src: '/media/images/surgery/surgery-01.jpg' },
+            { en: 'Root Canal', ko: '신경치료', src: '/media/images/treatment-room/treatment-01.jpg' },
+            { en: 'Oral Surgery', ko: '사랑니 발치', src: '/media/images/xray/xray-01.jpg' },
           ].map((t, i) => (
             <Reveal key={t.en} delay={0.1 + i * 0.12} duration="1s" from="scale(0.96)">
               <Link href="/treatments" className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
-                <Photo bg={t.bg} alt={`${t.ko} 이미지`} />
+                <Photo src={t.src} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 100vw, 33vw" />
                 <div className={styles.txOverlay} aria-hidden="true" />
                 <div className={styles.txLabel}>
                   <span className={styles.txEn}>{t.en}</span>
@@ -107,7 +118,12 @@ export default function Home() {
       {/* DOCTOR — full bleed split */}
       <section className={styles.doctor}>
         <Reveal duration="1.3s" from="scale(1.03)" style={{ overflow: 'hidden' }}>
-          <Photo bg={V.doc} label="원장님 프로필" alt="아트에이치치과 원장 프로필" />
+          <Photo
+            src="/media/images/doctor/doctor-01.jpg"
+            alt="아트에이치치과 원장 진료 장면"
+            sizes="(max-width: 768px) 100vw, 50vw"
+            objectPosition="center 30%"
+          />
         </Reveal>
         <div className={styles.doctorBody}>
           <Reveal delay={0.2} duration="0.6s">
@@ -140,13 +156,28 @@ export default function Home() {
           </Reveal>
           <div className={styles.facilityGrid}>
             <Reveal duration="1.1s" from="scale(0.97)" style={{ gridRow: '1/3', overflow: 'hidden' }}>
-              <Photo bg={V.wait} label="대기실 Waiting Lounge" alt="대기실" />
+              <Photo
+                src="/media/images/waiting/waiting-02.jpg"
+                label="대기실 Waiting Lounge"
+                alt="아트에이치치과 대기실"
+                sizes="(max-width: 768px) 100vw, 66vw"
+              />
             </Reveal>
             <Reveal delay={0.15} duration="1s" from="translateX(30px)" style={{ overflow: 'hidden' }}>
-              <Photo bg={V.surg} label="수술실 Operation Room" alt="수술실" />
+              <Photo
+                src="/media/images/surgery/surgery-02.jpg"
+                label="수술실 Operation Room"
+                alt="아트에이치치과 수술실"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
             </Reveal>
             <Reveal delay={0.25} duration="1s" from="translateX(30px)" style={{ overflow: 'hidden' }}>
-              <Photo bg={V.consult} label="상담실 Consultation" alt="상담실" />
+              <Photo
+                src="/media/images/consult/consult-01.jpg"
+                label="상담실 Consultation"
+                alt="아트에이치치과 상담실"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
             </Reveal>
           </div>
         </div>

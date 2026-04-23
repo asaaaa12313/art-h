@@ -5,6 +5,10 @@
   overflow: hidden;
 }
 
+.image {
+  transition: transform 0.8s var(--ease-out);
+}
+
 .pattern {
   position: absolute;
   inset: 0;

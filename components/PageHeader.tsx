@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import Photo from './Photo';
 import styles from './PageHeader.module.css';
 
-type Props = { title: string; bg: string; alt?: string };
+type Props = { title: string; bg?: string; src?: string; alt?: string; objectPosition?: string };
 
-export default function PageHeader({ title, bg, alt }: Props) {
+export default function PageHeader({ title, bg, src, alt, objectPosition }: Props) {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     setLoaded(false);
@@ -16,7 +16,15 @@ export default function PageHeader({ title, bg, alt }: Props) {
 
   return (
     <section className={styles.wrap}>
-      <Photo bg={bg} alt={alt || title} style={{ position: 'absolute', inset: 0 }} />
+      <Photo
+        bg={bg}
+        src={src}
+        alt={alt || title}
+        style={{ position: 'absolute', inset: 0 }}
+        priority
+        sizes="100vw"
+        objectPosition={objectPosition}
+      />
       <div className={styles.overlay} aria-hidden="true" />
       <div className={styles.content}>
         <h1

@@ -13,13 +13,18 @@ export const metadata: Metadata = {
 export default function DoctorPage() {
   return (
     <>
-      <PageHeader title="의료진" bg={V.doc} alt="원장 프로필" />
+      <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="원장 프로필" objectPosition="center 25%" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div className="docGrid">
           <Reveal duration="1.2s" from="translateY(20px)">
             <div className="docSticky">
-              <Photo bg={V.doc} label="원장님 프로필 사진" alt="원장 프로필 사진" />
+              <Photo
+                src="/media/images/doctor/doctor-03.jpg"
+                label="원장님 프로필 사진"
+                alt="아트에이치치과 원장 사진"
+                sizes="(max-width: 768px) 100vw, 40vw"
+              />
             </div>
           </Reveal>
           <div>

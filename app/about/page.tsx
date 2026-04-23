@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHeader title="의원소개" bg={V.clinic} alt="의원 내부 전경" />
+      <PageHeader title="의원소개" src="/media/images/waiting/waiting-logo.jpg" alt="아트에이치치과 AH 로고" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,12vw,160px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
@@ -52,7 +52,12 @@ export default function AboutPage() {
 
       <Reveal duration="1.4s" from="scale(1.02)">
         <div style={{ height: 400, overflow: 'hidden' }}>
-          <Photo bg={V.wait} label="대기실 전경" alt="아트에이치치과 대기실 전경" />
+          <Photo
+            src="/media/images/exterior/exterior-01.jpg"
+            label="송도국제업무단지 C8-2블럭"
+            alt="아트에이치치과 건물 외관"
+            sizes="100vw"
+          />
         </div>
       </Reveal>
 

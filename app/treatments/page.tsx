@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
-import { V } from '@/lib/visuals';
 import { TREATMENTS } from '@/lib/copy';
 
 export const metadata: Metadata = {
@@ -11,10 +10,21 @@ export const metadata: Metadata = {
     '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
 };
 
+// 진료과목별 실사 매핑 (copy.ts의 en 값과 매칭)
+const TX_SRC: Record<string, string> = {
+  'Implant': '/media/images/surgery/surgery-01.jpg',
+  'Root Canal': '/media/images/treatment-room/treatment-01.jpg',
+  'Oral Surgery': '/media/images/xray/xray-01.jpg',
+  'TMJ': '/media/images/xray/xray-02.jpg',
+  'Sedation': '/media/images/surgery/surgery-02.jpg',
+  'Periodontics': '/media/images/equipment/equipment-01.jpg',
+  'Whitening': '/media/images/consult/consult-01.jpg',
+};
+
 export default function TreatmentsPage() {
   return (
     <>
-      <PageHeader title="진료과목" bg={V.chair} alt="진료실 이미지" />
+      <PageHeader title="진료과목" src="/media/images/treatment-room/treatment-02.jpg" alt="진료실 이미지" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(48px,6vw,80px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -22,7 +32,7 @@ export default function TreatmentsPage() {
             <Reveal key={t.en} delay={0.03 + i * 0.04} duration="0.6s">
               <article className="txRow">
                 <div className="txImg">
-                  <Photo bg={t.bg} alt={`${t.ko} 이미지`} />
+                  <Photo src={TX_SRC[t.en]} alt={`${t.ko} 이미지`} sizes="200px" />
                 </div>
                 <div className="txBody">
                   <div className="txHead">

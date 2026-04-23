@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function LocationPage() {
   return (
     <>
-      <PageHeader title="오시는길" bg={V.city} alt="송도 도시 전경" />
+      <PageHeader title="오시는길" src="/media/images/exterior/exterior-02.jpg" alt="송도국제업무단지 건물 외관" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div className="locGrid">
