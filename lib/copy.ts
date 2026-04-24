@@ -223,7 +223,7 @@ export const DOCTORS = [
   },
   {
     name: '강지수',
-    title: '진료원장',
+    title: '원장',
     specialty: '치과보존과 전문의',
     focus: '신경치료 · 충치 치료 · 잇몸 · 치아미백',
     photo: '/media/images/doctor/doctor-kang-profile.jpg',
