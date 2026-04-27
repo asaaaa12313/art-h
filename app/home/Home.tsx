@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
@@ -239,6 +240,18 @@ export default function Home() {
               </div>
             </Reveal>
           </div>
+
+          <Reveal delay={0.4} duration="0.9s" from="translateY(20px)">
+            <Link href="/location" className={styles.locMapWrap} aria-label="오시는길 약도 — 자세히 보기">
+              <Image
+                src="/media/images/exterior/map-illustration.jpg"
+                alt="아트에이치치과 약도 — 송도 IBS타워, 국제업무지구역 1·3·5번 출구 도보 5분"
+                fill
+                sizes="(max-width: 768px) 100vw, 1100px"
+                style={{ objectFit: 'contain' }}
+              />
+            </Link>
+          </Reveal>
         </div>
       </section>
     </>

@@ -1,40 +1,30 @@
-'use client';
-
+import Image from 'next/image';
 import styles from './MapEmbed.module.css';
 
 type Props = {
-  query?: string;
-  lat?: number;
-  lng?: number;
   label?: string;
   naverPlaceUrl?: string;
 };
 
-const DEFAULT_QUERY = '송도 IBS타워 아트에이치치과';
-const DEFAULT_LAT = 37.3856;
-const DEFAULT_LNG = 126.6438;
+const MAP_IMAGE = '/media/images/exterior/map-illustration.jpg';
 
 export default function MapEmbed({
-  query = DEFAULT_QUERY,
-  lat = DEFAULT_LAT,
-  lng = DEFAULT_LNG,
   label = '아트에이치치과',
   naverPlaceUrl = 'https://naver.me/GWW5jD4j',
 }: Props) {
-  const gmapsSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&hl=ko&z=16&output=embed`;
-  const kakaoUrl = `https://map.kakao.com/link/search/${encodeURIComponent(label + ' 송도')}`;
-  const tmapUrl = `https://apis.openapi.sk.com/tmap/app/routes?appKey=&name=${encodeURIComponent(label)}&lon=${lng}&lat=${lat}`;
+  const kakaoUrl = `https://map.kakao.com/link/search/${encodeURIComponent(label + ' 송도 IBS타워')}`;
 
   return (
     <div className={styles.wrap}>
-      <iframe
-        src={gmapsSrc}
-        className={styles.frame}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title={`${label} 위치 약도`}
-        allowFullScreen
-      />
+      <div className={styles.frame}>
+        <Image
+          src={MAP_IMAGE}
+          alt={`${label} 약도 — 송도 IBS타워, 국제업무지구역 1·3·5번 출구 도보 5분`}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <div className={styles.links} role="group" aria-label="길찾기 앱으로 열기">
         <a href={naverPlaceUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
           <span className={styles.linkIcon} style={{ background: '#03C75A', color: '#fff' }}>N</span>

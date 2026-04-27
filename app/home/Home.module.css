@@ -283,6 +283,28 @@
   .locCard { min-height: auto; padding: 18px 20px 20px; }
 }
 
+.locMapWrap {
+  display: block;
+  position: relative;
+  margin-top: clamp(28px, 4vw, 40px);
+  width: 100%;
+  height: clamp(360px, 48vw, 560px);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s var(--ease-out);
+}
+@media (hover: hover) {
+  .locMapWrap:hover {
+    border-color: var(--c-navy);
+    transform: translateY(-2px);
+  }
+}
+@media (max-width: 480px) {
+  .locMapWrap { height: 320px; }
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .storyGrid { grid-template-columns: 1fr; }

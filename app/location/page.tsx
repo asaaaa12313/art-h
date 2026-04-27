@@ -130,7 +130,8 @@ export default function LocationPage() {
           font-size: 14px;
         }
         .mapBox {
-          border-radius: 2px; overflow: hidden; min-height: 380px;
+          border-radius: 2px; overflow: hidden;
+          min-height: 460px;
           display: flex; flex-direction: column;
         }
         @media (max-width: 768px) {

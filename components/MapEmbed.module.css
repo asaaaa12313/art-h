@@ -8,12 +8,14 @@
 }
 
 .frame {
+  position: relative;
   width: 100%;
   flex: 1;
-  min-height: 240px;
+  min-height: 360px;
   border: 1px solid var(--c-line);
   border-radius: 2px;
-  background: var(--c-warm);
+  background: var(--c-bg);
+  overflow: hidden;
 }
 
 .links {
