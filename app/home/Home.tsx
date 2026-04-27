@@ -214,44 +214,46 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className={styles.locCardGrid}>
-            <Reveal delay={0.1} duration="0.7s" from="translateY(16px)">
-              <div className={styles.locCard}>
-                <span className={styles.locCardLabel}>SUBWAY</span>
-                <p className={styles.locCardText}>인천1호선 국제업무지구역<br /><strong>5번 출구 470m</strong> (G타워 방면)</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.18} duration="0.7s" from="translateY(16px)">
-              <div className={styles.locCard}>
-                <span className={styles.locCardLabel}>PARKING</span>
-                <p className={styles.locCardText}>지하 1~3층 주차 가능<br /><strong>‘업무동 저층용’</strong> 엘리베이터 이용</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.26} duration="0.7s" from="translateY(16px)">
-              <div className={styles.locCard}>
-                <span className={styles.locCardLabel}>BUS</span>
-                <p className={styles.locCardText}>경제자유구역청 하차 (38515)<br /><strong>82 / 92 / 42 / 43</strong></p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.34} duration="0.7s" from="translateY(16px)">
-              <div className={styles.locCard}>
-                <span className={styles.locCardLabel}>CAR</span>
-                <p className={styles.locCardText}>내비게이션 검색<br /><strong>‘연수구 센트럴로 263’</strong></p>
-              </div>
+          <div className={styles.locContent}>
+            <div className={styles.locCardGrid}>
+              <Reveal delay={0.1} duration="0.7s" from="translateY(16px)">
+                <div className={styles.locCard}>
+                  <span className={styles.locCardLabel}>SUBWAY</span>
+                  <p className={styles.locCardText}>인천1호선 국제업무지구역<br /><strong>5번 출구 470m</strong> (G타워 방면)</p>
+                </div>
+              </Reveal>
+              <Reveal delay={0.18} duration="0.7s" from="translateY(16px)">
+                <div className={styles.locCard}>
+                  <span className={styles.locCardLabel}>PARKING</span>
+                  <p className={styles.locCardText}>지하 1~3층 주차 가능<br /><strong>‘업무동 저층용’</strong> 엘리베이터 이용</p>
+                </div>
+              </Reveal>
+              <Reveal delay={0.26} duration="0.7s" from="translateY(16px)">
+                <div className={styles.locCard}>
+                  <span className={styles.locCardLabel}>BUS</span>
+                  <p className={styles.locCardText}>경제자유구역청 하차 (38515)<br /><strong>82 / 92 / 42 / 43</strong></p>
+                </div>
+              </Reveal>
+              <Reveal delay={0.34} duration="0.7s" from="translateY(16px)">
+                <div className={styles.locCard}>
+                  <span className={styles.locCardLabel}>CAR</span>
+                  <p className={styles.locCardText}>내비게이션 검색<br /><strong>‘연수구 센트럴로 263’</strong></p>
+                </div>
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.4} duration="0.9s" from="translateY(20px)" style={{ height: '100%' }}>
+              <Link href="/location" className={styles.locMapWrap} aria-label="오시는길 약도 — 자세히 보기">
+                <Image
+                  src="/media/images/exterior/map-illustration.jpg"
+                  alt="아트에이치치과 약도 — 송도 IBS타워, 국제업무지구역 1·3·5번 출구 도보 5분"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'contain' }}
+                />
+              </Link>
             </Reveal>
           </div>
-
-          <Reveal delay={0.4} duration="0.9s" from="translateY(20px)">
-            <Link href="/location" className={styles.locMapWrap} aria-label="오시는길 약도 — 자세히 보기">
-              <Image
-                src="/media/images/exterior/map-illustration.jpg"
-                alt="아트에이치치과 약도 — 송도 IBS타워, 국제업무지구역 1·3·5번 출구 도보 5분"
-                fill
-                sizes="(max-width: 768px) 100vw, 1100px"
-                style={{ objectFit: 'contain' }}
-              />
-            </Link>
-          </Reveal>
         </div>
       </section>
     </>
