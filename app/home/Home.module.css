@@ -56,6 +56,17 @@
 }
 .heroCta:hover { border-bottom-color: var(--c-gold-l); color: var(--c-gold-l); }
 
+/* 첫 영상 종료 후 텍스트 페이드아웃 — 영상만 노출 */
+.heroEyebrow[data-visible='false'],
+.heroTitle[data-visible='false'],
+.heroSub[data-visible='false'],
+.heroCtas[data-visible='false'] {
+  opacity: 0 !important;
+  transform: translateY(-12px) !important;
+  transition: opacity 1.4s var(--ease-out), transform 1.4s var(--ease-out) !important;
+  pointer-events: none;
+}
+
 /* 스크롤 인디케이터 */
 .scrollHint {
   position: absolute;
@@ -75,6 +86,10 @@
   pointer-events: none;
 }
 .scrollHint[data-loaded='true'] { opacity: 1; }
+.scrollHint[data-visible='false'] {
+  opacity: 0 !important;
+  transition: opacity 1.4s var(--ease-out) !important;
+}
 .scrollHintLine {
   width: 1px;
   height: 28px;

@@ -12,7 +12,7 @@ const jsonLd = {
   telephone: SITE.phone,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '송도국제업무단지 C8-2블럭',
+    streetAddress: '센트럴로 263 IBS타워 업무동 8층',
     addressLocality: '연수구',
     addressRegion: '인천광역시',
     addressCountry: 'KR',

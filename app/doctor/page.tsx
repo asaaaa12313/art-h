@@ -10,6 +10,29 @@ export const metadata: Metadata = {
     '구강외과(최종원 원장) · 보존과(강지수 원장) 전문의 협진. 각 분야 전문의가 한 자리에서 정확하게 진단하고 끝까지 책임집니다.',
 };
 
+function CertBadge() {
+  return (
+    <svg
+      className="certBadge"
+      width="14"
+      height="14"
+      viewBox="0 0 16 16"
+      aria-hidden="true"
+      role="img"
+    >
+      <circle cx="8" cy="8" r="7" fill="var(--c-navy)" />
+      <path
+        d="M4.8 8.4 L7 10.6 L11.4 5.8"
+        stroke="#fff"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </svg>
+  );
+}
+
 export default function DoctorPage() {
   return (
     <>
@@ -71,12 +94,20 @@ export default function DoctorPage() {
               <Reveal delay={0.35} duration="0.5s">
                 <div className="docDivider" />
               </Reveal>
-              {doc.career.map((c, j) => (
-                <Reveal key={c} delay={0.4 + j * 0.05} duration="0.5s">
-                  <p className="docCareer" style={{ borderLeftColor: j === 0 ? 'var(--c-navy)' : 'var(--c-line)' }}>
-                    {c}
-                  </p>
-                </Reveal>
+              {doc.careerGroups?.map((group, gi) => (
+                <div key={group.label} className="careerGroup">
+                  <Reveal delay={0.4 + gi * 0.06} duration="0.5s">
+                    <p className="careerLabel">{group.label}</p>
+                  </Reveal>
+                  {group.items.map((c, j) => (
+                    <Reveal key={c} delay={0.42 + gi * 0.06 + j * 0.03} duration="0.45s">
+                      <p className="docCareer">
+                        {c.startsWith('보건복지부') && <CertBadge />}
+                        <span>{c}</span>
+                      </p>
+                    </Reveal>
+                  ))}
+                </div>
               ))}
             </div>
           </div>
@@ -141,9 +172,29 @@ export default function DoctorPage() {
         .docDivider {
           width: 24px; height: 1px; background: var(--c-text3); margin-bottom: 24px;
         }
+        .careerGroup {
+          margin-bottom: 22px;
+        }
+        .careerGroup:last-child { margin-bottom: 0; }
+        .careerLabel {
+          font-size: 11px; letter-spacing: 3px; font-weight: 700;
+          color: var(--c-navy); opacity: 0.7;
+          margin: 0 0 10px;
+          text-transform: uppercase;
+        }
         .docCareer {
+          display: flex; align-items: center; gap: 8px;
           font-size: 14px; color: var(--c-text2); font-weight: 400;
-          margin: 0 0 10px; padding-left: 14px; border-left: 2px solid var(--c-line);
+          margin: 0 0 8px; padding-left: 14px; border-left: 2px solid var(--c-line);
+          line-height: 1.6;
+        }
+        .docCareer .certBadge {
+          flex-shrink: 0;
+        }
+        .docCareer:has(.certBadge) {
+          border-left-color: var(--c-navy);
+          color: var(--c-text);
+          font-weight: 500;
         }
 
         @media (max-width: 768px) {

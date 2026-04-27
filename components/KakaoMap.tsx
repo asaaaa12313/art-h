@@ -16,9 +16,9 @@ type Props = {
   label?: string;
 };
 
-// 힐스테이트 송도 더스카이 좌표 (인천 연수구 인천타워대로 365)
-const DEFAULT_LAT = 37.3894;
-const DEFAULT_LNG = 126.6506;
+// 송도 IBS타워 좌표 (인천광역시 연수구 센트럴로 263) — 추정값. 실측 시 갱신 필요.
+const DEFAULT_LAT = 37.3856;
+const DEFAULT_LNG = 126.6438;
 
 export default function KakaoMap({
   lat = DEFAULT_LAT,

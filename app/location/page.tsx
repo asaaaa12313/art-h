@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function LocationPage() {
   return (
     <>
-      <PageHeader title="오시는길" src="/media/images/exterior/exterior-02.jpg" alt="송도국제업무단지 건물 외관" />
+      <PageHeader title="오시는길" src="/media/images/exterior/exterior-02.jpg" alt="송도 IBS타워 외관" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div className="locGrid">
@@ -20,8 +20,8 @@ export default function LocationPage() {
             <Reveal duration="0.7s">
               <div style={{ marginBottom: 36 }}>
                 <p className="label">ADDRESS</p>
-                <p style={{ fontSize: 16, color: 'var(--c-text)', fontWeight: 400, margin: 0, lineHeight: 1.8 }}>
-                  인천 연수구 인천타워대로 365<br />힐스테이트 송도 더스카이<br />송도국제업무단지
+                <p className="locText">
+                  인천광역시 연수구 센트럴로 263<br />IBS타워 업무동 8층<br />송도국제업무단지
                 </p>
               </div>
             </Reveal>
@@ -33,11 +33,49 @@ export default function LocationPage() {
                 </p>
               </div>
             </Reveal>
-            <Reveal delay={0.2} duration="0.7s">
+            <Reveal delay={0.18} duration="0.7s">
+              <div style={{ marginBottom: 32 }}>
+                <p className="label">PARKING</p>
+                <p className="locText">
+                  지하 1~3층 주차 가능 (업무동·판매동 모두 가능)<br />
+                  내원 시 ‘업무동 저층용’ 엘리베이터 탑승 후 8층
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.24} duration="0.7s">
+              <div style={{ marginBottom: 32 }}>
+                <p className="label">SUBWAY</p>
+                <p className="locText">
+                  인천1호선 국제업무지구역 5번 출구 470m<br />
+                  (G타워 방면)
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3} duration="0.7s">
+              <div style={{ marginBottom: 32 }}>
+                <p className="label">BUS</p>
+                <p className="locText">
+                  정류장 38515 · 경제자유구역청 하차<br />
+                  송도 푸르지오하버뷰 방면<br />
+                  간선 82 / 92(급행) / 42(순환) / 43(순환)
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.36} duration="0.7s">
+              <div style={{ marginBottom: 32 }}>
+                <p className="label">WALK</p>
+                <p className="locText">
+                  국제업무지구역 1번 출구 도보 10분<br />
+                  센트럴파크역 3번 출구 도보 10분
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.42} duration="0.7s">
               <div>
-                <p className="label">PARKING · TRANSIT</p>
-                <p style={{ fontSize: 14, color: 'var(--c-text)', fontWeight: 400, margin: 0, lineHeight: 1.8 }}>
-                  건물 내 지하주차장 이용<br />인천1호선 국제업무지구역<br />3번 출구에서 202m
+                <p className="label">CAR</p>
+                <p className="locText">
+                  내비게이션: ‘연수구 센트럴로 263’ 검색<br />
+                  송도 IBS타워 업무동 8층
                 </p>
               </div>
             </Reveal>
@@ -81,6 +119,10 @@ export default function LocationPage() {
         }
         .label {
           font-size: 12px; color: var(--c-text3); letter-spacing: 3px; margin-bottom: 10px;
+        }
+        .locText {
+          font-size: 14.5px; color: var(--c-text); font-weight: 400;
+          margin: 0; line-height: 1.85;
         }
         .hourRow {
           display: flex; justify-content: space-between;

@@ -12,6 +12,7 @@ import styles from './Home.module.css';
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [showHeroText, setShowHeroText] = useState(true);
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoaded(true), 150);
@@ -22,6 +23,11 @@ export default function Home() {
       window.removeEventListener('scroll', on);
     };
   }, []);
+
+  // 첫 영상이 끝나면 텍스트 영구 숨김 — 이후 영상 사이클 되돌아와도 재노출 X
+  const handleVideoIndexChange = (idx: number) => {
+    if (idx > 0) setShowHeroText(false);
+  };
 
   return (
     <>
@@ -38,25 +44,26 @@ export default function Home() {
             ]}
             poster="/media/video/hero-poster.jpg"
             alt="아트에이치치과 병원 소개 영상"
+            onIndexChange={handleVideoIndexChange}
           />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow} data-loaded={loaded}>송도 국제도시</p>
-          <h1 className={styles.heroTitle} data-loaded={loaded}>
+          <p className={styles.heroEyebrow} data-loaded={loaded} data-visible={showHeroText}>송도 국제도시</p>
+          <h1 className={styles.heroTitle} data-loaded={loaded} data-visible={showHeroText}>
             진료 너머,<br />사람의 고귀함을<br />생각합니다
           </h1>
-          <p className={styles.heroSub} data-loaded={loaded}>
-            한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 약속합니다.
+          <p className={styles.heroSub} data-loaded={loaded} data-visible={showHeroText}>
+            한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 추구합니다.
           </p>
-          <div className={styles.heroCtas} data-loaded={loaded}>
+          <div className={styles.heroCtas} data-loaded={loaded} data-visible={showHeroText}>
             <Link href="/about" className={styles.heroCta}>의원소개</Link>
             <Link href="/treatments" className={styles.heroCta}>진료과목</Link>
             <Link href="/location" className={styles.heroCta}>오시는길</Link>
             <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCta}>전화문의</a>
           </div>
         </div>
-        <div className={styles.scrollHint} data-loaded={loaded} aria-hidden="true">
+        <div className={styles.scrollHint} data-loaded={loaded} data-visible={showHeroText} aria-hidden="true">
           <span>SCROLL</span>
           <div className={styles.scrollHintLine} />
         </div>
@@ -197,8 +204,8 @@ export default function Home() {
         <div className={styles.locationRow}>
           <div>
             <Reveal duration="0.6s"><p className={styles.eyebrow}>LOCATION</p></Reveal>
-            <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>힐스테이트 송도 더스카이</h2></Reveal>
-            <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천 연수구 인천타워대로 365 · 국제업무지구역 3번 출구 202m</p></Reveal>
+            <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>송도 IBS타워 · 업무동 8층</h2></Reveal>
+            <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천광역시 연수구 센트럴로 263 · 국제업무지구역 5번 출구 470m</p></Reveal>
           </div>
           <Reveal delay={0.2} duration="0.5s">
             <Link href="/location" className={styles.underline}>오시는길 안내</Link>

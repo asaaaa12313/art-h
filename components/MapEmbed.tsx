@@ -10,9 +10,9 @@ type Props = {
   naverPlaceUrl?: string;
 };
 
-const DEFAULT_QUERY = '힐스테이트 송도 더스카이 아트에이치치과';
-const DEFAULT_LAT = 37.3894;
-const DEFAULT_LNG = 126.6506;
+const DEFAULT_QUERY = '송도 IBS타워 아트에이치치과';
+const DEFAULT_LAT = 37.3856;
+const DEFAULT_LNG = 126.6438;
 
 export default function MapEmbed({
   query = DEFAULT_QUERY,

@@ -98,15 +98,19 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* 풀블리드 이미지 */}
+      {/* 풀블리드 이미지 — 송도 IBS타워 */}
       <Reveal duration="1.4s" from="scale(1.02)">
-        <div style={{ height: 400, overflow: 'hidden' }}>
+        <div className="ibsWrap">
           <Photo
             src="/media/images/exterior/exterior-01.jpg"
-            label="송도국제업무단지 · 힐스테이트 송도 더스카이"
-            alt="아트에이치치과 건물 외관"
+            alt="송도 IBS타워 외관 — 아트에이치치과 입주"
             sizes="100vw"
           />
+          <div className="ibsOverlay" aria-hidden="true">
+            <span className="ibsLabel">SONGDO</span>
+            <span className="ibsTitle">IBS TOWER</span>
+            <span className="ibsSub">업무동 8층 · 아트에이치치과</span>
+          </div>
         </div>
       </Reveal>
 
@@ -214,11 +218,58 @@ export default function AboutPage() {
           letter-spacing: -0.02em; margin: 0;
         }
 
+        /* IBS Tower 풀블리드 오버레이 */
+        .ibsWrap {
+          position: relative;
+          height: 460px;
+          overflow: hidden;
+        }
+        .ibsOverlay {
+          position: absolute; inset: 0;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          gap: 10px;
+          background: linear-gradient(
+            180deg,
+            rgba(15, 26, 53, 0.10) 0%,
+            rgba(15, 26, 53, 0.45) 60%,
+            rgba(15, 26, 53, 0.65) 100%
+          );
+          text-align: center;
+          padding: 24px;
+        }
+        .ibsLabel {
+          font-family: var(--f-display);
+          font-size: 13px;
+          font-weight: 400;
+          letter-spacing: 6px;
+          color: var(--c-gold-l);
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+        }
+        .ibsTitle {
+          font-family: var(--f-display);
+          font-size: clamp(40px, 6vw, 72px);
+          font-weight: 400;
+          letter-spacing: 6px;
+          color: var(--c-gold);
+          line-height: 1;
+          text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.45);
+        }
+        .ibsSub {
+          font-size: 13px;
+          letter-spacing: 3px;
+          color: rgba(255, 255, 255, 0.94);
+          margin-top: 6px;
+          text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+        }
+
         @media (max-width: 768px) {
           .greetGrid { grid-template-columns: 1fr; }
           .greetImg { max-width: 360px; margin: 0 auto; aspect-ratio: 4/5; }
           .promiseGrid { grid-template-columns: 1fr; }
           .promiseCard { min-height: auto; }
+          .ibsWrap { height: 360px; }
+          .ibsTitle { letter-spacing: 4px; }
         }
       `}</style>
     </>

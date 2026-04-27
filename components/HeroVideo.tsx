@@ -14,9 +14,10 @@ type Props = {
   poster: string;
   alt?: string;
   style?: CSSProperties;
+  onIndexChange?: (index: number) => void;
 };
 
-export default function HeroVideo({ videos, poster, alt = '아트에이치치과 소개 영상', style }: Props) {
+export default function HeroVideo({ videos, poster, alt = '아트에이치치과 소개 영상', style, onIndexChange }: Props) {
   const [index, setIndex] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -64,7 +65,11 @@ export default function HeroVideo({ videos, poster, alt = '아트에이치치과
   }, [index, isMobile]);
 
   const handleEnded = () => {
-    setIndex((prev) => (prev + 1) % videos.length);
+    setIndex((prev) => {
+      const next = (prev + 1) % videos.length;
+      onIndexChange?.(next);
+      return next;
+    });
   };
 
   if (prefersReducedMotion) {
