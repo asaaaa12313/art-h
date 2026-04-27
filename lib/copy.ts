@@ -10,8 +10,8 @@ export const SITE = {
   transit: '인천1호선 국제업무지구역 5번 출구에서 470m (G타워 방면)',
   naverPlace: 'https://naver.me/GWW5jD4j',
   hours: [
-    { day: '월·화·수·금', time: '09:30 — 18:30', highlight: false },
-    { day: '목 (야간진료)', time: '09:30 — 20:30', highlight: true },
+    { day: '월·목 (야간진료)', time: '09:30 — 20:30', highlight: true },
+    { day: '화·수·금', time: '09:30 — 18:30', highlight: false },
     { day: '토', time: '09:30 — 14:00', highlight: false },
     { day: '점심', time: '14:00 — 15:00', highlight: false },
     { day: '일요일', time: '정기휴무', highlight: false },

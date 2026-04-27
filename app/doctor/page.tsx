@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import { DOCTORS } from '@/lib/copy';
@@ -12,24 +13,14 @@ export const metadata: Metadata = {
 
 function CertBadge() {
   return (
-    <svg
+    <Image
       className="certBadge"
-      width="14"
-      height="14"
-      viewBox="0 0 16 16"
+      src="/media/images/cert/mohw-mark.jpg"
+      alt=""
       aria-hidden="true"
-      role="img"
-    >
-      <circle cx="8" cy="8" r="7" fill="var(--c-navy)" />
-      <path
-        d="M4.8 8.4 L7 10.6 L11.4 5.8"
-        stroke="#fff"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
+      width={18}
+      height={18}
+    />
   );
 }
 
@@ -190,6 +181,10 @@ export default function DoctorPage() {
         }
         .docCareer .certBadge {
           flex-shrink: 0;
+          display: block;
+          width: 20px;
+          height: 20px;
+          object-fit: contain;
         }
         .docCareer:has(.certBadge) {
           border-left-color: var(--c-navy);
