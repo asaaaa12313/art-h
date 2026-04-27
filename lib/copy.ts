@@ -370,10 +370,5 @@ export const FACILITY_ROOMS = [
   { k: '상담실', e: 'Consult', bg: V.consult },
 ];
 
-export const EQUIPMENTS = [
-  { n: '저선량 CT', e: 'Low-dose CT' },
-  { n: 'GBT', e: 'Guided Biofilm Therapy' },
-  { n: 'Endo-Wiz', e: 'Endodontic System' },
-  { n: '자체 기공실', e: 'In-house Dental Lab' },
-  { n: '의식하진정 장비', e: 'Conscious Sedation' },
-];
+// 보유 장비 정보는 추후 원장님 확정 후 다시 채울 예정
+export const EQUIPMENTS: { n: string; e: string }[] = [];
