@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
-import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import { DOCTORS } from '@/lib/copy';
+import DoctorPhoto from './DoctorPhoto';
 
 export const metadata: Metadata = {
   title: '의료진',
@@ -58,15 +58,13 @@ export default function DoctorPage() {
         </div>
 
         {DOCTORS.map((doc, i) => (
-          <div key={doc.name} className="docBlock" data-reverse={i % 2 === 1}>
+          <div key={doc.name} className="docBlock" data-reverse={i % 2 === 1} data-doc-block>
             <Reveal duration="1.1s" from="translateY(24px)">
               <div className="docSticky">
-                <Photo
+                <DoctorPhoto
                   src={doc.photo}
                   label={`${doc.name} 원장`}
                   alt={`${doc.name} ${doc.title}`}
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  objectPosition={doc.objectPosition}
                 />
               </div>
             </Reveal>
@@ -129,9 +127,11 @@ export default function DoctorPage() {
         .docBlock:last-of-type { margin-bottom: 0; }
 
         .docSticky {
-          position: sticky; top: 90px;
+          position: sticky; top: 100px;
           border-radius: 2px; overflow: hidden;
-          aspect-ratio: 3/4;
+          height: calc(100vh - 140px);
+          min-height: 460px;
+          max-height: 760px;
           box-shadow: 0 10px 30px rgba(15, 26, 53, 0.08);
         }
         .docBody {
@@ -199,7 +199,15 @@ export default function DoctorPage() {
 
         @media (max-width: 768px) {
           .docBlock { grid-template-columns: 1fr; direction: ltr !important; }
-          .docSticky { position: static; max-width: 360px; margin: 0 auto; }
+          .docSticky {
+            position: static;
+            max-width: 360px;
+            margin: 0 auto;
+            height: auto;
+            min-height: 0;
+            max-height: none;
+            aspect-ratio: 3/4;
+          }
         }
       `}</style>
     </>

@@ -199,17 +199,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LOCATION — minimal */}
+      {/* LOCATION */}
       <section className={styles.location}>
-        <div className={styles.locationRow}>
-          <div>
-            <Reveal duration="0.6s"><p className={styles.eyebrow}>LOCATION</p></Reveal>
-            <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>송도 IBS타워 · 업무동 8층</h2></Reveal>
-            <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천광역시 연수구 센트럴로 263 · 국제업무지구역 5번 출구 470m</p></Reveal>
+        <div className={styles.locationInner}>
+          <div className={styles.locationRow}>
+            <div>
+              <Reveal duration="0.6s"><p className={styles.eyebrow}>LOCATION</p></Reveal>
+              <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>송도 IBS타워 · 업무동 8층</h2></Reveal>
+              <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>인천광역시 연수구 센트럴로 263 · 국제업무지구역 5번 출구 470m</p></Reveal>
+            </div>
+            <Reveal delay={0.2} duration="0.5s">
+              <Link href="/location" className={styles.underline}>오시는길 안내</Link>
+            </Reveal>
           </div>
-          <Reveal delay={0.2} duration="0.5s">
-            <Link href="/location" className={styles.underline}>오시는길 안내</Link>
-          </Reveal>
+
+          <div className={styles.locCardGrid}>
+            <Reveal delay={0.1} duration="0.7s" from="translateY(16px)">
+              <div className={styles.locCard}>
+                <span className={styles.locCardLabel}>SUBWAY</span>
+                <p className={styles.locCardText}>인천1호선 국제업무지구역<br /><strong>5번 출구 470m</strong> (G타워 방면)</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.18} duration="0.7s" from="translateY(16px)">
+              <div className={styles.locCard}>
+                <span className={styles.locCardLabel}>PARKING</span>
+                <p className={styles.locCardText}>지하 1~3층 주차 가능<br /><strong>‘업무동 저층용’</strong> 엘리베이터 이용</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.26} duration="0.7s" from="translateY(16px)">
+              <div className={styles.locCard}>
+                <span className={styles.locCardLabel}>BUS</span>
+                <p className={styles.locCardText}>경제자유구역청 하차 (38515)<br /><strong>82 / 92 / 42 / 43</strong></p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.34} duration="0.7s" from="translateY(16px)">
+              <div className={styles.locCard}>
+                <span className={styles.locCardLabel}>CAR</span>
+                <p className={styles.locCardText}>내비게이션 검색<br /><strong>‘연수구 센트럴로 263’</strong></p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
     </>

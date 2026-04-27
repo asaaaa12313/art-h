@@ -22,7 +22,7 @@
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  height: 64px;
+  height: 72px;
   padding: 0 clamp(20px, 3.5vw, 40px);
 }
 
@@ -31,10 +31,15 @@
 }
 .brand span {
   font-family: var(--f-display);
-  font-size: 22px;
+  font-size: 26px;
+  font-weight: 700;
   letter-spacing: 1px;
   color: #fff;
   transition: color 0.4s;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.4);
+}
+.nav[data-show='true'] .brand span {
+  text-shadow: none;
 }
 .nav[data-show='true'] .brand span {
   color: var(--c-dark);
@@ -43,22 +48,25 @@
 .desktop {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 30px;
 }
 
 .link {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.2px;
   transition: color 0.3s;
   padding: 6px 2px;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.45);
 }
 .nav[data-show='true'] .link {
-  color: var(--c-text2);
+  color: var(--c-dark);
+  text-shadow: none;
 }
 .link[data-active='true'] {
   color: var(--c-navy) !important;
-  font-weight: 600;
+  font-weight: 800;
 }
 .nav:not([data-show='true']) .link[data-active='true'] {
   color: var(--c-gold-l) !important;
@@ -95,9 +103,10 @@
   padding: 12px 0;
 }
 .overlayLink {
-  padding: 14px clamp(24px, 5vw, 40px);
-  font-size: 15px;
-  color: var(--c-text);
+  padding: 16px clamp(24px, 5vw, 40px);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--c-dark);
   border-bottom: 1px solid var(--c-line);
 }
 .overlayLink:last-child { border-bottom: none; }
