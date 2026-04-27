@@ -36,7 +36,7 @@ function CertBadge() {
 export default function DoctorPage() {
   return (
     <>
-      <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="의료진 협진" objectPosition="center 25%" />
+      <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="의료진 협진" objectPosition="center 55%" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto 80px', textAlign: 'center' }}>

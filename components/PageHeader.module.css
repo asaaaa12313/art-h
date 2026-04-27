@@ -1,8 +1,8 @@
 .wrap {
   position: relative;
-  height: 360px;
+  height: clamp(440px, 56vh, 620px);
   overflow: hidden;
-  margin-top: 64px;
+  margin-top: 72px;
 }
 
 .overlay {
@@ -31,5 +31,5 @@
 }
 
 @media (max-width: 600px) {
-  .wrap { height: 280px; }
+  .wrap { height: 380px; }
 }
