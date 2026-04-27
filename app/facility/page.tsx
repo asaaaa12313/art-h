@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
-import { FACILITY_ROOMS } from '@/lib/copy';
+import { FACILITY_ROOMS, EQUIPMENTS } from '@/lib/copy';
 
 const ROOM_SRC: Record<string, string> = {
   대기실: '/media/images/waiting/waiting-02.jpg',
@@ -14,7 +14,7 @@ const ROOM_SRC: Record<string, string> = {
 export const metadata: Metadata = {
   title: '시설',
   description:
-    '독립 수술실, 진료실, 상담실 등 아트에이치치과의 진료 공간 안내.',
+    '독립 수술실, 저선량 CT, GBT, Endo-Wiz, 자체 기공실, 의식하진정 장비 등 아트에이치치과의 진료 공간과 보유 장비.',
 };
 
 export default function FacilityPage() {
@@ -42,6 +42,29 @@ export default function FacilityPage() {
                     <span className="roomE">{s.e}</span>
                     <span className="roomK">{s.k}</span>
                   </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 보유 장비 — 이름만 노출 */}
+      <section style={{ background: 'var(--c-warm)', padding: 'clamp(60px,8vw,100px) clamp(24px,5vw,80px)' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <Reveal>
+            <div className="secHead">
+              <p className="secEyebrow">EQUIPMENT</p>
+              <h2 className="secTitle">보유 장비</h2>
+            </div>
+          </Reveal>
+
+          <div className="eqGrid">
+            {EQUIPMENTS.map((eq, i) => (
+              <Reveal key={eq.n} delay={0.05 + i * 0.06} duration="0.7s" from="translateY(16px)">
+                <div className="eqCard">
+                  <span className="eqEn">{eq.e}</span>
+                  <h3 className="eqKo">{eq.n}</h3>
                 </div>
               </Reveal>
             ))}
@@ -83,6 +106,56 @@ export default function FacilityPage() {
           color: var(--c-gold-l); letter-spacing: 2px;
         }
         .roomK { font-size: 20px; color: #fff; font-weight: 700; letter-spacing: -0.02em; }
+
+        /* 보유 장비 — 단순 카드 그리드 */
+        .eqGrid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 14px;
+        }
+        .eqCard {
+          background: var(--c-white);
+          border: 1px solid var(--c-line);
+          border-radius: 2px;
+          padding: 36px 20px;
+          text-align: center;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          gap: 10px;
+          min-height: 150px;
+          transition: border-color 0.3s ease, transform 0.3s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .eqCard:hover {
+            border-color: var(--c-navy);
+            transform: translateY(-2px);
+          }
+        }
+        .eqEn {
+          font-family: var(--f-display);
+          font-size: 12px;
+          letter-spacing: 2.5px;
+          color: var(--c-navy);
+          opacity: 0.75;
+          font-weight: 400;
+        }
+        .eqKo {
+          font-family: var(--f-heading);
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          color: var(--c-navy);
+          margin: 0;
+        }
+
+        @media (max-width: 900px) {
+          .eqGrid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 600px) {
+          .eqGrid { grid-template-columns: repeat(2, 1fr); }
+          .eqCard { padding: 28px 16px; min-height: 120px; }
+          .eqKo { font-size: 16px; }
+        }
 
         @media (max-width: 768px) {
           .roomGrid { grid-template-columns: 1fr; }
