@@ -132,12 +132,12 @@ export default function Home() {
 
       {/* DOCTOR — full bleed split */}
       <section className={styles.doctor}>
-        <Reveal duration="1.3s" from="scale(1.03)" style={{ overflow: 'hidden' }}>
+        <Reveal duration="1.3s" from="scale(1.03)" style={{ overflow: 'hidden', height: '100%' }}>
           <Photo
             src="/media/images/doctor/doctor-01.jpg"
             alt="아트에이치치과 원장 진료 장면"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            objectPosition="center 30%"
+            sizes="(max-width: 768px) 100vw, 55vw"
+            objectPosition="center 45%"
           />
         </Reveal>
         <div className={styles.doctorBody}>
