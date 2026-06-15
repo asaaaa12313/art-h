@@ -49,6 +49,37 @@ export default function FacilityPage() {
         </div>
       </section>
 
+      {/* 살균수 — 노바케어(HOCL) 수관관리 */}
+      <section className="novaSec">
+        <div className="novaInner">
+          <Reveal from="translateX(-20px)" duration="1s">
+            <div className="novaImgWrap">
+              <Photo
+                src="/media/images/equipment/novacare.jpg"
+                alt="노바케어 수관관리 시스템 장비"
+                sizes="(max-width: 768px) 260px, 300px"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={0.1} duration="0.9s">
+            <div className="novaBody">
+              <p className="novaEyebrow">WATER STERILIZATION · HOCL</p>
+              <h2 className="novaTitle">살균수를 통한<br />청정한 치과수관 관리</h2>
+              <p className="novaSystem">노바케어 시스템 (NOVACARE)</p>
+              <p className="novaDesc">
+                전기분해를 통해 생성된 차아염소산수(HOCL)는 대장균·살모넬라·콜레라·진균·바이러스·사상균·아포균 등 다양한 균주에 대한 강력한 살균력을 보유하고 있습니다.
+              </p>
+              <p className="novaHighlight">눈에 보이지 않는 진료수까지, 세심하게 관리합니다.</p>
+              <ul className="novaChips">
+                {['대장균', '살모넬라', '콜레라', '진균', '바이러스', '사상균', '아포균'].map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <style>{`
         .secHead { text-align: center; margin-bottom: clamp(40px,5vw,60px); }
         .secEyebrow {
@@ -84,8 +115,55 @@ export default function FacilityPage() {
         }
         .roomK { font-size: 20px; color: #fff; font-weight: 700; letter-spacing: -0.02em; }
 
+        /* 살균수 — 노바케어(HOCL) */
+        .novaSec {
+          background: var(--c-navy);
+          padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
+        }
+        .novaInner {
+          max-width: 1100px; margin: 0 auto;
+          display: grid; grid-template-columns: 300px 1fr;
+          gap: clamp(36px,5vw,72px); align-items: center;
+        }
+        .novaImgWrap {
+          position: relative; aspect-ratio: 458 / 805; overflow: hidden;
+          border-radius: 3px; background: #fff;
+        }
+        .novaEyebrow {
+          font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
+          color: var(--c-gold-l); margin: 0 0 18px;
+        }
+        .novaTitle {
+          font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
+          font-weight: 700; letter-spacing: -0.03em; color: #fff;
+          line-height: 1.35; margin: 0 0 16px;
+        }
+        .novaSystem {
+          font-size: 15px; color: var(--c-gold-l); font-weight: 600; margin: 0 0 24px;
+        }
+        .novaDesc {
+          font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
+          font-weight: 400; margin: 0 0 20px; max-width: 540px;
+        }
+        .novaHighlight {
+          font-family: var(--f-heading); font-size: clamp(17px,2vw,21px);
+          font-weight: 700; color: var(--c-gold-l); line-height: 1.5;
+          letter-spacing: -0.02em; margin: 0 0 28px;
+        }
+        .novaChips {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .novaChips li {
+          font-size: 12.5px; color: rgba(255,255,255,0.9);
+          border: 1px solid rgba(255,255,255,0.22);
+          padding: 7px 14px; border-radius: 999px;
+        }
+
         @media (max-width: 768px) {
           .roomGrid { grid-template-columns: 1fr; }
+          .novaInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
+          .novaImgWrap { width: 260px; }
         }
       `}</style>
     </>

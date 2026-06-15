@@ -27,7 +27,41 @@ export const NAV_ITEMS = [
   { href: '/location', label: '오시는길' },
 ] as const;
 
-export const TREATMENTS = [
+type TxFaq = { q: string; a: string };
+type TxSectionTitle = { label: string; title: string; desc: string };
+type TxTech = { no: string; t: string; metric?: string; d: string; target: string };
+type TxDevice = { name: string; role: string; d: string };
+type TxBeforeAfter = {
+  label: string;
+  title: string;
+  before: string;
+  after: string;
+  caption: string;
+  d: string;
+};
+
+export type Treatment = {
+  en: string;
+  ko: string;
+  slug: string;
+  bg: string;
+  d: string;
+  summary: string;
+  intro: string;
+  processes: string[];
+  features: string[];
+  faqs: TxFaq[];
+  // 브로셔 확장 블록 (해당 과목만 — 있으면 상세에서 렌더)
+  techTitle?: TxSectionTitle;
+  tech?: TxTech[];
+  beforeAfter?: TxBeforeAfter;
+  devicesTitle?: TxSectionTitle;
+  devices?: TxDevice[];
+  targetsTitle?: TxSectionTitle;
+  targets?: string[];
+};
+
+export const TREATMENTS: Treatment[] = [
   {
     en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
     d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.',
@@ -53,6 +87,41 @@ export const TREATMENTS = [
       { q: '수술 당일에 바로 씹을 수 있나요?', a: '식립 직후에는 임플란트가 뼈에 고정될 시간이 필요하므로, 일반적으로 2–4개월 뒤에 최종 보철물을 장착합니다. 케이스에 따라 즉시 보철이 가능한 경우도 있습니다.' },
       { q: '임플란트는 평생 유지되나요?', a: '정기 검진과 구강 위생 관리를 꾸준히 한다면 오래 사용할 수 있습니다. 잇몸 염증(임플란트 주위염) 예방이 가장 중요합니다.' },
     ],
+    techTitle: {
+      label: 'SWISS PREMIUM IMPLANT',
+      title: '정품 스위스 SIC 임플란트',
+      desc: '치과 임플란트의 본산지인 스위스의 기술력으로, 독일에서 제조된 SIC 임플란트를 사용합니다. 장기간 안정적인 임플란트 사용을 추구합니다.',
+    },
+    tech: [
+      {
+        no: '01',
+        t: '정말 두꺼운 벽 두께',
+        d: '탁월하게 두꺼운 SIC 임플란트 두께로, 임플란트가 찢어지는 현상을 극소화합니다.',
+        target: '임플란트 찢어짐으로 재수술하신 분께',
+      },
+      {
+        no: '02',
+        t: '쉽게 풀리지 않는 잠금 기술',
+        metric: '안정적인 어버트먼트 스크류 체결 설계',
+        d: '스크류가 쉽게 풀리지 않도록 설계되어, 편안한 사후 관리를 돕습니다.',
+        target: '잦은 스크류 풀림으로 고생하신 분께',
+      },
+      {
+        no: '03',
+        t: '감염 위험을 낮춘 설계',
+        metric: '순수 티타늄 + SICmatrix',
+        d: '고혈압·당뇨·천식·신부전 등 기저질환, 심장질환·골다공증 등 전신질환, 암 진단·치료 중인 분께도 적용할 수 있습니다.',
+        target: '임플란트 감염으로 재수술하신 분께',
+      },
+    ],
+    beforeAfter: {
+      label: 'ADVANCED IMPLANTOLOGY',
+      title: '고난이도 임플란트 · 상악동 거상술',
+      before: '/media/images/xray/sinus-before.jpg',
+      after: '/media/images/xray/sinus-after.jpg',
+      caption: '상악동 거상술 전 / 후 X-RAY',
+      d: '아트에이치치과는 어려운 환경의 치조골에서도 구강악안면외과 전문의의 전문성을 통한 안전한 임플란트 식립을 진행합니다.',
+    },
   },
   {
     en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
@@ -176,6 +245,16 @@ export const TREATMENTS = [
       { q: '스케일링은 얼마나 자주 해야 하나요?', a: '일반적으로 6개월~1년에 한 번 권장합니다. 잇몸 상태에 따라 더 자주 필요할 수 있습니다.' },
       { q: '잇몸 출혈이 있는데 괜찮은가요?', a: '칫솔질 시 출혈은 잇몸 염증의 대표적 신호입니다. 방치하면 치주염으로 진행할 수 있어 진료를 권장드립니다.' },
     ],
+    targetsTitle: {
+      label: 'PAINLESS GBT',
+      title: '시리지 않은 편안한 무통증 GBT',
+      desc: '파우더로 섬세하게 세균을 관리하고, 초슬림팁으로 부드럽게 치석을 제거합니다. 자극은 줄이고 편안함은 높여 부담 없이 받으실 수 있는 잇몸 케어입니다.',
+    },
+    targets: [
+      '스케일링이 아파서 미뤄오신 분',
+      '잇몸이 자주 붓고 피가 나는 분',
+      '착색 때문에 치아가 누렇게 보여 고민이신 분',
+    ],
   },
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
@@ -200,6 +279,16 @@ export const TREATMENTS = [
       { q: '미백 후 얼마나 유지되나요?', a: '생활 습관에 따라 다르지만 일반적으로 1~2년 유지됩니다. 커피·와인 등 착색 음식 후 양치를 권장합니다.' },
       { q: '미백 중 시림은 어떻게 관리하나요?', a: '시림 완화 성분을 도포하고, 농도를 조절하여 최소화합니다. 심하면 일시 중단 후 재개 가능합니다.' },
       { q: '인공치아(레진·크라운)도 미백이 되나요?', a: '인공 보철물은 미백이 되지 않습니다. 미백 후 자연치아와 색을 맞추는 보철 교체가 필요할 수 있습니다.' },
+    ],
+    devicesTitle: {
+      label: 'ADVANCED WHITENING SYSTEM',
+      title: '효과는 높이고 부작용은 줄이는 미백 시스템',
+      desc: '미백 효과는 최대화하고 시린 불편감은 최소화하기 위해, 단계별 전문 장비를 활용합니다.',
+    },
+    devices: [
+      { name: 'GBT Machine', role: '미백 전 치면세정', d: '파우더 세정과 초슬림팁으로 부드럽게 치석을 제거해, 미백 효과를 최대화하는 사전 단계입니다.' },
+      { name: 'Endo-Wiz', role: '시린 증상 완화', d: '미백 과정에서 생길 수 있는 시린 불편감을 최소화하는 첨단 기기입니다.' },
+      { name: 'Osstem Vutees', role: '미백광 조사', d: '최적의 파장으로 미백제 활성화를 도와 미백 효과를 높입니다.' },
     ],
   },
 ];

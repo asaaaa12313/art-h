@@ -66,6 +66,60 @@ export default async function TreatmentDetailPage({
           </Reveal>
         </section>
 
+        {/* SIC 정품 임플란트 — 3대 기술력 */}
+        {tx.tech && tx.techTitle && (
+          <section className="txSec txTech">
+            <Reveal duration="0.9s">
+              <div className="txTechHead">
+                <p className="txLabel">{tx.techTitle.label}</p>
+                <h3 className="txSectionTitle">{tx.techTitle.title}</h3>
+                <p className="txBlockDesc">{tx.techTitle.desc}</p>
+              </div>
+            </Reveal>
+            <div className="txTechGrid">
+              {tx.tech.map((item, i) => (
+                <Reveal key={item.no} delay={0.1 + i * 0.08} duration="0.7s">
+                  <div className="txTechCard">
+                    <span className="txTechNo" aria-hidden="true">{item.no}</span>
+                    <h4 className="txTechName">{item.t}</h4>
+                    {item.metric && <p className="txTechMetric">{item.metric}</p>}
+                    <p className="txTechD">{item.d}</p>
+                    <p className="txTechTarget">{item.target}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 고난이도 임플란트 — 상악동 거상술 전/후 */}
+        {tx.beforeAfter && (
+          <section className="txSec txBA">
+            <Reveal duration="0.9s">
+              <div>
+                <p className="txLabel">{tx.beforeAfter.label}</p>
+                <h3 className="txSectionTitle">{tx.beforeAfter.title}</h3>
+              </div>
+            </Reveal>
+            <div className="txBAGrid">
+              <Reveal delay={0.1} duration="0.8s">
+                <div className="txBAImg">
+                  <Photo src={tx.beforeAfter.before} alt="상악동 거상술 전 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
+                </div>
+              </Reveal>
+              <Reveal delay={0.18} duration="0.8s">
+                <div className="txBAImg">
+                  <Photo src={tx.beforeAfter.after} alt="상악동 거상술 후 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
+                </div>
+              </Reveal>
+            </div>
+            <Reveal delay={0.2} duration="0.7s">
+              <p className="txBACaption">{tx.beforeAfter.caption}</p>
+              <p className="txBlockDesc txBADesc">{tx.beforeAfter.d}</p>
+            </Reveal>
+          </section>
+        )}
+
         {/* Processes */}
         <section className="txSec txSplit">
           <Reveal duration="1s" from="translateX(-20px)">
@@ -85,6 +139,31 @@ export default async function TreatmentDetailPage({
             ))}
           </ol>
         </section>
+
+        {/* 미백 시스템 — 기기 3종 */}
+        {tx.devices && tx.devicesTitle && (
+          <section className="txSec txDevices">
+            <Reveal duration="0.9s">
+              <div>
+                <p className="txLabel">{tx.devicesTitle.label}</p>
+                <h3 className="txSectionTitle">{tx.devicesTitle.title}</h3>
+                <p className="txBlockDesc">{tx.devicesTitle.desc}</p>
+              </div>
+            </Reveal>
+            <div className="txDevGrid">
+              {tx.devices.map((dv, i) => (
+                <Reveal key={dv.name} delay={0.1 + i * 0.08} duration="0.7s">
+                  <div className="txDevCard">
+                    <span className="txDevNum" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    <p className="txDevName">{dv.name}</p>
+                    <p className="txDevRole">{dv.role}</p>
+                    <p className="txDevD">{dv.d}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Features */}
         <section className="txSec txFeat">
@@ -109,6 +188,33 @@ export default async function TreatmentDetailPage({
             ))}
           </div>
         </section>
+
+        {/* 무통증 GBT — 이런 분께 권합니다 */}
+        {tx.targets && tx.targetsTitle && (
+          <section className="txSec txTargets">
+            <Reveal duration="0.9s">
+              <div className="txTargetsHead">
+                <p className="txLabel">{tx.targetsTitle.label}</p>
+                <h3 className="txSectionTitle">{tx.targetsTitle.title}</h3>
+                <p className="txBlockDesc">{tx.targetsTitle.desc}</p>
+              </div>
+            </Reveal>
+            <ul className="txTargetList">
+              {tx.targets.map((tg, i) => (
+                <Reveal key={tg} delay={0.1 + i * 0.07} duration="0.6s">
+                  <li className="txTargetItem">
+                    <span className="txTargetCheck" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z" />
+                      </svg>
+                    </span>
+                    <span>{tg}</span>
+                  </li>
+                </Reveal>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* FAQ */}
         <section className="txSec txFaq">
@@ -170,6 +276,106 @@ export default async function TreatmentDetailPage({
         .txIntro {
           font-size: 16px; color: var(--c-text); font-weight: 400;
           line-height: 2; margin: 0;
+        }
+
+        .txBlockDesc {
+          font-size: 15px; color: var(--c-text2); line-height: 1.9;
+          font-weight: 400; margin: 16px 0 0; max-width: 760px;
+        }
+
+        /* SIC 정품 임플란트 — 3대 기술력 */
+        .txTechHead { max-width: 760px; margin-bottom: 36px; }
+        .txTechGrid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+        }
+        .txTechCard {
+          display: flex; flex-direction: column;
+          padding: 28px 24px; background: var(--c-warm);
+          border-top: 2px solid var(--c-navy); border-radius: 2px;
+        }
+        .txTechNo {
+          font-family: var(--f-display); font-size: 26px; color: var(--c-gold-d);
+          line-height: 1; margin-bottom: 16px;
+        }
+        .txTechName {
+          font-family: var(--f-heading); font-size: 18px; font-weight: 700;
+          color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 12px;
+          line-height: 1.4;
+        }
+        .txTechMetric {
+          font-size: 12px; color: var(--c-navy); font-weight: 600;
+          background: rgba(26,38,71,0.07); border-radius: 2px;
+          padding: 9px 12px; margin: 0 0 12px; line-height: 1.5;
+        }
+        .txTechD {
+          font-size: 14px; color: var(--c-text); line-height: 1.75;
+          font-weight: 400; margin: 0 0 16px; flex: 1;
+        }
+        .txTechTarget {
+          font-size: 12.5px; color: var(--c-text2); font-weight: 500;
+          padding-top: 14px; border-top: 1px solid var(--c-line); margin: 0;
+        }
+
+        /* 고난이도 임플란트 — 상악동 거상술 전/후 */
+        .txBAGrid {
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+          margin-top: 28px;
+        }
+        .txBAImg {
+          position: relative; aspect-ratio: 19 / 10; overflow: hidden;
+          border-radius: 2px; background: #0d0d0d;
+        }
+        .txBACaption {
+          text-align: center; font-family: var(--f-heading);
+          font-size: 17px; font-weight: 700; color: var(--c-navy);
+          letter-spacing: -0.01em; margin: 28px 0 0;
+        }
+        .txBADesc { text-align: center; margin-left: auto; margin-right: auto; }
+
+        /* 미백 시스템 — 기기 3종 */
+        .txDevGrid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+          margin-top: 28px;
+        }
+        .txDevCard {
+          position: relative;
+          padding: 26px 24px; background: #fff;
+          border: 1px solid var(--c-line); border-radius: 2px;
+        }
+        .txDevNum {
+          font-family: var(--f-display); font-size: 14px; color: var(--c-text3);
+          position: absolute; top: 22px; right: 22px;
+        }
+        .txDevName {
+          font-family: var(--f-display); font-size: 19px; color: var(--c-navy);
+          margin: 0 0 4px;
+        }
+        .txDevRole {
+          font-size: 13px; color: var(--c-gold-d); font-weight: 600;
+          margin: 0 0 14px;
+        }
+        .txDevD {
+          font-size: 14px; color: var(--c-text); line-height: 1.75;
+          font-weight: 400; margin: 0;
+        }
+
+        /* 무통증 GBT — 대상 */
+        .txTargets { background: var(--c-warm); padding: clamp(40px,5vw,60px); border-radius: 2px; }
+        .txTargetsHead { max-width: 760px; }
+        .txTargetList {
+          list-style: none; padding: 0; margin: 28px 0 0;
+          display: flex; flex-direction: column; gap: 10px;
+        }
+        .txTargetItem {
+          display: grid; grid-template-columns: 30px 1fr; align-items: center;
+          gap: 14px; padding: 18px 22px; background: #fff;
+          border-radius: 2px; font-size: 15px; color: var(--c-text);
+          font-weight: 500;
+        }
+        .txTargetCheck {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 30px; height: 30px; border-radius: 50%;
+          background: var(--c-navy); color: #fff;
         }
 
         .txLabel {
@@ -284,6 +490,9 @@ export default async function TreatmentDetailPage({
         @media (max-width: 768px) {
           .txSplit { grid-template-columns: 1fr; }
           .txFeatList { grid-template-columns: 1fr; }
+          .txTechGrid { grid-template-columns: 1fr; }
+          .txDevGrid { grid-template-columns: 1fr; }
+          .txBAGrid { grid-template-columns: 1fr; }
           .txNav { grid-template-columns: 1fr; text-align: center; }
           .txNavNext { text-align: center; align-items: center; }
         }
