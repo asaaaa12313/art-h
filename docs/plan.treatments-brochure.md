@@ -138,3 +138,7 @@ PageHeader → 요약/소개 → [tech 블록] → [beforeAfter 블록] → 치�
 - 진료과목 추가/삭제, 네비게이션 구조 변경
 - 홈(`Home.tsx`) 레이아웃 변경 (3카드 미리보기 유지)
 - 인사말/의료진 콘텐츠 (이미 반영됨)
+
+## 배포 이력
+
+- **2026-06-15**: v1.33 구현 완료(tsc PASS, 검수 봇 Critical/High 0). main push(8624634) 했으나 Vercel 자동배포 미작동 발견 → **Vercel ↔ GitHub Git 연동이 끊겨 있었음**(webhook 0개, 최근 배포 전부 CLI 수동). `vercel git connect`로 연동 복구 후, 이 커밋으로 자동배포 정상화 확인.
