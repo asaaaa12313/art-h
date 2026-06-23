@@ -94,7 +94,6 @@ export default function HeroVideo({ videos, poster, alt = '아트에이치치과
         playsInline
         loop={false}
         preload="auto"
-        poster={poster}
         onEnded={handleEnded}
         aria-label={alt}
       >

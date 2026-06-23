@@ -10,10 +10,20 @@ import { V } from '@/lib/visuals';
 import { SITE } from '@/lib/copy';
 import styles from './Home.module.css';
 
+// Hero 영상 — 배열 순서 = 재생 순서. 체어(hero-1) 장면에만 인사 문구 노출.
+const HERO_VIDEOS = [
+  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 덴티폼 상담
+  { mp4: '/media/video/hero-4.mp4', mp4Mobile: '/media/video/hero-4-720.mp4' }, // 마스크 진료
+  { mp4: '/media/video/hero-1.mp4', webm: '/media/video/hero-1.webm', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료 체어
+  { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' }, // 인테리어
+  { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
+];
+const CHAIR_INDEX = HERO_VIDEOS.findIndex((v) => v.mp4.includes('hero-1'));
+
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [showHeroText, setShowHeroText] = useState(true);
+  const [showHeroText, setShowHeroText] = useState(CHAIR_INDEX === 0);
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoaded(true), 150);
@@ -25,9 +35,9 @@ export default function Home() {
     };
   }, []);
 
-  // 첫 영상이 끝나면 텍스트 영구 숨김 — 이후 영상 사이클 되돌아와도 재노출 X
+  // 체어(hero-1) 장면일 때만 인사 문구 노출
   const handleVideoIndexChange = (idx: number) => {
-    if (idx > 0) setShowHeroText(false);
+    setShowHeroText(idx === CHAIR_INDEX);
   };
 
   return (
@@ -36,13 +46,7 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.1}px)`, height: '115%' }}>
           <HeroVideo
-            videos={[
-              { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
-              { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 원장님 상담
-              { mp4: '/media/video/hero-4.mp4', mp4Mobile: '/media/video/hero-4-720.mp4' }, // 원장님 시술
-              { mp4: '/media/video/hero-1.mp4', webm: '/media/video/hero-1.webm', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료 체어
-              { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' }, // 인테리어
-            ]}
+            videos={HERO_VIDEOS}
             poster="/media/video/hero-poster.jpg"
             alt="아트에이치치과 병원 소개 영상"
             onIndexChange={handleVideoIndexChange}
