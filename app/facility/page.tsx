@@ -80,6 +80,36 @@ export default function FacilityPage() {
         </div>
       </section>
 
+      {/* GBT — 시리지 않은 스케일링 */}
+      <section className="gbtSec">
+        <div className="gbtInner">
+          <Reveal duration="0.9s">
+            <div className="gbtBody">
+              <p className="gbtEyebrow">PAINLESS SCALING · GBT</p>
+              <h2 className="gbtTitle">시리지 않은 스케일링,<br />GBT 에어플로우</h2>
+              <p className="gbtSystem">Guided Biofilm Therapy · 스위스 EMS</p>
+              <p className="gbtDesc">
+                파우더로 섬세하게 바이오필름(세균막)을 관리하고, 초슬림팁으로 부드럽게 치석을 제거합니다. 자극은 줄이고 편안함은 높여, 스케일링이 시려 미뤄오신 분도 부담 없이 받으실 수 있습니다.
+              </p>
+              <ul className="gbtChips">
+                {['파우더 세정', '초슬림팁', '임플란트 관리', '교정장치 케어', '착색 제거'].map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1} from="translateX(20px)" duration="1s">
+            <div className="gbtImgWrap">
+              <Photo
+                src="/media/images/equipment/gbt-airflow.jpg"
+                alt="GBT 에어플로우 프로필락시스 마스터 장비"
+                sizes="(max-width: 768px) 260px, 360px"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <style>{`
         .secHead { text-align: center; margin-bottom: clamp(40px,5vw,60px); }
         .secEyebrow {
@@ -160,10 +190,52 @@ export default function FacilityPage() {
           padding: 7px 14px; border-radius: 999px;
         }
 
+        /* GBT — 시리지 않은 스케일링 */
+        .gbtSec {
+          background: var(--c-warm);
+          padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
+        }
+        .gbtInner {
+          max-width: 1100px; margin: 0 auto;
+          display: grid; grid-template-columns: 1fr 360px;
+          gap: clamp(36px,5vw,72px); align-items: center;
+        }
+        .gbtEyebrow {
+          font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
+          color: var(--c-gold-d); margin: 0 0 18px;
+        }
+        .gbtTitle {
+          font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
+          font-weight: 700; letter-spacing: -0.03em; color: var(--c-navy);
+          line-height: 1.35; margin: 0 0 16px;
+        }
+        .gbtSystem {
+          font-size: 15px; color: var(--c-gold-d); font-weight: 600; margin: 0 0 24px;
+        }
+        .gbtDesc {
+          font-size: 15px; color: var(--c-text); line-height: 1.95;
+          font-weight: 400; margin: 0 0 28px; max-width: 540px;
+        }
+        .gbtChips {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .gbtChips li {
+          font-size: 12.5px; color: var(--c-navy);
+          border: 1px solid var(--c-line);
+          padding: 7px 14px; border-radius: 999px; background: #fff;
+        }
+        .gbtImgWrap {
+          position: relative; aspect-ratio: 900 / 1095; overflow: hidden;
+          border-radius: 3px; background: #fff;
+        }
+
         @media (max-width: 768px) {
           .roomGrid { grid-template-columns: 1fr; }
           .novaInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
           .novaImgWrap { width: 260px; }
+          .gbtInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
+          .gbtImgWrap { width: 260px; }
         }
       `}</style>
     </>

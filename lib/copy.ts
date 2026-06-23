@@ -31,6 +31,15 @@ type TxFaq = { q: string; a: string };
 type TxSectionTitle = { label: string; title: string; desc: string };
 type TxTech = { no: string; t: string; metric?: string; d: string; target: string };
 type TxDevice = { name: string; role: string; d: string };
+type TxMediaImage = { src: string; alt: string; caption?: string };
+type TxMedia = {
+  label: string;
+  title: string;
+  desc: string;
+  video?: string;
+  poster?: string;
+  images?: TxMediaImage[];
+};
 type TxBeforeAfter = {
   label: string;
   title: string;
@@ -59,6 +68,7 @@ export type Treatment = {
   devices?: TxDevice[];
   targetsTitle?: TxSectionTitle;
   targets?: string[];
+  media?: TxMedia;
 };
 
 export const TREATMENTS: Treatment[] = [
@@ -255,6 +265,16 @@ export const TREATMENTS: Treatment[] = [
       '잇몸이 자주 붓고 피가 나는 분',
       '착색 때문에 치아가 누렇게 보여 고민이신 분',
     ],
+    media: {
+      label: 'GBT · GUIDED BIOFILM THERAPY',
+      title: '눈으로 보는 GBT',
+      desc: '스위스 프리미엄 프로토콜 GBT가 어떻게 진행되는지 짧은 영상으로 확인해 보세요. 눈에 보이지 않던 바이오필름을 디스클로징으로 확인하고, 부드러운 파우더와 따뜻한 물로 섬세하게 닦아내는 과정입니다.',
+      video: '/media/video/gbt-intro.mp4',
+      poster: '/media/video/gbt-intro-poster.jpg',
+      images: [
+        { src: '/media/images/equipment/gbt-clinic.jpg', alt: '아트에이치치과 GBT 진료 장면', caption: '구강악안면외과 전문의가 직접 진행하는 GBT 케어' },
+      ],
+    },
   },
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,

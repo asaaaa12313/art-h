@@ -189,6 +189,49 @@ export default async function TreatmentDetailPage({
           </div>
         </section>
 
+        {/* GBT 영상 + 장비·시술 사진 */}
+        {tx.media && (
+          <section className="txSec txGbt">
+            <Reveal duration="0.9s">
+              <div className="txGbtHead">
+                <p className="txLabel">{tx.media.label}</p>
+                <h3 className="txSectionTitle">{tx.media.title}</h3>
+                <p className="txBlockDesc">{tx.media.desc}</p>
+              </div>
+            </Reveal>
+            {tx.media.video && (
+              <Reveal delay={0.1} duration="0.9s">
+                <div className="txGbtVideo">
+                  <video
+                    className="txGbtVideoEl"
+                    controls
+                    preload="none"
+                    playsInline
+                    poster={tx.media.poster}
+                    aria-label={`${tx.media.title} 소개 영상`}
+                  >
+                    <source src={tx.media.video} type="video/mp4" />
+                  </video>
+                </div>
+              </Reveal>
+            )}
+            {tx.media.images && tx.media.images.length > 0 && (
+              <div className="txGbtGrid">
+                {tx.media.images.map((img, i) => (
+                  <Reveal key={img.src} delay={0.12 + i * 0.08} duration="0.8s">
+                    <figure className="txGbtFig">
+                      <div className="txGbtImg">
+                        <Photo src={img.src} alt={img.alt} sizes="(max-width: 768px) 100vw, 480px" />
+                      </div>
+                      {img.caption && <figcaption className="txGbtCap">{img.caption}</figcaption>}
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
         {/* 무통증 GBT — 이런 분께 권합니다 */}
         {tx.targets && tx.targetsTitle && (
           <section className="txSec txTargets">
@@ -429,6 +472,29 @@ export default async function TreatmentDetailPage({
         }
         .txFeatCard p { margin: 0; font-size: 14px; color: var(--c-text); line-height: 1.7; font-weight: 500; }
 
+        /* GBT 영상 + 장비·시술 사진 */
+        .txGbtHead { max-width: 760px; margin-bottom: 28px; }
+        .txGbtVideo {
+          position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+          border-radius: 3px; background: #0d0d0d;
+        }
+        .txGbtVideoEl {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .txGbtGrid {
+          display: grid; grid-template-columns: 1fr; gap: 16px;
+          margin-top: 16px;
+        }
+        .txGbtFig { margin: 0; }
+        .txGbtImg {
+          position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+          border-radius: 2px; background: var(--c-warm);
+        }
+        .txGbtCap {
+          font-size: 12.5px; color: var(--c-text2); font-weight: 500;
+          margin: 10px 0 0; text-align: center;
+        }
+
         .txFaqList {
           margin-top: 28px; display: flex; flex-direction: column; gap: 6px;
         }
@@ -492,6 +558,7 @@ export default async function TreatmentDetailPage({
           .txFeatList { grid-template-columns: 1fr; }
           .txTechGrid { grid-template-columns: 1fr; }
           .txDevGrid { grid-template-columns: 1fr; }
+          .txGbtGrid { grid-template-columns: 1fr; }
           .txBAGrid { grid-template-columns: 1fr; }
           .txNav { grid-template-columns: 1fr; text-align: center; }
           .txNavNext { text-align: center; align-items: center; }
