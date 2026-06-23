@@ -66,6 +66,68 @@ export default async function TreatmentDetailPage({
           </Reveal>
         </section>
 
+        {/* 장비·브랜드 쇼케이스 (임플란트 2종 / 의식하진정 안전장비) */}
+        {tx.showcase && (
+          <section className="txSec txShowcase">
+            <Reveal duration="0.9s">
+              <div className="txShowcaseHead">
+                <p className="txLabel">{tx.showcase.label}</p>
+                <h3 className="txSectionTitle">{tx.showcase.title}</h3>
+                <p className="txBlockDesc">{tx.showcase.desc}</p>
+              </div>
+            </Reveal>
+            <div className="txShowcaseGrid">
+              {tx.showcase.items.map((item, i) => (
+                <Reveal key={item.name} delay={0.1 + i * 0.1} duration="0.8s">
+                  <div className="txShowcaseCard">
+                    <div className={item.imageFit === 'contain' ? 'txShowcaseMedia txShowcaseMediaContain' : 'txShowcaseMedia'}>
+                      {item.video ? (
+                        <video
+                          className="txShowcaseVideo"
+                          controls
+                          preload="none"
+                          playsInline
+                          poster={item.poster}
+                          aria-label={`${item.name} 소개 영상`}
+                        >
+                          <source src={item.video} type="video/mp4" />
+                        </video>
+                      ) : item.image ? (
+                        <Photo
+                          src={item.image}
+                          alt={`${item.name} 이미지`}
+                          sizes="(max-width: 768px) 100vw, 460px"
+                          objectFit={item.imageFit ?? 'cover'}
+                          bg="#fff"
+                        />
+                      ) : null}
+                    </div>
+                    <div className="txShowcaseBody">
+                      <h4 className="txShowcaseName">{item.name}</h4>
+                      <p className="txShowcaseTag">{item.tag}</p>
+                      <p className="txShowcaseDesc">{item.desc}</p>
+                      {item.points && item.points.length > 0 && (
+                        <ul className="txShowcasePoints">
+                          {item.points.map((p) => (
+                            <li key={p}>
+                              <span className="txShowcaseCheck" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="14" height="14">
+                                  <path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z" />
+                                </svg>
+                              </span>
+                              <span>{p}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* SIC 정품 임플란트 — 3대 기술력 */}
         {tx.tech && tx.techTitle && (
           <section className="txSec txTech">
@@ -471,6 +533,58 @@ export default async function TreatmentDetailPage({
           background: var(--c-navy); color: #fff;
         }
         .txFeatCard p { margin: 0; font-size: 14px; color: var(--c-text); line-height: 1.7; font-weight: 500; }
+
+        /* 장비·브랜드 쇼케이스 */
+        .txShowcaseHead { max-width: 760px; margin-bottom: 36px; }
+        .txShowcaseGrid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 20px;
+        }
+        .txShowcaseCard {
+          display: flex; flex-direction: column;
+          background: #fff; border: 1px solid var(--c-line);
+          border-radius: 3px; overflow: hidden;
+        }
+        .txShowcaseMedia {
+          position: relative; aspect-ratio: 16 / 10;
+          background: #0d0d0d; overflow: hidden;
+        }
+        .txShowcaseMediaContain { background: #fff; }
+        .txShowcaseVideo {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .txShowcaseBody {
+          padding: 26px 26px 28px; flex: 1;
+          display: flex; flex-direction: column;
+        }
+        .txShowcaseName {
+          font-family: var(--f-heading); font-size: 20px; font-weight: 700;
+          color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 4px;
+        }
+        .txShowcaseTag {
+          font-size: 12.5px; color: var(--c-gold-d); font-weight: 600;
+          margin: 0 0 14px;
+        }
+        .txShowcaseDesc {
+          font-size: 14px; color: var(--c-text); line-height: 1.8;
+          font-weight: 400; margin: 0 0 18px;
+        }
+        .txShowcasePoints {
+          list-style: none; padding: 0; margin: auto 0 0;
+          display: flex; flex-direction: column; gap: 9px;
+        }
+        .txShowcasePoints li {
+          display: grid; grid-template-columns: 22px 1fr; gap: 10px;
+          align-items: start;
+          font-size: 13.5px; color: var(--c-text2); font-weight: 500;
+          line-height: 1.5;
+        }
+        .txShowcaseCheck {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 22px; height: 22px; border-radius: 50%;
+          background: var(--c-navy); color: #fff; margin-top: 1px;
+        }
 
         /* GBT 영상 + 장비·시술 사진 */
         .txGbtHead { max-width: 760px; margin-bottom: 28px; }

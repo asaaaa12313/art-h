@@ -103,6 +103,32 @@ export default function DoctorPage() {
         ))}
       </section>
 
+      {/* 구강악안면외과 전문의 소개 영상 */}
+      <section className="docVideo">
+        <div className="docVideoInner">
+          <Reveal duration="0.8s">
+            <p className="docVideoEyebrow">INTERVIEW</p>
+          </Reveal>
+          <Reveal delay={0.1} duration="0.9s">
+            <h2 className="docVideoTitle">
+              구강악안면외과 전문의가<br />직접 전하는 진료 이야기
+            </h2>
+          </Reveal>
+          <Reveal delay={0.2} duration="1s" from="scale(0.98)">
+            <div className="docVideoFrame">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/cYeo29ukYKA"
+                title="구강악안면외과 전문의 최종원 대표원장 소개 영상"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <style>{`
         .docBlock {
           max-width: 1000px; margin: 0 auto 120px;
@@ -190,6 +216,30 @@ export default function DoctorPage() {
           border-left-color: var(--c-navy);
           color: var(--c-text);
           font-weight: 500;
+        }
+
+        /* 구강악안면외과 전문의 소개 영상 */
+        .docVideo {
+          background: var(--c-warm);
+          padding: clamp(70px,9vw,120px) clamp(24px,5vw,80px);
+        }
+        .docVideoInner { max-width: 900px; margin: 0 auto; text-align: center; }
+        .docVideoEyebrow {
+          font-family: var(--f-display); font-size: 12px; letter-spacing: 4px;
+          color: var(--c-gold-d); margin: 0 0 14px;
+        }
+        .docVideoTitle {
+          font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
+          font-weight: 700; letter-spacing: -0.03em; color: var(--c-navy);
+          line-height: 1.4; margin: 0 0 40px;
+        }
+        .docVideoFrame {
+          position: relative; aspect-ratio: 16 / 9;
+          border-radius: 4px; overflow: hidden;
+          background: #0d0d0d; box-shadow: 0 10px 30px rgba(15,26,53,0.12);
+        }
+        .docVideoFrame iframe {
+          position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
         }
 
         @media (max-width: 768px) {

@@ -48,6 +48,22 @@ type TxBeforeAfter = {
   caption: string;
   d: string;
 };
+type TxShowcaseItem = {
+  name: string;
+  tag: string;
+  desc: string;
+  points?: string[];
+  video?: string;
+  poster?: string;
+  image?: string;
+  imageFit?: 'cover' | 'contain';
+};
+type TxShowcase = {
+  label: string;
+  title: string;
+  desc: string;
+  items: TxShowcaseItem[];
+};
 
 export type Treatment = {
   en: string;
@@ -69,6 +85,7 @@ export type Treatment = {
   targetsTitle?: TxSectionTitle;
   targets?: string[];
   media?: TxMedia;
+  showcase?: TxShowcase;
 };
 
 export const TREATMENTS: Treatment[] = [
@@ -97,6 +114,29 @@ export const TREATMENTS: Treatment[] = [
       { q: '수술 당일에 바로 씹을 수 있나요?', a: '식립 직후에는 임플란트가 뼈에 고정될 시간이 필요하므로, 일반적으로 2–4개월 뒤에 최종 보철물을 장착합니다. 케이스에 따라 즉시 보철이 가능한 경우도 있습니다.' },
       { q: '임플란트는 평생 유지되나요?', a: '정기 검진과 구강 위생 관리를 꾸준히 한다면 오래 사용할 수 있습니다. 잇몸 염증(임플란트 주위염) 예방이 가장 중요합니다.' },
     ],
+    showcase: {
+      label: 'PREMIUM IMPLANT SYSTEM',
+      title: '검증된 정품 임플란트 2종 운용',
+      desc: '환자분의 골 상태와 치료 목적에 맞춰 스위스 SIC와 국산 오스템 KS를 선택 적용합니다. 두 시스템 모두 정품만을 사용합니다.',
+      items: [
+        {
+          name: 'SIC',
+          tag: '스위스 설계 · 독일 제조',
+          desc: '치과 임플란트의 본산지 스위스의 기술력으로 독일에서 제조된 프리미엄 임플란트입니다. 두꺼운 벽 두께로 장기간 안정적인 사용을 추구합니다.',
+          points: ['두꺼운 벽 두께로 찢어짐 최소화', '쉽게 풀리지 않는 잠금 설계', '순수 티타늄으로 감염 위험 저감'],
+          video: '/media/video/implant-sic.mp4',
+          poster: '/media/video/implant-sic-poster.jpg',
+        },
+        {
+          name: '오스템 KS',
+          tag: '국산 · OSSTEM',
+          desc: '국내 점유율 1위 오스템의 KS 시스템입니다. 벽 두께와 체결 깊이를 키워 더 단단한 고정력을 구현했습니다.',
+          points: ['임플란트 벽 두께 +44%', '나사 체결 깊이 +50%', '직경 축소(M2.0→M1.6)로 강한 결합'],
+          image: '/media/images/implant/ts-vs-ks.jpg',
+          imageFit: 'contain',
+        },
+      ],
+    },
     techTitle: {
       label: 'SWISS PREMIUM IMPLANT',
       title: '정품 스위스 SIC 임플란트',
@@ -230,6 +270,27 @@ export const TREATMENTS: Treatment[] = [
       { q: '혼자 내원해도 되나요?', a: '진정 후에는 판단력과 운동 반응이 느려지므로, 반드시 보호자 동반으로 내원·귀가해주셔야 합니다.' },
       { q: '식사는 언제부터 가능한가요?', a: '완전히 깨어난 후 가벼운 음식부터 시작하세요. 시술 부위에 따라 별도 안내드립니다.' },
     ],
+    showcase: {
+      label: 'SAFETY MONITORING SYSTEM',
+      title: '안전을 지키는 진정 장비',
+      desc: '진정 치료 중 환자분의 활력징후를 실시간으로 감시하고, 진정제를 정밀하게 조절하여 안전한 진료 환경을 갖추었습니다.',
+      items: [
+        {
+          name: 'BM1 환자감시장치',
+          tag: '실시간 활력징후 감시',
+          desc: '산소포화도·혈압·맥박·체온은 물론 호기말이산화탄소(EtCO2)까지 실시간으로 감시하여, 진정 깊이를 안전하게 관리합니다.',
+          image: '/media/images/sedation/bm1-monitor.png',
+          imageFit: 'contain',
+        },
+        {
+          name: 'Agilia SP 시린지펌프',
+          tag: '진정제 정밀 주입',
+          desc: '진정제를 정밀한 속도로 주입하고 주입 압력을 실시간 감시하여, 일정하고 안정적인 진정 상태를 유지합니다.',
+          image: '/media/images/sedation/agilia-sp.jpg',
+          imageFit: 'contain',
+        },
+      ],
+    },
   },
   {
     en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,

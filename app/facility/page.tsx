@@ -75,6 +75,21 @@ export default function FacilityPage() {
                   <li key={g}>{g}</li>
                 ))}
               </ul>
+              <div className="novaRange">
+                <div className="novaRangeImg">
+                  <Photo
+                    src="/media/images/equipment/novacare-range.jpg"
+                    alt="노바케어 살균 범위 비교 — 알코올·차아염소산나트륨(NaOCl) 대비 아포균·사상균까지 살균"
+                    sizes="(max-width: 768px) 220px, 240px"
+                    objectFit="contain"
+                    bg="#fff"
+                  />
+                </div>
+                <p className="novaRangeCap">
+                  알코올·차아염소산나트륨(NaOCl)이 닿지 못하는<br />
+                  <strong>아포균·사상균까지</strong> 살균하는 강력한 살균력
+                </p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -189,6 +204,20 @@ export default function FacilityPage() {
           border: 1px solid rgba(255,255,255,0.22);
           padding: 7px 14px; border-radius: 999px;
         }
+        .novaRange {
+          display: flex; align-items: center; gap: 22px;
+          margin-top: 32px; flex-wrap: wrap;
+        }
+        .novaRangeImg {
+          position: relative; width: 240px; aspect-ratio: 1 / 1;
+          background: #fff; border-radius: 8px; overflow: hidden;
+          flex-shrink: 0;
+        }
+        .novaRangeCap {
+          font-size: 13.5px; color: rgba(255,255,255,0.72);
+          line-height: 1.75; font-weight: 400; margin: 0; flex: 1; min-width: 200px;
+        }
+        .novaRangeCap strong { color: var(--c-gold-l); font-weight: 700; }
 
         /* GBT — 시리지 않은 스케일링 */
         .gbtSec {

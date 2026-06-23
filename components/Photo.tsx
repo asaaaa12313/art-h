@@ -11,6 +11,7 @@ type Props = {
   priority?: boolean;
   sizes?: string;
   objectPosition?: string;
+  objectFit?: 'cover' | 'contain';
 };
 
 export default function Photo({
@@ -22,6 +23,7 @@ export default function Photo({
   priority = false,
   sizes = '100vw',
   objectPosition = 'center',
+  objectFit = 'cover',
 }: Props) {
   const ariaLabel = alt || label || 'Art H Dental';
 
@@ -39,7 +41,7 @@ export default function Photo({
           fill
           priority={priority}
           sizes={sizes}
-          style={{ objectFit: 'cover', objectPosition }}
+          style={{ objectFit, objectPosition }}
           className={styles.image}
         />
       )}
