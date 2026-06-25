@@ -1,0 +1,34 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  transition: opacity 0.9s var(--ease-out);
+}
+.wrap[data-fading='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.9s var(--ease-out);
+}
+.slide[data-on='true'] {
+  opacity: 1;
+}
+/* 활성 사진만 은은한 줌(Ken Burns) */
+.slide[data-on='true'] :global(img) {
+  animation: hiKen 6.5s linear forwards;
+}
+@keyframes hiKen {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide :global(img) { animation: none !important; }
+  .wrap[data-fading='true'] { opacity: 1; }
+}

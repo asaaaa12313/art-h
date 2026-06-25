@@ -132,6 +132,17 @@
   text-shadow: 0 1px 12px rgba(15, 26, 53, 0.6), 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .heroSub[data-loaded='true'] { opacity: 1; transform: none; }
+
+/* 영상 전환 시 인사 문구 깔끔한 퇴장 (등장 트랜지션 역재생 방지) */
+.heroLine[data-exit='true'],
+.heroEyebrow[data-exit='true'],
+.heroTitle[data-exit='true'],
+.heroSub[data-exit='true'] {
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+  pointer-events: none;
+}
 .heroCtas {
   display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
   opacity: 0; transition: opacity 0.8s ease 1.25s;

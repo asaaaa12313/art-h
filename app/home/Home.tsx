@@ -9,10 +9,19 @@ import HeroVideo from '@/components/HeroVideo';
 import CountUp from '@/components/CountUp';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
+import HeroIntro from '@/components/HeroIntro';
 import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS } from '@/lib/copy';
 import styles from './Home.module.css';
 
-// Hero 영상 — 밝은 라운지를 첫 컷으로 (화사한 첫인상). 인사 문구는 항상 노출.
+// Hero 사진 인트로 — 사진 3장(대기실·외관·상담실)을 줌+크로스페이드로 먼저 보여준 뒤 영상으로 전환.
+// 인사 문구는 사진 인트로에서만 노출되고, 영상으로 넘어가면 사라진다. CTA는 계속 유지.
+const HERO_PHOTOS = [
+  { src: '/media/images/waiting/waiting-01.jpg', alt: '아트에이치치과 대기실 라운지' },
+  { src: '/media/images/exterior/exterior-01.jpg', alt: '송도 IBS타워 외관' },
+  { src: '/media/images/consult/consult-01.jpg', alt: '아트에이치치과 상담실' },
+];
+
+// Hero 영상 — 사진 인트로 후 재생되는 시퀀스.
 const HERO_VIDEOS = [
   { mp4: '/media/video/facility-lounge.mp4', mp4Mobile: '/media/video/facility-lounge-720.mp4' }, // 라운지(통유리 도시전경)
   { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' }, // 인테리어
@@ -47,6 +56,8 @@ const SYSTEM_ICONS = ['shield', 'door', 'clock', 'badge'];
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
+  const [heroPhase, setHeroPhase] = useState<'photos' | 'video'>('photos');
+  const inIntro = heroPhase === 'photos';
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoaded(true), 150);
@@ -71,20 +82,23 @@ export default function Home() {
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
         <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.08}px)`, height: '115%' }}>
-          <HeroVideo
-            videos={HERO_VIDEOS}
-            poster="/media/images/waiting/lounge-video-poster.jpg"
-            alt="아트에이치치과 병원 소개 영상"
-          />
+          {heroPhase === 'video' && (
+            <HeroVideo
+              videos={HERO_VIDEOS}
+              poster="/media/images/waiting/lounge-video-poster.jpg"
+              alt="아트에이치치과 병원 소개 영상"
+            />
+          )}
+          <HeroIntro photos={HERO_PHOTOS} perSlide={2500} onComplete={() => setHeroPhase('video')} />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <div className={styles.heroLine} data-loaded={loaded} aria-hidden="true" />
-          <p className={styles.heroEyebrow} data-loaded={loaded}>SONGDO · ART H DENTAL</p>
-          <h1 className={styles.heroTitle} data-loaded={loaded}>
+          <div className={styles.heroLine} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined} aria-hidden="true" />
+          <p className={styles.heroEyebrow} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>SONGDO · ART H DENTAL</p>
+          <h1 className={styles.heroTitle} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>
             진료 너머,<br />사람의 고귀함을<br />생각합니다
           </h1>
-          <p className={styles.heroSub} data-loaded={loaded}>
+          <p className={styles.heroSub} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>
             한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 추구합니다.
           </p>
           <div className={styles.heroCtas} data-loaded={loaded}>
