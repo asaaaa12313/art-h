@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import styles from './HeroIntro.module.css';
 
 export type IntroPhoto = { src: string; alt: string; objectPosition?: string };
@@ -41,13 +40,12 @@ export default function HeroIntro({ photos, perSlide = 2500, onComplete }: Props
     <div className={styles.wrap} data-fading={fading} aria-hidden={fading ? 'true' : undefined}>
       {photos.map((p, i) => (
         <div key={p.src} className={styles.slide} data-on={i === idx ? 'true' : 'false'}>
-          <Image
+          {/* 일반 img — SSR HTML에 직접 jpg가 박혀 즉시 페인트(최적화 경유 지연 없음). 히어로 첫인상 회색 깜빡임 방지 */}
+          <img
             src={p.src}
             alt={p.alt}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: p.objectPosition || 'center' }}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: p.objectPosition || 'center' }}
           />
         </div>
       ))}
