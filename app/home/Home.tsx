@@ -22,11 +22,11 @@ const HERO_PHOTOS = [
 ];
 
 // Hero 영상 — 사진 인트로 후 재생되는 시퀀스.
+// 휴게실(라운지)·복도는 제외하고 수술실 → 원장님 영상 2개만 재생.
+// 시퀀스가 끝나면 영상 루프 대신 사진 인트로부터 다시 시작(Home의 cycle 참조).
 const HERO_VIDEOS = [
-  { mp4: '/media/video/facility-lounge.mp4', mp4Mobile: '/media/video/facility-lounge-720.mp4' }, // 라운지(통유리 도시전경)
-  { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' }, // 인테리어
-  { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료 체어
-  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 덴티폼 상담
+  { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료실 유닛체어(수술실)
+  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 원장님 덴티폼 상담
   { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
 ];
 
@@ -57,6 +57,7 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
   const [heroPhase, setHeroPhase] = useState<'photos' | 'video'>('photos');
+  const [cycle, setCycle] = useState(0); // 사진→영상→사진 순환 카운터 (HeroIntro 리마운트용)
   const inIntro = heroPhase === 'photos';
 
   useEffect(() => {
@@ -85,11 +86,16 @@ export default function Home() {
           {heroPhase === 'video' && (
             <HeroVideo
               videos={HERO_VIDEOS}
-              poster="/media/images/waiting/lounge-video-poster.jpg"
+              poster="/media/video/hero-1-poster.jpg"
               alt="아트에이치치과 병원 소개 영상"
+              onComplete={() => {
+                // 영상 시퀀스 종료 → 영상 루프 대신 사진 인트로부터 다시 시작
+                setHeroPhase('photos');
+                setCycle((c) => c + 1);
+              }}
             />
           )}
-          <HeroIntro photos={HERO_PHOTOS} perSlide={2500} onComplete={() => setHeroPhase('video')} />
+          <HeroIntro key={cycle} photos={HERO_PHOTOS} perSlide={2500} onComplete={() => setHeroPhase('video')} />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>

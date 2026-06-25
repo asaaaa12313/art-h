@@ -15,9 +15,10 @@ type Props = {
   alt?: string;
   style?: CSSProperties;
   onIndexChange?: (index: number) => void;
+  onComplete?: () => void; // 마지막 영상 종료 시 — 영상 루프 대신 사진 인트로로 복귀
 };
 
-export default function HeroVideo({ videos, poster, alt = '아트에이치치과 소개 영상', style, onIndexChange }: Props) {
+export default function HeroVideo({ videos, poster, alt = '아트에이치치과 소개 영상', style, onIndexChange, onComplete }: Props) {
   const [index, setIndex] = useState(0);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -65,11 +66,14 @@ export default function HeroVideo({ videos, poster, alt = '아트에이치치과
   }, [index, isMobile]);
 
   const handleEnded = () => {
-    setIndex((prev) => {
-      const next = (prev + 1) % videos.length;
-      onIndexChange?.(next);
-      return next;
-    });
+    // 마지막 영상이 끝나면 루프하지 않고 사진 인트로로 복귀
+    if (index >= videos.length - 1) {
+      onComplete?.();
+      return;
+    }
+    const next = index + 1;
+    setIndex(next);
+    onIndexChange?.(next);
   };
 
   if (prefersReducedMotion) {
