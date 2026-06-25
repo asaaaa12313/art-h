@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
+import TextReveal from '@/components/TextReveal';
+import AnimatedIcon from '@/components/AnimatedIcon';
 import { GREETING, PROMISE_ITEMS } from '@/lib/copy';
 
 export const metadata: Metadata = {
@@ -30,14 +32,27 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <div className="greetBody">
-            <Reveal duration="0.7s">
+            <Reveal variant="fade" duration="0.7s">
               <p className="greetEyebrow">GREETINGS</p>
             </Reveal>
-            <Reveal delay={0.1} duration="1s">
-              <h2 className="greetHeadline">{GREETING.headline}</h2>
-            </Reveal>
+            <TextReveal
+              as="h2"
+              className="greetHeadline"
+              lines={GREETING.headline.split('\n')}
+              delay={0.1}
+              duration="1s"
+            />
             <Reveal delay={0.2} duration="0.9s">
-              <p className="greetIntro">{GREETING.intro}</p>
+              <p className="greetIntro">
+                <AnimatedIcon
+                  name="chat"
+                  size={20}
+                  stroke="var(--c-blue)"
+                  delay={0.35}
+                  style={{ display: 'inline-block', verticalAlign: '-5px', marginRight: 8 }}
+                />
+                {GREETING.intro}
+              </p>
             </Reveal>
             {GREETING.body.map((paragraph, i) => (
               <Reveal key={i} delay={0.3 + i * 0.1} duration="0.9s">
@@ -61,12 +76,16 @@ export default function AboutPage() {
       <section style={{ background: 'var(--c-warm)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <div className="promiseHead">
-            <Reveal duration="0.7s">
+            <Reveal variant="fade" duration="0.7s">
               <p className="promiseEyebrow">OUR PROMISE</p>
             </Reveal>
-            <Reveal delay={0.1} duration="0.9s">
-              <h2 className="promiseTitle">Art H의 약속</h2>
-            </Reveal>
+            <TextReveal
+              as="h2"
+              className="promiseTitle"
+              lines={['Art H의 약속']}
+              delay={0.1}
+              duration="0.9s"
+            />
             <Reveal delay={0.2} duration="0.9s">
               <p className="promiseLead">
                 진료는 기술이지만, 진료 너머의 경험은 사람을 향한 태도에서 나옵니다.
@@ -75,15 +94,21 @@ export default function AboutPage() {
           </div>
 
           <div className="promiseGrid">
-            {PROMISE_ITEMS.map((item, i) => (
-              <Reveal key={item.no} delay={0.15 + i * 0.08} duration="0.8s" from="translateY(20px)">
-                <article className="promiseCard">
-                  <span className="promiseNo">{item.no}</span>
-                  <h3 className="promiseCardTitle">{item.t}</h3>
-                  <p className="promiseCardDesc">{item.d}</p>
-                </article>
-              </Reveal>
-            ))}
+            {PROMISE_ITEMS.map((item, i) => {
+              const icons = ['users', 'leaf', 'chat', 'home'] as const;
+              return (
+                <Reveal key={item.no} delay={0.15 + i * 0.08} duration="0.8s" from="translateY(20px)">
+                  <article className="promiseCard">
+                    <span className="promiseCardIcon" aria-hidden="true">
+                      <AnimatedIcon name={icons[i]} size={30} stroke="var(--c-blue)" delay={0.25 + i * 0.08} />
+                    </span>
+                    <span className="promiseNo">{item.no}</span>
+                    <h3 className="promiseCardTitle">{item.t}</h3>
+                    <p className="promiseCardDesc">{item.d}</p>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -99,7 +124,7 @@ export default function AboutPage() {
       </section>
 
       {/* 풀블리드 이미지 — 송도 IBS타워 */}
-      <Reveal duration="1.4s" from="scale(1.02)">
+      <Reveal variant="blur-up" duration="1.4s">
         <div className="ibsWrap">
           <Photo
             src="/media/images/exterior/exterior-01.jpg"
@@ -107,6 +132,7 @@ export default function AboutPage() {
             sizes="100vw"
           />
           <div className="ibsOverlay" aria-hidden="true">
+            <AnimatedIcon name="building" size={34} stroke="var(--c-blue-l)" delay={0.3} className="ibsIcon" />
             <span className="ibsLabel">SONGDO</span>
             <span className="ibsTitle">IBS TOWER</span>
             <span className="ibsSub">업무동 8층 · 아트에이치치과</span>
@@ -186,10 +212,19 @@ export default function AboutPage() {
         .promiseCard {
           background: var(--c-white); padding: clamp(28px, 3.5vw, 48px);
           display: flex; flex-direction: column; gap: 14px;
-          transition: background 0.4s ease;
+          transition: background 0.4s ease, transform .35s var(--ease-out), box-shadow .35s;
           min-height: 220px;
         }
-        .promiseCard:hover { background: #FCFAF5; }
+        @media (hover: hover) {
+          .promiseCard:hover {
+            background: #FCFAF5;
+            transform: translateY(-4px);
+            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.22);
+          }
+        }
+        .promiseCardIcon {
+          display: inline-flex; margin-bottom: 2px;
+        }
         .promiseNo {
           font-family: var(--f-display); font-size: 15px; color: var(--c-navy);
           letter-spacing: 4px; font-weight: 400; opacity: 0.85;
@@ -237,6 +272,10 @@ export default function AboutPage() {
           );
           text-align: center;
           padding: 24px;
+        }
+        .ibsIcon {
+          margin-bottom: 4px;
+          filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.55));
         }
         .ibsLabel {
           font-family: var(--f-display);

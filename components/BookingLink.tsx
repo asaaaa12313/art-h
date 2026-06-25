@@ -1,4 +1,6 @@
-import { CSSProperties, ReactNode } from 'react';
+'use client';
+
+import { CSSProperties, ReactNode, useRef, useState } from 'react';
 
 type Props = {
   children?: ReactNode;
@@ -12,6 +14,18 @@ export default function BookingLink({
   style,
 }: Props) {
   const url = process.env.NEXT_PUBLIC_BOOKING_URL;
+  const [hover, setHover] = useState(false);
+  const [active, setActive] = useState(false);
+  const reducedRef = useRef<boolean | null>(null);
+
+  const isReduced = () => {
+    if (reducedRef.current === null) {
+      reducedRef.current =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return reducedRef.current;
+  };
 
   const base: CSSProperties = {
     display: 'inline-flex',
@@ -20,7 +34,8 @@ export default function BookingLink({
     fontSize: 13,
     letterSpacing: 0.5,
     padding: '10px 18px',
-    transition: 'background 0.3s, color 0.3s, border-color 0.3s',
+    transition:
+      'background 0.3s, color 0.3s, border-color 0.3s, transform 0.2s var(--ease-out)',
   };
 
   const variantStyle: CSSProperties =
@@ -42,12 +57,29 @@ export default function BookingLink({
     );
   }
 
+  const motionStyle: CSSProperties = isReduced()
+    ? {}
+    : {
+        transform: active
+          ? 'scale(0.98)'
+          : hover
+          ? 'translateY(-1px) scale(1.02)'
+          : 'none',
+      };
+
   return (
     <a
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      style={{ ...base, ...variantStyle, ...style }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => {
+        setHover(false);
+        setActive(false);
+      }}
+      onMouseDown={() => setActive(true)}
+      onMouseUp={() => setActive(false)}
+      style={{ ...base, ...variantStyle, ...motionStyle, ...style }}
     >
       {children}
     </a>

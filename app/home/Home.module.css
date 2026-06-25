@@ -273,8 +273,8 @@
 }
 @media (hover: hover) {
   .promiseCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 46px rgba(46, 111, 212, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 22px 48px rgba(46, 111, 212, 0.26);
   }
   .promiseCard:hover::before { transform: scaleX(1); }
 }
@@ -519,3 +519,14 @@
   .locCardGrid { grid-template-columns: 1fr; }
   .locCard { min-height: auto; }
 }
+
+/* ===== 모션 보강 — 라인 아이콘 배치 ===== */
+.statIcon { margin: 0 auto 16px; }
+.promiseTop {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.promiseTop .promiseNo { margin-bottom: 0; }
+.promiseIcon { flex-shrink: 0; opacity: 0.9; }
+.systemBody { flex: 1; min-width: 0; }
+.systemIcon { flex-shrink: 0; align-self: flex-start; margin-top: 2px; opacity: 0.85; }

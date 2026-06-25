@@ -10,10 +10,13 @@
 }
 
 .nav[data-show='true'] {
-  background: rgba(253, 252, 250, 0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(253, 252, 250, 0.9);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
   border-bottom-color: var(--c-line);
+}
+.nav[data-show='true'] .inner {
+  height: var(--header-h-scrolled);
 }
 
 .inner {
@@ -22,8 +25,9 @@
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  height: 72px;
+  height: var(--header-h);
   padding: 0 clamp(20px, 3.5vw, 40px);
+  transition: height 0.4s var(--ease-out);
 }
 
 .brand {

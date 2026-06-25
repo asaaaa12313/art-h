@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
+import TextReveal from '@/components/TextReveal';
+import AnimatedIcon from '@/components/AnimatedIcon';
 import { TREATMENTS } from '@/lib/copy';
 
 const TX_SRC: Record<string, string> = {
@@ -55,13 +57,11 @@ export default async function TreatmentDetailPage({
       <article className="txDetail">
         {/* Summary */}
         <section className="txSec txHead">
-          <Reveal duration="0.7s">
+          <Reveal variant="fade" duration="0.7s">
             <p className="txEyebrow">{tx.en.toUpperCase()}</p>
           </Reveal>
-          <Reveal delay={0.1} duration="0.9s">
-            <h2 className="txSummary">{tx.summary}</h2>
-          </Reveal>
-          <Reveal delay={0.2} duration="0.9s">
+          <TextReveal as="h2" className="txSummary" lines={[tx.summary]} delay={0.1} duration="1s" />
+          <Reveal variant="fade" delay={0.28} duration="0.9s">
             <p className="txIntro">{tx.intro}</p>
           </Reveal>
         </section>
@@ -69,16 +69,18 @@ export default async function TreatmentDetailPage({
         {/* 장비·브랜드 쇼케이스 (임플란트 2종 / 의식하진정 안전장비) */}
         {tx.showcase && (
           <section className="txSec txShowcase">
-            <Reveal duration="0.9s">
-              <div className="txShowcaseHead">
+            <div className="txShowcaseHead">
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.showcase.label}</p>
-                <h3 className="txSectionTitle">{tx.showcase.title}</h3>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.showcase.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
                 <p className="txBlockDesc">{tx.showcase.desc}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
             <div className="txShowcaseGrid">
               {tx.showcase.items.map((item, i) => (
-                <Reveal key={item.name} delay={0.1 + i * 0.1} duration="0.8s">
+                <Reveal key={item.name} variant="blur-up" delay={0.1 + i * 0.1} duration="0.8s">
                   <div className="txShowcaseCard">
                     <div className={item.imageFit === 'contain' ? 'txShowcaseMedia txShowcaseMediaContain' : 'txShowcaseMedia'}>
                       {item.video ? (
@@ -131,13 +133,15 @@ export default async function TreatmentDetailPage({
         {/* SIC 정품 임플란트 — 3대 기술력 */}
         {tx.tech && tx.techTitle && (
           <section className="txSec txTech">
-            <Reveal duration="0.9s">
-              <div className="txTechHead">
+            <div className="txTechHead">
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.techTitle.label}</p>
-                <h3 className="txSectionTitle">{tx.techTitle.title}</h3>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.techTitle.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
                 <p className="txBlockDesc">{tx.techTitle.desc}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
             <div className="txTechGrid">
               {tx.tech.map((item, i) => (
                 <Reveal key={item.no} delay={0.1 + i * 0.08} duration="0.7s">
@@ -157,19 +161,19 @@ export default async function TreatmentDetailPage({
         {/* 고난이도 임플란트 — 상악동 거상술 전/후 */}
         {tx.beforeAfter && (
           <section className="txSec txBA">
-            <Reveal duration="0.9s">
-              <div>
+            <div>
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.beforeAfter.label}</p>
-                <h3 className="txSectionTitle">{tx.beforeAfter.title}</h3>
-              </div>
-            </Reveal>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.beforeAfter.title]} delay={0.05} />
+            </div>
             <div className="txBAGrid">
-              <Reveal delay={0.1} duration="0.8s">
+              <Reveal variant="blur-up" delay={0.1} duration="0.8s">
                 <div className="txBAImg">
                   <Photo src={tx.beforeAfter.before} alt="상악동 거상술 전 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
                 </div>
               </Reveal>
-              <Reveal delay={0.18} duration="0.8s">
+              <Reveal variant="blur-up" delay={0.18} duration="0.8s">
                 <div className="txBAImg">
                   <Photo src={tx.beforeAfter.after} alt="상악동 거상술 후 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
                 </div>
@@ -184,17 +188,20 @@ export default async function TreatmentDetailPage({
 
         {/* Processes */}
         <section className="txSec txSplit">
-          <Reveal duration="1s" from="translateX(-20px)">
-            <div>
+          <div>
+            <Reveal variant="fade">
               <p className="txLabel">PROCESS</p>
-              <h3 className="txSectionTitle">치료 과정</h3>
-            </div>
-          </Reveal>
+            </Reveal>
+            <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정']} delay={0.05} />
+          </div>
           <ol className="txSteps">
             {tx.processes.map((step, i) => (
               <Reveal key={step} delay={0.1 + i * 0.05} duration="0.6s">
                 <li>
-                  <span className="txStepNo">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="txStepNo">
+                    <AnimatedIcon name="badge" size={22} stroke="var(--c-blue)" delay={0.1 + i * 0.05} className="txStepIcon" />
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
                   <span className="txStepText">{step}</span>
                 </li>
               </Reveal>
@@ -205,13 +212,15 @@ export default async function TreatmentDetailPage({
         {/* 미백 시스템 — 기기 3종 */}
         {tx.devices && tx.devicesTitle && (
           <section className="txSec txDevices">
-            <Reveal duration="0.9s">
-              <div>
+            <div>
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.devicesTitle.label}</p>
-                <h3 className="txSectionTitle">{tx.devicesTitle.title}</h3>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.devicesTitle.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
                 <p className="txBlockDesc">{tx.devicesTitle.desc}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
             <div className="txDevGrid">
               {tx.devices.map((dv, i) => (
                 <Reveal key={dv.name} delay={0.1 + i * 0.08} duration="0.7s">
@@ -229,20 +238,18 @@ export default async function TreatmentDetailPage({
 
         {/* Features */}
         <section className="txSec txFeat">
-          <Reveal duration="0.9s">
-            <div>
+          <div>
+            <Reveal variant="fade">
               <p className="txLabel">FEATURES</p>
-              <h3 className="txSectionTitle">아트에이치의 차별점</h3>
-            </div>
-          </Reveal>
+            </Reveal>
+            <TextReveal as="h3" className="txSectionTitle" lines={['아트에이치의 차별점']} delay={0.05} />
+          </div>
           <div className="txFeatList">
             {tx.features.map((f, i) => (
               <Reveal key={f} delay={0.1 + i * 0.08} duration="0.7s">
                 <div className="txFeatCard">
                   <span className="txCheck" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="18" height="18">
-                      <path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z" />
-                    </svg>
+                    <AnimatedIcon name="badge" size={18} stroke="#fff" delay={0.1 + i * 0.08} />
                   </span>
                   <p>{f}</p>
                 </div>
@@ -254,15 +261,17 @@ export default async function TreatmentDetailPage({
         {/* GBT 영상 + 장비·시술 사진 */}
         {tx.media && (
           <section className="txSec txGbt">
-            <Reveal duration="0.9s">
-              <div className="txGbtHead">
+            <div className="txGbtHead">
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.media.label}</p>
-                <h3 className="txSectionTitle">{tx.media.title}</h3>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.media.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
                 <p className="txBlockDesc">{tx.media.desc}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
             {tx.media.video && (
-              <Reveal delay={0.1} duration="0.9s">
+              <Reveal variant="blur-up" delay={0.1} duration="0.9s">
                 <div className="txGbtVideo">
                   <video
                     className="txGbtVideoEl"
@@ -280,7 +289,7 @@ export default async function TreatmentDetailPage({
             {tx.media.images && tx.media.images.length > 0 && (
               <div className="txGbtGrid">
                 {tx.media.images.map((img, i) => (
-                  <Reveal key={img.src} delay={0.12 + i * 0.08} duration="0.8s">
+                  <Reveal key={img.src} variant="blur-up" delay={0.12 + i * 0.08} duration="0.8s">
                     <figure className="txGbtFig">
                       <div className="txGbtImg">
                         <Photo src={img.src} alt={img.alt} sizes="(max-width: 768px) 100vw, 480px" />
@@ -297,21 +306,21 @@ export default async function TreatmentDetailPage({
         {/* 무통증 GBT — 이런 분께 권합니다 */}
         {tx.targets && tx.targetsTitle && (
           <section className="txSec txTargets">
-            <Reveal duration="0.9s">
-              <div className="txTargetsHead">
+            <div className="txTargetsHead">
+              <Reveal variant="fade">
                 <p className="txLabel">{tx.targetsTitle.label}</p>
-                <h3 className="txSectionTitle">{tx.targetsTitle.title}</h3>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.targetsTitle.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
                 <p className="txBlockDesc">{tx.targetsTitle.desc}</p>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
             <ul className="txTargetList">
               {tx.targets.map((tg, i) => (
                 <Reveal key={tg} delay={0.1 + i * 0.07} duration="0.6s">
                   <li className="txTargetItem">
                     <span className="txTargetCheck" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path fill="currentColor" d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z" />
-                      </svg>
+                      <AnimatedIcon name="users" size={16} stroke="#fff" delay={0.1 + i * 0.07} />
                     </span>
                     <span>{tg}</span>
                   </li>
@@ -323,12 +332,12 @@ export default async function TreatmentDetailPage({
 
         {/* FAQ */}
         <section className="txSec txFaq">
-          <Reveal duration="0.9s">
-            <div>
+          <div>
+            <Reveal variant="fade">
               <p className="txLabel">FAQ</p>
-              <h3 className="txSectionTitle">자주 묻는 질문</h3>
-            </div>
-          </Reveal>
+            </Reveal>
+            <TextReveal as="h3" className="txSectionTitle" lines={['자주 묻는 질문']} delay={0.05} />
+          </div>
           <div className="txFaqList">
             {tx.faqs.map((f, i) => (
               <Reveal key={f.q} delay={0.08 + i * 0.06} duration="0.6s">
@@ -397,6 +406,10 @@ export default async function TreatmentDetailPage({
           display: flex; flex-direction: column;
           padding: 28px 24px; background: var(--c-warm);
           border-top: 2px solid var(--c-navy); border-radius: 2px;
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .txTechCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
         }
         .txTechNo {
           font-family: var(--f-display); font-size: 26px; color: var(--c-gold-d);
@@ -446,6 +459,10 @@ export default async function TreatmentDetailPage({
           position: relative;
           padding: 26px 24px; background: #fff;
           border: 1px solid var(--c-line); border-radius: 2px;
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
         }
         .txDevNum {
           font-family: var(--f-display); font-size: 14px; color: var(--c-text3);
@@ -511,7 +528,9 @@ export default async function TreatmentDetailPage({
           font-family: var(--f-display); font-size: 15px;
           color: var(--c-navy); font-weight: 400;
           letter-spacing: 1px; align-self: center;
+          display: flex; flex-direction: column; align-items: center; gap: 6px;
         }
+        .txStepIcon { opacity: 0.85; }
         .txStepText {
           font-size: 15px; color: var(--c-text); line-height: 1.7;
           font-weight: 500;
@@ -545,6 +564,10 @@ export default async function TreatmentDetailPage({
           display: flex; flex-direction: column;
           background: #fff; border: 1px solid var(--c-line);
           border-radius: 3px; overflow: hidden;
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .txShowcaseCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
         }
         .txShowcaseMedia {
           position: relative; aspect-ratio: 16 / 10;

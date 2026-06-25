@@ -50,6 +50,21 @@
 
   /* easing */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* motion tokens (모션 보강 — duration / 이동거리 / 헤더·앵커 여백 표준화) */
+  --m-fast: 0.5s;
+  --m-base: 0.8s;
+  --m-slow: 1.1s;
+  --m-dist: 28px;
+  --header-h: 72px;
+  --header-h-scrolled: 60px;
+  --anchor-offset: 88px;
+}
+
+/* 섹션 제목이 고정 헤더 밑에 안 깔리도록 앵커/점프 여백 확보 */
+main h1,
+main h2 {
+  scroll-margin-top: var(--anchor-offset);
 }
 
 * { box-sizing: border-box; }

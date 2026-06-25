@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
+import TextReveal from '@/components/TextReveal';
+import AnimatedIcon from '@/components/AnimatedIcon';
 import { DOCTORS } from '@/lib/copy';
 import DoctorPhoto from './DoctorPhoto';
 
@@ -31,15 +33,26 @@ export default function DoctorPage() {
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto 80px', textAlign: 'center' }}>
-          <Reveal duration="0.8s">
+          <Reveal variant="fade" duration="0.8s">
             <p style={{ fontSize: 12, color: 'var(--c-navy)', letterSpacing: 4, margin: '0 0 14px', fontWeight: 500 }}>
               PROFESSIONAL COLLABORATION
             </p>
           </Reveal>
-          <Reveal delay={0.1} duration="0.9s">
-            <h2 style={{ fontFamily: 'var(--f-heading)', fontSize: 'clamp(24px,3vw,34px)', fontWeight: 600, letterSpacing: '-0.025em', color: 'var(--c-navy)', lineHeight: 1.5, margin: '0 0 20px' }}>
-              구강외과 · 보존과<br />전문의 협진
-            </h2>
+          <TextReveal
+            as="h2"
+            style={{ fontFamily: 'var(--f-heading)', fontSize: 'clamp(24px,3vw,34px)', fontWeight: 600, letterSpacing: '-0.025em', color: 'var(--c-navy)', lineHeight: 1.5, margin: '0 0 20px' }}
+            lines={['구강외과 · 보존과', '전문의 협진']}
+            delay={0.05}
+            duration="0.9s"
+          />
+          <Reveal delay={0.15} duration="0.7s">
+            <AnimatedIcon
+              name="users"
+              size={26}
+              stroke="var(--c-blue)"
+              delay={0.2}
+              className="docIntroIcon"
+            />
           </Reveal>
           <Reveal delay={0.2} duration="0.9s">
             <p style={{ fontSize: 16, color: 'var(--c-text2)', lineHeight: 2, fontWeight: 400, margin: 0 }}>
@@ -50,7 +63,7 @@ export default function DoctorPage() {
 
         {DOCTORS.map((doc, i) => (
           <div key={doc.name} className="docBlock" data-reverse={i % 2 === 1} data-doc-block>
-            <Reveal duration="1.1s" from="translateY(24px)">
+            <Reveal variant="blur-up" duration="1.1s" from="translateY(24px)">
               <div className="docSticky">
                 <DoctorPhoto
                   src={doc.photo}
@@ -70,7 +83,16 @@ export default function DoctorPage() {
                 </h3>
               </Reveal>
               <Reveal delay={0.2} duration="0.7s">
-                <p className="docSpec">{doc.specialty}</p>
+                <p className="docSpec">
+                  <AnimatedIcon
+                    name={doc.specialty.includes('보존') ? 'award' : 'badge'}
+                    size={18}
+                    stroke="var(--c-blue)"
+                    delay={0.3}
+                    className="docSpecIcon"
+                  />
+                  <span>{doc.specialty}</span>
+                </p>
               </Reveal>
               <Reveal delay={0.25} duration="0.7s">
                 <p className="docFocus">{doc.focus}</p>
@@ -86,7 +108,16 @@ export default function DoctorPage() {
               {doc.careerGroups?.map((group, gi) => (
                 <div key={group.label} className="careerGroup">
                   <Reveal delay={0.4 + gi * 0.06} duration="0.5s">
-                    <p className="careerLabel">{group.label}</p>
+                    <p className="careerLabel">
+                      <AnimatedIcon
+                        name={group.label === '경력' ? 'calendar' : 'award'}
+                        size={15}
+                        stroke="var(--c-blue)"
+                        delay={0.45 + gi * 0.06}
+                        className="careerLabelIcon"
+                      />
+                      <span>{group.label}</span>
+                    </p>
                   </Reveal>
                   {group.items.map((c, j) => (
                     <Reveal key={c} delay={0.42 + gi * 0.06 + j * 0.03} duration="0.45s">
@@ -106,14 +137,16 @@ export default function DoctorPage() {
       {/* 구강악안면외과 전문의 소개 영상 */}
       <section className="docVideo">
         <div className="docVideoInner">
-          <Reveal duration="0.8s">
+          <Reveal variant="fade" duration="0.8s">
             <p className="docVideoEyebrow">INTERVIEW</p>
           </Reveal>
-          <Reveal delay={0.1} duration="0.9s">
-            <h2 className="docVideoTitle">
-              구강악안면외과 전문의가<br />직접 전하는 진료 이야기
-            </h2>
-          </Reveal>
+          <TextReveal
+            as="h2"
+            className="docVideoTitle"
+            lines={['구강악안면외과 전문의가', '직접 전하는 진료 이야기']}
+            delay={0.05}
+            duration="0.9s"
+          />
           <Reveal delay={0.2} duration="1s" from="scale(0.98)">
             <div className="docVideoFrame">
               <iframe
@@ -170,9 +203,12 @@ export default function DoctorPage() {
           font-size: 14px; color: var(--c-text3); font-weight: 400;
         }
         .docSpec {
+          display: flex; align-items: center; gap: 8px;
           font-size: 15px; color: var(--c-text); font-weight: 500;
           margin: 0 0 8px;
         }
+        .docSpecIcon { flex-shrink: 0; }
+        .docIntroIcon { margin: 0 auto 18px; }
         .docFocus {
           font-size: 13px; color: var(--c-text2); font-weight: 400;
           margin: 0 0 28px; letter-spacing: -0.01em;
@@ -181,6 +217,13 @@ export default function DoctorPage() {
           background: var(--c-warm); padding: 24px 28px; border-radius: 2px;
           border-left: 2px solid var(--c-navy);
           margin-bottom: 32px;
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .docQuote:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.18);
+          }
         }
         .docQuote p {
           font-size: 15px; color: var(--c-text2); line-height: 2;
@@ -194,11 +237,13 @@ export default function DoctorPage() {
         }
         .careerGroup:last-child { margin-bottom: 0; }
         .careerLabel {
+          display: flex; align-items: center; gap: 7px;
           font-size: 11px; letter-spacing: 3px; font-weight: 700;
           color: var(--c-navy); opacity: 0.7;
           margin: 0 0 10px;
           text-transform: uppercase;
         }
+        .careerLabelIcon { flex-shrink: 0; opacity: 0.85; }
         .docCareer {
           display: flex; align-items: center; gap: 8px;
           font-size: 14px; color: var(--c-text2); font-weight: 400;
@@ -237,6 +282,13 @@ export default function DoctorPage() {
           position: relative; aspect-ratio: 16 / 9;
           border-radius: 4px; overflow: hidden;
           background: #0d0d0d; box-shadow: 0 10px 30px rgba(15,26,53,0.12);
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .docVideoFrame:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.18);
+          }
         }
         .docVideoFrame iframe {
           position: absolute; inset: 0; width: 100%; height: 100%; border: 0;

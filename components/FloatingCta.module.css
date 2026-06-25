@@ -43,6 +43,29 @@
   outline: none;
 }
 
+/* 버튼 순차 등장 — wrap 슬라이드인에 이어 각 버튼이 살짝씩 늦게.
+   delay는 opacity에만 걸어 호버(transform) 반응은 지연 없이 즉각 유지 */
+.wrap .btn {
+  opacity: 0;
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
+    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0s;
+}
+.wrap[data-visible='true'] .btn {
+  opacity: 1;
+}
+.wrap[data-visible='true'] .btn:nth-child(1) {
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
+    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.1s;
+}
+.wrap[data-visible='true'] .btn:nth-child(2) {
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
+    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.2s;
+}
+.wrap[data-visible='true'] .btn:nth-child(3) {
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
+    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.3s;
+}
+
 .btn .icon {
   width: 22px;
   height: 22px;
@@ -66,6 +89,23 @@
 .primary:focus-visible {
   background: linear-gradient(135deg, var(--c-navy) 0%, var(--c-navy-d) 100%);
   box-shadow: 0 12px 28px rgba(15, 26, 53, 0.38), 0 4px 8px rgba(15, 26, 53, 0.12);
+}
+/* 전화 버튼 — 은은한 펄스 글로우 (등장 후에만) */
+@keyframes ctaPulse {
+  0%,
+  100% {
+    box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 0 0 0 rgba(46, 111, 212, 0.4);
+  }
+  70% {
+    box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 0 0 10px rgba(46, 111, 212, 0);
+  }
+}
+.wrap[data-visible='true'] .primary {
+  animation: ctaPulse 2.4s ease-out infinite;
+}
+.wrap[data-visible='true'] .primary:hover,
+.wrap[data-visible='true'] .primary:focus-visible {
+  animation: none;
 }
 
 /* 일반 버튼 — 호버 시 네이비 반전 */
@@ -130,10 +170,16 @@
   .wrap {
     transition: opacity 0.01s;
   }
-  .btn {
+  .wrap .btn,
+  .wrap[data-visible='true'] .btn {
     transition: none;
+    transition-delay: 0s;
+    opacity: 1;
   }
   .btn:hover {
     transform: none;
+  }
+  .wrap[data-visible='true'] .primary {
+    animation: none;
   }
 }

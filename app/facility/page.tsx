@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
+import TextReveal from '@/components/TextReveal';
+import AnimatedIcon from '@/components/AnimatedIcon';
 import { FACILITY_ROOMS } from '@/lib/copy';
 
 const ROOM_SRC: Record<string, string> = {
@@ -9,6 +11,13 @@ const ROOM_SRC: Record<string, string> = {
   진료실: '/media/images/treatment-room/treatment-03.jpg',
   수술실: '/media/images/surgery/surgery-01.jpg',
   상담실: '/media/images/consult/consult-02.jpg',
+};
+
+const ROOM_ICON: Record<string, string> = {
+  대기실: 'home',
+  진료실: 'scan',
+  수술실: 'door',
+  상담실: 'users',
 };
 
 export const metadata: Metadata = {
@@ -25,12 +34,12 @@ export default function FacilityPage() {
       {/* 진료 공간 */}
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(60px,8vw,100px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <Reveal>
-            <div className="secHead">
+          <div className="secHead">
+            <Reveal variant="fade">
               <p className="secEyebrow">SPACE</p>
-              <h2 className="secTitle">진료 공간</h2>
-            </div>
-          </Reveal>
+            </Reveal>
+            <TextReveal as="h2" className="secTitle" lines={['진료 공간']} delay={0.05} />
+          </div>
 
           <div className="roomGrid">
             {FACILITY_ROOMS.map((s, i) => (
@@ -39,6 +48,13 @@ export default function FacilityPage() {
                   <Photo src={ROOM_SRC[s.k]} alt={`${s.k} 이미지`} sizes="(max-width: 768px) 100vw, 50vw" />
                   <div className="roomOverlay" aria-hidden="true" />
                   <div className="roomLabel">
+                    <AnimatedIcon
+                      name={ROOM_ICON[s.k]}
+                      size={26}
+                      stroke="var(--c-blue-l)"
+                      delay={0.2 + i * 0.08}
+                      className="roomIcon"
+                    />
                     <span className="roomE">{s.e}</span>
                     <span className="roomK">{s.k}</span>
                   </div>
@@ -52,7 +68,7 @@ export default function FacilityPage() {
       {/* 살균수 — 노바케어(HOCL) 수관관리 */}
       <section className="novaSec">
         <div className="novaInner">
-          <Reveal from="translateX(-20px)" duration="1s">
+          <Reveal variant="blur-up" duration="1s">
             <div className="novaImgWrap">
               <Photo
                 src="/media/images/equipment/novacare.jpg"
@@ -61,10 +77,17 @@ export default function FacilityPage() {
               />
             </div>
           </Reveal>
-          <Reveal delay={0.1} duration="0.9s">
-            <div className="novaBody">
+          <div className="novaBody">
+            <Reveal variant="fade" delay={0.1}>
               <p className="novaEyebrow">WATER STERILIZATION · HOCL</p>
-              <h2 className="novaTitle">살균수를 통한<br />청정한 치과수관 관리</h2>
+            </Reveal>
+            <Reveal variant="fade" delay={0.15}>
+              <div className="novaTitleRow">
+                <AnimatedIcon name="droplet" size={30} stroke="var(--c-blue-l)" delay={0.35} className="novaTitleIcon" />
+                <TextReveal as="h2" className="novaTitle" lines={['살균수를 통한', '청정한 치과수관 관리']} delay={0.2} />
+              </div>
+            </Reveal>
+            <Reveal delay={0.25}>
               <p className="novaSystem">노바케어 시스템 (NOVACARE)</p>
               <p className="novaDesc">
                 전기분해를 통해 생성된 차아염소산수(HOCL)는 대장균·살모넬라·콜레라·진균·바이러스·사상균·아포균 등 다양한 균주에 대한 강력한 살균력을 보유하고 있습니다.
@@ -75,6 +98,8 @@ export default function FacilityPage() {
                   <li key={g}>{g}</li>
                 ))}
               </ul>
+            </Reveal>
+            <Reveal variant="blur-up" delay={0.1}>
               <div className="novaRange">
                 <div className="novaRangeImg">
                   <Photo
@@ -90,18 +115,25 @@ export default function FacilityPage() {
                   <strong>아포균·사상균까지</strong> 살균하는 강력한 살균력
                 </p>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* GBT — 시리지 않은 스케일링 */}
       <section className="gbtSec">
         <div className="gbtInner">
-          <Reveal duration="0.9s">
-            <div className="gbtBody">
+          <div className="gbtBody">
+            <Reveal variant="fade">
               <p className="gbtEyebrow">PAINLESS SCALING · GBT</p>
-              <h2 className="gbtTitle">시리지 않은 스케일링,<br />GBT 에어플로우</h2>
+            </Reveal>
+            <Reveal variant="fade" delay={0.05}>
+              <div className="gbtTitleRow">
+                <AnimatedIcon name="sparkle" size={30} stroke="var(--c-blue)" delay={0.3} className="gbtTitleIcon" />
+                <TextReveal as="h2" className="gbtTitle" lines={['시리지 않은 스케일링,', 'GBT 에어플로우']} delay={0.1} />
+              </div>
+            </Reveal>
+            <Reveal delay={0.15}>
               <p className="gbtSystem">Guided Biofilm Therapy · 스위스 EMS</p>
               <p className="gbtDesc">
                 파우더로 섬세하게 바이오필름(세균막)을 관리하고, 초슬림팁으로 부드럽게 치석을 제거합니다. 자극은 줄이고 편안함은 높여, 스케일링이 시려 미뤄오신 분도 부담 없이 받으실 수 있습니다.
@@ -111,9 +143,9 @@ export default function FacilityPage() {
                   <li key={g}>{g}</li>
                 ))}
               </ul>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1} from="translateX(20px)" duration="1s">
+            </Reveal>
+          </div>
+          <Reveal variant="blur-up" delay={0.1} duration="1s">
             <div className="gbtImgWrap">
               <Photo
                 src="/media/images/equipment/gbt-airflow.jpg"
@@ -144,6 +176,7 @@ export default function FacilityPage() {
         .roomCard {
           position: relative; overflow: hidden; aspect-ratio: 16/10;
           background: var(--c-warm);
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         .roomOverlay {
           position: absolute; inset: 0;
@@ -153,6 +186,13 @@ export default function FacilityPage() {
           position: absolute; bottom: 0; left: 0;
           padding: 0 24px 22px; z-index: 2;
           display: flex; flex-direction: column; gap: 4px;
+        }
+        .roomIcon { margin-bottom: 8px; opacity: 0.95; }
+        @media (hover: hover) {
+          .roomCard:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 46px rgba(46,111,212,.22);
+          }
         }
         .roomE {
           font-family: var(--f-display); font-size: 11px;
@@ -178,10 +218,14 @@ export default function FacilityPage() {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
           color: var(--c-gold-l); margin: 0 0 18px;
         }
+        .novaTitleRow {
+          display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
+        }
+        .novaTitleIcon { flex-shrink: 0; margin-top: 4px; }
         .novaTitle {
           font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
           font-weight: 700; letter-spacing: -0.03em; color: #fff;
-          line-height: 1.35; margin: 0 0 16px;
+          line-height: 1.35; margin: 0;
         }
         .novaSystem {
           font-size: 15px; color: var(--c-gold-l); font-weight: 600; margin: 0 0 24px;
@@ -233,10 +277,14 @@ export default function FacilityPage() {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
           color: var(--c-gold-d); margin: 0 0 18px;
         }
+        .gbtTitleRow {
+          display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
+        }
+        .gbtTitleIcon { flex-shrink: 0; margin-top: 4px; }
         .gbtTitle {
           font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
           font-weight: 700; letter-spacing: -0.03em; color: var(--c-navy);
-          line-height: 1.35; margin: 0 0 16px;
+          line-height: 1.35; margin: 0;
         }
         .gbtSystem {
           font-size: 15px; color: var(--c-gold-d); font-weight: 600; margin: 0 0 24px;

@@ -2,10 +2,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import HeroVideo from '@/components/HeroVideo';
+import CountUp from '@/components/CountUp';
+import AnimatedIcon from '@/components/AnimatedIcon';
+import TextReveal from '@/components/TextReveal';
 import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS } from '@/lib/copy';
 import styles from './Home.module.css';
 
@@ -31,43 +34,15 @@ const TX_IMG: Record<string, string> = {
 
 // 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
 const STATS = [
-  { en: 'STERILIZATION', num: '9', unit: '단계', label: '대학병원급 멸균 시스템' },
-  { en: 'SPECIALISTS', num: '2', unit: '인', label: '구강악안면외과 · 보존과 전문의 협진' },
-  { en: 'TREATMENTS', num: '7', unit: '과목', label: '임플란트부터 미백까지 전 진료' },
-  { en: 'SONGDO IBS', num: '8', unit: '층', label: '국제업무지구역 IBS타워' },
+  { en: 'STERILIZATION', num: '9', unit: '단계', label: '대학병원급 멸균 시스템', icon: 'shield' },
+  { en: 'SPECIALISTS', num: '2', unit: '인', label: '구강악안면외과 · 보존과 전문의 협진', icon: 'users' },
+  { en: 'TREATMENTS', num: '7', unit: '과목', label: '임플란트부터 미백까지 전 진료', icon: 'layers' },
+  { en: 'SONGDO IBS', num: '8', unit: '층', label: '국제업무지구역 IBS타워', icon: 'building' },
 ];
 
-// 숫자 카운트업 — 화면에 들어오면 0 → 목표값 (easeOutCubic)
-function CountUp({ target }: { target: number }) {
-  const [n, setN] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setN(target);
-      return;
-    }
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (!e.isIntersecting) return;
-        obs.unobserve(el);
-        const dur = 1100;
-        const start = performance.now();
-        const tick = (now: number) => {
-          const p = Math.min((now - start) / dur, 1);
-          setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
-          if (p < 1) requestAnimationFrame(tick);
-        };
-        requestAnimationFrame(tick);
-      },
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [target]);
-  return <span ref={ref}>{n}</span>;
-}
+// 약속·시스템 카드 라인 아이콘 (순서 = copy.ts 배열 순서)
+const PROMISE_ICONS = ['users', 'leaf', 'chat', 'home'];
+const SYSTEM_ICONS = ['shield', 'door', 'clock', 'badge'];
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
@@ -186,14 +161,15 @@ export default function Home() {
       {/* ===== STATS — 숫자 임팩트 ===== */}
       <section className={styles.stats}>
         <div className={styles.inner}>
-          <Reveal>
+          <Reveal variant="fade">
             <span className={styles.labelCenter}><i />WHY ART H</span>
-            <h2 className={styles.sectionTitleCenter}>믿고 맡기실 수 있는 이유</h2>
           </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['믿고 맡기실 수 있는 이유']} delay={0.05} />
           <div className={styles.statsGrid}>
             {STATS.map((s, i) => (
               <Reveal key={s.en} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
                 <div className={styles.statItem}>
+                  <AnimatedIcon name={s.icon} size={34} stroke="var(--c-blue-text)" delay={0.1 + 0.08 * i} className={styles.statIcon} />
                   <span className={styles.statEn}>{s.en}</span>
                   <p className={styles.statNum}>
                     <CountUp target={parseInt(s.num, 10)} /><em>{s.unit}</em>
@@ -209,15 +185,18 @@ export default function Home() {
       {/* ===== PROMISE — 약속 4 ===== */}
       <section className={styles.promise}>
         <div className={styles.inner}>
-          <Reveal>
+          <Reveal variant="fade">
             <span className={styles.label}><i />OUR PROMISE</span>
-            <h2 className={styles.sectionTitle}>아트에이치치과의 네 가지 약속</h2>
           </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitle} lines={['아트에이치치과의 네 가지 약속']} delay={0.05} />
           <div className={styles.promiseGrid}>
             {PROMISE_ITEMS.map((p, i) => (
               <Reveal key={p.no} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
                 <div className={styles.promiseCard}>
-                  <span className={styles.promiseNo}>{p.no}</span>
+                  <div className={styles.promiseTop}>
+                    <span className={styles.promiseNo}>{p.no}</span>
+                    <AnimatedIcon name={PROMISE_ICONS[i % PROMISE_ICONS.length]} size={26} stroke="var(--c-blue)" delay={0.2} className={styles.promiseIcon} />
+                  </div>
                   <h3 className={styles.promiseT}>{p.t}</h3>
                   <p className={styles.promiseD}>{p.d}</p>
                 </div>
@@ -263,9 +242,11 @@ export default function Home() {
       {/* ===== DOCTOR — 전문의 2인 협진 ===== */}
       <section className={styles.doctor}>
         <div className={styles.inner}>
-          <Reveal>
+          <Reveal variant="fade">
             <span className={styles.labelCenter}><i />DOCTORS</span>
-            <h2 className={styles.sectionTitleCenter}>구강악안면외과 · 보존과 전문의 협진</h2>
+          </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['구강악안면외과 · 보존과 전문의 협진']} delay={0.05} />
+          <Reveal variant="fade" delay={0.15}>
             <p className={styles.sectionLeadCenter}>
               수술은 정교하게, 자연치아는 끝까지. 두 분야 전문의가 한 자리에서 정확하게 진단하고 끝까지 책임집니다.
             </p>
@@ -309,19 +290,20 @@ export default function Home() {
       {/* ===== SYSTEM — 진료 시스템 4 (네이비) ===== */}
       <section className={styles.system}>
         <div className={styles.inner}>
-          <Reveal>
+          <Reveal variant="fade">
             <span className={styles.label}><i />CARE SYSTEM</span>
-            <h2 className={styles.sectionTitle}>믿고 맡기실 수 있는 진료 시스템</h2>
           </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitle} lines={['믿고 맡기실 수 있는 진료 시스템']} delay={0.05} />
           <div className={styles.systemGrid}>
             {SYSTEM_ITEMS.map((s, i) => (
               <Reveal key={s.t} delay={0.07 * i} duration="0.8s" from="translateY(18px)">
                 <div className={styles.systemRow}>
                   <span className={styles.systemNo}>{String(i + 1).padStart(2, '0')}</span>
-                  <div>
+                  <div className={styles.systemBody}>
                     <h3 className={styles.systemT}>{s.t}</h3>
                     <p className={styles.systemD}>{s.d}</p>
                   </div>
+                  <AnimatedIcon name={SYSTEM_ICONS[i % SYSTEM_ICONS.length]} size={30} stroke="var(--c-blue-l)" delay={0.1 + 0.07 * i} className={styles.systemIcon} />
                 </div>
               </Reveal>
             ))}

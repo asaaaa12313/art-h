@@ -2,7 +2,25 @@
   position: relative;
   height: clamp(440px, 56vh, 620px);
   overflow: hidden;
-  margin-top: 72px;
+  margin-top: var(--header-h);
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10%;
+  height: 120%;
+  will-change: transform;
+}
+.bgInner {
+  position: absolute;
+  inset: 0;
+  animation: phZoom 1.8s var(--ease-out) both;
+}
+@keyframes phZoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
 }
 
 .overlay {
@@ -27,9 +45,19 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #fff;
-  transition: opacity 0.9s var(--ease-out) 0.2s, transform 0.9s var(--ease-out) 0.2s;
+}
+.titleMask {
+  display: block;
+  overflow: hidden;
+}
+.titleInner {
+  display: block;
+  transition: transform 0.9s var(--ease-out) 0.15s;
 }
 
 @media (max-width: 600px) {
   .wrap { height: 380px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bgInner { animation: none; }
 }

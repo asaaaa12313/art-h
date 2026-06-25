@@ -3,6 +3,7 @@ import Link from 'next/link';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
+import AnimatedIcon from '@/components/AnimatedIcon';
 import { TREATMENTS } from '@/lib/copy';
 
 export const metadata: Metadata = {
@@ -22,6 +23,17 @@ const TX_SRC: Record<string, string> = {
   'Whitening': '/media/images/consult/consult-01.jpg',
 };
 
+// 진료과목 slug별 라인 아이콘 매핑 (없는 slug는 tooth 기본)
+const TX_ICON: Record<string, string> = {
+  implant: 'scan',
+  'root-canal': 'tooth',
+  'oral-surgery': 'tooth',
+  tmj: 'badge',
+  sedation: 'droplet',
+  periodontics: 'sparkle',
+  whitening: 'sparkle',
+};
+
 export default function TreatmentsPage() {
   return (
     <>
@@ -37,6 +49,9 @@ export default function TreatmentsPage() {
                 </div>
                 <div className="txBody">
                   <div className="txHead">
+                    <span className="txIcon">
+                      <AnimatedIcon name={TX_ICON[t.slug] ?? 'tooth'} size={26} delay={0.18 + i * 0.04} />
+                    </span>
                     <span className="txEn">{t.en}</span>
                     <span className="txKo">{t.ko}</span>
                   </div>
@@ -61,11 +76,17 @@ export default function TreatmentsPage() {
         .txRow:hover { background: var(--c-warm); }
         .txRow:hover .txEn { color: var(--c-navy); }
         .txRow:hover .txArrow { transform: translateX(4px); color: var(--c-navy); }
+        .txRow:hover .txIcon { color: var(--c-navy); transform: translateY(-1px); }
         .txImg { overflow: hidden; height: 140px; }
         .txBody {
           padding: 24px 32px; display: flex; flex-direction: column; justify-content: center;
         }
         .txHead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+        .txIcon {
+          align-self: center; color: var(--c-blue);
+          transition: color 0.3s, transform 0.3s var(--ease-out);
+        }
+        .txIcon svg { stroke: currentColor; }
         .txEn { font-family: var(--f-display); font-size: 18px; color: var(--c-navy); transition: color 0.3s; }
         .txKo { font-size: 15px; color: var(--c-text2); font-weight: 500; }
         .txD { font-size: 14px; color: var(--c-text); line-height: 1.75; font-weight: 400; margin: 0; }
