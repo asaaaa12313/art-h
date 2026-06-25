@@ -1,5 +1,5 @@
 :root {
-  /* colors — Art H Dental Clinic 브랜드 컬러 (네이비 + 골드) */
+  /* colors — Art H Dental Clinic 브랜드 컬러 (네이비 + 블루) */
   --c-bg: #FDFCFA;
   --c-white: #FFFFFF;
   --c-warm: #F5F2ED;
@@ -13,12 +13,17 @@
   --c-navy-d: #0F1A35;       /* 더 짙은 네이비 */
   --c-navy-l: #2D3B60;       /* 밝은 네이비 */
 
-  /* Brand: Gold (로고 링/왕관) */
-  --c-gold: #C9A553;         /* 메인 골드 */
-  --c-gold-l: #D4B062;       /* 밝은 골드 (히어로/텍스트용) */
-  --c-gold-d: #A88942;       /* 짙은 골드 */
+  /* Brand: Blue accent (치과 — 청결·신뢰의 블루로 전환) */
+  --c-blue: #2E6FD4;          /* 메인 블루 액센트 */
+  --c-blue-l: #6BAEE8;        /* 밝은 블루 (다크 배경 텍스트·라인·글로우) */
+  --c-blue-text: #1F5AAE;     /* 밝은 배경 위 텍스트용 블루 — WCAG AA */
+  --c-blue-glow: rgba(46, 111, 212, 0.45);
 
-  --c-gold-text: #7E6228; /* 밝은 배경 위 텍스트용 골드 — WCAG AA 대비 확보 */
+  /* 기존 골드 토큰 → 블루로 통합 (토큰명 유지, 값만 블루 = 전체 페이지 일괄 전환) */
+  --c-gold: var(--c-blue);
+  --c-gold-l: var(--c-blue-l);
+  --c-gold-d: var(--c-blue-text);
+  --c-gold-text: var(--c-blue-text);
 
   --c-line: rgba(0, 0, 0, 0.07);
 

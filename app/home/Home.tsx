@@ -2,22 +2,21 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import HeroVideo from '@/components/HeroVideo';
 import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS } from '@/lib/copy';
 import styles from './Home.module.css';
 
-// Hero 영상 — 배열 순서 = 재생 순서. 체어(hero-1) 장면에만 인사 문구 노출.
+// Hero 영상 — 밝은 라운지를 첫 컷으로 (화사한 첫인상). 인사 문구는 항상 노출.
 const HERO_VIDEOS = [
-  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 덴티폼 상담
-  { mp4: '/media/video/hero-4.mp4', mp4Mobile: '/media/video/hero-4-720.mp4' }, // 마스크 진료
-  { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료 체어 (떨림보정 적용)
+  { mp4: '/media/video/facility-lounge.mp4', mp4Mobile: '/media/video/facility-lounge-720.mp4' }, // 라운지(통유리 도시전경)
   { mp4: '/media/video/hero-2.mp4', mp4Mobile: '/media/video/hero-2-720.mp4' }, // 인테리어
+  { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료 체어
+  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 덴티폼 상담
   { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
 ];
-const CHAIR_INDEX = HERO_VIDEOS.findIndex((v) => v.mp4.includes('hero-1'));
 
 // 진료과목 카드 이미지 (slug → 실사 매핑)
 const TX_IMG: Record<string, string> = {
@@ -30,54 +29,97 @@ const TX_IMG: Record<string, string> = {
   whitening: '/media/images/consult/consult-02.jpg',
 };
 
+// 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
+const STATS = [
+  { en: 'STERILIZATION', num: '9', unit: '단계', label: '대학병원급 멸균 시스템' },
+  { en: 'SPECIALISTS', num: '2', unit: '인', label: '구강악안면외과 · 보존과 전문의 협진' },
+  { en: 'TREATMENTS', num: '7', unit: '과목', label: '임플란트부터 미백까지 전 진료' },
+  { en: 'SONGDO IBS', num: '8', unit: '층', label: '국제업무지구역 IBS타워' },
+];
+
+// 숫자 카운트업 — 화면에 들어오면 0 → 목표값 (easeOutCubic)
+function CountUp({ target }: { target: number }) {
+  const [n, setN] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setN(target);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        obs.unobserve(el);
+        const dur = 1100;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const p = Math.min((now - start) / dur, 1);
+          setN(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target]);
+  return <span ref={ref}>{n}</span>;
+}
+
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [showHeroText, setShowHeroText] = useState(CHAIR_INDEX === 0);
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoaded(true), 150);
-    const on = () => setOffset(window.scrollY);
+    let raf = 0;
+    const on = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        setOffset(window.scrollY);
+        raf = 0;
+      });
+    };
     window.addEventListener('scroll', on, { passive: true });
     return () => {
       window.clearTimeout(t);
       window.removeEventListener('scroll', on);
+      if (raf) window.cancelAnimationFrame(raf);
     };
   }, []);
-
-  const handleVideoIndexChange = (idx: number) => {
-    setShowHeroText(idx === CHAIR_INDEX);
-  };
 
   return (
     <>
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
-        <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.1}px)`, height: '115%' }}>
+        <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.08}px)`, height: '115%' }}>
           <HeroVideo
             videos={HERO_VIDEOS}
-            poster="/media/video/hero-poster.jpg"
+            poster="/media/images/waiting/lounge-video-poster.jpg"
             alt="아트에이치치과 병원 소개 영상"
-            onIndexChange={handleVideoIndexChange}
           />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow} data-loaded={loaded} data-visible={showHeroText}>SONGDO · ART H DENTAL</p>
-          <h1 className={styles.heroTitle} data-loaded={loaded} data-visible={showHeroText}>
+          <div className={styles.heroLine} data-loaded={loaded} aria-hidden="true" />
+          <p className={styles.heroEyebrow} data-loaded={loaded}>SONGDO · ART H DENTAL</p>
+          <h1 className={styles.heroTitle} data-loaded={loaded}>
             진료 너머,<br />사람의 고귀함을<br />생각합니다
           </h1>
-          <p className={styles.heroSub} data-loaded={loaded} data-visible={showHeroText}>
+          <p className={styles.heroSub} data-loaded={loaded}>
             한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 추구합니다.
           </p>
-          <div className={styles.heroCtas} data-loaded={loaded} data-visible={showHeroText}>
+          <div className={styles.heroCtas} data-loaded={loaded}>
             <Link href="/about" className={styles.heroCta}>의원소개</Link>
             <Link href="/treatments" className={styles.heroCta}>진료과목</Link>
             <Link href="/location" className={styles.heroCta}>오시는길</Link>
             <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCtaPrimary}>전화문의</a>
           </div>
         </div>
-        <div className={styles.scrollHint} data-loaded={loaded} data-visible={showHeroText} aria-hidden="true">
+        <div className={styles.scrollHint} data-loaded={loaded} aria-hidden="true">
           <span>SCROLL</span>
           <div className={styles.scrollHintLine} />
         </div>
@@ -88,7 +130,7 @@ export default function Home() {
         <div className={styles.introGrid}>
           <div>
             <Reveal duration="0.6s">
-              <p className={styles.eyebrow}>BEYOND TREATMENT</p>
+              <span className={styles.label}><i />BEYOND TREATMENT</span>
             </Reveal>
             <Reveal delay={0.1} duration="0.8s">
               <h2 className={styles.introTitle}>
@@ -118,12 +160,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== PROMISE — 왜 아트에이치인가 (약속 4) ===== */}
+      {/* ===== QUOTE — 풀블리드 에디토리얼 ===== */}
+      <section className={styles.quote}>
+        <div className={styles.quoteBg} style={{ transform: `translateY(${(offset - 900) * 0.04}px)` }}>
+          <Photo
+            src="/media/images/waiting/waiting-02.jpg"
+            alt="아트에이치치과 대기실 라운지"
+            sizes="100vw"
+            objectPosition="center 55%"
+          />
+          <div className={styles.quoteOverlay} aria-hidden="true" />
+        </div>
+        <div className={styles.quoteContent}>
+          <Reveal duration="0.7s">
+            <span className={styles.quoteCaption}>｜ A PLACE TO RETURN ｜</span>
+          </Reveal>
+          <Reveal delay={0.12} duration="0.9s">
+            <p className={styles.quoteText}>
+              충분한 시간을 드리는 것,<br />그것이 우리가 선택한 방식입니다.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== STATS — 숫자 임팩트 ===== */}
+      <section className={styles.stats}>
+        <div className={styles.inner}>
+          <Reveal>
+            <span className={styles.labelCenter}><i />WHY ART H</span>
+            <h2 className={styles.sectionTitleCenter}>믿고 맡기실 수 있는 이유</h2>
+          </Reveal>
+          <div className={styles.statsGrid}>
+            {STATS.map((s, i) => (
+              <Reveal key={s.en} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
+                <div className={styles.statItem}>
+                  <span className={styles.statEn}>{s.en}</span>
+                  <p className={styles.statNum}>
+                    <CountUp target={parseInt(s.num, 10)} /><em>{s.unit}</em>
+                  </p>
+                  <p className={styles.statLabel}>{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PROMISE — 약속 4 ===== */}
       <section className={styles.promise}>
         <div className={styles.inner}>
           <Reveal>
-            <p className={styles.eyebrowCenter}>WHY ART H</p>
-            <h2 className={styles.sectionTitleCenter}>아트에이치치과가 드리는 네 가지 약속</h2>
+            <span className={styles.label}><i />OUR PROMISE</span>
+            <h2 className={styles.sectionTitle}>아트에이치치과의 네 가지 약속</h2>
           </Reveal>
           <div className={styles.promiseGrid}>
             {PROMISE_ITEMS.map((p, i) => (
@@ -145,7 +233,7 @@ export default function Home() {
           <Reveal>
             <div className={styles.sectionHead}>
               <div>
-                <p className={styles.eyebrow}>TREATMENTS</p>
+                <span className={styles.label}><i />TREATMENTS</span>
                 <h2 className={styles.sectionTitle}>진료과목</h2>
               </div>
               <Link href="/treatments" className={styles.moreLink}>전체보기</Link>
@@ -158,6 +246,7 @@ export default function Home() {
                   <div className={styles.txImg}>
                     <Photo src={TX_IMG[t.slug]} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
                     <div className={styles.txOverlay} aria-hidden="true" />
+                    <span className={styles.txNo}>{String(i + 1).padStart(2, '0')}</span>
                   </div>
                   <div className={styles.txLabel}>
                     <span className={styles.txEn}>{t.en}</span>
@@ -175,7 +264,7 @@ export default function Home() {
       <section className={styles.doctor}>
         <div className={styles.inner}>
           <Reveal>
-            <p className={styles.eyebrowCenter}>DOCTORS</p>
+            <span className={styles.labelCenter}><i />DOCTORS</span>
             <h2 className={styles.sectionTitleCenter}>구강악안면외과 · 보존과 전문의 협진</h2>
             <p className={styles.sectionLeadCenter}>
               수술은 정교하게, 자연치아는 끝까지. 두 분야 전문의가 한 자리에서 정확하게 진단하고 끝까지 책임집니다.
@@ -217,11 +306,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== SYSTEM — 진료 시스템 4 ===== */}
+      {/* ===== SYSTEM — 진료 시스템 4 (네이비) ===== */}
       <section className={styles.system}>
         <div className={styles.inner}>
           <Reveal>
-            <p className={styles.eyebrow}>CARE SYSTEM</p>
+            <span className={styles.label}><i />CARE SYSTEM</span>
             <h2 className={styles.sectionTitle}>믿고 맡기실 수 있는 진료 시스템</h2>
           </Reveal>
           <div className={styles.systemGrid}>
@@ -240,40 +329,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== FACILITY — 시설 (영상 + 사진) ===== */}
+      {/* ===== FACILITY — 풀블리드 시네마틱 영상 ===== */}
       <section className={styles.facility}>
+        <div className={styles.facilityVideoWrap}>
+          <video
+            className={styles.facilityVideoEl}
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="none"
+            poster="/media/images/waiting/lounge-video-poster.jpg"
+            aria-label="아트에이치치과 대기실 라운지 영상"
+          >
+            <source src="/media/video/facility-lounge-720.mp4" media="(max-width: 768px)" type="video/mp4" />
+            <source src="/media/video/facility-lounge.mp4" type="video/mp4" />
+          </video>
+          <div className={styles.facilityVideoOverlay} aria-hidden="true" />
+          <div className={styles.facilityVideoText}>
+            <Reveal duration="0.7s">
+              <span className={styles.facilityCaption}>｜ WAITING LOUNGE ｜</span>
+            </Reveal>
+            <Reveal delay={0.12} duration="0.9s">
+              <h2 className={styles.facilityTitle}>송도의 하늘과 맞닿은,<br />편안함을 설계한 공간</h2>
+            </Reveal>
+          </div>
+        </div>
         <div className={styles.inner}>
-          <Reveal>
-            <div className={styles.sectionHead}>
-              <div>
-                <p className={styles.eyebrow}>FACILITY</p>
-                <h2 className={styles.sectionTitle}>편안함을 설계한 공간</h2>
-              </div>
-              <Link href="/facility" className={styles.moreLink}>전체보기</Link>
-            </div>
-          </Reveal>
-          {/* 대표 영상 — 인테리어 (추후 드라이브 대기실·데스크 영상으로 교체 가능) */}
-          <Reveal duration="1.1s" from="scale(0.98)">
-            <div className={styles.facilityVideo}>
-              <video
-                className={styles.facilityVideoEl}
-                autoPlay
-                muted
-                playsInline
-                loop
-                preload="none"
-                poster="/media/images/waiting/lounge-video-poster.jpg"
-                aria-label="아트에이치치과 대기실 라운지 영상"
-              >
-                <source src="/media/video/facility-lounge-720.mp4" media="(max-width: 768px)" type="video/mp4" />
-                <source src="/media/video/facility-lounge.mp4" type="video/mp4" />
-              </video>
-              <div className={styles.facilityVideoLabel} aria-hidden="true">
-                <span>WAITING LOUNGE</span>
-                <strong>송도 IBS타워 8층 · 통유리 너머 도시 전경</strong>
-              </div>
-            </div>
-          </Reveal>
+          <div className={styles.facilityHead}>
+            <span className={styles.label}><i />FACILITY</span>
+            <Link href="/facility" className={styles.moreLink}>시설 전체보기</Link>
+          </div>
           <div className={styles.facilityGrid}>
             {[
               { src: '/media/images/surgery/surgery-02.jpg', label: '수술실 Operation Room' },
@@ -296,7 +382,7 @@ export default function Home() {
         <div className={styles.inner}>
           <div className={styles.locationRow}>
             <div>
-              <Reveal duration="0.6s"><p className={styles.eyebrow}>LOCATION</p></Reveal>
+              <Reveal duration="0.6s"><span className={styles.label}><i />LOCATION</span></Reveal>
               <Reveal delay={0.1} duration="0.7s"><h2 className={styles.locTitle}>송도 IBS타워 · 업무동 8층</h2></Reveal>
               <Reveal delay={0.15} duration="0.7s"><p className={styles.locSub}>{SITE.address} · 국제업무지구역 5번 출구 470m</p></Reveal>
             </div>
