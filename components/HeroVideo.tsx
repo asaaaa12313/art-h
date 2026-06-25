@@ -85,6 +85,8 @@ export default function HeroVideo({ videos, poster, alt = '아트에이치치과
 
   return (
     <div className={styles.wrap} style={style}>
+      {/* 포스터 — 영상 로딩 전/실패 시 항상 노출되는 베이스 레이어 (빈 화면 방지) */}
+      <img src={poster} alt="" aria-hidden="true" className={styles.poster} />
       <video
         ref={videoRef}
         className={styles.video}

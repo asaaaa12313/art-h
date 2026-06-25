@@ -18,6 +18,8 @@
   --c-gold-l: #D4B062;       /* 밝은 골드 (히어로/텍스트용) */
   --c-gold-d: #A88942;       /* 짙은 골드 */
 
+  --c-gold-text: #7E6228; /* 밝은 배경 위 텍스트용 골드 — WCAG AA 대비 확보 */
+
   --c-line: rgba(0, 0, 0, 0.07);
 
   /* gradient visuals */
@@ -37,6 +39,7 @@
 
   /* fonts */
   --f-display: 'DM Serif Display', 'Pretendard Variable', Pretendard, serif; /* 영문 전용 세리프 */
+  --f-serif-ko: 'Nanum Myeongjo', 'Pretendard Variable', serif; /* 한글 명조 — 프리미엄 제목 강조용 */
   --f-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
   --f-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; /* 한글 제목 */
 
