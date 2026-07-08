@@ -211,7 +211,7 @@ export default function Home() {
           <TextReveal as="h2" className={styles.sectionTitle} lines={['아트에이치치과의 네 가지 약속']} delay={0.05} />
           <div className={styles.promiseGrid}>
             {PROMISE_ITEMS.map((p, i) => (
-              <Reveal key={p.no} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
+              <Reveal key={p.no} delay={0.08 * i} duration="0.8s" from="translateY(20px)" style={{ height: '100%' }}>
                 <div className={styles.promiseCard}>
                   <div className={styles.promiseTop}>
                     <span className={styles.promiseNo}>{p.no}</span>
@@ -240,7 +240,7 @@ export default function Home() {
           </Reveal>
           <div className={styles.txGrid}>
             {TREATMENTS.map((t, i) => (
-              <Reveal key={t.slug} delay={0.05 + (i % 3) * 0.08} duration="0.9s" from="scale(0.97)">
+              <Reveal key={t.slug} delay={0.05 + (i % 3) * 0.08} duration="0.9s" from="scale(0.97)" style={{ height: '100%' }}>
                 <Link href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
                   <div className={styles.txImg}>
                     <Photo src={TX_IMG[t.slug]} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
@@ -273,7 +273,7 @@ export default function Home() {
           </Reveal>
           <div className={styles.doctorGrid}>
             {DOCTORS.map((d, i) => (
-              <Reveal key={d.name} delay={0.1 * i} duration="0.9s" from="translateY(24px)">
+              <Reveal key={d.name} delay={0.1 * i} duration="0.9s" from="translateY(24px)" style={{ height: '100%' }}>
                 <div className={styles.doctorCard}>
                   <div className={styles.doctorPhoto}>
                     <Photo
@@ -316,7 +316,7 @@ export default function Home() {
           <TextReveal as="h2" className={styles.sectionTitle} lines={['믿고 맡기실 수 있는 진료 시스템']} delay={0.05} />
           <div className={styles.systemGrid}>
             {SYSTEM_ITEMS.map((s, i) => (
-              <Reveal key={s.t} delay={0.07 * i} duration="0.8s" from="translateY(18px)">
+              <Reveal key={s.t} delay={0.07 * i} duration="0.8s" from="translateY(18px)" style={{ height: '100%' }}>
                 <div className={styles.systemRow}>
                   <span className={styles.systemNo}>{String(i + 1).padStart(2, '0')}</span>
                   <div className={styles.systemBody}>
