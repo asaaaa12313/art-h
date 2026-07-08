@@ -43,7 +43,7 @@ const TX_IMG: Record<string, string> = {
 
 // 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
 const STATS = [
-  { en: 'STERILIZATION', num: '9', unit: '단계', label: '대학병원급 멸균 시스템', icon: 'shield' },
+  { en: 'STERILIZATION', num: '9', unit: '단계', label: 'Class B 고압증기멸균 시스템', icon: 'shield' },
   { en: 'SPECIALISTS', num: '2', unit: '인', label: '구강악안면외과 · 보존과 전문의 협진', icon: 'users' },
   { en: 'TREATMENTS', num: '7', unit: '과목', label: '임플란트부터 미백까지 전 진료', icon: 'layers' },
   { en: 'SONGDO IBS', num: '8', unit: '층', label: '국제업무지구역 IBS타워', icon: 'building' },
@@ -51,7 +51,7 @@ const STATS = [
 
 // 약속·시스템 카드 라인 아이콘 (순서 = copy.ts 배열 순서)
 const PROMISE_ICONS = ['users', 'leaf', 'chat', 'home'];
-const SYSTEM_ICONS = ['shield', 'door', 'clock', 'badge'];
+const SYSTEM_ICONS = ['shield', 'door', 'badge'];
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);

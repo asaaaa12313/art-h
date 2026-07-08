@@ -167,10 +167,10 @@ export const TREATMENTS: Treatment[] = [
     beforeAfter: {
       label: 'ADVANCED IMPLANTOLOGY',
       title: '고난이도 임플란트 · 상악동 거상술',
-      before: '/media/images/xray/sinus-before.jpg',
+      before: '/media/images/xray/sinus-diagram.png',
       after: '/media/images/xray/sinus-after.jpg',
-      caption: '상악동 거상술 전 / 후 X-RAY',
-      d: '아트에이치치과는 어려운 환경의 치조골에서도 구강악안면외과 전문의의 전문성을 통한 안전한 임플란트 식립을 진행합니다.',
+      caption: '상악동 거상술 원리 모식도 (왼쪽) · 실제 시술 후 X-RAY (오른쪽)',
+      d: '① 잔존골이 부족한 상태에서 ② 상악동막을 들어올려 골이식을 하고 ③ 충분한 골량을 확보한 뒤 임플란트를 식립합니다. 아트에이치치과는 어려운 환경의 치조골에서도 구강악안면외과 전문의의 전문성을 통한 안전한 임플란트 식립을 진행합니다.',
     },
   },
   {
@@ -489,9 +489,8 @@ export const DOCTORS = [
 export const DOCTOR = DOCTORS[0];
 
 export const SYSTEM_ITEMS = [
-  { t: '멸균 시스템', d: '9단계 감염 관리 프로토콜. 기구 세척부터 멸균, 진료수 관리까지 눈에 보이지 않는 곳까지 철저하게.' },
+  { t: '멸균 시스템', d: '중앙공급실 방식의 Class B 고압증기멸균 시스템. 기구 세척부터 멸균, 진료수 관리까지 9단계 감염 관리 프로토콜로 눈에 보이지 않는 곳까지 철저하게.' },
   { t: '독립 수술실', d: '임플란트 수술은 완전히 분리된 1인 수술실에서 진행합니다. 외부 소음 차단, 감염 위험 최소화.' },
-  { t: '원데이 보철', d: '독일 CEREC 시스템으로 본 뜨는 불편함 없이, 하루 만에 보철물을 완성합니다.' },
   { t: '치료 보증제', d: '진료 보증서를 발급하고, 정기 검진을 통해 치료받은 치아를 오래 유지할 수 있도록 끝까지 책임집니다.' },
 ];
 

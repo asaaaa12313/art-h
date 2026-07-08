@@ -170,7 +170,7 @@ export default async function TreatmentDetailPage({
             <div className="txBAGrid">
               <Reveal variant="blur-up" delay={0.1} duration="0.8s">
                 <div className="txBAImg">
-                  <Photo src={tx.beforeAfter.before} alt="상악동 거상술 전 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
+                  <Photo src={tx.beforeAfter.before} alt="상악동 거상술 원리 모식도" objectFit="contain" bg="#ffffff" sizes="(max-width: 768px) 100vw, 460px" />
                 </div>
               </Reveal>
               <Reveal variant="blur-up" delay={0.18} duration="0.8s">
