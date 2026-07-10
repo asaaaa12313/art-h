@@ -20,6 +20,9 @@ const ROOM_ICON: Record<string, string> = {
   상담실: 'users',
 };
 
+// 프라임스캔 제품 이미지 (덴츠플라이 시로나 제공 원본 → 웹용 최적화)
+const PRIMESCAN_SRC = '/media/images/equipment/primescan-01.jpg';
+
 export const metadata: Metadata = {
   title: '시설',
   description:
@@ -154,6 +157,55 @@ export default function FacilityPage() {
               />
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* 프라임스캔 — 디지털 구강스캐너 */}
+      <section className="scanSec">
+        <div className="scanInner">
+          <Reveal variant="blur-up" duration="1s">
+            <div className="scanImgCol">
+              <div className="scanImgWrap">
+                <Photo
+                  src={PRIMESCAN_SRC || undefined}
+                  bg={PRIMESCAN_SRC ? undefined : 'var(--c-navy-l)'}
+                  label={PRIMESCAN_SRC ? undefined : '프라임스캔 이미지 준비중'}
+                  alt="프라임스캔 커넥트 디지털 구강스캐너 — 노트북 화면에 3D 스캔된 치아 모형과 스캐너 본체"
+                  sizes="(max-width: 768px) 86vw, 560px"
+                />
+              </div>
+              <div className="scanImgWrap2">
+                <Photo
+                  src="/media/images/equipment/primescan-scanner.jpg"
+                  alt="프라임스캔 스캐너 본체 클로즈업 — 크래들에 놓인 무선형 구강 스캐너"
+                  sizes="(max-width: 768px) 86vw, 560px"
+                />
+              </div>
+            </div>
+          </Reveal>
+          <div className="scanBody">
+            <Reveal variant="fade" delay={0.1}>
+              <p className="scanEyebrow">DIGITAL SCAN · PRIMESCAN</p>
+            </Reveal>
+            <Reveal variant="fade" delay={0.15}>
+              <div className="scanTitleRow">
+                <AnimatedIcon name="scan" size={30} stroke="var(--c-blue-l)" delay={0.35} className="scanTitleIcon" />
+                <TextReveal as="h2" className="scanTitle" lines={['본뜨지 않는 정밀 인상채득,', '디지털 구강스캐너']} delay={0.2} />
+              </div>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <p className="scanSystem">프라임스캔 커넥트 · 덴츠플라이 시로나</p>
+              <p className="scanDesc">
+                고무·석고로 본을 뜨던 기존 방식 대신, 입안을 카메라로 스캔해 3D 디지털 모형을 즉시 만듭니다. 구역질 나는 인상재가 없어 편안하고, 빠르며, 다시 찍기도 간편합니다.
+              </p>
+              <p className="scanHighlight">불편한 본뜨기 없이, 정밀하고 편안하게.</p>
+              <ul className="scanChips">
+                {['인상재 없음', '구역질 감소', '빠른 스캔', '3D 정밀', '임플란트·보철·교정'].map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -307,12 +359,70 @@ export default function FacilityPage() {
           border-radius: 3px; background: #fff;
         }
 
+        /* 프라임스캔 — 디지털 구강스캐너 (이미지 좌 / 텍스트 우, 네이비) */
+        .scanSec {
+          background: var(--c-navy);
+          padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
+        }
+        .scanInner {
+          max-width: 1100px; margin: 0 auto;
+          display: grid; grid-template-columns: 1.1fr 0.9fr;
+          gap: clamp(36px,5vw,72px); align-items: start;
+        }
+        .scanImgCol {
+          display: flex; flex-direction: column; gap: 14px;
+        }
+        .scanImgWrap {
+          position: relative; aspect-ratio: 3 / 2; overflow: hidden;
+          border-radius: 3px; background: #fff;
+        }
+        .scanImgWrap2 {
+          position: relative; aspect-ratio: 16 / 9; overflow: hidden;
+          border-radius: 3px; background: #fff;
+        }
+        .scanEyebrow {
+          font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
+          color: var(--c-gold-l); margin: 0 0 18px;
+        }
+        .scanTitleRow {
+          display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
+        }
+        .scanTitleIcon { flex-shrink: 0; margin-top: 4px; }
+        .scanTitle {
+          font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
+          font-weight: 700; letter-spacing: -0.03em; color: #fff;
+          line-height: 1.35; margin: 0;
+        }
+        .scanSystem {
+          font-size: 15px; color: var(--c-gold-l); font-weight: 600; margin: 0 0 24px;
+        }
+        .scanDesc {
+          font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
+          font-weight: 400; margin: 0 0 20px; max-width: 540px;
+        }
+        .scanHighlight {
+          font-family: var(--f-heading); font-size: clamp(17px,2vw,21px);
+          font-weight: 700; color: var(--c-gold-l); line-height: 1.5;
+          letter-spacing: -0.02em; margin: 0 0 28px;
+        }
+        .scanChips {
+          list-style: none; padding: 0; margin: 0;
+          display: flex; flex-wrap: wrap; gap: 8px;
+        }
+        .scanChips li {
+          font-size: 12.5px; color: rgba(255,255,255,0.9);
+          border: 1px solid rgba(255,255,255,0.22);
+          padding: 7px 14px; border-radius: 999px;
+        }
+
         @media (max-width: 768px) {
           .roomGrid { grid-template-columns: 1fr; }
           .novaInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
           .novaImgWrap { width: 260px; }
           .gbtInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
           .gbtImgWrap { width: 260px; }
+          .scanInner { grid-template-columns: 1fr; justify-items: center; text-align: left; }
+          .scanImgCol { width: min(420px, 86vw); }
         }
       `}</style>
     </>
