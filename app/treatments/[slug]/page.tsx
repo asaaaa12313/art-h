@@ -277,7 +277,7 @@ export default async function TreatmentDetailPage({
           </section>
         )}
 
-        {/* 미백 시스템 — 기기 3종 */}
+        {/* 기기·치료 방법 카드 (미백 기기 3종 / 턱관절 치료 방법 3종) */}
         {tx.devices && tx.devicesTitle && (
           <section className="txSec txDevices">
             <div>

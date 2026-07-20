@@ -73,8 +73,10 @@ type TxShowcase = {
   desc: string;
   items: TxShowcaseItem[];
 };
-type TxFigure = { diagram: string; t: string; d: string };
-type TxKindItem = { name: string; tag: string; d: string; diagram?: string; image?: string };
+import type { TxDiagramName } from '@/components/TxDiagram';
+
+type TxFigure = { diagram: TxDiagramName; t: string; d: string };
+type TxKindItem = { name: string; tag: string; d: string; diagram?: TxDiagramName; image?: string };
 type TxKinds = { label: string; title: string; desc: string; items: TxKindItem[] };
 type TxInsurance = {
   label: string;
@@ -120,7 +122,7 @@ export const TREATMENTS: Treatment[] = [
     en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
     d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.',
     summary: '상실된 자연치아의 자리를, 가장 가깝게 회복합니다.',
-    intro: '임플란트는 자연치아를 대체하는 가장 확실한 방법입니다. 아트에이치치과는 구강악안면외과 전문의가 직접 계획하고 수술합니다. 3D CT로 골량과 신경 위치를 정밀하게 파악하고, 디지털 가이드를 제작해 예측 가능한 식립을 지향합니다.',
+    intro: '임플란트는 상실된 자연치아를 대체하는 대표적인 방법입니다. 아트에이치치과는 구강악안면외과 전문의가 직접 계획하고 수술합니다. 3D CT로 골량과 신경 위치를 정밀하게 파악하고, 디지털 가이드를 제작해 예측 가능한 식립을 지향합니다.',
     processes: [
       '3D CT · 파노라마 촬영, 구강 스캔',
       '1:1 상담과 치료 계획 수립',
@@ -450,6 +452,53 @@ export const TREATMENTS: Treatment[] = [
       { q: '턱관절 장애에 좋은 생활 습관은?', a: '딱딱한 음식 피하기, 한쪽으로만 씹지 않기, 스트레스 관리, 이악물기 습관 교정이 중요합니다.' },
       { q: '턱관절 치료는 얼마나 걸리나요?', a: '원인과 증상 정도에 따라 다르지만, 스플린트 등 보존적 치료는 보통 3~6개월 단위로 경과를 보며 조절합니다. 조기에 시작할수록 치료 기간이 짧아집니다.' },
     ],
+    kinds: {
+      label: 'TMJ DISORDER TYPES',
+      title: '턱관절 장애, 원인에 따라 다릅니다',
+      desc: '턱관절 장애는 크게 근육의 문제, 관절 사이 디스크(관절원판)의 문제, 관절 자체의 문제로 나뉩니다. 원인에 따라 치료 방향이 달라지므로 정확한 감별 진단이 먼저입니다.',
+      items: [
+        {
+          name: '근육성 장애',
+          tag: '씹는 근육의 긴장',
+          d: '이악물기·이갈이·스트레스로 씹는 근육이 뭉쳐 턱과 관자놀이 주변이 아픈 유형입니다. 가장 흔한 유형으로, 습관 교정과 물리치료가 중심이 됩니다.',
+          diagram: 'tmj-muscle',
+        },
+        {
+          name: '관절원판 장애',
+          tag: '디스크 위치 이상',
+          d: '관절 사이에서 쿠션 역할을 하는 디스크가 제자리를 벗어나, 입을 벌릴 때 소리가 나거나 걸리는 유형입니다. 스플린트 치료가 도움이 됩니다.',
+          diagram: 'tmj-disc',
+        },
+        {
+          name: '퇴행성 관절 장애',
+          tag: '관절면의 마모',
+          d: '관절뼈 표면이 닳아 통증과 거친 잡음이 생기는 유형입니다. 조기에 관리할수록 진행을 늦출 수 있습니다.',
+          diagram: 'tmj-arthritis',
+        },
+      ],
+    },
+    devicesTitle: {
+      label: 'TREATMENT OPTIONS',
+      title: '턱관절, 이렇게 치료합니다',
+      desc: '턱관절 치료는 수술이 아닌 보존적 치료가 원칙입니다. 원인에 맞춰 아래 방법을 단계적으로 병행합니다.',
+    },
+    devices: [
+      {
+        name: '교합안정장치 (스플린트)',
+        role: '맞춤 제작 · 야간 착용',
+        d: '치아 전체를 덮는 맞춤 장치로 관절과 근육의 부담을 줄여줍니다. 보통 야간에 착용하며 정기적으로 조절합니다.',
+      },
+      {
+        name: '물리치료 · 약물치료',
+        role: '통증 · 염증 완화',
+        d: '온열 등 물리치료와 소염진통제 처방을 병행해 급성 통증과 염증을 조절합니다.',
+      },
+      {
+        name: '생활습관 교정',
+        role: '재발 방지',
+        d: '이악물기·한쪽 씹기·턱 괴기 같은 원인 습관을 찾아 교정하도록 안내합니다. 재발을 막는 데 가장 중요합니다.',
+      },
+    ],
     targetsTitle: {
       label: 'CHECK YOUR SYMPTOMS',
       title: '이런 증상이 있다면 확인해 보세요',
@@ -522,6 +571,28 @@ export const TREATMENTS: Treatment[] = [
           desc: '진정제를 정밀한 속도로 주입하고 주입 압력을 실시간 감시하여, 일정하고 안정적인 진정 상태를 유지합니다.',
           image: '/media/images/sedation/agilia-sp.jpg',
           imageFit: 'contain',
+        },
+      ],
+    },
+    kinds: {
+      label: 'WHEN SEDATION HELPS',
+      title: '이런 치료에 의식하진정을 활용합니다',
+      desc: '의식하진정(수면마취)은 긴장이 크거나 시간이 오래 걸리는 치료에서 특히 도움이 됩니다.',
+      items: [
+        {
+          name: '임플란트 수술',
+          tag: '긴 수술도 편안하게',
+          d: '식립·뼈이식처럼 수술 시간이 긴 치료를 잠자듯 편안한 상태로 받을 수 있습니다.',
+        },
+        {
+          name: '사랑니 발치',
+          tag: '공포가 큰 발치',
+          d: '매복 사랑니처럼 부담이 큰 발치도 진정 상태에서 안정적으로 진행합니다.',
+        },
+        {
+          name: '다수 치아 동시 치료',
+          tag: '내원 횟수 단축',
+          d: '여러 개의 충치·보철 치료를 한 번에 진행해 내원 횟수를 줄일 수 있습니다.',
         },
       ],
     },
@@ -599,6 +670,31 @@ export const TREATMENTS: Treatment[] = [
         { src: '/media/images/equipment/gbt-clinic.jpg', alt: '아트에이치치과 GBT 진료 장면', caption: '구강악안면외과 전문의가 직접 진행하는 GBT 케어' },
       ],
     },
+    kinds: {
+      label: 'GUM DISEASE STAGES',
+      title: '잇몸병, 소리 없이 진행됩니다',
+      desc: '잇몸병은 통증 없이 진행되다 뒤늦게 발견되는 경우가 많습니다. 정기적인 스케일링과 검진이 가장 기본적인 예방입니다.',
+      items: [
+        {
+          name: '건강한 잇몸',
+          tag: '단단하고 출혈 없음',
+          d: '잇몸이 치아를 단단히 감싸고 있고, 칫솔질에도 피가 나지 않는 상태입니다. 정기 검진으로 유지합니다.',
+          diagram: 'perio-1',
+        },
+        {
+          name: '치은염',
+          tag: '붓고 피가 나는 단계',
+          d: '치석 속 세균으로 잇몸에 염증이 생긴 상태입니다. 양치할 때 피가 나면 신호입니다. 스케일링과 관리로 회복할 수 있습니다.',
+          diagram: 'perio-2',
+        },
+        {
+          name: '치주염',
+          tag: '잇몸뼈까지 진행된 단계',
+          d: '염증이 잇몸뼈까지 진행돼 치아가 흔들릴 수 있는 상태입니다. 잇몸 치료가 필요하며, 방치하면 발치로 이어질 수 있습니다.',
+          diagram: 'perio-3',
+        },
+      ],
+    },
     aftercare: {
       label: 'AFTER SCALING',
       title: '스케일링 후 주의사항',
@@ -651,6 +747,31 @@ export const TREATMENTS: Treatment[] = [
       { name: 'Endo-Wiz', role: '시린 증상 완화', d: '미백 과정에서 생길 수 있는 시린 불편감을 최소화하는 첨단 기기입니다.' },
       { name: 'Osstem Vutees', role: '미백광 조사', d: '최적의 파장으로 미백제 활성화를 도와 미백 효과를 높입니다.' },
     ],
+    kinds: {
+      label: 'WHITENING OPTIONS',
+      title: '미백, 생활 패턴에 맞게 선택합니다',
+      desc: '치아 상태와 목표 밝기, 생활 패턴에 따라 오피스·홈·듀얼 미백 중 알맞은 방법을 안내해 드립니다.',
+      items: [
+        {
+          name: '오피스 미백',
+          tag: '치과에서 · 빠른 변화',
+          d: '전문가용 미백제와 전용 광선 조사로 치과에서 진행합니다. 짧은 기간에 뚜렷한 변화를 원할 때 적합합니다.',
+          diagram: 'wht-office',
+        },
+        {
+          name: '홈 미백',
+          tag: '집에서 · 맞춤 트레이',
+          d: '맞춤 제작한 트레이에 미백제를 담아 집에서 진행합니다. 부드럽게 서서히 밝아지는 방식입니다.',
+          diagram: 'wht-home',
+        },
+        {
+          name: '듀얼 미백',
+          tag: '오피스 + 홈 병행',
+          d: '오피스 미백으로 빠르게 밝기를 올리고 홈 미백으로 유지합니다. 효과와 지속력을 함께 챙기는 방법입니다.',
+          diagram: 'wht-dual',
+        },
+      ],
+    },
     targetsTitle: {
       label: 'WHO NEEDS WHITENING',
       title: '이런 분께 치아미백을 권합니다',

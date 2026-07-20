@@ -146,6 +146,36 @@ function Sparks({ pts, color = C.bad }: { pts: [number, number, number, number][
   );
 }
 
+/** 턱관절 측면 모식 베이스 — 위 관자뼈(오목면) + 하악 과두(원) + 관절원판(렌즈) + 턱선 */
+function TmjBase({ disc = 'normal' }: { disc?: 'normal' | 'displaced' | 'none' }) {
+  return (
+    <g>
+      <path
+        d="M28 44 Q80 20 140 26 Q186 32 196 58 L196 70 Q184 62 172 62 Q160 62 154 70 Q142 58 128 62 L60 70 Q38 66 28 56 Z"
+        fill={C.white}
+        stroke={C.navy}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <circle cx="163" cy="82" r="11" fill={C.white} stroke={C.navy} strokeWidth="2" />
+      {disc === 'normal' && <ellipse cx="163" cy="68" rx="9" ry="3.5" fill={C.blue} />}
+      {disc === 'displaced' && (
+        <g>
+          <ellipse cx="146" cy="70" rx="9" ry="3.5" fill={C.bad} />
+          <line x1="158" y1="66" x2="149" y2="68" stroke={C.bad} strokeWidth="1.8" strokeDasharray="3 2" />
+        </g>
+      )}
+      <path
+        d="M163 93 Q166 112 152 122 L96 138 Q66 144 54 134 Q46 127 56 122 L120 108 Q146 102 152 92 Z"
+        fill={C.white}
+        stroke={C.navy}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </g>
+  );
+}
+
 const SCENES: Record<string, () => ReactNode> = {
   /* ─── 임플란트 치료 단계 6종 ─── */
   'imp-step-1': () => (
@@ -319,6 +349,128 @@ const SCENES: Record<string, () => ReactNode> = {
       <Sparks pts={[[84, 30, 74, 20], [94, 24, 90, 12], [76, 44, 63, 40]]} />
     </>
   ),
+  /* ─── 턱관절 장애 유형 3종 ─── */
+  'tmj-muscle': () => (
+    <>
+      <TmjBase />
+      <g stroke={C.bad} strokeWidth="3" strokeLinecap="round" opacity="0.8">
+        <line x1="138" y1="96" x2="128" y2="122" />
+        <line x1="148" y1="94" x2="138" y2="120" />
+        <line x1="158" y1="92" x2="148" y2="118" />
+      </g>
+      <Sparks pts={[[118, 96, 108, 86], [126, 90, 122, 78], [110, 106, 97, 102]]} />
+    </>
+  ),
+  'tmj-disc': () => (
+    <>
+      <TmjBase disc="displaced" />
+      <Sparks pts={[[180, 66, 190, 58], [184, 76, 196, 74], [178, 56, 186, 46]]} />
+    </>
+  ),
+  'tmj-arthritis': () => (
+    <>
+      <TmjBase disc="none" />
+      <path
+        d="M153 78 L156 82 L153 86 L157 90 L161 87 L166 91 L170 87 L173 82"
+        fill="none"
+        stroke={C.bad}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      {[[150, 66], [176, 70], [158, 60], [170, 58]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="2" fill={C.bad} opacity="0.7" />
+      ))}
+      <Sparks pts={[[184, 78, 194, 72], [180, 62, 188, 52]]} />
+    </>
+  ),
+
+  /* ─── 잇몸병 진행 3단계 ─── */
+  'perio-1': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.2} />
+      <polyline points="152,34 161,43 176,24" fill="none" stroke={C.blue} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
+  'perio-2': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.2} />
+      <ellipse cx="82" cy="84" rx="9" ry="6" fill={C.bad} opacity="0.55" />
+      <ellipse cx="138" cy="84" rx="9" ry="6" fill={C.bad} opacity="0.55" />
+      {[[85, 76], [135, 76], [88, 70], [132, 70]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="2.6" fill={C.dot} stroke={C.navy} strokeWidth="0.8" />
+      ))}
+      <Sparks pts={[[70, 74, 60, 66], [150, 74, 160, 66]]} />
+    </>
+  ),
+  'perio-3': () => (
+    <>
+      <g>
+        <rect x="0" y="118" width="220" height="52" fill={C.bone} />
+        <rect x="0" y="102" width="220" height="16" fill={C.gum} />
+        <line x1="0" y1="102" x2="220" y2="102" stroke={C.navy} strokeWidth="1.5" opacity="0.45" />
+        {[[24, 132], [60, 148], [100, 136], [140, 152], [176, 134], [204, 148]].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="1.6" fill={C.dot} />
+        ))}
+      </g>
+      <Molar cx={110} s={1.2} />
+      {[[87, 90], [133, 90], [90, 98], [130, 98]].map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r="2.6" fill={C.dot} stroke={C.navy} strokeWidth="0.8" />
+      ))}
+      <Sparks pts={[[70, 92, 60, 84], [150, 92, 160, 84]]} />
+    </>
+  ),
+
+  /* ─── 미백 방법 3종 ─── */
+  'wht-office': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.3} />
+      <rect x="160" y="14" width="26" height="12" rx="6" fill={C.blue} transform="rotate(28 173 20)" />
+      <g stroke={C.blueL} strokeWidth="2.5" strokeLinecap="round">
+        <line x1="160" y1="28" x2="134" y2="46" />
+        <line x1="168" y1="36" x2="142" y2="54" />
+        <line x1="152" y1="22" x2="126" y2="40" />
+      </g>
+      <path d="M78 34 L82 42 L90 46 L82 50 L78 58 L74 50 L66 46 L74 42 Z" fill={C.blue} />
+    </>
+  ),
+  'wht-home': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.3} />
+      <path
+        d="M78 88 L78 46 Q78 28 94 28 Q110 40 126 28 Q142 28 142 46 L142 88 Q126 96 110 96 Q94 96 78 88 Z"
+        fill={C.blueL}
+        fillOpacity="0.28"
+        stroke={C.blue}
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+      />
+    </>
+  ),
+  'wht-dual': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.3} />
+      <path
+        d="M78 88 L78 46 Q78 28 94 28 Q110 40 126 28 Q142 28 142 46 L142 88 Q126 96 110 96 Q94 96 78 88 Z"
+        fill={C.blueL}
+        fillOpacity="0.22"
+        stroke={C.blue}
+        strokeWidth="2"
+        strokeDasharray="6 4"
+        strokeLinejoin="round"
+      />
+      <g stroke={C.blueL} strokeWidth="2.5" strokeLinecap="round">
+        <line x1="176" y1="26" x2="152" y2="42" />
+        <line x1="184" y1="36" x2="160" y2="52" />
+      </g>
+      <path d="M60 30 L63 37 L70 40 L63 43 L60 50 L57 43 L50 40 L57 37 Z" fill={C.blue} />
+    </>
+  ),
+
   'rct-4': () => (
     <>
       <Ground />
