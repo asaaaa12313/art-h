@@ -430,6 +430,30 @@ export default async function TreatmentDetailPage({
           </section>
         )}
 
+        {/* 진료 환경 실사 갤러리 */}
+        {tx.gallery && (
+          <section className="txSec txGallery">
+            <div>
+              <Reveal variant="fade">
+                <p className="txLabel">SPACE</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={['아트에이치의 진료 환경']} delay={0.05} />
+            </div>
+            <div className="txGalGrid">
+              {tx.gallery.map((g, i) => (
+                <Reveal key={`${g.src}-${g.caption}`} variant="blur-up" delay={0.1 + i * 0.08} duration="0.8s">
+                  <figure className="txGalFig">
+                    <div className="txGalImg">
+                      <Photo src={g.src} alt={g.alt} sizes="(max-width: 768px) 100vw, 400px" />
+                    </div>
+                    <figcaption className="txGalCap">{g.caption}</figcaption>
+                  </figure>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 시술 후 주의사항 */}
         {tx.aftercare && (
           <section className="txSec txCare">
@@ -909,6 +933,21 @@ export default async function TreatmentDetailPage({
         }
         .txInsNotes li::before { content: '※'; position: absolute; left: 0; }
 
+        /* 진료 환경 실사 갤러리 */
+        .txGalGrid {
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+          margin-top: 28px;
+        }
+        .txGalFig { margin: 0; }
+        .txGalImg {
+          position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+          border-radius: 2px; background: var(--c-warm);
+        }
+        .txGalCap {
+          font-size: 12.5px; color: var(--c-text2); font-weight: 500;
+          margin: 8px 0 0; text-align: center;
+        }
+
         /* 시술 후 주의사항 */
         .txCareHead { max-width: 760px; }
         .txCareGrid {
@@ -941,6 +980,7 @@ export default async function TreatmentDetailPage({
           .txFigGrid { grid-template-columns: repeat(2, 1fr); }
           .txInsGrid { grid-template-columns: 1fr; }
           .txCareGrid { grid-template-columns: 1fr; }
+          .txGalGrid { grid-template-columns: 1fr; }
           .txNav { grid-template-columns: 1fr; text-align: center; }
           .txNavNext { text-align: center; align-items: center; }
         }

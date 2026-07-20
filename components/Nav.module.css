@@ -52,17 +52,25 @@
 .desktop {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: clamp(12px, 1.6vw, 24px);
 }
 
 .link {
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.2px;
   transition: color 0.3s;
   padding: 6px 2px;
   text-shadow: 0 1px 8px rgba(15, 26, 53, 0.45);
+  white-space: nowrap;
 }
 .nav[data-show='true'] .link {
   color: var(--c-dark);
@@ -77,6 +85,50 @@
 }
 .link:hover { color: var(--c-navy); }
 .nav:not([data-show='true']) .link:hover { color: var(--c-gold-l); }
+
+.drop { position: relative; }
+.caret {
+  font-size: 10px;
+  line-height: 1;
+  transition: transform 0.25s var(--ease-out);
+}
+.caret[data-open='true'] { transform: rotate(180deg); }
+.dropMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: -8px;
+}
+/* 버튼과 메뉴 사이 6px 틈을 투명 브리지로 메워 hover 이탈로 닫히지 않게 */
+.dropMenu::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+.dropMenu {
+  min-width: 148px;
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: 2px;
+  box-shadow: 0 14px 34px rgba(15, 26, 53, 0.12);
+  padding: 6px 0;
+  display: flex;
+  flex-direction: column;
+}
+.dropLink {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-dark);
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.dropLink:hover { background: var(--c-warm); color: var(--c-navy); }
+.dropLink[data-active='true'] { color: var(--c-navy); font-weight: 800; }
+
+.cta { display: flex; align-items: center; margin-left: 8px; }
 
 .burger {
   display: none;
@@ -115,8 +167,44 @@
 }
 .overlayLink:last-child { border-bottom: none; }
 
-@media (max-width: 800px) {
+.overlayGroup {
+  margin: 14px 0 6px;
+  padding: 0 clamp(24px, 5vw, 40px);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--c-text2);
+}
+.overlayTxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 0 clamp(24px, 5vw, 40px) 8px;
+}
+.overlayTxLink {
+  padding: 13px 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-dark);
+  background: var(--c-warm);
+  border-radius: 2px;
+}
+.overlayTxLink[data-all='true'] {
+  background: transparent;
+  border: 1px solid var(--c-line);
+  color: var(--c-text2);
+  font-weight: 600;
+}
+.overlayCta { padding: 14px clamp(24px, 5vw, 40px) 8px; }
+
+@media (max-width: 1024px) {
   .desktop { display: none; }
+  .cta { display: none; }
   .burger { display: flex; }
-  .overlay { display: flex; }
+  .overlay {
+    display: flex;
+    max-height: calc(100vh - var(--header-h));
+    max-height: calc(100dvh - var(--header-h));
+    overflow-y: auto;
+  }
 }

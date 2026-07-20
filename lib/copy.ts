@@ -18,13 +18,22 @@ export const SITE = {
   ],
 };
 
-export const NAV_ITEMS = [
-  { href: '/', label: 'Home' },
+// 헤더 개편 v1.47 (하늘리더스 방식): 병원소개는 드롭다운 하나, 진료 7과목은 탑레벨 펼침
+export const NAV_ABOUT_ITEMS = [
   { href: '/about', label: '의원소개' },
   { href: '/doctor', label: '의료진' },
-  { href: '/treatments', label: '진료과목' },
   { href: '/facility', label: '시설' },
   { href: '/location', label: '오시는길' },
+] as const;
+
+export const NAV_TREATMENT_ITEMS = [
+  { href: '/treatments/implant', label: '임플란트' },
+  { href: '/treatments/oral-surgery', label: '사랑니 발치' },
+  { href: '/treatments/root-canal', label: '신경치료' },
+  { href: '/treatments/tmj', label: '턱관절' },
+  { href: '/treatments/sedation', label: '의식하진정' },
+  { href: '/treatments/periodontics', label: '잇몸 · 스케일링' },
+  { href: '/treatments/whitening', label: '치아미백' },
 ] as const;
 
 type TxFaq = { q: string; a: string };
@@ -75,6 +84,7 @@ type TxInsurance = {
   notes: string[];
 };
 type TxAftercare = { label: string; title: string; items: string[] };
+type TxGalleryItem = { src: string; alt: string; caption: string };
 
 export type Treatment = {
   en: string;
@@ -102,6 +112,7 @@ export type Treatment = {
   kinds?: TxKinds;
   insurance?: TxInsurance;
   aftercare?: TxAftercare;
+  gallery?: TxGalleryItem[];
 };
 
 export const TREATMENTS: Treatment[] = [
@@ -256,6 +267,11 @@ export const TREATMENTS: Treatment[] = [
         '실밥은 보통 1~2주 후 제거합니다. 그 전까지 수술 부위를 손이나 혀로 만지지 마세요.',
       ],
     },
+    gallery: [
+      { src: '/media/images/equipment/primescan-01.jpg', alt: '프라임스캔 디지털 구강 스캐너', caption: '디지털 구강 스캐너로 정밀 본뜨기' },
+      { src: '/media/images/xray/xray-01.jpg', alt: '디지털 영상 진단 장비', caption: '디지털 영상 정밀 진단' },
+      { src: '/media/images/consult/consult-01.jpg', alt: '1:1 상담실', caption: '치료 계획을 함께 정하는 1:1 상담' },
+    ],
   },
   {
     en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
@@ -323,6 +339,11 @@ export const TREATMENTS: Treatment[] = [
         '신경치료가 끝난 치아는 크라운으로 보호해야 오래 사용할 수 있습니다. 최종 보철까지 마무리해 주세요.',
       ],
     },
+    gallery: [
+      { src: '/media/images/treatment-room/treatment-02.jpg', alt: '신경치료가 이뤄지는 진료실', caption: '치료에 집중할 수 있는 진료 공간' },
+      { src: '/media/images/xray/xray-02.jpg', alt: '치아 뿌리를 확인하는 영상 진단 장비', caption: '치아 뿌리 상태를 확인하는 영상 진단' },
+      { src: '/media/images/treatment-room/treatment-03.jpg', alt: '위생적으로 관리되는 진료실', caption: '체계적인 멸균 · 위생 관리' },
+    ],
   },
   {
     en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery', bg: V.equip,
@@ -398,6 +419,11 @@ export const TREATMENTS: Treatment[] = [
         '다음 날 소독을 위해 내원해 주시고, 봉합한 실은 약 1주일 후 제거합니다.',
       ],
     },
+    gallery: [
+      { src: '/media/images/surgery/surgery-01.jpg', alt: '사랑니 발치가 이뤄지는 수술 공간', caption: '일반 진료와 분리된 수술 공간' },
+      { src: '/media/images/treatment-room/treatment-03.jpg', alt: '위생적으로 관리되는 진료 공간', caption: '체계적인 멸균 · 위생 관리' },
+      { src: '/media/images/recovery/recovery-01.jpg', alt: '수술 후 쉬어가는 회복실', caption: '발치 후 안정을 취하는 회복 공간' },
+    ],
   },
   {
     en: 'TMJ', ko: '턱관절치료', slug: 'tmj', bg: V.scan,
@@ -422,6 +448,36 @@ export const TREATMENTS: Treatment[] = [
       { q: '턱에서 소리만 나는데 치료가 필요한가요?', a: '통증이 없는 단순한 관절음은 경과 관찰이 가능하지만, 소리가 점점 커지거나 통증이 생기면 진단을 받는 것이 좋습니다.' },
       { q: '스플린트는 언제까지 착용하나요?', a: '증상에 따라 보통 3~6개월 정도 야간 착용합니다. 정기 점검 후 조절합니다.' },
       { q: '턱관절 장애에 좋은 생활 습관은?', a: '딱딱한 음식 피하기, 한쪽으로만 씹지 않기, 스트레스 관리, 이악물기 습관 교정이 중요합니다.' },
+      { q: '턱관절 치료는 얼마나 걸리나요?', a: '원인과 증상 정도에 따라 다르지만, 스플린트 등 보존적 치료는 보통 3~6개월 단위로 경과를 보며 조절합니다. 조기에 시작할수록 치료 기간이 짧아집니다.' },
+    ],
+    targetsTitle: {
+      label: 'CHECK YOUR SYMPTOMS',
+      title: '이런 증상이 있다면 확인해 보세요',
+      desc: '턱관절 장애는 초기에 진단할수록 간단한 보존적 치료로 좋아질 수 있습니다. 아래 증상이 반복된다면 진료를 권합니다.',
+    },
+    targets: [
+      '입을 벌리거나 다물 때 턱에서 소리가 나는 경우',
+      '턱 · 귀 주변이 아프거나 뻐근한 경우',
+      '입이 잘 안 벌어지거나 벌릴 때 통증이 있는 경우',
+      '아침에 턱이 뻣뻣하고 두통 · 목 통증이 함께 오는 경우',
+      '이갈이 · 이악물기 습관이 있는 경우',
+    ],
+    aftercare: {
+      label: 'DAILY CARE',
+      title: '턱관절 치료 중 생활 주의사항',
+      items: [
+        '딱딱하거나 질긴 음식(오징어·견과류·질긴 고기 등)은 치료 기간 동안 피해주세요.',
+        '하품할 때는 턱을 받쳐 입이 과하게 벌어지지 않게 해주세요.',
+        '턱 괴기, 한쪽으로만 씹기, 엎드려 자기 같은 습관은 턱관절에 부담을 줍니다.',
+        '스플린트(교합안정장치)는 안내된 착용 시간을 지키고, 흐르는 물로 세척해 보관하세요.',
+        '뻐근함이 있을 때는 따뜻한 찜질이 근육 이완에 도움이 됩니다.',
+        '스트레스와 수면 부족은 이악물기를 심하게 만듭니다. 충분한 휴식을 취해주세요.',
+      ],
+    },
+    gallery: [
+      { src: '/media/images/treatment-room/treatment-02.jpg', alt: '턱관절 진료가 이뤄지는 진료실', caption: '교합 · 근육 검사가 이뤄지는 진료실' },
+      { src: '/media/images/consult/consult-02.jpg', alt: '생활습관 상담 공간', caption: '생활습관 교정까지 안내하는 상담' },
+      { src: '/media/images/waiting/waiting-02.jpg', alt: '편안한 대기 공간', caption: '편안하게 순서를 기다리는 대기 공간' },
     ],
   },
   {
@@ -469,6 +525,35 @@ export const TREATMENTS: Treatment[] = [
         },
       ],
     },
+    targetsTitle: {
+      label: 'WHO NEEDS SEDATION',
+      title: '이런 분께 의식하진정을 권합니다',
+      desc: '진정 치료가 필요한지 고민된다면 상담 시 편하게 말씀해 주세요. 전신 상태를 확인한 뒤 안전하게 진행합니다.',
+    },
+    targets: [
+      '치과 치료에 대한 공포 · 불안이 심한 분',
+      '구역 반사가 심해 입안 치료가 어려운 분',
+      '임플란트 등 긴 수술을 편안하게 받고 싶은 분',
+      '여러 치료를 한 번에 받고 싶은 분',
+      '과거 치과 치료 중 힘들었던 경험이 있는 분',
+    ],
+    aftercare: {
+      label: 'BEFORE & AFTER',
+      title: '진정 치료 전 · 후 주의사항',
+      items: [
+        '치료 전 안내받은 금식 시간을 꼭 지켜주세요. 금식이 안 되면 당일 진정 치료가 어려울 수 있습니다.',
+        '당일은 몸을 조이는 옷보다 편안한 복장으로 내원해 주세요.',
+        '반드시 보호자와 함께 내원하고, 귀가할 때도 보호자가 동반해야 합니다.',
+        '치료 당일에는 운전, 기계 조작, 중요한 결정이나 계약을 피해주세요.',
+        '완전히 깨어난 뒤 물부터 시작해 가벼운 음식 순서로 드세요.',
+        '당일 음주는 금하고, 처방약은 안내된 대로 복용해 주세요.',
+      ],
+    },
+    gallery: [
+      { src: '/media/images/recovery/recovery-01.jpg', alt: '진정 치료 후 회복실', caption: '깨어난 뒤 경과를 살피는 회복실' },
+      { src: '/media/images/waiting/waiting-01.jpg', alt: '보호자와 함께하는 대기 공간', caption: '보호자와 함께하는 대기 공간' },
+      { src: '/media/images/consult/consult-02.jpg', alt: '사전 문진이 이뤄지는 상담실', caption: '사전 문진과 안내가 이뤄지는 상담실' },
+    ],
   },
   {
     en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,
@@ -514,6 +599,23 @@ export const TREATMENTS: Treatment[] = [
         { src: '/media/images/equipment/gbt-clinic.jpg', alt: '아트에이치치과 GBT 진료 장면', caption: '구강악안면외과 전문의가 직접 진행하는 GBT 케어' },
       ],
     },
+    aftercare: {
+      label: 'AFTER SCALING',
+      title: '스케일링 후 주의사항',
+      items: [
+        '스케일링 후 1~3일은 시리거나 잇몸에서 피가 살짝 날 수 있습니다. 치석이 덮고 있던 부위가 드러나며 생기는 자연스러운 회복 과정입니다.',
+        '당일은 맵고 뜨거운 음식, 음주, 흡연을 피해주세요.',
+        '시린 증상이 있을 때는 미지근한 물로 부드럽게 양치해 주세요.',
+        '치실 · 치간칫솔을 함께 쓰면 스케일링 효과가 오래 유지됩니다.',
+        '정기 스케일링은 보통 6개월~1년 주기를 권하며, 잇몸질환이 있다면 더 짧은 주기를 안내해 드립니다.',
+        '만 19세 이상은 연 1회 스케일링에 건강보험이 적용됩니다.',
+      ],
+    },
+    gallery: [
+      { src: '/media/images/treatment-room/treatment-01.jpg', alt: '스케일링이 이뤄지는 진료실', caption: '스케일링이 이뤄지는 진료실' },
+      { src: '/media/images/powder/powder-01.jpg', alt: '관리 후 정돈하는 파우더룸', caption: '관리 후 정돈할 수 있는 파우더룸' },
+      { src: '/media/images/waiting/waiting-02.jpg', alt: '편안한 대기 공간', caption: '편안하게 순서를 기다리는 대기 공간' },
+    ],
   },
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
@@ -548,6 +650,34 @@ export const TREATMENTS: Treatment[] = [
       { name: 'GBT Machine', role: '미백 전 치면세정', d: '파우더 세정과 초슬림팁으로 부드럽게 치석을 제거해, 미백 효과를 최대화하는 사전 단계입니다.' },
       { name: 'Endo-Wiz', role: '시린 증상 완화', d: '미백 과정에서 생길 수 있는 시린 불편감을 최소화하는 첨단 기기입니다.' },
       { name: 'Osstem Vutees', role: '미백광 조사', d: '최적의 파장으로 미백제 활성화를 도와 미백 효과를 높입니다.' },
+    ],
+    targetsTitle: {
+      label: 'WHO NEEDS WHITENING',
+      title: '이런 분께 치아미백을 권합니다',
+      desc: '치아 상태와 변색 원인에 따라 미백 방법과 횟수가 달라집니다. 상담 후 알맞은 플랜을 안내해 드립니다.',
+    },
+    targets: [
+      '커피 · 차 · 와인 등으로 치아가 착색된 분',
+      '결혼식 · 면접 등 중요한 일정을 앞둔 분',
+      '나이가 들며 치아 색이 어두워졌다고 느끼는 분',
+      '미백 후 밝은 색을 오래 유지하고 싶은 분',
+    ],
+    aftercare: {
+      label: 'AFTER WHITENING',
+      title: '미백 후 주의사항',
+      items: [
+        '미백 후 24~48시간은 커피 · 카레 · 와인 · 콜라 등 착색이 잘 되는 음식을 피해주세요.',
+        '흡연은 재변색의 가장 큰 원인입니다. 최소 48시간은 금연해 주세요.',
+        '일시적으로 시릴 수 있습니다. 보통 1~2일 안에 가라앉으며, 지속되면 내원해 주세요.',
+        '착색이 심한 음식을 먹었다면 바로 양치하거나 물로 헹궈주세요.',
+        '정기 검진과 클리닝을 병행하면 밝기를 오래 유지할 수 있습니다.',
+        '홈 미백을 병행하는 경우 안내된 착용 시간을 지켜주세요.',
+      ],
+    },
+    gallery: [
+      { src: '/media/images/equipment/gbt-airflow.jpg', alt: '미백 전 치면 세정에 쓰는 에어플로우 장비', caption: '미백 전 치면 세정(GBT) 장비' },
+      { src: '/media/images/powder/powder-01.jpg', alt: '시술 후 정돈하는 파우더룸', caption: '시술 후 정돈할 수 있는 파우더룸' },
+      { src: '/media/images/waiting/waiting-01.jpg', alt: '밝은 대기 공간', caption: '밝은 채광의 대기 공간' },
     ],
   },
 ];
