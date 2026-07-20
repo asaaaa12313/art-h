@@ -17,6 +17,10 @@ const C = {
   bad: '#C05A45', // 충치·염증 표시용
 };
 
+/* 미백 트레이(마우스가드) 외곽 패스 — wht-home / wht-dual 공용 */
+const TRAY_PATH =
+  'M78 88 L78 46 Q78 28 94 28 Q110 40 126 28 Q142 28 142 46 L142 88 Q126 96 110 96 Q94 96 78 88 Z';
+
 const BONE_DOTS: [number, number][] = [
   [18, 116], [40, 138], [66, 122], [92, 148], [118, 130], [144, 142],
   [170, 120], [196, 136], [30, 158], [126, 160], [200, 154], [76, 154],
@@ -441,7 +445,7 @@ const SCENES: Record<string, () => ReactNode> = {
       <Ground />
       <Molar cx={110} s={1.3} />
       <path
-        d="M78 88 L78 46 Q78 28 94 28 Q110 40 126 28 Q142 28 142 46 L142 88 Q126 96 110 96 Q94 96 78 88 Z"
+        d={TRAY_PATH}
         fill={C.blueL}
         fillOpacity="0.28"
         stroke={C.blue}
@@ -455,7 +459,7 @@ const SCENES: Record<string, () => ReactNode> = {
       <Ground />
       <Molar cx={110} s={1.3} />
       <path
-        d="M78 88 L78 46 Q78 28 94 28 Q110 40 126 28 Q142 28 142 46 L142 88 Q126 96 110 96 Q94 96 78 88 Z"
+        d={TRAY_PATH}
         fill={C.blueL}
         fillOpacity="0.22"
         stroke={C.blue}

@@ -875,6 +875,10 @@ export default async function TreatmentDetailPage({
         .txKindsGrid {
           display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
         }
+        /* 카드가 정확히 3장인 과목은 3열로 — 마지막 카드 반폭 고아 방지 */
+        .txKindsGrid:has(> :nth-child(3):last-child) {
+          grid-template-columns: repeat(3, 1fr);
+        }
         .txKindCard {
           display: flex; flex-direction: column; height: 100%;
           background: #fff; border: 1px solid var(--c-line);
