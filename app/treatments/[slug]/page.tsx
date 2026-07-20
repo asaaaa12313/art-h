@@ -106,7 +106,7 @@ export default async function TreatmentDetailPage({
 
         {/* 치료 단계 모식도 */}
         {tx.stepFigures && (
-          <section className="txSec txFigs">
+          <section className="txSec txFigs txBandWarm">
             <div className="txFigsHead">
               <Reveal variant="fade">
                 <p className="txLabel">STEP BY STEP</p>
@@ -254,7 +254,7 @@ export default async function TreatmentDetailPage({
 
         {/* Processes — 단계 모식도(stepFigures)가 있는 과목은 중복이라 생략 */}
         {!tx.stepFigures && (
-          <section className="txSec txSplit">
+          <section className="txSec txSplit txBandWarm">
             <div>
               <Reveal variant="fade">
                 <p className="txLabel">PROCESS</p>
@@ -305,7 +305,7 @@ export default async function TreatmentDetailPage({
         )}
 
         {/* Features */}
-        <section className="txSec txFeat">
+        <section className="txSec txFeat txBandNavy">
           <div>
             <Reveal variant="fade">
               <p className="txLabel">FEATURES</p>
@@ -328,7 +328,7 @@ export default async function TreatmentDetailPage({
 
         {/* 보험 임플란트 안내 */}
         {tx.insurance && (
-          <section className="txSec txIns">
+          <section className="txSec txIns txBandNavy">
             <div className="txInsHead">
               <Reveal variant="fade">
                 <p className="txLabel">{tx.insurance.label}</p>
@@ -456,7 +456,7 @@ export default async function TreatmentDetailPage({
 
         {/* 시술 후 주의사항 */}
         {tx.aftercare && (
-          <section className="txSec txCare">
+          <section className="txSec txCare txBandWarm">
             <div className="txCareHead">
               <Reveal variant="fade">
                 <p className="txLabel">{tx.aftercare.label}</p>
@@ -521,6 +521,42 @@ export default async function TreatmentDetailPage({
         }
         .txSec { margin-bottom: clamp(60px, 8vw, 100px); }
         .txSec:last-of-type { margin-bottom: 0; }
+
+        /* 풀폭 배경 밴드 (하늘리더스식 리듬) — 콘텐츠 폭은 유지, 배경만 화면 끝까지 */
+        .txBandWarm, .txBandNavy {
+          padding-top: clamp(48px, 6vw, 80px);
+          padding-bottom: clamp(48px, 6vw, 80px);
+          clip-path: inset(0 -100vmax);
+        }
+        .txBandWarm {
+          background: var(--c-warm);
+          box-shadow: 0 0 0 100vmax var(--c-warm);
+        }
+        .txBandNavy {
+          background: var(--c-navy);
+          box-shadow: 0 0 0 100vmax var(--c-navy);
+        }
+        /* 네이비 밴드가 연달아 오면 틈 없이 이어 붙이고 얇은 구분선만 (선도 풀폭으로) */
+        .txBandNavy { position: relative; }
+        .txBandNavy:has(+ .txBandNavy) { margin-bottom: 0; }
+        .txBandNavy + .txBandNavy::before {
+          content: '';
+          position: absolute;
+          top: 0; left: -100vmax; right: -100vmax; height: 1px;
+          background: rgba(255, 255, 255, 0.12);
+        }
+        .txBandNavy .txLabel { color: var(--c-blue-l); opacity: 1; }
+        .txBandNavy .txSectionTitle { color: #fff; }
+        .txBandNavy .txBlockDesc { color: rgba(255, 255, 255, 0.78); }
+
+        /* 섹션 라벨 앞 짧은 선 장식 */
+        .txLabel { display: flex; align-items: center; gap: 8px; }
+        .txLabel::before {
+          content: '';
+          width: 22px; height: 1px;
+          background: currentColor; opacity: 0.55;
+          flex: none;
+        }
 
         .txHead { max-width: 720px; }
         .txEyebrow {
@@ -627,8 +663,7 @@ export default async function TreatmentDetailPage({
           font-weight: 400; margin: 0;
         }
 
-        /* 무통증 GBT — 대상 */
-        .txTargets { background: var(--c-warm); padding: clamp(40px,5vw,60px); border-radius: 2px; }
+        /* 대상 체크리스트 — 크림 밴드 */
         .txTargetsHead { max-width: 760px; }
         .txTargetList {
           list-style: none; padding: 0; margin: 28px 0 0;
@@ -636,7 +671,7 @@ export default async function TreatmentDetailPage({
         }
         .txTargetItem {
           display: grid; grid-template-columns: 30px 1fr; align-items: center;
-          gap: 14px; padding: 18px 22px; background: #fff;
+          gap: 14px; padding: 18px 22px; background: var(--c-warm);
           border-radius: 2px; font-size: 15px; color: var(--c-text);
           font-weight: 500;
         }
@@ -666,7 +701,7 @@ export default async function TreatmentDetailPage({
         }
         .txSteps li {
           display: grid; grid-template-columns: 48px 1fr; gap: 16px;
-          padding: 18px 20px; background: var(--c-warm);
+          padding: 18px 20px; background: #fff;
           border-left: 2px solid var(--c-navy);
           border-radius: 2px;
         }
@@ -682,22 +717,21 @@ export default async function TreatmentDetailPage({
           font-weight: 500;
         }
 
-        .txFeat { background: var(--c-warm); padding: clamp(40px,5vw,60px); border-radius: 2px; }
         .txFeatList {
           display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
           margin-top: 28px;
         }
         .txFeatCard {
           display: grid; grid-template-columns: 28px 1fr; gap: 14px;
-          padding: 20px 22px; background: #fff;
-          border: 1px solid var(--c-line); border-radius: 2px;
+          padding: 20px 22px; background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 2px;
         }
         .txCheck {
           display: inline-flex; align-items: center; justify-content: center;
           width: 28px; height: 28px; border-radius: 50%;
-          background: var(--c-navy); color: #fff;
+          background: var(--c-blue); color: #fff;
         }
-        .txFeatCard p { margin: 0; font-size: 14px; color: var(--c-text); line-height: 1.7; font-weight: 500; }
+        .txFeatCard p { margin: 0; font-size: 14px; color: #fff; line-height: 1.7; font-weight: 500; }
 
         /* 장비·브랜드 쇼케이스 */
         .txShowcaseHead { max-width: 760px; margin-bottom: 36px; }
@@ -897,15 +931,8 @@ export default async function TreatmentDetailPage({
           font-weight: 400; margin: 0;
         }
 
-        /* 보험 임플란트 안내 */
-        .txIns {
-          background: var(--c-navy); border-radius: 3px;
-          padding: clamp(40px, 5vw, 64px);
-        }
+        /* 보험 임플란트 안내 — 네이비 밴드 */
         .txInsHead { max-width: 760px; }
-        .txIns .txLabel { color: var(--c-blue-l); opacity: 1; }
-        .txIns .txSectionTitle { color: #fff; }
-        .txIns .txBlockDesc { color: rgba(255,255,255,0.78); }
         .txInsGrid {
           display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
           margin-top: 32px;
@@ -956,7 +983,7 @@ export default async function TreatmentDetailPage({
         }
         .txCareCard {
           display: grid; grid-template-columns: 40px 1fr; gap: 14px;
-          padding: 20px 22px; background: var(--c-warm);
+          padding: 20px 22px; background: #fff;
           border-top: 2px solid var(--c-navy); border-radius: 2px;
           height: 100%;
         }
