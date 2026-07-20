@@ -6,6 +6,7 @@ import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
+import TxDiagram from '@/components/TxDiagram';
 import { TREATMENTS } from '@/lib/copy';
 
 const TX_SRC: Record<string, string> = {
@@ -65,6 +66,71 @@ export default async function TreatmentDetailPage({
             <p className="txIntro">{tx.intro}</p>
           </Reveal>
         </section>
+
+        {/* 치료 종류 · 유형 (모식도 카드) */}
+        {tx.kinds && (
+          <section className="txSec txKinds">
+            <div className="txKindsHead">
+              <Reveal variant="fade">
+                <p className="txLabel">{tx.kinds.label}</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.kinds.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
+                <p className="txBlockDesc">{tx.kinds.desc}</p>
+              </Reveal>
+            </div>
+            <div className="txKindsGrid">
+              {tx.kinds.items.map((k, i) => (
+                <Reveal key={k.name} variant="blur-up" delay={0.1 + i * 0.08} duration="0.8s">
+                  <div className="txKindCard">
+                    {k.diagram ? (
+                      <div className="txKindMedia">
+                        <TxDiagram name={k.diagram} title={`${k.name} 모식도`} />
+                      </div>
+                    ) : k.image ? (
+                      <div className="txKindMedia txKindMediaImg">
+                        <Photo src={k.image} alt={`${k.name} 모식도`} objectFit="contain" bg="#fff" sizes="(max-width: 768px) 100vw, 460px" />
+                      </div>
+                    ) : null}
+                    <div className="txKindBody">
+                      <h4 className="txKindName">{k.name}</h4>
+                      <p className="txKindTag">{k.tag}</p>
+                      <p className="txKindD">{k.d}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* 치료 단계 모식도 */}
+        {tx.stepFigures && (
+          <section className="txSec txFigs">
+            <div className="txFigsHead">
+              <Reveal variant="fade">
+                <p className="txLabel">STEP BY STEP</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정, 한눈에 보기']} delay={0.05} />
+            </div>
+            <ol className="txFigGrid">
+              {tx.stepFigures.map((f, i) => (
+                <Reveal key={f.t} as="li" variant="blur-up" delay={0.08 + i * 0.06} duration="0.7s">
+                  <div className="txFigCard">
+                    <div className="txFigMedia">
+                      <TxDiagram name={f.diagram} title={`${f.t} 모식도`} />
+                    </div>
+                    <div className="txFigBody">
+                      <span className="txFigNo">{String(i + 1).padStart(2, '0')}</span>
+                      <h4 className="txFigT">{f.t}</h4>
+                      <p className="txFigD">{f.d}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+          </section>
+        )}
 
         {/* 장비·브랜드 쇼케이스 (임플란트 2종 / 의식하진정 안전장비) */}
         {tx.showcase && (
@@ -186,28 +252,30 @@ export default async function TreatmentDetailPage({
           </section>
         )}
 
-        {/* Processes */}
-        <section className="txSec txSplit">
-          <div>
-            <Reveal variant="fade">
-              <p className="txLabel">PROCESS</p>
-            </Reveal>
-            <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정']} delay={0.05} />
-          </div>
-          <ol className="txSteps">
-            {tx.processes.map((step, i) => (
-              <Reveal key={step} delay={0.1 + i * 0.05} duration="0.6s">
-                <li>
-                  <span className="txStepNo">
-                    <AnimatedIcon name="badge" size={22} stroke="var(--c-blue)" delay={0.1 + i * 0.05} className="txStepIcon" />
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className="txStepText">{step}</span>
-                </li>
+        {/* Processes — 단계 모식도(stepFigures)가 있는 과목은 중복이라 생략 */}
+        {!tx.stepFigures && (
+          <section className="txSec txSplit">
+            <div>
+              <Reveal variant="fade">
+                <p className="txLabel">PROCESS</p>
               </Reveal>
-            ))}
-          </ol>
-        </section>
+              <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정']} delay={0.05} />
+            </div>
+            <ol className="txSteps">
+              {tx.processes.map((step, i) => (
+                <Reveal key={step} delay={0.1 + i * 0.05} duration="0.6s">
+                  <li>
+                    <span className="txStepNo">
+                      <AnimatedIcon name="badge" size={22} stroke="var(--c-blue)" delay={0.1 + i * 0.05} className="txStepIcon" />
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="txStepText">{step}</span>
+                  </li>
+                </Reveal>
+              ))}
+            </ol>
+          </section>
+        )}
 
         {/* 미백 시스템 — 기기 3종 */}
         {tx.devices && tx.devicesTitle && (
@@ -257,6 +325,38 @@ export default async function TreatmentDetailPage({
             ))}
           </div>
         </section>
+
+        {/* 보험 임플란트 안내 */}
+        {tx.insurance && (
+          <section className="txSec txIns">
+            <div className="txInsHead">
+              <Reveal variant="fade">
+                <p className="txLabel">{tx.insurance.label}</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.insurance.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
+                <p className="txBlockDesc">{tx.insurance.desc}</p>
+              </Reveal>
+            </div>
+            <div className="txInsGrid">
+              {tx.insurance.rows.map((r, i) => (
+                <Reveal key={r.k} delay={0.1 + i * 0.06} duration="0.7s">
+                  <div className="txInsCard">
+                    <p className="txInsK">{r.k}</p>
+                    <p className="txInsV">{r.v}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal variant="fade" delay={0.2} duration="0.8s">
+              <ul className="txInsNotes">
+                {tx.insurance.notes.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+            </Reveal>
+          </section>
+        )}
 
         {/* GBT 영상 + 장비·시술 사진 */}
         {tx.media && (
@@ -327,6 +427,28 @@ export default async function TreatmentDetailPage({
                 </Reveal>
               ))}
             </ul>
+          </section>
+        )}
+
+        {/* 시술 후 주의사항 */}
+        {tx.aftercare && (
+          <section className="txSec txCare">
+            <div className="txCareHead">
+              <Reveal variant="fade">
+                <p className="txLabel">{tx.aftercare.label}</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[tx.aftercare.title]} delay={0.05} />
+            </div>
+            <ol className="txCareGrid">
+              {tx.aftercare.items.map((it, i) => (
+                <Reveal key={it} as="li" delay={0.08 + i * 0.05} duration="0.6s">
+                  <div className="txCareCard">
+                    <span className="txCareNo" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                    <p>{it}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
           </section>
         )}
 
@@ -690,6 +812,124 @@ export default async function TreatmentDetailPage({
         }
         .txNavList:hover { background: var(--c-warm); }
 
+        /* 치료 종류 · 유형 (모식도 카드) */
+        .txKindsHead { max-width: 760px; margin-bottom: 36px; }
+        .txKindsGrid {
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+        }
+        .txKindCard {
+          display: flex; flex-direction: column; height: 100%;
+          background: #fff; border: 1px solid var(--c-line);
+          border-radius: 3px; overflow: hidden;
+          transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .txKindCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
+        }
+        .txKindMedia {
+          padding: 18px 28px 6px; background: #fff;
+          border-bottom: 1px solid var(--c-line);
+        }
+        .txKindMediaImg {
+          position: relative; aspect-ratio: 16 / 10; padding: 0;
+        }
+        .txKindBody { padding: 20px 24px 24px; }
+        .txKindName {
+          font-family: var(--f-heading); font-size: 18px; font-weight: 700;
+          color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 3px;
+        }
+        .txKindTag {
+          font-size: 12.5px; color: var(--c-gold-d); font-weight: 600;
+          margin: 0 0 12px;
+        }
+        .txKindD {
+          font-size: 14px; color: var(--c-text); line-height: 1.8;
+          font-weight: 400; margin: 0;
+        }
+
+        /* 치료 단계 모식도 */
+        .txFigsHead { max-width: 760px; margin-bottom: 32px; }
+        .txFigGrid {
+          list-style: none; padding: 0; margin: 0;
+          display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+        }
+        .txFigCard {
+          display: flex; flex-direction: column; height: 100%;
+          background: #fff; border: 1px solid var(--c-line);
+          border-radius: 3px; overflow: hidden;
+        }
+        .txFigMedia { padding: 12px 20px 0; background: #fff; }
+        .txFigBody { padding: 12px 18px 18px; }
+        .txFigNo {
+          font-family: var(--f-display); font-size: 13px;
+          color: var(--c-gold-d); letter-spacing: 1px;
+        }
+        .txFigT {
+          font-family: var(--f-heading); font-size: 16px; font-weight: 700;
+          color: var(--c-navy); letter-spacing: -0.02em; margin: 4px 0 8px;
+        }
+        .txFigD {
+          font-size: 13px; color: var(--c-text2); line-height: 1.7;
+          font-weight: 400; margin: 0;
+        }
+
+        /* 보험 임플란트 안내 */
+        .txIns {
+          background: var(--c-navy); border-radius: 3px;
+          padding: clamp(40px, 5vw, 64px);
+        }
+        .txInsHead { max-width: 760px; }
+        .txIns .txLabel { color: var(--c-blue-l); opacity: 1; }
+        .txIns .txSectionTitle { color: #fff; }
+        .txIns .txBlockDesc { color: rgba(255,255,255,0.78); }
+        .txInsGrid {
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+          margin-top: 32px;
+        }
+        .txInsCard {
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 2px; padding: 22px 24px; height: 100%;
+        }
+        .txInsK {
+          font-size: 12.5px; color: var(--c-blue-l); font-weight: 700;
+          letter-spacing: 1px; margin: 0 0 8px;
+        }
+        .txInsV {
+          font-size: 14.5px; color: #fff; line-height: 1.7;
+          font-weight: 400; margin: 0;
+        }
+        .txInsNotes {
+          list-style: none; padding: 0; margin: 20px 0 0;
+          display: flex; flex-direction: column; gap: 6px;
+        }
+        .txInsNotes li {
+          font-size: 12.5px; color: rgba(255,255,255,0.68); line-height: 1.6;
+          padding-left: 18px; position: relative;
+        }
+        .txInsNotes li::before { content: '※'; position: absolute; left: 0; }
+
+        /* 시술 후 주의사항 */
+        .txCareHead { max-width: 760px; }
+        .txCareGrid {
+          list-style: none; padding: 0; margin: 28px 0 0;
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+        }
+        .txCareCard {
+          display: grid; grid-template-columns: 40px 1fr; gap: 14px;
+          padding: 20px 22px; background: var(--c-warm);
+          border-top: 2px solid var(--c-navy); border-radius: 2px;
+          height: 100%;
+        }
+        .txCareNo {
+          font-family: var(--f-display); font-size: 18px;
+          color: var(--c-gold-d); line-height: 1.2;
+        }
+        .txCareCard p {
+          margin: 0; font-size: 14px; color: var(--c-text);
+          line-height: 1.75; font-weight: 400;
+        }
+
         @media (max-width: 768px) {
           .txSplit { grid-template-columns: 1fr; }
           .txFeatList { grid-template-columns: 1fr; }
@@ -697,8 +937,15 @@ export default async function TreatmentDetailPage({
           .txDevGrid { grid-template-columns: 1fr; }
           .txGbtGrid { grid-template-columns: 1fr; }
           .txBAGrid { grid-template-columns: 1fr; }
+          .txKindsGrid { grid-template-columns: 1fr; }
+          .txFigGrid { grid-template-columns: repeat(2, 1fr); }
+          .txInsGrid { grid-template-columns: 1fr; }
+          .txCareGrid { grid-template-columns: 1fr; }
           .txNav { grid-template-columns: 1fr; text-align: center; }
           .txNavNext { text-align: center; align-items: center; }
+        }
+        @media (max-width: 480px) {
+          .txFigGrid { grid-template-columns: 1fr; }
         }
       `}</style>
     </>
