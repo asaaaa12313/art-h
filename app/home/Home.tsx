@@ -134,9 +134,10 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.2} duration="0.9s">
               <p className={styles.introBody}>
-                좋은 치과는 치료를 잘하는 곳이 아니라, 다시 가고 싶은 곳이라 믿습니다.
-                아트에이치치과는 처음 문을 여는 순간부터 치료가 끝나고 일상으로 돌아가는 순간까지,
-                머무시는 모든 시간을 세심하게 설계합니다.
+                좋은 치과는 치료를 잘하는 곳이 아니라,<br className={styles.brPc} /> 다시 가고 싶은 곳이라 믿습니다.
+              </p>
+              <p className={styles.introBody}>
+                아트에이치치과는 처음 문을 여는 순간부터<br className={styles.brPc} /> 치료가 끝나고 일상으로 돌아가는 순간까지,<br className={styles.brPc} /> 머무시는 모든 시간을 세심하게 설계합니다.
               </p>
             </Reveal>
             <Reveal delay={0.3} duration="0.6s">

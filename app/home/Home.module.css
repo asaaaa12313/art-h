@@ -197,8 +197,11 @@
   color: var(--c-dark); line-height: 1.45; margin: 0 0 28px;
 }
 .introBody {
-  font-size: 15px; color: var(--c-text2); line-height: 2; font-weight: 300; margin: 0 0 30px;
+  font-size: 15px; color: var(--c-text2); line-height: 2; font-weight: 300; margin: 0 0 14px;
 }
+.introBody:last-of-type { margin-bottom: 30px; }
+.brPc { display: none; }
+@media (min-width: 769px) { .brPc { display: inline; } }
 .introImg { border-radius: 3px; overflow: hidden; aspect-ratio: 4/5; }
 
 /* ===== QUOTE — 풀블리드 ===== */
