@@ -1,185 +1,192 @@
-.wrap {
+/* ===== 데스크톱 — 우측 세로 레일 (잉크 네이비) ===== */
+.rail {
   position: fixed;
-  right: 20px;
+  right: 18px;
   top: 50%;
-  transform: translateY(-50%) translateX(110%);
+  transform: translateY(-50%);
   z-index: 50;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.5s var(--ease-out);
-  pointer-events: none;
-}
-.wrap[data-visible='true'] {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-  pointer-events: auto;
 }
 
-.btn {
+.railBox {
+  display: flex;
+  flex-direction: column;
+  width: 72px;
+  background: rgba(15, 26, 53, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  overflow: visible;
+  box-shadow: 0 10px 28px rgba(15, 26, 53, 0.22);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+/* 본문 진입 후 불투명 전환 */
+.rail[data-solid='true'] .railBox {
+  background: var(--c-navy-d);
+  box-shadow: 0 14px 34px rgba(15, 26, 53, 0.34);
+}
+
+.railBtn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 13px 4px 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.railBtn + .railBtn {
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+.railBtn:first-child { border-radius: 13px 13px 0 0; }
+.railBtn:last-child { border-radius: 0 0 13px 13px; }
+.railBtn:hover,
+.railBtn:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.railLabel {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: inherit;
+  white-space: nowrap;
+}
+
+/* 전화 호버 시 세리프 숫자 플라이아웃 */
+.railPhone {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: var(--c-navy-d);
+  color: #fff;
+  font-family: var(--f-display);
+  font-size: 16px;
+  letter-spacing: 1.2px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-out);
+}
+.railBtn:hover .railPhone,
+.railBtn:focus-visible .railPhone {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* 네이버 뱃지 — 그린 시그널 */
+.naverBadge {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: #03C75A;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+/* TOP — 레일 아래 별도 버튼, 스크롤 후에만 */
+.railTop {
+  display: flex;
   flex-direction: column;
-  gap: 3px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
+  align-items: center;
+  gap: 2px;
+  width: 52px;
+  padding: 8px 0 7px;
+  border-radius: 12px;
   background: var(--c-white);
   color: var(--c-navy);
-  box-shadow: 0 6px 20px rgba(15, 26, 53, 0.12), 0 2px 4px rgba(15, 26, 53, 0.06);
-  border: 1px solid rgba(15, 26, 53, 0.06);
-  cursor: pointer;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-  text-decoration: none;
-  padding: 0;
-  font-family: inherit;
-}
-.btn:hover,
-.btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(15, 26, 53, 0.18), 0 4px 8px rgba(15, 26, 53, 0.1);
-  outline: none;
-}
-
-/* 버튼 순차 등장 — wrap 슬라이드인에 이어 각 버튼이 살짝씩 늦게.
-   delay는 opacity에만 걸어 호버(transform) 반응은 지연 없이 즉각 유지 */
-.wrap .btn {
+  border: 1px solid rgba(15, 26, 53, 0.12);
+  box-shadow: 0 6px 18px rgba(15, 26, 53, 0.14);
   opacity: 0;
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
-    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0s;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s var(--ease-out), background 0.3s, color 0.3s;
 }
-.wrap[data-visible='true'] .btn {
+.railTop[data-visible='true'] {
   opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
-.wrap[data-visible='true'] .btn:nth-child(1) {
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
-    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.1s;
-}
-.wrap[data-visible='true'] .btn:nth-child(2) {
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
-    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.2s;
-}
-.wrap[data-visible='true'] .btn:nth-child(3) {
-  transition: transform 0.3s var(--ease-out), box-shadow 0.3s ease,
-    background 0.3s ease, color 0.3s ease, opacity 0.4s ease 0.3s;
-}
-
-.btn .icon {
-  width: 22px;
-  height: 22px;
-  display: block;
-}
-.btn .label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: inherit;
-}
-
-/* 전화 버튼 — 브랜드 네이비 강조 */
-.primary {
-  background: linear-gradient(135deg, var(--c-navy-l) 0%, var(--c-navy) 100%);
-  color: #fff;
-  border-color: var(--c-navy);
-  box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 2px 4px rgba(15, 26, 53, 0.08);
-}
-.primary:hover,
-.primary:focus-visible {
-  background: linear-gradient(135deg, var(--c-navy) 0%, var(--c-navy-d) 100%);
-  box-shadow: 0 12px 28px rgba(15, 26, 53, 0.38), 0 4px 8px rgba(15, 26, 53, 0.12);
-}
-/* 전화 버튼 — 은은한 펄스 글로우 (등장 후에만) */
-@keyframes ctaPulse {
-  0%,
-  100% {
-    box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 0 0 0 rgba(46, 111, 212, 0.4);
-  }
-  70% {
-    box-shadow: 0 6px 20px rgba(15, 26, 53, 0.28), 0 0 0 10px rgba(46, 111, 212, 0);
-  }
-}
-.wrap[data-visible='true'] .primary {
-  animation: ctaPulse 2.4s ease-out infinite;
-}
-.wrap[data-visible='true'] .primary:hover,
-.wrap[data-visible='true'] .primary:focus-visible {
-  animation: none;
-}
-
-/* 일반 버튼 — 호버 시 네이비 반전 */
-.btn:not(.primary):not(.top):hover {
-  background: var(--c-navy);
-  color: #fff;
-  border-color: var(--c-navy);
-}
-
-/* 네이버 플레이스 버튼 — 네이버 그린 강조 */
-.place {
-  background: #03C75A;
-  color: #fff;
-  border-color: #03C75A;
-  box-shadow: 0 6px 20px rgba(3, 199, 90, 0.28), 0 2px 4px rgba(15, 26, 53, 0.08);
-}
-.place:hover,
-.place:focus-visible {
-  background: #02b150;
-  color: #fff;
-  border-color: #02b150;
-  box-shadow: 0 12px 28px rgba(3, 199, 90, 0.38), 0 4px 8px rgba(15, 26, 53, 0.12);
-}
-/* .btn:not selector의 place 예외 처리 */
-.btn.place:not(.primary):hover {
-  background: #02b150;
-  color: #fff;
-  border-color: #02b150;
-}
-
-/* TOP 버튼 */
-.top {
-  background: var(--c-warm);
-  color: var(--c-text2);
-}
-.top:hover {
+.railTop:hover,
+.railTop:focus-visible {
   background: var(--c-navy);
   color: #fff;
 }
+.railTop .railLabel { font-size: 9.5px; letter-spacing: 1px; }
+.railTop .icon { width: 16px; height: 16px; }
 
-/* 모바일 */
+/* ===== 모바일 — 하단 고정 바 ===== */
+.bar { display: none; }
+
 @media (max-width: 600px) {
-  .wrap {
-    right: 12px;
+  .rail { display: none; }
+  .bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: flex;
+    box-shadow: 0 -6px 20px rgba(15, 26, 53, 0.16);
+  }
+  .barBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
+    padding: 15px 0 calc(15px + env(safe-area-inset-bottom));
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #fff;
+    background: var(--c-navy-d);
+    text-decoration: none;
+    transition: background 0.25s ease;
   }
-  .btn {
-    width: 54px;
-    height: 54px;
-  }
-  .btn .icon {
+  .barBtn:active { background: var(--c-navy); }
+  .barBtn .icon { width: 17px; height: 17px; }
+  /* 그린 위 흰 글씨는 대비 2.25:1 미달 → 짙은 네이비 라벨 (검수 반영) */
+  .barNaver { background: #03C75A; color: #0F1A35; font-weight: 700; }
+  .barNaver:active { background: #02b150; }
+  .barNaver .naverBadge {
+    background: #fff;
+    color: #03C75A;
     width: 18px;
     height: 18px;
-  }
-  .btn .label {
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 
-/* 접근성 - 모션 축소 */
+/* 접근성 — 모션 축소 */
 @media (prefers-reduced-motion: reduce) {
-  .wrap {
-    transition: opacity 0.01s;
-  }
-  .wrap .btn,
-  .wrap[data-visible='true'] .btn {
+  .railBox,
+  .railBtn,
+  .railPhone,
+  .railTop {
     transition: none;
-    transition-delay: 0s;
-    opacity: 1;
-  }
-  .btn:hover {
-    transform: none;
-  }
-  .wrap[data-visible='true'] .primary {
-    animation: none;
   }
 }

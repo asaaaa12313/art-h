@@ -261,6 +261,121 @@
   font-size: 13px; color: var(--c-text2); line-height: 1.6; font-weight: 400; margin: 0;
 }
 
+/* ===== STATS — 네이버 리뷰 링크 (건수 비노출) ===== */
+.reviewRow {
+  margin-top: clamp(40px, 5vw, 60px);
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  text-align: center;
+}
+.reviewText {
+  font-size: 14px; color: var(--c-text2); line-height: 1.8; font-weight: 300; margin: 0;
+}
+.reviewBtn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 14px; font-weight: 500; letter-spacing: 0.2px;
+  color: var(--c-navy); background: var(--c-white);
+  border: 1px solid var(--c-navy); border-radius: 2px;
+  padding: 13px 28px;
+  transition: background 0.3s, color 0.3s, transform 0.3s var(--ease-out);
+}
+.reviewBtn:hover { background: var(--c-navy); color: #fff; transform: translateY(-1px); }
+.reviewDot {
+  width: 9px; height: 9px; border-radius: 2px; background: #03C75A; flex-shrink: 0;
+}
+
+/* ===== STORY — 풀블리드 3밴드 ===== */
+.story {
+  background: var(--c-bg);
+  padding-top: clamp(76px, 9vw, 130px);
+}
+.storyHead { margin-bottom: clamp(44px, 5vw, 64px); }
+.storyBand {
+  position: relative;
+  width: 100vw; margin-left: calc(-50vw + 50%);
+  min-height: clamp(440px, 60vh, 620px);
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+.storyBg { position: absolute; inset: 0; }
+/* 텍스트 컬럼 구간(~55%)은 불투명도 0.74 이상 유지 — 흰 본문 AA 대비 확보 (검수 반영) */
+.storyShade {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(15, 26, 53, 0.86) 0%, rgba(15, 26, 53, 0.74) 55%, rgba(15, 26, 53, 0.24) 100%);
+}
+.storyBand[data-flip='true'] .storyShade {
+  background: linear-gradient(270deg, rgba(15, 26, 53, 0.86) 0%, rgba(15, 26, 53, 0.74) 55%, rgba(15, 26, 53, 0.24) 100%);
+}
+.storyContent {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1180px; margin: 0 auto;
+  padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 64px);
+}
+.storyBand[data-flip='true'] .storyContent {
+  display: flex; flex-direction: column; align-items: flex-end; text-align: right;
+}
+.storyEn {
+  font-family: var(--f-display); font-size: 12.5px; color: var(--c-blue-l);
+  letter-spacing: 3px; display: block; margin-bottom: 18px;
+}
+.storyTitle {
+  font-family: var(--f-serif-ko); font-size: clamp(25px, 3.4vw, 42px);
+  font-weight: 700; letter-spacing: -0.015em;
+  color: #fff; line-height: 1.4; margin: 0 0 20px;
+  text-shadow: 0 2px 18px rgba(15, 26, 53, 0.45);
+  word-break: keep-all;
+}
+.storyDesc {
+  font-size: 14.5px; color: rgba(255, 255, 255, 0.94); line-height: 1.9;
+  font-weight: 400; margin: 0 0 26px; max-width: 470px;
+  text-shadow: 0 1px 10px rgba(15, 26, 53, 0.5);
+  word-break: keep-all;
+}
+.storyLink {
+  font-size: 13px; color: #fff; letter-spacing: 0.3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55); padding-bottom: 4px;
+  display: inline-block;
+  transition: color 0.3s, border-color 0.3s;
+  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.5);
+}
+.storyLink:hover { color: var(--c-blue-l); border-bottom-color: var(--c-blue-l); }
+
+/* ===== WARRANTY — 치료 보증제 (우리 약속만 단일 열) ===== */
+.warranty {
+  background: var(--c-bg);
+  padding: clamp(76px, 9vw, 130px) 0;
+}
+.warrantyCard {
+  position: relative;
+  background: var(--c-white); border: 1px solid var(--c-navy); border-radius: 3px;
+  padding: 36px clamp(26px, 4vw, 44px) 38px;
+  max-width: 620px; margin: clamp(44px, 5vw, 64px) auto 0;
+  box-shadow: 0 18px 40px rgba(15, 26, 53, 0.1);
+}
+.warrantyBadge {
+  position: absolute; top: -11px; left: 28px;
+  font-family: var(--f-display); font-size: 11px; letter-spacing: 2px;
+  color: #fff; background: var(--c-navy);
+  padding: 4px 12px; border-radius: 2px;
+}
+.warrantyList { list-style: none; margin: 0; padding: 0; }
+.warrantyList li {
+  position: relative;
+  padding: 18px 0 18px 30px;
+  word-break: keep-all;
+}
+.warrantyList li + li { border-top: 1px solid var(--c-line); }
+.warrantyList li::before {
+  content: '✓'; position: absolute; left: 2px; top: 17px;
+  color: var(--c-blue-text); font-weight: 600; font-size: 15px;
+}
+.warrantyList strong {
+  display: block; font-size: 15.5px; font-weight: 600; color: var(--c-navy);
+  line-height: 1.5; margin-bottom: 4px;
+}
+.warrantyList li > span {
+  font-size: 13.5px; color: var(--c-text2); line-height: 1.75; font-weight: 300;
+}
+
 /* ===== PROMISE ===== */
 .promise {
   background: var(--c-bg);
@@ -305,9 +420,23 @@
 
 /* ===== TREATMENTS ===== */
 .tx {
+  position: relative;
   background: var(--c-warm);
   padding: clamp(76px, 9vw, 130px) 0;
+  overflow: hidden;
 }
+/* 대형 영문 워터마크 — 세리프, 3% 투명도 (루센트 구조를 우리 폰트로) */
+.txWatermark {
+  position: absolute; top: clamp(20px, 3vw, 44px); left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--f-display);
+  font-size: clamp(88px, 16vw, 230px);
+  line-height: 1; white-space: nowrap;
+  color: var(--c-navy); opacity: 0.03;
+  letter-spacing: 0.04em;
+  pointer-events: none; user-select: none;
+}
+.tx .inner { position: relative; z-index: 1; }
 .txGrid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
@@ -519,6 +648,13 @@
 }
 @media (max-width: 768px) {
   .introGrid { grid-template-columns: 1fr; gap: 32px; }
+  .storyBand { min-height: 420px; align-items: flex-end; }
+  .storyShade,
+  .storyBand[data-flip='true'] .storyShade {
+    background: linear-gradient(180deg, rgba(15, 26, 53, 0.16) 0%, rgba(15, 26, 53, 0.46) 45%, rgba(15, 26, 53, 0.84) 100%);
+  }
+  .storyBand[data-flip='true'] .storyContent { align-items: flex-start; text-align: left; }
+  .storyContent { padding-top: 48px; padding-bottom: 44px; }
   .txGrid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .doctorGrid { grid-template-columns: 1fr; }
   .doctorPhoto { aspect-ratio: 16/10; }
@@ -526,6 +662,10 @@
   .facilityGrid { grid-template-columns: repeat(2, 1fr); }
   .locContent { grid-template-columns: 1fr; gap: 24px; }
   .locMapWrap { min-height: 300px; height: clamp(300px, 56vw, 440px); }
+}
+/* 모바일 하단 상담 바(56px)와 히어로 스크롤 힌트 겹침 방지 */
+@media (max-width: 600px) {
+  .scrollHint { bottom: calc(24px + 56px + env(safe-area-inset-bottom)); }
 }
 @media (max-width: 480px) {
   .promiseGrid { grid-template-columns: 1fr; }

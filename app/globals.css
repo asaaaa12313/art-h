@@ -107,6 +107,13 @@ button:focus-visible,
 }
 .skip-link:focus { top: 12px; }
 
+/* 모바일 하단 고정 상담 바(FloatingCta)가 푸터를 가리지 않도록 여백 확보 */
+@media (max-width: 600px) {
+  body {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

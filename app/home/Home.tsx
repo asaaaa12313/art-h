@@ -10,7 +10,7 @@ import CountUp from '@/components/CountUp';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
 import HeroIntro from '@/components/HeroIntro';
-import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS } from '@/lib/copy';
+import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS, REVIEW_LINK, WARRANTY, STORY_BANDS } from '@/lib/copy';
 import styles from './Home.module.css';
 
 // Hero 사진 인트로 — 사진 3장(대기실·외관·상담실)을 줌+크로스페이드로 먼저 보여준 뒤 영상으로 전환.
@@ -31,15 +31,15 @@ const HERO_VIDEOS = [
   { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' }, // 수술실 풀세팅 짐벌(07.21 촬영)
 ];
 
-// 진료과목 카드 이미지 (slug → 실사 매핑)
+// 진료과목 카드 이미지 (slug → 실사 매핑, 07.21 촬영본 — plan-design-refresh P4)
 const TX_IMG: Record<string, string> = {
-  implant: '/media/images/surgery/surgery-01.jpg',
-  'root-canal': '/media/images/treatment-room/treatment-01.jpg',
-  'oral-surgery': '/media/images/xray/xray-01.jpg',
-  tmj: '/media/images/treatment-room/treatment-02.jpg',
-  sedation: '/media/images/recovery/recovery-01.jpg',
-  periodontics: '/media/images/equipment/gbt-clinic.jpg',
-  whitening: '/media/images/consult/consult-02.jpg',
+  implant: '/media/images/implant/implant-surgery-01.jpg',
+  'root-canal': '/media/images/treatment-room/treatment-02.jpg',
+  'oral-surgery': '/media/images/xray/xray-position.jpg',
+  tmj: '/media/images/tmj/tmj-tmd-monitor.jpg',
+  sedation: '/media/images/sedation/sedation-monitor-01.jpg',
+  periodontics: '/media/images/perio/gbt-treatment.jpg',
+  whitening: '/media/images/whitening/whitening-lamp-01.jpg',
 };
 
 // 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
@@ -201,7 +201,61 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+          <Reveal delay={0.2} duration="0.7s">
+            <div className={styles.reviewRow}>
+              <p className={styles.reviewText}>{REVIEW_LINK.d}</p>
+              <a
+                href={SITE.naverPlace}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.reviewBtn}
+                aria-label="네이버 플레이스 리뷰 보러가기 (새 창)"
+              >
+                <span className={styles.reviewDot} aria-hidden="true" />
+                {REVIEW_LINK.cta}
+              </a>
+            </div>
+          </Reveal>
         </div>
+      </section>
+
+      {/* ===== STORY — 왜 아트에이치인가, 풀블리드 3밴드 ===== */}
+      <section className={styles.story}>
+        <div className={`${styles.inner} ${styles.storyHead}`}>
+          <Reveal variant="fade">
+            <span className={styles.labelCenter}><i />HOW WE CARE</span>
+          </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['아트에이치가 진료를 대하는 방식']} delay={0.05} />
+        </div>
+        {STORY_BANDS.map((b, i) => (
+          <div key={b.en} className={styles.storyBand} data-flip={i % 2 === 1 ? 'true' : undefined}>
+            <div className={styles.storyBg}>
+              <Photo src={b.img} alt={b.alt} sizes="100vw" />
+            </div>
+            <div className={styles.storyShade} aria-hidden="true" />
+            <div className={styles.storyContent}>
+              <Reveal duration="0.7s">
+                <span className={styles.storyEn}>{b.en}</span>
+              </Reveal>
+              <Reveal delay={0.1} duration="0.9s">
+                <h3 className={styles.storyTitle}>
+                  {b.title.split('\n').map((line, li) => (
+                    <span key={line}>
+                      {li > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </h3>
+              </Reveal>
+              <Reveal delay={0.18} duration="0.9s">
+                <p className={styles.storyDesc}>{b.d}</p>
+              </Reveal>
+              <Reveal delay={0.26} duration="0.6s">
+                <Link href={b.href} className={styles.storyLink}>{b.link}</Link>
+              </Reveal>
+            </div>
+          </div>
+        ))}
       </section>
 
       {/* ===== PROMISE — 약속 4 ===== */}
@@ -230,6 +284,7 @@ export default function Home() {
 
       {/* ===== TREATMENTS — 7개 ===== */}
       <section className={styles.tx}>
+        <span className={styles.txWatermark} aria-hidden="true">ART H SPECIAL</span>
         <div className={styles.inner}>
           <Reveal>
             <div className={styles.sectionHead}>
@@ -330,6 +385,32 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== WARRANTY — 치료 보증제 (우리 약속만 단일 카드) ===== */}
+      <section className={styles.warranty}>
+        <div className={styles.inner}>
+          <Reveal variant="fade">
+            <span className={styles.labelCenter}><i />{WARRANTY.label}</span>
+          </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={[WARRANTY.title]} delay={0.05} />
+          <Reveal variant="fade" delay={0.15}>
+            <p className={styles.sectionLeadCenter}>{WARRANTY.desc}</p>
+          </Reveal>
+          <Reveal delay={0.1} duration="0.8s" from="translateY(20px)">
+            <div className={styles.warrantyCard}>
+              <span className={styles.warrantyBadge}>ART H</span>
+              <ul className={styles.warrantyList}>
+                {WARRANTY.items.map((it) => (
+                  <li key={it.t}>
+                    <strong>{it.t}</strong>
+                    <span>{it.d}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 
