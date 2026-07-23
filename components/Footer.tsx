@@ -18,7 +18,7 @@ export default function Footer() {
           <div className={styles.links}>
             <Link href="/about">의원소개</Link>
             <Link href="/location">오시는길</Link>
-            <a href={`tel:${tel}`}>전화문의</a>
+            <a href={`tel:${tel}`}>전화하기</a>
           </div>
         </div>
         <div className={styles.copy}>

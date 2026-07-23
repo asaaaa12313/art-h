@@ -651,7 +651,7 @@
   .storyBand { min-height: 420px; align-items: flex-end; }
   .storyShade,
   .storyBand[data-flip='true'] .storyShade {
-    background: linear-gradient(180deg, rgba(15, 26, 53, 0.16) 0%, rgba(15, 26, 53, 0.46) 45%, rgba(15, 26, 53, 0.84) 100%);
+    background: linear-gradient(180deg, rgba(15, 26, 53, 0.18) 0%, rgba(15, 26, 53, 0.62) 50%, rgba(15, 26, 53, 0.88) 100%);
   }
   .storyBand[data-flip='true'] .storyContent { align-items: flex-start; text-align: left; }
   .storyContent { padding-top: 48px; padding-bottom: 44px; }

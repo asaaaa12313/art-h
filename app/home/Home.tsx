@@ -112,7 +112,7 @@ export default function Home() {
             <Link href="/about" className={styles.heroCta}>의원소개</Link>
             <Link href="/treatments" className={styles.heroCta}>진료과목</Link>
             <Link href="/location" className={styles.heroCta}>오시는길</Link>
-            <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCtaPrimary}>전화문의</a>
+            <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCtaPrimary}>전화하기</a>
           </div>
         </div>
         <div className={styles.scrollHint} data-loaded={loaded} aria-hidden="true">
