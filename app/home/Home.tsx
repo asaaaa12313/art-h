@@ -22,12 +22,13 @@ const HERO_PHOTOS = [
 ];
 
 // Hero 영상 — 사진 인트로 후 재생되는 시퀀스.
-// 휴게실(라운지)·복도는 제외하고 수술실 → 원장님 영상 2개만 재생.
+// 휴게실(라운지)·복도는 제외하고 수술실 → 원장님 영상 2개 → 수술실 풀세팅(07.21 촬영) 순 4개 재생.
 // 시퀀스가 끝나면 영상 루프 대신 사진 인트로부터 다시 시작(Home의 cycle 참조).
 const HERO_VIDEOS = [
   { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료실 유닛체어(수술실)
   { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 원장님 덴티폼 상담
   { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
+  { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' }, // 수술실 풀세팅 짐벌(07.21 촬영)
 ];
 
 // 진료과목 카드 이미지 (slug → 실사 매핑)

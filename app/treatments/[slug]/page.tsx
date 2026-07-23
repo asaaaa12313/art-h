@@ -381,6 +381,9 @@ export default async function TreatmentDetailPage({
                     poster={tx.media.poster}
                     aria-label={`${tx.media.title} 소개 영상`}
                   >
+                    {tx.media.videoMobile && (
+                      <source src={tx.media.videoMobile} media="(max-width: 768px)" type="video/mp4" />
+                    )}
                     <source src={tx.media.video} type="video/mp4" />
                   </video>
                 </div>

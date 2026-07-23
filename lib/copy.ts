@@ -46,6 +46,7 @@ type TxMedia = {
   title: string;
   desc: string;
   video?: string;
+  videoMobile?: string; // 모바일(≤768px)용 720p 파생본
   poster?: string;
   images?: TxMediaImage[];
 };
@@ -269,10 +270,21 @@ export const TREATMENTS: Treatment[] = [
         '실밥은 보통 1~2주 후 제거합니다. 그 전까지 수술 부위를 손이나 혀로 만지지 마세요.',
       ],
     },
+    media: {
+      label: 'DIGITAL DIAGNOSIS',
+      title: '영상으로 보는 정밀 진단',
+      desc: '임플란트의 시작은 정확한 진단입니다. 파노라마 · 3D CT 촬영으로 골량과 신경 위치를 확인하고, 판독 영상을 함께 보며 식립 계획을 세우는 과정을 담았습니다.',
+      video: '/media/video/implant-diag.mp4',
+      videoMobile: '/media/video/implant-diag-720.mp4',
+      poster: '/media/video/implant-diag-poster.jpg',
+      images: [
+        { src: '/media/images/xray/xray-reading.jpg', alt: '파노라마 영상을 판독하는 의료진', caption: '촬영 직후 판독 영상을 함께 보며 치료 계획을 설명해 드립니다' },
+      ],
+    },
     gallery: [
-      { src: '/media/images/equipment/primescan-01.jpg', alt: '프라임스캔 디지털 구강 스캐너', caption: '디지털 구강 스캐너로 정밀 본뜨기' },
-      { src: '/media/images/xray/xray-01.jpg', alt: '디지털 영상 진단 장비', caption: '디지털 영상 정밀 진단' },
-      { src: '/media/images/consult/consult-01.jpg', alt: '1:1 상담실', caption: '치료 계획을 함께 정하는 1:1 상담' },
+      { src: '/media/images/implant/implant-surgery-01.jpg', alt: '독립 수술실에서 진행되는 임플란트 수술', caption: '구강악안면외과 전문의가 직접 집도하는 수술' },
+      { src: '/media/images/implant/implant-kit.jpg', alt: '정품 임플란트 키트 트레이', caption: '정품 임플란트 키트와 멸균 수술 기구' },
+      { src: '/media/images/implant/implant-ct-check.jpg', alt: '태블릿과 3D CT 영상으로 식립 계획을 확인하는 의료진', caption: '3D CT 영상으로 식립 계획을 확인합니다' },
     ],
   },
   {
@@ -421,10 +433,21 @@ export const TREATMENTS: Treatment[] = [
         '다음 날 소독을 위해 내원해 주시고, 봉합한 실은 약 1주일 후 제거합니다.',
       ],
     },
+    media: {
+      label: 'SURGICAL EXTRACTION',
+      title: '영상으로 보는 사랑니 발치',
+      desc: '독립 수술실에서 구강악안면외과 전문의와 어시스트가 함께 진행하는 발치 수술 장면입니다. 진단부터 수술까지 한 공간에서 체계적으로 이뤄집니다.',
+      video: '/media/video/oral-surgery-clinic.mp4',
+      videoMobile: '/media/video/oral-surgery-clinic-720.mp4',
+      poster: '/media/video/oral-surgery-clinic-poster.jpg',
+      images: [
+        { src: '/media/images/xray/xray-position.jpg', alt: '파노라마 X-레이 촬영을 준비하는 의료진', caption: '발치 전 파노라마 촬영으로 뿌리와 신경관 위치를 확인합니다' },
+      ],
+    },
     gallery: [
-      { src: '/media/images/surgery/surgery-01.jpg', alt: '사랑니 발치가 이뤄지는 수술 공간', caption: '일반 진료와 분리된 수술 공간' },
-      { src: '/media/images/treatment-room/treatment-03.jpg', alt: '위생적으로 관리되는 진료 공간', caption: '체계적인 멸균 · 위생 관리' },
-      { src: '/media/images/recovery/recovery-01.jpg', alt: '수술 후 쉬어가는 회복실', caption: '발치 후 안정을 취하는 회복 공간' },
+      { src: '/media/images/surgery/wisdom-surgery-01.jpg', alt: '전문의가 집도하는 사랑니 발치 수술', caption: '구강악안면외과 전문의가 직접 집도합니다' },
+      { src: '/media/images/surgery/surgery-tools.jpg', alt: '멸균 포 위에 준비된 발치 수술 기구', caption: '케이스별로 준비하는 멸균 수술 기구' },
+      { src: '/media/images/surgery/or-fullset.jpg', alt: '수술 준비를 마친 독립 수술실', caption: '일반 진료와 분리된 독립 수술실' },
     ],
   },
   {
@@ -523,10 +546,37 @@ export const TREATMENTS: Treatment[] = [
         '스트레스와 수면 부족은 이악물기를 심하게 만듭니다. 충분한 휴식을 취해주세요.',
       ],
     },
+    showcase: {
+      label: 'BOTOX THERAPY',
+      title: '보톡스 치료 — 이갈이 · 사각턱',
+      desc: '과도하게 긴장한 저작근(씹는 근육)에 보톡스를 주사해 근육의 힘을 조절하는 치료입니다. 이갈이 · 이악물기로 인한 턱관절 부담을 줄이는 데 활용하며, 스플린트 등 보존적 치료와 병행할 수 있습니다.',
+      items: [
+        {
+          name: '이갈이 · 이악물기 보톡스',
+          tag: '턱관절 부담 완화',
+          desc: '수면 중 이갈이나 이악물기 습관으로 뭉친 저작근의 과활동을 줄여, 턱관절과 치아에 가해지는 부담을 덜어줍니다.',
+          image: '/media/images/tmj/tmj-botox.jpg',
+        },
+        {
+          name: '사각턱(교근) 보톡스',
+          tag: '교근 긴장 완화',
+          desc: '발달한 교근 부위에 소량을 나누어 주사합니다. 정품 보툴리눔 톡신만 사용하며, 상담 후 개인별 용량과 주기를 안내해 드립니다.',
+          image: '/media/images/tmj/tmj-botox-2.jpg',
+        },
+      ],
+    },
+    media: {
+      label: 'TMJ CARE',
+      title: '영상으로 보는 턱관절 치료',
+      desc: '3D 해부 영상으로 턱관절 구조와 원인을 설명하고, 힐링 레이저와 물리치료 장비로 통증을 조절하는 과정을 담았습니다.',
+      video: '/media/video/tmj-care.mp4',
+      videoMobile: '/media/video/tmj-care-720.mp4',
+      poster: '/media/video/tmj-care-poster.jpg',
+    },
     gallery: [
-      { src: '/media/images/treatment-room/treatment-02.jpg', alt: '턱관절 진료가 이뤄지는 진료실', caption: '교합 · 근육 검사가 이뤄지는 진료실' },
-      { src: '/media/images/consult/consult-02.jpg', alt: '생활습관 상담 공간', caption: '생활습관 교정까지 안내하는 상담' },
-      { src: '/media/images/waiting/waiting-02.jpg', alt: '편안한 대기 공간', caption: '편안하게 순서를 기다리는 대기 공간' },
+      { src: '/media/images/tmj/tmj-tmd-monitor.jpg', alt: '3D 해부 영상으로 턱관절 구조를 설명하는 의료진', caption: '3D 영상으로 이해하기 쉽게 설명해 드립니다' },
+      { src: '/media/images/tmj/tmj-laser.jpg', alt: 'PHL-15 힐링 레이저 시술 장면', caption: '힐링 레이저로 통증 부위를 관리합니다' },
+      { src: '/media/images/tmj/tmj-physio.jpg', alt: '턱관절 물리치료 장비', caption: '물리치료 장비를 활용한 근육 이완 치료' },
     ],
   },
   {
@@ -562,15 +612,13 @@ export const TREATMENTS: Treatment[] = [
           name: 'BM1 환자감시장치',
           tag: '실시간 활력징후 감시',
           desc: '산소포화도·혈압·맥박·체온은 물론 호기말이산화탄소(EtCO2)까지 실시간으로 감시하여, 진정 깊이를 안전하게 관리합니다.',
-          image: '/media/images/sedation/bm1-monitor.png',
-          imageFit: 'contain',
+          image: '/media/images/sedation/bm1-live.jpg',
         },
         {
           name: 'Agilia SP 시린지펌프',
           tag: '진정제 정밀 주입',
           desc: '진정제를 정밀한 속도로 주입하고 주입 압력을 실시간 감시하여, 일정하고 안정적인 진정 상태를 유지합니다.',
-          image: '/media/images/sedation/agilia-sp.jpg',
-          imageFit: 'contain',
+          image: '/media/images/sedation/agilia-live.jpg',
         },
       ],
     },
@@ -621,9 +669,9 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
+      { src: '/media/images/sedation/sedation-pump-01.jpg', alt: '시린지펌프를 조작하는 의료진', caption: '시린지펌프로 진정제를 정밀하게 조절합니다' },
+      { src: '/media/images/sedation/sedation-monitor-01.jpg', alt: 'BM1 환자감시장치를 확인하는 의료진', caption: '치료 내내 활력징후를 실시간으로 확인합니다' },
       { src: '/media/images/recovery/recovery-01.jpg', alt: '진정 치료 후 회복실', caption: '깨어난 뒤 경과를 살피는 회복실' },
-      { src: '/media/images/waiting/waiting-01.jpg', alt: '보호자와 함께하는 대기 공간', caption: '보호자와 함께하는 대기 공간' },
-      { src: '/media/images/consult/consult-02.jpg', alt: '사전 문진이 이뤄지는 상담실', caption: '사전 문진과 안내가 이뤄지는 상담실' },
     ],
   },
   {
@@ -663,9 +711,10 @@ export const TREATMENTS: Treatment[] = [
     media: {
       label: 'GBT · GUIDED BIOFILM THERAPY',
       title: '눈으로 보는 GBT',
-      desc: '스위스 프리미엄 프로토콜 GBT가 어떻게 진행되는지 짧은 영상으로 확인해 보세요. 눈에 보이지 않던 바이오필름을 디스클로징으로 확인하고, 부드러운 파우더와 따뜻한 물로 섬세하게 닦아내는 과정입니다.',
-      video: '/media/video/gbt-intro.mp4',
-      poster: '/media/video/gbt-intro-poster.jpg',
+      desc: '스위스 프리미엄 프로토콜 GBT가 실제로 어떻게 진행되는지, 아트에이치치과 진료실에서 촬영한 영상으로 확인해 보세요. 부드러운 파우더와 따뜻한 물로 치태와 착색을 섬세하게 닦아내는 과정입니다.',
+      video: '/media/video/gbt-clinic.mp4',
+      videoMobile: '/media/video/gbt-clinic-720.mp4',
+      poster: '/media/video/gbt-clinic-poster.jpg',
       images: [
         { src: '/media/images/equipment/gbt-clinic.jpg', alt: '아트에이치치과 GBT 진료 장면', caption: '구강악안면외과 전문의가 직접 진행하는 GBT 케어' },
       ],
@@ -708,9 +757,9 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
-      { src: '/media/images/treatment-room/treatment-01.jpg', alt: '스케일링이 이뤄지는 진료실', caption: '스케일링이 이뤄지는 진료실' },
-      { src: '/media/images/powder/powder-01.jpg', alt: '관리 후 정돈하는 파우더룸', caption: '관리 후 정돈할 수 있는 파우더룸' },
-      { src: '/media/images/waiting/waiting-02.jpg', alt: '편안한 대기 공간', caption: '편안하게 순서를 기다리는 대기 공간' },
+      { src: '/media/images/perio/gbt-treatment.jpg', alt: 'GBT 에어플로우 케어를 진행하는 의료진', caption: 'GBT 프로토콜에 따라 진행하는 잇몸 케어' },
+      { src: '/media/images/perio/scaling-closeup.jpg', alt: '초슬림팁으로 진행하는 스케일링 클로즈업', caption: '초슬림팁으로 부드럽게 치석을 제거합니다' },
+      { src: '/media/images/perio/airflow-device.jpg', alt: 'EMS 에어플로우 프로필락시스 마스터 장비', caption: '스위스 EMS 에어플로우 장비' },
     ],
   },
   {
@@ -795,10 +844,18 @@ export const TREATMENTS: Treatment[] = [
         '홈 미백을 병행하는 경우 안내된 착용 시간을 지켜주세요.',
       ],
     },
+    media: {
+      label: 'OFFICE WHITENING',
+      title: '영상으로 보는 치아미백',
+      desc: '전용 미백램프로 미백제를 활성화하는 오피스 미백 과정을 아트에이치치과 진료실에서 촬영했습니다. 시림을 줄이는 단계별 관리와 함께 진행됩니다.',
+      video: '/media/video/whitening-care.mp4',
+      videoMobile: '/media/video/whitening-care-720.mp4',
+      poster: '/media/video/whitening-care-poster.jpg',
+    },
     gallery: [
-      { src: '/media/images/equipment/gbt-airflow.jpg', alt: '미백 전 치면 세정에 쓰는 에어플로우 장비', caption: '미백 전 치면 세정(GBT) 장비' },
-      { src: '/media/images/powder/powder-01.jpg', alt: '시술 후 정돈하는 파우더룸', caption: '시술 후 정돈할 수 있는 파우더룸' },
-      { src: '/media/images/waiting/waiting-01.jpg', alt: '밝은 대기 공간', caption: '밝은 채광의 대기 공간' },
+      { src: '/media/images/whitening/whitening-lamp-01.jpg', alt: '미백램프를 조정하는 의료진', caption: '전용 미백램프로 진행하는 오피스 미백' },
+      { src: '/media/images/whitening/whitening-bluelight.jpg', alt: '블루라이트가 점등된 미백 장비 클로즈업', caption: '최적 파장의 블루라이트로 미백제를 활성화합니다' },
+      { src: '/media/images/whitening/whitening-device.jpg', alt: '오스템 미백램프 장비', caption: '오스템 미백램프(Vutees) 장비' },
     ],
   },
 ];

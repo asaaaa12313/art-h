@@ -8,3 +8,6 @@ out
 next-env.d.ts
 .claude/
 .vercel/
+
+# 촬영 원본 소스 (웹 배포 제외 — public/media로 가공본만 반영)
+raw-assets/
