@@ -45,8 +45,8 @@ export default function BookingLink({
           background: 'transparent',
           color: '#fff',
           borderBottom: '1px solid rgba(255,255,255,0.35)',
-          paddingBottom: 4,
-          padding: '0 0 4px',
+          // 세로 패딩으로 터치 타깃 ≥24px 확보 (WCAG 2.5.8)
+          padding: '10px 0 4px',
         };
 
   if (!url) {

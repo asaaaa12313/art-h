@@ -10,6 +10,9 @@ const jsonLd = {
   alternateName: 'Art H Dental',
   url: SITE_URL,
   telephone: SITE.phone,
+  image: `${SITE_URL}/media/images/waiting/waiting-02.jpg`,
+  sameAs: [SITE.naverPlace],
+  hasMap: SITE.naverPlace,
   address: {
     '@type': 'PostalAddress',
     streetAddress: '센트럴로 263 IBS타워 업무동 8층',
@@ -17,6 +20,7 @@ const jsonLd = {
     addressRegion: '인천광역시',
     addressCountry: 'KR',
   },
+  geo: { '@type': 'GeoCoordinates', latitude: 37.3856, longitude: 126.6438 },
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Thursday'], opens: '09:30', closes: '20:30' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday', 'Friday'], opens: '09:30', closes: '18:30' },

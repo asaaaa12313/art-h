@@ -12,15 +12,15 @@ export const metadata: Metadata = {
     '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
 };
 
-// 진료과목별 실사 매핑 (copy.ts의 en 값과 매칭)
+// 진료과목별 실사 매핑 (copy.ts의 en 값과 매칭, 07.21 촬영본 — 홈 TX_IMG와 통일)
 const TX_SRC: Record<string, string> = {
-  'Implant': '/media/images/surgery/surgery-01.jpg',
-  'Root Canal': '/media/images/treatment-room/treatment-01.jpg',
-  'Oral Surgery': '/media/images/xray/xray-01.jpg',
-  'TMJ': '/media/images/xray/xray-02.jpg',
-  'Sedation': '/media/images/surgery/surgery-02.jpg',
-  'Periodontics': '/media/images/equipment/equipment-01.jpg',
-  'Whitening': '/media/images/consult/consult-01.jpg',
+  'Implant': '/media/images/implant/implant-surgery-01.jpg',
+  'Root Canal': '/media/images/treatment-room/treatment-02.jpg',
+  'Oral Surgery': '/media/images/xray/xray-position.jpg',
+  'TMJ': '/media/images/tmj/tmj-tmd-monitor.jpg',
+  'Sedation': '/media/images/sedation/sedation-monitor-01.jpg',
+  'Periodontics': '/media/images/perio/gbt-treatment.jpg',
+  'Whitening': '/media/images/whitening/whitening-lamp-01.jpg',
 };
 
 // 진료과목 slug별 라인 아이콘 매핑 (없는 slug는 tooth 기본)

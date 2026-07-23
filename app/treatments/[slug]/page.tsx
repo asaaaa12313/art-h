@@ -7,16 +7,17 @@ import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
-import { TREATMENTS } from '@/lib/copy';
+import BookingLink from '@/components/BookingLink';
+import { TREATMENTS, SITE } from '@/lib/copy';
 
 const TX_SRC: Record<string, string> = {
-  Implant: '/media/images/surgery/surgery-01.jpg',
-  'Root Canal': '/media/images/treatment-room/treatment-01.jpg',
-  'Oral Surgery': '/media/images/xray/xray-01.jpg',
-  TMJ: '/media/images/xray/xray-02.jpg',
-  Sedation: '/media/images/surgery/surgery-02.jpg',
-  Periodontics: '/media/images/equipment/equipment-01.jpg',
-  Whitening: '/media/images/consult/consult-01.jpg',
+  Implant: '/media/images/implant/implant-surgery-01.jpg',
+  'Root Canal': '/media/images/treatment-room/treatment-02.jpg',
+  'Oral Surgery': '/media/images/xray/xray-position.jpg',
+  TMJ: '/media/images/tmj/tmj-tmd-monitor.jpg',
+  Sedation: '/media/images/sedation/sedation-monitor-01.jpg',
+  Periodontics: '/media/images/perio/gbt-treatment.jpg',
+  Whitening: '/media/images/whitening/whitening-lamp-01.jpg',
 };
 
 export function generateStaticParams() {
@@ -34,6 +35,7 @@ export async function generateMetadata({
   return {
     title: t.ko,
     description: t.summary || t.d,
+    openGraph: { images: [{ url: TX_SRC[t.en] }] },
   };
 }
 
@@ -50,9 +52,25 @@ export default async function TreatmentDetailPage({
   const idx = TREATMENTS.findIndex((t) => t.slug === slug);
   const prev = TREATMENTS[(idx - 1 + TREATMENTS.length) % TREATMENTS.length];
   const next = TREATMENTS[(idx + 1) % TREATMENTS.length];
+  const phoneHref = `tel:${SITE.phone.replace(/-/g, '')}`;
+
+  // FAQ 리치 스니펫용 구조화 데이터 (화면의 FAQ 아코디언과 동일 내용)
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: tx.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <PageHeader title={tx.ko} src={src} alt={`${tx.ko} 이미지`} />
 
       <article className="txDetail">
@@ -503,6 +521,25 @@ export default async function TreatmentDetailPage({
           </div>
         </section>
 
+        {/* Closing CTA — 읽고 난 뒤 상담으로 잇는 마무리 밴드 */}
+        <section className="txSec txBandNavy txCtaSec">
+          <Reveal variant="fade">
+            <span className="txCtaEn">CONSULTATION</span>
+          </Reveal>
+          <TextReveal as="h3" className="txCtaTitle" lines={[`${tx.ko}, 궁금한 점이 남으셨나요?`]} delay={0.05} />
+          <Reveal variant="fade" delay={0.12}>
+            <p className="txCtaDesc">전화 한 통이면 충분합니다. 상담부터 편하게 시작하세요.</p>
+          </Reveal>
+          <Reveal delay={0.2} duration="0.6s">
+            <div className="txCtaBtns">
+              <a href={phoneHref} className="txCtaCall">
+                <span className="txCtaNum">{SITE.phone}</span> 전화하기
+              </a>
+              <BookingLink variant="ghost">네이버 예약</BookingLink>
+            </div>
+          </Reveal>
+        </section>
+
         {/* Navigation */}
         <nav className="txNav" aria-label="다른 진료과목 보기">
           <Link href={`/treatments/${prev.slug}`} className="txNavLink txNavPrev">
@@ -846,6 +883,32 @@ export default async function TreatmentDetailPage({
           font-size: 14px; color: var(--c-text2); line-height: 2;
           font-weight: 400;
         }
+
+        .txCtaSec { text-align: center; }
+        .txCtaEn {
+          font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
+          color: var(--c-blue-l); display: block; margin-bottom: 14px;
+        }
+        .txCtaTitle {
+          font-family: var(--f-serif-ko); font-size: clamp(22px, 3vw, 34px);
+          font-weight: 700; color: #fff; margin: 0 0 10px; line-height: 1.4;
+          word-break: keep-all;
+        }
+        .txCtaDesc {
+          font-size: 14px; color: rgba(255, 255, 255, 0.78);
+          margin: 0 0 28px; line-height: 1.8;
+        }
+        .txCtaBtns {
+          display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap;
+        }
+        .txCtaCall {
+          display: inline-flex; align-items: center; gap: 9px;
+          background: var(--c-blue-l); color: var(--c-navy-d);
+          font-weight: 700; font-size: 14px; padding: 13px 26px; border-radius: 2px;
+          transition: background 0.3s, transform 0.3s var(--ease-out);
+        }
+        .txCtaCall:hover { background: #fff; transform: translateY(-1px); }
+        .txCtaNum { font-family: var(--f-display); font-size: 15px; letter-spacing: 1px; }
 
         .txNav {
           display: grid; grid-template-columns: 1fr auto 1fr;
