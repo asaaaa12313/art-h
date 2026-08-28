@@ -6,11 +6,13 @@ import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import { DOCTORS, SITE } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
+import Breadcrumb from '@/components/Breadcrumb';
 import DoctorPhoto from './DoctorPhoto';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/doctor' },
   title: '의료진',
   description:
     '구강외과(최종원 원장) · 보존과(강지수 원장) 전문의 협진. 각 분야 전문의가 한 자리에서 정확하게 진단하고 끝까지 책임집니다.',
@@ -84,6 +86,9 @@ export default function DoctorPage() {
       <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="의료진 협진" objectPosition="center 55%" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <Breadcrumb items={[{ label: '홈', href: '/' }, { label: '의료진' }]} />
+        </div>
         <div style={{ maxWidth: 720, margin: '0 auto 80px', textAlign: 'center' }}>
           <Reveal variant="fade" duration="0.8s">
             <p style={{ fontSize: 12, color: 'var(--c-navy)', letterSpacing: 4, margin: '0 0 14px', fontWeight: 500 }}>

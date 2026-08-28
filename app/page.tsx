@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import Home from './home/Home';
 import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
+
+// 홈 canonical — layout에 두면 하위 페이지가 상속받아 전부 '/'가 되므로 페이지마다 명시한다.
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 

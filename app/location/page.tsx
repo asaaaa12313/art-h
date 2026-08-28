@@ -6,6 +6,7 @@ import MapEmbed from '@/components/MapEmbed';
 import { SITE } from '@/lib/copy';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/location' },
   title: '오시는길',
   description: `${SITE.address} · ${SITE.phone}. 주차 · 대중교통 안내.`,
 };

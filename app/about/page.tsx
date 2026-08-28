@@ -7,6 +7,7 @@ import AnimatedIcon from '@/components/AnimatedIcon';
 import { GREETING, PROMISE_ITEMS } from '@/lib/copy';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/about' },
   title: '의원소개',
   description:
     '진료 너머, 사람의 고귀함을 생각합니다. 구강악안면외과 · 치과보존과 전문의 협진으로 정교한 진료에 환자를 향한 깊은 시선을 더합니다.',

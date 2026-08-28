@@ -8,8 +8,9 @@ import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
 import BookingLink from '@/components/BookingLink';
+import Breadcrumb from '@/components/Breadcrumb';
 import { TREATMENTS, DOCTORS, SITE, CONTENT_UPDATED } from '@/lib/copy';
-import { jsonLdScript } from '@/lib/jsonld';
+import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -28,6 +29,7 @@ export async function generateMetadata({
   return {
     title: t.ko,
     description: t.summary || t.d,
+    alternates: { canonical: `/treatments/${t.slug}` },
     openGraph: { images: [{ url: t.card }] },
   };
 }
@@ -58,6 +60,10 @@ export default async function TreatmentDetailPage({
         }
       : null;
 
+  // 검수 표시 — 담당이 확인된 과목에만 붙인다(잇몸·미백은 검수자 미확정이라 표기하지 않음)
+  const reviewer = tx.reviewedBy !== undefined ? DOCTORS[tx.reviewedBy] : undefined;
+  const reviewedOn = `${CONTENT_UPDATED.slice(0, 4)}년 ${Number(CONTENT_UPDATED.slice(5, 7))}월 ${Number(CONTENT_UPDATED.slice(8, 10))}일`;
+
   // 구조화 데이터 — 검색엔진·생성형 검색이 과목/시술/담당의/경로를 그대로 인용할 수 있게 한 묶음으로 제공
   const pageUrl = `${SITE_URL}/treatments/${tx.slug}`;
   const provider = {
@@ -85,6 +91,18 @@ export default async function TreatmentDetailPage({
         inLanguage: 'ko-KR',
         lastReviewed: CONTENT_UPDATED,
         about: { '@id': `${pageUrl}#procedure` },
+        // 화면 하단의 검수 표시와 동일한 사실 (구조화 데이터는 보이는 내용을 설명하는 수단)
+        ...(reviewer
+          ? {
+              reviewedBy: {
+                '@type': 'Physician',
+                '@id': doctorNodeId(SITE_URL, tx.reviewedBy as number),
+                name: `${reviewer.name} ${reviewer.title}`,
+                medicalSpecialty: 'Dentistry',
+                description: reviewer.specialty,
+              },
+            }
+          : {}),
       },
       {
         '@type': 'MedicalProcedure',
@@ -137,6 +155,13 @@ export default async function TreatmentDetailPage({
       <article className="txDetail">
         {/* Summary */}
         <section className="txSec txHead">
+          <Breadcrumb
+            items={[
+              { label: '홈', href: '/' },
+              { label: '진료과목', href: '/treatments' },
+              { label: tx.ko },
+            ]}
+          />
           <Reveal variant="fade" duration="0.7s">
             <p className="txEyebrow">{tx.en.toUpperCase()}</p>
           </Reveal>
@@ -649,6 +674,19 @@ export default async function TreatmentDetailPage({
           </div>
         </section>
 
+        {/* 의료 콘텐츠 검수 표시 — 누가 언제 검수했는지 (E-E-A-T의 Who·Trust) */}
+        {reviewer && (
+          <Reveal variant="fade" duration="0.7s">
+            <section className="txSec txReview">
+              <AnimatedIcon name="badge" size={18} stroke="var(--c-blue)" delay={0.1} />
+              <p className="txReviewText">
+                이 페이지는 <strong>{reviewer.name} {reviewer.title}</strong>({reviewer.specialty})이 검수했습니다.
+                <span className="txReviewDate">최종 검수 {reviewedOn}</span>
+              </p>
+            </section>
+          </Reveal>
+        )}
+
         {/* Closing CTA — 읽고 난 뒤 상담으로 잇는 마무리 밴드 */}
         <section className="txSec txBandNavy txCtaSec">
           <Reveal variant="fade">
@@ -774,6 +812,22 @@ export default async function TreatmentDetailPage({
         .txQuickRow dd {
           margin: 0; font-size: 14px; font-weight: 400;
           color: var(--c-text); line-height: 1.7;
+        }
+
+        /* 의료 콘텐츠 검수 표시 */
+        .txReview {
+          display: flex; align-items: flex-start; gap: 10px;
+          padding: 18px 20px;
+          background: var(--c-warm); border-radius: 2px;
+        }
+        .txReviewText {
+          margin: 0; font-size: 13.5px; line-height: 1.75;
+          color: var(--c-text); font-weight: 400; word-break: keep-all;
+        }
+        .txReviewText strong { font-weight: 600; color: var(--c-navy); }
+        .txReviewDate {
+          display: block; margin-top: 3px;
+          font-size: 12.5px; color: var(--c-text2);
         }
 
         /* 담당 전문의 밴드 */

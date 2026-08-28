@@ -24,6 +24,7 @@ const ROOM_ICON: Record<string, string> = {
 const PRIMESCAN_SRC = '/media/images/equipment/primescan-01.jpg';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/facility' },
   title: '시설',
   description:
     '독립 수술실, 진료실, 상담실 등 아트에이치치과의 진료 공간 안내.',

@@ -4,12 +4,14 @@ import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
+import Breadcrumb from '@/components/Breadcrumb';
 import { TREATMENTS } from '@/lib/copy';
 import { jsonLdScript } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/treatments' },
   title: '진료과목',
   description:
     '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
@@ -61,6 +63,7 @@ export default function TreatmentsPage() {
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(48px,6vw,80px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <Breadcrumb items={[{ label: '홈', href: '/' }, { label: '진료과목' }]} />
           {TREATMENTS.map((t, i) => (
             <Reveal key={t.en} delay={0.03 + i * 0.04} duration="0.6s">
               <Link href={`/treatments/${t.slug}`} className="txRow" aria-label={`${t.ko} 상세 보기`}>
