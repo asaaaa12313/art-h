@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TREATMENTS.map((t) => `/treatments/${t.slug}`),
     '/facility',
     '/location',
+    '/privacy',
   ];
   // 빌드 시각(new Date())을 쓰면 배포할 때마다 전 페이지 수정일이 갱신돼 신선도 신호가 왜곡된다.
   // 콘텐츠가 실제로 바뀐 날짜(lib/copy.ts의 CONTENT_UPDATED)를 기준으로 삼는다.

@@ -4,6 +4,9 @@ import { V } from './visuals';
  *  빌드 시각(new Date())을 쓰면 매 배포마다 전 페이지 수정일이 바뀌어 신선도 신호가 왜곡된다. */
 export const CONTENT_UPDATED = '2026-08-28';
 
+/** 개인정보처리방침 시행일 — 내용을 고칠 때마다 갱신하고, 변경 이력은 방침 하단에 남긴다. */
+export const PRIVACY_EFFECTIVE = '2026-08-28';
+
 export const SITE = {
   name: '아트에이치치과',
   nameEn: 'Art H Dental',

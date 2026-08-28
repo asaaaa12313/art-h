@@ -61,6 +61,7 @@ ${treatments}
 - [진료과목](${SITE_URL}/treatments)
 - [시설](${SITE_URL}/facility)
 - [오시는 길](${SITE_URL}/location)
+- [개인정보처리방침](${SITE_URL}/privacy)
 `;
 
   return new Response(body, {

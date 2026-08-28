@@ -19,6 +19,7 @@ export default function Footer() {
             <Link href="/about">의원소개</Link>
             <Link href="/location">오시는길</Link>
             <a href={`tel:${tel}`}>전화하기</a>
+            <Link href="/privacy">개인정보처리방침</Link>
           </div>
         </div>
         <dl className={styles.biz}>
