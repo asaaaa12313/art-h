@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
 import { SITE, PRIVACY_EFFECTIVE } from '@/lib/copy';
+import { jsonLdScript } from '@/lib/jsonld';
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/privacy' },
@@ -38,8 +41,22 @@ const AGENCIES: [string, string][] = [
 ];
 
 export default function PrivacyPage() {
+  // 화면 경로와 같은 항목·순서 (다른 페이지와 동일 규칙)
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: '개인정보처리방침', item: `${SITE_URL}/privacy` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
+      />
       <article className="pv">
         <Breadcrumb items={[{ label: '홈', href: '/' }, { label: '개인정보처리방침' }]} />
         <Reveal variant="fade" duration="0.7s">
