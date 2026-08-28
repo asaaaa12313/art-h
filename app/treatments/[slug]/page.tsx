@@ -817,6 +817,9 @@ export default async function TreatmentDetailPage({
         /* 의료 콘텐츠 검수 표시 */
         .txReview {
           display: flex; align-items: flex-start; gap: 10px;
+        }
+        .txReview > svg { flex: none; margin-top: 1px; }
+        .txReview {
           padding: 18px 20px;
           background: var(--c-warm); border-radius: 2px;
         }

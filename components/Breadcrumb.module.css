@@ -30,9 +30,3 @@
   color: var(--c-text2);
   font-weight: 500;
 }
-
-/* 네이비 밴드 위에 놓일 때 (PageHeader 하단 등) */
-.onDark { color: rgba(255, 255, 255, 0.72); }
-.onDark .link { color: var(--c-blue-l); }
-.onDark .sep { color: rgba(255, 255, 255, 0.4); }
-.onDark .current { color: rgba(255, 255, 255, 0.92); }
