@@ -34,6 +34,7 @@ export function GET() {
 - 전화: ${SITE.phone}
 - 교통: ${SITE.transit}
 - 네이버 플레이스: ${SITE.naverPlace}
+- 사업자 정보: ${SITE.business.legalName}(${SITE.business.category}) · 대표 ${SITE.business.ceo} · 사업자등록번호 ${SITE.business.regNo}
 - 최종 갱신일: ${CONTENT_UPDATED}
 
 ## 진료시간

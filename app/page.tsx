@@ -26,6 +26,8 @@ const jsonLd = {
       '@id': `${SITE_URL}#clinic`,
       name: SITE.name,
       alternateName: 'Art H Dental',
+      legalName: SITE.business.legalName,
+      taxID: SITE.business.regNo,
       description:
         '인천 송도 IBS타워 업무동 8층에 위치한 치과. 구강악안면외과 전문의와 치과보존과 전문의가 함께 진료하며, 임플란트·사랑니 발치·신경치료·턱관절·의식하진정·잇몸 스케일링·치아미백을 진료합니다.',
       url: SITE_URL,

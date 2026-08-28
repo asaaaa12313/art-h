@@ -13,6 +13,15 @@ export const SITE = {
   addressShort: '송도 IBS타워 · 국제업무지구역 5번 출구 470m',
   transit: '인천1호선 국제업무지구역 5번 출구에서 470m (G타워 방면)',
   naverPlace: 'https://naver.me/GWW5jD4j',
+  // 사업자등록증 기재 사항 (2026-02-09 발급 · 개업 2026-04-01). 대표자 생년월일은 개인정보라 담지 않는다.
+  business: {
+    legalName: '아트에이치 치과',
+    ceo: '최종원',
+    regNo: '202-30-70322',
+    // 등록증 소재지 표기 — 화면 안내용 주소(SITE.address)와 표기 방식이 달라 그대로 둔다
+    regAddress: '인천광역시 연수구 센트럴로 263, 8층 1, 2호',
+    category: '치과의원',
+  },
   hours: [
     { day: '월·목 (야간진료)', time: '09:30 — 20:30', highlight: true },
     { day: '화·수·금', time: '09:30 — 18:30', highlight: false },

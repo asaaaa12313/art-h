@@ -21,6 +21,24 @@ export default function Footer() {
             <a href={`tel:${tel}`}>전화하기</a>
           </div>
         </div>
+        <dl className={styles.biz}>
+          <div>
+            <dt>상호</dt>
+            <dd>{SITE.business.legalName} <span className={styles.bizSub}>({SITE.business.category})</span></dd>
+          </div>
+          <div>
+            <dt>대표자</dt>
+            <dd>{SITE.business.ceo}</dd>
+          </div>
+          <div>
+            <dt>사업자등록번호</dt>
+            <dd>{SITE.business.regNo}</dd>
+          </div>
+          <div className={styles.bizWide}>
+            <dt>주소</dt>
+            <dd>{SITE.business.regAddress}</dd>
+          </div>
+        </dl>
         <div className={styles.copy}>
           &copy; {new Date().getFullYear()} {SITE.name}
         </div>
