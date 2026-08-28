@@ -10,11 +10,15 @@ import CountUp from '@/components/CountUp';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
 import HeroIntro from '@/components/HeroIntro';
+import TxDiagram from '@/components/TxDiagram';
 import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS, REVIEW_LINK, WARRANTY, STORY_BANDS } from '@/lib/copy';
 import styles from './Home.module.css';
 
 // Hero 사진 인트로 — 사진 3장(대기실·외관·상담실)을 줌+크로스페이드로 먼저 보여준 뒤 영상으로 전환.
 // 인사 문구는 사진 인트로에서만 노출되고, 영상으로 넘어가면 사라진다. CTA는 계속 유지.
+// TODO(엔도 촬영본 입고 시): X-Smart Pro+ 사용 장면을 4번째 슬라이드로 추가한다.
+//   { src: '/media/images/endo/endo-motor-01.jpg', alt: 'X-Smart Pro+ 엔도 모터로 진행하는 신경치료' }
+//   제조사(덴츠플라이시로나) 제품 이미지는 저작권 문제로 사용하지 않는다 — 원내 촬영본만.
 const HERO_PHOTOS = [
   { src: '/media/images/waiting/waiting-01.jpg', alt: '아트에이치치과 대기실 라운지' },
   { src: '/media/images/exterior/exterior-01.jpg', alt: '송도 IBS타워 외관' },
@@ -31,16 +35,17 @@ const HERO_VIDEOS = [
   { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' }, // 수술실 풀세팅 짐벌(07.21 촬영)
 ];
 
-// 진료과목 카드 이미지 (slug → 실사 매핑, 07.21 촬영본 — plan-design-refresh P4)
-const TX_IMG: Record<string, string> = {
-  implant: '/media/images/implant/implant-surgery-01.jpg',
-  'root-canal': '/media/images/treatment-room/treatment-02.jpg',
-  'oral-surgery': '/media/images/xray/xray-position.jpg',
-  tmj: '/media/images/tmj/tmj-tmd-monitor.jpg',
-  sedation: '/media/images/sedation/sedation-monitor-01.jpg',
-  periodontics: '/media/images/perio/gbt-treatment.jpg',
-  whitening: '/media/images/whitening/whitening-lamp-01.jpg',
-};
+// 신경치료 밴드 — 자체 제작 모식도 3종 + 장비/자격 요약 (copy.ts root-canal과 동일 사실)
+const ENDO_FIGS = [
+  { name: 'endo-1', caption: '근관장 측정' },
+  { name: 'endo-2', caption: '근관 성형' },
+  { name: 'endo-3', caption: '근관 충전' },
+];
+const ENDO_CHIPS = [
+  '보건복지부 인증 치과보존과 전문의 직접 진료',
+  'X-Smart Pro+ — 근관장 측정기 내장 엔도 모터',
+  'ProTaper Next — M-Wire® 니켈-티타늄 파일',
+];
 
 // 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
 const STATS = [
@@ -300,7 +305,7 @@ export default function Home() {
               <Reveal key={t.slug} delay={0.05 + (i % 3) * 0.08} duration="0.9s" from="scale(0.97)" style={{ height: '100%' }}>
                 <Link href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
                   <div className={styles.txImg}>
-                    <Photo src={TX_IMG[t.slug]} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
+                    <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
                     <div className={styles.txOverlay} aria-hidden="true" />
                     <span className={styles.txNo}>{String(i + 1).padStart(2, '0')}</span>
                   </div>
@@ -312,6 +317,53 @@ export default function Home() {
                 </Link>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ENDODONTICS — 신경치료 전문의 · 엔도 시스템 ===== */}
+      <section className={styles.endo}>
+        <div className={styles.inner}>
+          <div className={styles.endoGrid}>
+            <Reveal variant="blur-up" duration="0.9s" from="translateY(20px)">
+              <div className={styles.endoFigs}>
+                {ENDO_FIGS.map((f) => (
+                  <figure key={f.name} className={styles.endoFig}>
+                    <TxDiagram name={f.name} title={`${f.caption} 모식도`} />
+                    <figcaption>{f.caption}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </Reveal>
+            <div className={styles.endoBody}>
+              <Reveal>
+                <span className={styles.label}><i />ENDODONTICS</span>
+              </Reveal>
+              <Reveal delay={0.06}>
+                <h2 className={styles.sectionTitle}>신경치료,<br />치과보존과 전문의가</h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className={styles.endoDesc}>
+                  감염된 신경을 제거하고 자연치아를 살리는 진료입니다.
+                  아트에이치치과는 보건복지부 인증 치과보존과 전문의가
+                  X-Smart Pro+ 엔도 모터와 ProTaper Next 파일로 근관 하나하나를 정밀하게 처치합니다.
+                </p>
+              </Reveal>
+              <ul className={styles.endoChips}>
+                {ENDO_CHIPS.map((c, i) => (
+                  <Reveal key={c} as="li" delay={0.18 + i * 0.06}>
+                    <AnimatedIcon name="badge" size={15} stroke="var(--c-blue-l)" delay={0.24 + i * 0.06} />
+                    <span>{c}</span>
+                  </Reveal>
+                ))}
+              </ul>
+              <Reveal delay={0.4}>
+                <Link href="/treatments/root-canal" className={styles.endoLink}>
+                  신경치료 자세히 보기
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>

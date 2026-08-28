@@ -6,21 +6,12 @@ import Reveal from '@/components/Reveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import { TREATMENTS } from '@/lib/copy';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
+
 export const metadata: Metadata = {
   title: '진료과목',
   description:
     '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
-};
-
-// 진료과목별 실사 매핑 (copy.ts의 en 값과 매칭, 07.21 촬영본 — 홈 TX_IMG와 통일)
-const TX_SRC: Record<string, string> = {
-  'Implant': '/media/images/implant/implant-surgery-01.jpg',
-  'Root Canal': '/media/images/treatment-room/treatment-02.jpg',
-  'Oral Surgery': '/media/images/xray/xray-position.jpg',
-  'TMJ': '/media/images/tmj/tmj-tmd-monitor.jpg',
-  'Sedation': '/media/images/sedation/sedation-monitor-01.jpg',
-  'Periodontics': '/media/images/perio/gbt-treatment.jpg',
-  'Whitening': '/media/images/whitening/whitening-lamp-01.jpg',
 };
 
 // 진료과목 slug별 라인 아이콘 매핑 (없는 slug는 tooth 기본)
@@ -35,9 +26,37 @@ const TX_ICON: Record<string, string> = {
 };
 
 export default function TreatmentsPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: '진료과목', item: `${SITE_URL}/treatments` },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        name: '아트에이치치과 진료과목',
+        itemListElement: TREATMENTS.map((t, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: t.ko,
+          description: t.d,
+          url: `${SITE_URL}/treatments/${t.slug}`,
+        })),
+      },
+    ],
+  };
+
   return (
     <>
-      <PageHeader title="진료과목" src="/media/images/treatment-room/treatment-02.jpg" alt="진료실 이미지" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PageHeader title="진료과목" src="/media/images/treatment-room/treatment-01.jpg" alt="아트에이치치과 진료실" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(48px,6vw,80px) clamp(24px,5vw,80px)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
@@ -45,7 +64,7 @@ export default function TreatmentsPage() {
             <Reveal key={t.en} delay={0.03 + i * 0.04} duration="0.6s">
               <Link href={`/treatments/${t.slug}`} className="txRow" aria-label={`${t.ko} 상세 보기`}>
                 <div className="txImg">
-                  <Photo src={TX_SRC[t.en]} alt={`${t.ko} 이미지`} sizes="200px" />
+                  <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="200px" />
                 </div>
                 <div className="txBody">
                   <div className="txHead">

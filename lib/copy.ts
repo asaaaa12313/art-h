@@ -1,5 +1,9 @@
 import { V } from './visuals';
 
+/** 콘텐츠 기준 최종 갱신일 — sitemap lastModified·JSON-LD lastReviewed 공용.
+ *  빌드 시각(new Date())을 쓰면 매 배포마다 전 페이지 수정일이 바뀌어 신선도 신호가 왜곡된다. */
+export const CONTENT_UPDATED = '2026-08-28';
+
 export const SITE = {
   name: '아트에이치치과',
   nameEn: 'Art H Dental',
@@ -87,6 +91,15 @@ type TxInsurance = {
   notes: string[];
 };
 type TxAftercare = { label: string; title: string; items: string[] };
+/** 생성형 검색·AI 답변이 그대로 인용할 수 있는 정의형 사실 요약 (GEO) */
+type TxQuickFact = { k: string; v: string };
+type TxSpecialist = {
+  /** DOCTORS 배열 인덱스 — 자격·사진·문구는 의료진 데이터를 그대로 재사용 */
+  doctorIndex: number;
+  label: string;
+  title: string;
+  desc: string;
+};
 type TxGalleryItem = { src: string; alt: string; caption: string };
 
 export type Treatment = {
@@ -94,6 +107,8 @@ export type Treatment = {
   ko: string;
   slug: string;
   bg: string;
+  /** 진료과목 카드·목록·상세헤더 공통 대표 이미지 (v1.56 단일화) */
+  card: string;
   d: string;
   summary: string;
   intro: string;
@@ -115,15 +130,24 @@ export type Treatment = {
   kinds?: TxKinds;
   insurance?: TxInsurance;
   aftercare?: TxAftercare;
+  quickFacts?: TxQuickFact[];
+  specialist?: TxSpecialist;
   gallery?: TxGalleryItem[];
 };
 
 export const TREATMENTS: Treatment[] = [
   {
     en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
+    card: '/media/images/implant/implant-surgery-01.jpg',
     d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.',
     summary: '상실된 자연치아의 자리를, 가장 가깝게 회복합니다.',
     intro: '임플란트는 상실된 자연치아를 대체하는 대표적인 방법입니다. 아트에이치치과는 구강악안면외과 전문의가 직접 계획하고 수술합니다. 3D CT로 골량과 신경 위치를 정밀하게 파악하고, 디지털 가이드를 제작해 예측 가능한 식립을 지향합니다.',
+    quickFacts: [
+      { k: '담당', v: '구강악안면외과 전문의 (최종원 대표원장)' },
+      { k: '치료 기간', v: '골유착 기간 2~4개월을 포함해 진행' },
+      { k: '건강보험', v: '만 65세 이상 1인 평생 2개까지 본인부담 30%' },
+      { k: '진정 병행', v: '치과 공포가 있는 경우 의식하진정 병행 가능' },
+    ],
     processes: [
       '3D CT · 파노라마 촬영, 구강 스캔',
       '1:1 상담과 치료 계획 수립',
@@ -289,18 +313,28 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
+    card: '/media/images/equipment/equipment-02.jpg',
     d: '근관을 정밀하게 처치하여 자연치아를 최대한 보존합니다.',
     summary: '살릴 수 있는 치아는 끝까지 살립니다.',
-    intro: '신경치료는 충치가 깊어 치수(신경)까지 감염된 경우, 감염된 조직을 제거하고 근관을 소독·밀폐하여 자연치아를 보존하는 치료입니다. 치과보존과 전문의가 근관 하나하나를 정밀하게 처치합니다.',
+    intro: '신경치료는 충치가 깊어 치수(신경)까지 감염된 경우, 감염된 조직을 제거하고 근관을 소독·밀폐하여 자연치아를 보존하는 치료입니다. 아트에이치치과는 치과보존과 전문의가 직접 진료하며, X-Smart Pro+ 엔도 모터와 ProTaper Next 파일로 근관 하나하나를 정밀하게 처치합니다.',
+    quickFacts: [
+      { k: '담당', v: '치과보존과 전문의 (강지수 원장)' },
+      { k: '내원 횟수', v: '일반적으로 2~4회 (근관 복잡도에 따라 변동)' },
+      { k: '사용 장비', v: 'X-Smart Pro+ 엔도 모터 · ProTaper Next 니켈-티타늄 파일' },
+      { k: '치료 마무리', v: '신경을 제거한 치아는 크라운으로 보호하는 것이 원칙' },
+    ],
     processes: [
-      '증상 문진 및 방사선 검사',
-      '마취 후 감염 치수 제거',
-      '근관 형성 및 세척·소독',
+      '증상 문진과 치근단 방사선 검사',
+      '마취 후 감염된 치수 제거',
+      '근관장(뿌리 길이) 측정',
+      '니켈-티타늄 파일로 근관 성형',
+      '근관 세척 · 소독',
       '근관 충전 (Gutta-percha)',
       '코어 및 크라운 보철',
     ],
     features: [
       '치과보존과 전문의 직접 진료',
+      'X-Smart Pro+ · ProTaper Next 엔도 시스템 사용',
       '자연치아 최대 보존 원칙',
       '재신경치료 케이스도 적극 대응',
     ],
@@ -309,6 +343,66 @@ export const TREATMENTS: Treatment[] = [
       { q: '치료 중 통증이 있나요?', a: '마취 하에 치료하므로 대부분 통증이 없습니다. 치료 후 일시적인 저작통이 있을 수 있지만 점차 사라집니다.' },
       { q: '신경치료 후 꼭 크라운을 씌워야 하나요?', a: '신경을 제거한 치아는 부서지기 쉬워 크라운으로 보호하는 것이 원칙입니다. 그래야 치아 수명이 오래 유지됩니다.' },
       { q: '신경치료한 치아가 또 아플 수 있나요?', a: '근관이 복잡하거나 재감염된 경우 통증이 재발할 수 있습니다. 많은 경우 재신경치료로 해결할 수 있으며, 아트에이치치과는 재신경치료 케이스도 적극 대응합니다.' },
+      { q: '신경치료에 어떤 기구를 사용하나요?', a: '아트에이치치과는 덴츠플라이시로나의 X-Smart Pro+ 엔도 모터와 ProTaper Next 니켈-티타늄 파일을 사용합니다. 모터에 근관장 측정기가 내장되어 있어 치료 중 뿌리 길이를 확인하며 진행하고, 유연한 파일로 굽은 근관도 해부학적 형태를 따라 성형합니다.' },
+      { q: '송도에서 치과보존과 전문의에게 신경치료를 받을 수 있나요?', a: '아트에이치치과(인천 연수구 센트럴로 263 IBS타워 업무동 8층, 국제업무지구역 5번 출구)에는 보건복지부 인증 치과보존과 전문의가 상주하며 신경치료를 직접 담당합니다. 예약은 032-831-3877로 문의해 주세요.' },
+    ],
+    stepFigures: [
+      { diagram: 'rct-3', t: '감염 확인', d: '증상과 방사선 검사로 신경(치수)까지 감염이 진행됐는지 확인합니다.' },
+      { diagram: 'endo-1', t: '근관장 측정', d: '뿌리 끝까지의 길이를 측정해 파일이 그 지점을 넘지 않도록 기준을 잡습니다.' },
+      { diagram: 'endo-2', t: '근관 성형', d: '유연한 니켈-티타늄 파일이 굽은 근관의 원래 형태를 따라 안쪽을 넓힙니다.' },
+      { diagram: 'endo-3', t: '세척 · 충전', d: '소독한 근관을 거타퍼차로 빈틈없이 채우고, 입구를 덮어 재감염을 막습니다.' },
+      { diagram: 'rct-4', t: '크라운 보호', d: '신경을 제거한 치아는 부서지기 쉬워 크라운으로 덮어 오래 사용합니다.' },
+    ],
+    specialist: {
+      doctorIndex: 1,
+      label: 'ENDODONTIC SPECIALIST',
+      title: '치과보존과 전문의가 직접 진료합니다',
+      desc: '신경치료는 눈에 보이지 않는 근관을 다루는 진료입니다. 아트에이치치과는 보건복지부 인증 치과보존과 전문의가 진단부터 근관 충전, 최종 보철까지 직접 담당합니다. 재신경치료처럼 까다로운 케이스도 같은 전문의가 이어서 봅니다.',
+    },
+    techTitle: {
+      label: 'ENDODONTIC SYSTEM',
+      title: '아트에이치가 사용하는 엔도 시스템',
+      desc: '신경치료의 성패는 굽고 좁은 근관을 얼마나 원래 형태 그대로, 끝까지 처치하느냐에 달려 있습니다. 아트에이치치과는 근관장 측정기를 내장한 엔도 모터와 유연한 니켈-티타늄 파일을 사용합니다.',
+    },
+    tech: [
+      {
+        no: '01',
+        t: '뿌리 길이를 확인하며 치료합니다',
+        metric: '근관장 측정기 내장 · Auto-Reverse',
+        d: 'X-Smart Pro+는 치료 중 파일 끝의 위치를 실시간으로 확인합니다. 설정한 길이에 도달하면 파일이 자동으로 되돌아가 뿌리 끝을 넘지 않도록 돕습니다.',
+        target: '신경치료 후 통증이 남았던 경험이 있는 분께',
+      },
+      {
+        no: '02',
+        t: '굽은 근관을 따라가는 유연한 파일',
+        metric: 'M-Wire® 니켈-티타늄 열처리 소재',
+        d: 'ProTaper Next는 열처리한 니켈-티타늄 소재로 유연합니다. 근관 벽에 두 지점만 닿는 비대칭 회전 방식이라 굽은 근관의 원래 형태를 따라 성형합니다.',
+        target: '뿌리가 휘어 치료가 어렵다고 들으신 분께',
+      },
+      {
+        no: '03',
+        t: '적은 파일 수, 짧아진 의자 시간',
+        metric: '대부분 X1 · X2 두 개로 성형',
+        d: '기존 시스템이 네 개의 파일을 쓰던 근관도 대부분 두 개로 성형합니다. 기구를 바꿔 끼우는 횟수가 줄어 한 번에 앉아 계시는 시간이 짧아집니다.',
+        target: '치과 의자에 오래 앉아 있기 힘드신 분께',
+      },
+    ],
+    devicesTitle: {
+      label: 'ENDO EQUIPMENT',
+      title: '신경치료에 사용하는 장비',
+      desc: '아트에이치치과는 덴츠플라이시로나(Dentsply Sirona)의 엔도 시스템을 사용합니다. 아래는 실제 진료에 쓰이는 장비의 사양입니다.',
+    },
+    devices: [
+      {
+        name: 'X-Smart Pro+',
+        role: '근관 성형 엔도 모터',
+        d: '토크 0.2–7.5 N·cm, 회전 속도 100–3,000 rpm 범위에서 근관 상태에 맞춰 조절합니다. 근관장 측정기가 내장되어 길이를 확인하며 치료하고, 회전(로터리)과 왕복(레시프로케이팅) 두 방식을 모두 사용할 수 있습니다.',
+      },
+      {
+        name: 'ProTaper Next',
+        role: '니켈-티타늄 근관 파일',
+        d: 'M-Wire® 열처리 니켈-티타늄 소재의 회전 파일로 X1부터 X5까지 다섯 종으로 구성됩니다. 근관의 굵기와 형태에 따라 필요한 종류만 골라 사용합니다.',
+      },
     ],
     kinds: {
       label: 'DECAY PROGRESSION',
@@ -354,16 +448,23 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
-      { src: '/media/images/treatment-room/treatment-02.jpg', alt: '신경치료가 이뤄지는 진료실', caption: '치료에 집중할 수 있는 진료 공간' },
+      { src: '/media/images/treatment-room/treatment-01.jpg', alt: '신경치료가 이뤄지는 진료실', caption: '치료에 집중할 수 있는 진료 공간' },
       { src: '/media/images/xray/xray-02.jpg', alt: '치아 뿌리를 확인하는 영상 진단 장비', caption: '치아 뿌리 상태를 확인하는 영상 진단' },
       { src: '/media/images/treatment-room/treatment-03.jpg', alt: '위생적으로 관리되는 진료실', caption: '체계적인 멸균 · 위생 관리' },
     ],
   },
   {
     en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery', bg: V.equip,
+    card: '/media/images/surgery/or-fullset.jpg',
     d: '3D CT 기반 정밀 진단. 매복 사랑니도 안전하게.',
     summary: '복잡한 매복 사랑니도, 안전하게.',
     intro: '사랑니는 위치와 방향에 따라 발치 난이도가 크게 달라집니다. 특히 신경관과 가까운 매복 사랑니는 3D CT 진단이 필수입니다. 구강악안면외과 전문의가 3D 영상 분석 후 안전한 경로로 발치합니다.',
+    quickFacts: [
+      { k: '담당', v: '구강악안면외과 전문의 (최종원 대표원장)' },
+      { k: '사전 검사', v: '3D CT · 파노라마로 신경관과 뿌리 위치 분석' },
+      { k: '대응 범위', v: '매복 · 수평 매복 · 완전 매복 사랑니' },
+      { k: '진정 병행', v: '공포가 심한 경우 의식하진정 병행 가능' },
+    ],
     processes: [
       '3D CT · 파노라마 촬영',
       '신경관 · 뿌리 위치 정밀 분석',
@@ -452,9 +553,16 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'TMJ', ko: '턱관절치료', slug: 'tmj', bg: V.scan,
+    card: '/media/images/tmj/tmj-tmd-monitor.jpg',
     d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.',
     summary: '턱의 통증과 불편감, 원인부터 찾습니다.',
     intro: '턱관절 장애는 교합·습관·스트레스 등 복합적 원인에서 발생합니다. 일상에 지장을 주는 소리·통증·개구 장애가 지속된다면 조기 진단이 중요합니다. 영상 검사와 근육 검사를 통해 원인을 파악하고, 비수술적·보존적 치료를 우선합니다.',
+    quickFacts: [
+      { k: '담당', v: '구강악안면외과 전문의 (최종원 대표원장)' },
+      { k: '치료 원칙', v: '수술이 아닌 보존적 치료를 우선' },
+      { k: '주요 방법', v: '교합안정장치(스플린트) · 물리치료 · 약물 · 생활습관 교정' },
+      { k: '병행 치료', v: '이갈이 · 사각턱 보톡스 병행 가능' },
+    ],
     processes: [
       '증상 문진 및 교합 검사',
       '3D CT · 파노라마 진단',
@@ -581,9 +689,16 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'Sedation', ko: '의식하진정', slug: 'sedation', bg: V.surg,
+    card: '/media/images/sedation/bm1-live.jpg',
     d: '수면마취 하 편안한 진료. 치과 공포가 있는 분도 안심하고 치료받으실 수 있습니다.',
     summary: '불안 없이, 편안한 잠처럼 받는 진료.',
     intro: '의식하진정(Conscious Sedation)은 환자가 의식은 유지하되 긴장과 불안은 크게 줄어든 상태에서 치료받을 수 있게 하는 방법입니다. 치과 공포가 심한 분, 복잡한 임플란트 수술, 장시간 치료가 필요한 분에게 특히 권장됩니다.',
+    quickFacts: [
+      { k: '담당', v: '구강악안면외과 전문의 (최종원 대표원장)' },
+      { k: '진행 방식', v: '의식이 남아 있는 상태의 진정 (전신마취와 다름)' },
+      { k: '안전 관리', v: '치료 중 활력징후 실시간 모니터링' },
+      { k: '귀가', v: '회복 관찰 후 보호자 동반 귀가' },
+    ],
     processes: [
       '사전 건강 문진 및 금식 안내',
       '생체 신호 모니터링 준비',
@@ -676,9 +791,16 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,
+    card: '/media/images/treatment-room/treatment-02.jpg',
     d: '에어플로우 스케일링과 체계적 치주 관리.',
     summary: '치아의 집, 잇몸부터 건강하게.',
     intro: '잇몸 질환은 성인의 치아 상실 원인 1위입니다. 초기에는 증상이 거의 없어 정기 검진이 중요합니다. GBT(Guided Biofilm Therapy) 프로토콜에 따라 에어플로우로 치태와 착색을 부드럽게 제거하고, 체계적인 치주 관리를 제공합니다.',
+    quickFacts: [
+      { k: '진행 방식', v: 'GBT(Guided Biofilm Therapy) 프로토콜' },
+      { k: '사용 장비', v: '스위스 EMS 에어플로우 · 초슬림팁 스케일러' },
+      { k: '건강보험', v: '만 19세 이상 연 1회 스케일링 건강보험 적용' },
+      { k: '권장 주기', v: '6개월~1년 (잇몸 상태에 따라 단축)' },
+    ],
     processes: [
       '잇몸 상태 및 치주낭 깊이 측정',
       '디스클로징 용액으로 치태 시각화',
@@ -764,9 +886,16 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
+    card: '/media/images/whitening/whitening-bluelight.jpg',
     d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.',
     summary: '자연스러운 결, 밝아진 미소.',
     intro: '치아 변색은 식습관·흡연·노화·약물 등 다양한 원인에서 발생합니다. 치아 상태에 따라 오피스 미백(내원)과 홈 미백(자가)을 병행해 자연스러운 밝기를 찾아갑니다.',
+    quickFacts: [
+      { k: '미백 방식', v: '오피스 미백 · 홈 미백 · 듀얼 미백 중 선택' },
+      { k: '사전 준비', v: '스케일링과 표면 착색 제거 후 진행' },
+      { k: '시림 관리', v: '시림 완화 도포제 병행' },
+      { k: '유지 관리', v: '홈 미백 맞춤 트레이 제공 및 정기 관리 안내' },
+    ],
     processes: [
       '치아 · 잇몸 상태 점검',
       '스케일링 및 표면 착색 제거',

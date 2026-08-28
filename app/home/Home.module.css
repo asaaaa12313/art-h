@@ -468,6 +468,79 @@
 .txKo { font-size: 19px; color: var(--c-navy); font-weight: 600; display: block; margin-bottom: 8px; }
 .txSummary { font-size: 13px; color: var(--c-text2); line-height: 1.6; font-weight: 300; display: block; }
 
+/* ===== ENDODONTICS — 신경치료 밴드 ===== */
+.endo {
+  background: var(--c-navy);
+  padding: clamp(76px, 9vw, 130px) 0;
+}
+.endoGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+.endoFigs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.endoFig {
+  margin: 0;
+  padding: 16px 10px 14px;
+  background: var(--c-white);
+  border-radius: 3px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.3);
+}
+.endoFig figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-navy);
+  letter-spacing: -0.01em;
+}
+.endo .label { color: var(--c-blue-l); }
+.endo .label i { background: var(--c-blue-l); }
+.endo .sectionTitle { color: var(--c-white); }
+.endoDesc {
+  margin: 20px 0 0;
+  font-size: 15px;
+  line-height: 2;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.76);
+}
+.endoChips {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+}
+.endoChips li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 0;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+.endoChips li:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.13); }
+.endoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding-bottom: 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--c-blue-l);
+  border-bottom: 1px solid rgba(107, 174, 232, 0.42);
+  transition: gap 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+}
+@media (hover: hover) {
+  .endoLink:hover { gap: 13px; border-bottom-color: var(--c-blue-l); }
+}
+
 /* ===== DOCTOR ===== */
 .doctor {
   background: var(--c-bg);
@@ -642,6 +715,7 @@
 /* ===== 반응형 ===== */
 @media (max-width: 900px) {
   .promiseGrid { grid-template-columns: repeat(2, 1fr); }
+  .endoGrid { grid-template-columns: 1fr; gap: 36px; }
   .systemGrid { grid-template-columns: 1fr; }
   .statsGrid { grid-template-columns: repeat(2, 1fr); border-top: none; }
   .statItem { border-left: none; border-top: 1px solid var(--c-line); padding-top: 32px; padding-bottom: 8px; }
@@ -666,6 +740,12 @@
 /* 모바일 하단 상담 바(56px)와 히어로 스크롤 힌트 겹침 방지 */
 @media (max-width: 600px) {
   .scrollHint { bottom: calc(24px + 56px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 560px) {
+  /* 모식도는 SVG라 작아도 형태가 읽힌다 — 세로로 쌓으면 밴드가 지나치게 길어져 3열 유지 */
+  .endoFigs { gap: 7px; }
+  .endoFig { padding: 10px 5px 9px; }
+  .endoFig figcaption { font-size: 10.5px; margin-top: 7px; letter-spacing: -0.03em; }
 }
 @media (max-width: 480px) {
   .promiseGrid { grid-template-columns: 1fr; }

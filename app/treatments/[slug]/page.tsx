@@ -8,17 +8,9 @@ import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
 import BookingLink from '@/components/BookingLink';
-import { TREATMENTS, SITE } from '@/lib/copy';
+import { TREATMENTS, DOCTORS, SITE, CONTENT_UPDATED } from '@/lib/copy';
 
-const TX_SRC: Record<string, string> = {
-  Implant: '/media/images/implant/implant-surgery-01.jpg',
-  'Root Canal': '/media/images/treatment-room/treatment-02.jpg',
-  'Oral Surgery': '/media/images/xray/xray-position.jpg',
-  TMJ: '/media/images/tmj/tmj-tmd-monitor.jpg',
-  Sedation: '/media/images/sedation/sedation-monitor-01.jpg',
-  Periodontics: '/media/images/perio/gbt-treatment.jpg',
-  Whitening: '/media/images/whitening/whitening-lamp-01.jpg',
-};
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
 export function generateStaticParams() {
   return TREATMENTS.map((t) => ({ slug: t.slug }));
@@ -35,7 +27,7 @@ export async function generateMetadata({
   return {
     title: t.ko,
     description: t.summary || t.d,
-    openGraph: { images: [{ url: TX_SRC[t.en] }] },
+    openGraph: { images: [{ url: t.card }] },
   };
 }
 
@@ -48,28 +40,96 @@ export default async function TreatmentDetailPage({
   const tx = TREATMENTS.find((t) => t.slug === slug);
   if (!tx) notFound();
 
-  const src = TX_SRC[tx.en];
+  const src = tx.card;
   const idx = TREATMENTS.findIndex((t) => t.slug === slug);
   const prev = TREATMENTS[(idx - 1 + TREATMENTS.length) % TREATMENTS.length];
   const next = TREATMENTS[(idx + 1) % TREATMENTS.length];
   const phoneHref = `tel:${SITE.phone.replace(/-/g, '')}`;
 
-  // FAQ 리치 스니펫용 구조화 데이터 (화면의 FAQ 아코디언과 동일 내용)
-  const faqJsonLd = {
+  // 담당 전문의 블록 — 의료진 데이터(DOCTORS)를 참조로만 연결해 정보 중복 정의를 피한다.
+  const specDoc = tx.specialist ? DOCTORS[tx.specialist.doctorIndex] : undefined;
+  const specialist =
+    tx.specialist && specDoc
+      ? {
+          ...tx.specialist,
+          doc: specDoc,
+          certs: specDoc.careerGroups.find((g) => g.label === '자격')?.items ?? [],
+        }
+      : null;
+
+  // 구조화 데이터 — 검색엔진·생성형 검색이 과목/시술/담당의/경로를 그대로 인용할 수 있게 한 묶음으로 제공
+  const pageUrl = `${SITE_URL}/treatments/${tx.slug}`;
+  const provider = {
+    '@type': 'Dentist',
+    name: SITE.name,
+    url: SITE_URL,
+    telephone: SITE.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '센트럴로 263 IBS타워 업무동 8층',
+      addressLocality: '연수구',
+      addressRegion: '인천광역시',
+      addressCountry: 'KR',
+    },
+  };
+  const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: tx.faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
+    '@graph': [
+      {
+        '@type': 'MedicalWebPage',
+        '@id': pageUrl,
+        url: pageUrl,
+        name: `${tx.ko} | ${SITE.name}`,
+        description: tx.summary || tx.d,
+        inLanguage: 'ko-KR',
+        lastReviewed: CONTENT_UPDATED,
+        about: { '@id': `${pageUrl}#procedure` },
+      },
+      {
+        '@type': 'MedicalProcedure',
+        '@id': `${pageUrl}#procedure`,
+        name: tx.ko,
+        alternateName: tx.en,
+        description: tx.intro,
+        howPerformed: tx.processes.join(' → '),
+        bodyLocation: '치아 · 구강',
+        ...(tx.aftercare ? { followup: tx.aftercare.items.join(' ') } : {}),
+        ...(specialist
+          ? {
+              performer: {
+                '@type': 'Physician',
+                name: `${specialist.doc.name} ${specialist.doc.title}`,
+                medicalSpecialty: 'Dentistry',
+                description: specialist.doc.specialty,
+              },
+            }
+          : {}),
+        provider,
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: tx.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: '진료과목', item: `${SITE_URL}/treatments` },
+          { '@type': 'ListItem', position: 3, name: tx.ko, item: pageUrl },
+        ],
+      },
+    ],
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <PageHeader title={tx.ko} src={src} alt={`${tx.ko} 이미지`} />
 
@@ -84,6 +144,73 @@ export default async function TreatmentDetailPage({
             <p className="txIntro">{tx.intro}</p>
           </Reveal>
         </section>
+
+        {/* 핵심 정보 요약 — 정의형 문장으로 담당·기간·보험·장비를 한 곳에 (검색·AI 인용용) */}
+        {tx.quickFacts && (
+          <Reveal variant="fade" duration="0.8s">
+            <section className="txSec txQuick" aria-label={`${tx.ko} 핵심 정보 요약`}>
+              <p className="txQuickLabel">AT A GLANCE</p>
+              <dl className="txQuickList">
+                {tx.quickFacts.map((f) => (
+                  <div key={f.k} className="txQuickRow">
+                    <dt>{f.k}</dt>
+                    <dd>{f.v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          </Reveal>
+        )}
+
+        {/* 담당 전문의 — 해당 과목을 직접 진료하는 전문의 (데이터는 DOCTORS 재사용) */}
+        {specialist && (
+          <section className="txSec txSpec txBandWarm">
+            <Reveal variant="blur-up" duration="1s" from="translateY(20px)">
+              <div className="txSpecPhoto">
+                <Photo
+                  src={specialist.doc.photo}
+                  alt={`${specialist.doc.name} ${specialist.doc.title} — ${specialist.doc.specialty}`}
+                  objectPosition={specialist.doc.objectPosition}
+                  sizes="(max-width: 900px) 100vw, 360px"
+                />
+              </div>
+            </Reveal>
+            <div className="txSpecBody">
+              <Reveal variant="fade">
+                <p className="txLabel">{specialist.label}</p>
+              </Reveal>
+              <TextReveal as="h3" className="txSectionTitle" lines={[specialist.title]} delay={0.05} />
+              <Reveal variant="fade" delay={0.12}>
+                <p className="txBlockDesc">{specialist.desc}</p>
+              </Reveal>
+              <Reveal variant="fade" delay={0.18}>
+                <div className="txSpecName">
+                  <span className="txSpecNameKo">{specialist.doc.name} {specialist.doc.title}</span>
+                  <span className="txSpecNameSpec">{specialist.doc.specialty}</span>
+                </div>
+              </Reveal>
+              {specialist.certs.length > 0 && (
+                <ul className="txSpecCerts">
+                  {specialist.certs.map((c, i) => (
+                    <Reveal key={c} as="li" variant="fade" delay={0.24 + i * 0.05}>
+                      <AnimatedIcon name="award" size={16} stroke="var(--c-blue)" delay={0.3 + i * 0.05} />
+                      <span>{c}</span>
+                    </Reveal>
+                  ))}
+                </ul>
+              )}
+              <Reveal variant="fade" delay={0.4}>
+                <p className="txSpecQuote">{specialist.doc.quote}</p>
+              </Reveal>
+              <Reveal variant="fade" delay={0.46}>
+                <Link href="/doctor" className="txSpecLink">
+                  의료진 소개 보기
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         {/* 치료 종류 · 유형 (모식도 카드) */}
         {tx.kinds && (
@@ -619,6 +746,86 @@ export default async function TreatmentDetailPage({
           font-weight: 400; margin: 16px 0 0; max-width: 760px;
         }
 
+        /* 핵심 정보 요약 (AT A GLANCE) */
+        .txQuick {
+          border: 1px solid var(--c-line);
+          border-top: 2px solid var(--c-navy);
+          border-radius: 2px;
+          padding: clamp(24px, 3vw, 32px) clamp(22px, 3vw, 34px);
+          background: var(--c-white);
+        }
+        .txQuickLabel {
+          font-family: var(--f-display); font-size: 12px;
+          color: var(--c-gold-text); letter-spacing: 3px;
+          margin: 0 0 18px;
+        }
+        .txQuickList { margin: 0; }
+        .txQuickRow {
+          display: grid; grid-template-columns: 132px 1fr;
+          gap: 16px; padding: 12px 0;
+          border-top: 1px solid var(--c-line);
+        }
+        .txQuickRow:first-of-type { border-top: none; padding-top: 0; }
+        .txQuickRow dt {
+          font-size: 13px; font-weight: 600; color: var(--c-navy);
+          letter-spacing: -0.01em; line-height: 1.7;
+        }
+        .txQuickRow dd {
+          margin: 0; font-size: 14px; font-weight: 400;
+          color: var(--c-text); line-height: 1.7;
+        }
+
+        /* 담당 전문의 밴드 */
+        .txSpec {
+          display: grid; grid-template-columns: 340px 1fr;
+          gap: clamp(28px, 4vw, 56px); align-items: start;
+        }
+        .txSpecPhoto {
+          position: relative; aspect-ratio: 4 / 5; border-radius: 2px;
+          overflow: hidden; box-shadow: 0 18px 44px rgba(26, 38, 71, 0.16);
+        }
+        .txSpecPhoto::after {
+          content: ''; position: absolute; inset: 0;
+          border: 1px solid rgba(26, 38, 71, 0.1); pointer-events: none;
+        }
+        .txSpecBody { padding-top: 4px; }
+        .txSpecName {
+          display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+          margin-top: 26px; padding-bottom: 18px;
+          border-bottom: 1px solid var(--c-line);
+        }
+        .txSpecNameKo {
+          font-family: var(--f-heading); font-size: 21px; font-weight: 700;
+          color: var(--c-navy); letter-spacing: -0.02em;
+        }
+        .txSpecNameSpec {
+          font-size: 13px; font-weight: 600; color: var(--c-blue-text);
+          letter-spacing: -0.01em;
+        }
+        .txSpecCerts { list-style: none; margin: 18px 0 0; padding: 0; }
+        .txSpecCerts li {
+          display: flex; align-items: center; gap: 9px;
+          font-size: 14px; color: var(--c-text); font-weight: 400;
+          line-height: 1.7; margin-bottom: 8px;
+        }
+        .txSpecQuote {
+          font-family: var(--f-serif-ko); font-size: 15.5px;
+          color: var(--c-navy); line-height: 1.95; white-space: pre-line;
+          margin: 24px 0 0; padding-left: 16px;
+          border-left: 2px solid var(--c-blue);
+        }
+        .txSpecLink {
+          display: inline-flex; align-items: center; gap: 8px;
+          margin-top: 26px; padding-bottom: 4px;
+          font-size: 13.5px; font-weight: 600; color: var(--c-blue-text);
+          letter-spacing: -0.01em;
+          border-bottom: 1px solid rgba(46, 111, 212, 0.35);
+          transition: gap .3s var(--ease-out), border-color .3s var(--ease-out);
+        }
+        @media (hover: hover) {
+          .txSpecLink:hover { gap: 13px; border-bottom-color: var(--c-blue); }
+        }
+
         /* SIC 정품 임플란트 — 3대 기술력 */
         .txTechHead { max-width: 760px; margin-bottom: 36px; }
         .txTechGrid {
@@ -1066,6 +1273,13 @@ export default async function TreatmentDetailPage({
           line-height: 1.75; font-weight: 400;
         }
 
+        @media (max-width: 560px) {
+          .txQuickRow { grid-template-columns: 1fr; gap: 4px; }
+        }
+        @media (max-width: 900px) {
+          .txSpec { grid-template-columns: 1fr; }
+          .txSpecPhoto { aspect-ratio: 3 / 2; max-width: 420px; }
+        }
         @media (max-width: 768px) {
           .txSplit { grid-template-columns: 1fr; }
           .txFeatList { grid-template-columns: 1fr; }

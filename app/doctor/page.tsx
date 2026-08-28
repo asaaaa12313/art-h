@@ -4,8 +4,10 @@ import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
-import { DOCTORS } from '@/lib/copy';
+import { DOCTORS, SITE } from '@/lib/copy';
 import DoctorPhoto from './DoctorPhoto';
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
 export const metadata: Metadata = {
   title: '의료진',
@@ -27,8 +29,57 @@ function CertBadge() {
 }
 
 export default function DoctorPage() {
+  // 의료진 구조화 데이터 — 검색·생성형 검색이 "어떤 전문의가 있는 치과인지" 인용할 수 있게 한다.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ...DOCTORS.map((doc) => ({
+        '@type': 'Physician',
+        '@id': `${SITE_URL}/doctor#${doc.name}`,
+        name: `${doc.name} ${doc.title}`,
+        jobTitle: doc.title,
+        medicalSpecialty: 'Dentistry',
+        description: doc.specialty,
+        knowsAbout: doc.focus.split(' · '),
+        image: `${SITE_URL}${doc.photo}`,
+        hasCredential: doc.careerGroups
+          .filter((g) => g.label === '자격')
+          .flatMap((g) => g.items)
+          .map((c) => ({
+            '@type': 'EducationalOccupationalCredential',
+            credentialCategory: '전문의 자격',
+            name: c,
+          })),
+        worksFor: {
+          '@type': 'Dentist',
+          name: SITE.name,
+          url: SITE_URL,
+          telephone: SITE.phone,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: '센트럴로 263 IBS타워 업무동 8층',
+            addressLocality: '연수구',
+            addressRegion: '인천광역시',
+            addressCountry: 'KR',
+          },
+        },
+      })),
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: '의료진', item: `${SITE_URL}/doctor` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="의료진 협진" objectPosition="center 55%" />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>

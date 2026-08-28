@@ -490,6 +490,64 @@ const SCENES: Record<string, () => ReactNode> = {
       />
     </>
   ),
+
+  /* ─── 엔도(신경치료) 시스템 3종 — 근관장 측정 → 근관 성형 → 근관 충전 ─── */
+  /* endo-1: 근관장 측정 — 파일이 뿌리 끝(점선 링) 앞에서 멈추도록 길이를 잡는다 */
+  'endo-1': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.5} />
+      <Pulp color={C.dot} />
+      {/* 파일 손잡이 + 샤프트 — 교합면을 통해 왼쪽 근관으로 진입 */}
+      <rect x="95" y="12" width="11" height="14" rx="2" fill={C.blue} stroke={C.navy} strokeWidth="1.4" />
+      <path d="M100.5 26 L103 58 Q102 86 100 104" stroke={C.navy} strokeWidth="3.4" fill="none" strokeLinecap="round" />
+      <path d="M100.5 26 L103 58 Q102 86 100 104" stroke={C.blueL} strokeWidth="1.6" fill="none" strokeLinecap="round" />
+      {/* 뿌리 끝 기준점 — 파일이 넘지 않는 지점 */}
+      <line x1="70" y1="112" x2="92" y2="112" stroke={C.blue} strokeWidth="1.4" strokeDasharray="4 3" opacity="0.75" />
+      <circle cx="99" cy="112" r="4.5" fill="none" stroke={C.blue} strokeWidth="2" strokeDasharray="3 2.5" />
+      <circle cx="99" cy="112" r="1.8" fill={C.blue} />
+    </>
+  ),
+  /* endo-2: 굽은 근관 성형 — 유연한 니켈-티타늄 파일이 만곡을 따라 들어간다 */
+  'endo-2': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.5} />
+      <path d="M104 70 Q102 92 99 112" stroke={C.dot} strokeWidth="4.5" fill="none" strokeLinecap="round" />
+      <ellipse cx="110" cy="62" rx="9" ry="10" fill={C.dot} opacity="0.92" />
+      {/* 만곡이 큰 오른쪽 근관 + 교합면에서 그 곡선을 따라 들어간 파일 */}
+      <path d="M116 70 Q123 92 114 115" stroke={C.dot} strokeWidth="6.5" fill="none" strokeLinecap="round" />
+      <rect x="102" y="12" width="11" height="14" rx="2" fill={C.blue} stroke={C.navy} strokeWidth="1.4" />
+      <path d="M107.5 26 L112 58 Q121 90 114 112" stroke={C.blue} strokeWidth="3.2" fill="none" strokeLinecap="round" />
+      <g stroke={C.white} strokeWidth="1.2" opacity="0.9">
+        <line x1="114" y1="72" x2="118" y2="75" />
+        <line x1="118" y1="84" x2="121" y2="88" />
+        <line x1="119" y1="96" x2="121" y2="100" />
+      </g>
+      {/* 회전 방향 표시 — 손잡이 옆 */}
+      <path d="M132 19 A 11 11 0 1 1 124 8" stroke={C.blue} strokeWidth="2" fill="none" strokeLinecap="round" />
+      <path d="M120 4 L128 10 L120 14 Z" fill={C.blue} />
+    </>
+  ),
+  /* endo-3: 근관 충전 — 세척·소독한 근관을 거타퍼차로 채워 밀폐한다 */
+  'endo-3': () => (
+    <>
+      <Ground />
+      <Molar cx={110} s={1.5} />
+      <Pulp color={C.blue} />
+      {/* 치관부 코어 — 근관 입구를 덮어 재감염을 막는 마무리 충전 */}
+      <path
+        d="M89 37 Q110 46 131 37 L131 60 Q110 66 89 60 Z"
+        fill={C.blueL}
+        fillOpacity="0.55"
+        stroke={C.navy}
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <circle cx="99" cy="112" r="2.6" fill={C.blue} />
+      <circle cx="121" cy="112" r="2.6" fill={C.blue} />
+    </>
+  ),
 };
 
 export type TxDiagramName = keyof typeof SCENES;
