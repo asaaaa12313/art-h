@@ -5,6 +5,7 @@ import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import { DOCTORS, SITE } from '@/lib/copy';
+import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
 import DoctorPhoto from './DoctorPhoto';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
@@ -33,9 +34,9 @@ export default function DoctorPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      ...DOCTORS.map((doc) => ({
+      ...DOCTORS.map((doc, i) => ({
         '@type': 'Physician',
-        '@id': `${SITE_URL}/doctor#${doc.name}`,
+        '@id': doctorNodeId(SITE_URL, i),
         name: `${doc.name} ${doc.title}`,
         jobTitle: doc.title,
         medicalSpecialty: 'Dentistry',
@@ -78,7 +79,7 @@ export default function DoctorPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <PageHeader title="의료진" src="/media/images/doctor/doctor-02.jpg" alt="의료진 협진" objectPosition="center 55%" />
 

@@ -1,5 +1,6 @@
 import Home from './home/Home';
 import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
+import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -38,8 +39,10 @@ const jsonLd = {
       isAcceptingNewPatients: true,
       currenciesAccepted: 'KRW',
       // 상주 전문의 — 어떤 전문의가 있는 치과인지 명시
-      employee: DOCTORS.map((doc) => ({
+      employee: DOCTORS.map((doc, i) => ({
         '@type': 'Physician',
+        // /doctor의 Physician 노드와 같은 @id — 자격(hasCredential)이 병원 노드와 한 인물로 이어진다
+        '@id': doctorNodeId(SITE_URL, i),
         name: `${doc.name} ${doc.title}`,
         medicalSpecialty: 'Dentistry',
         description: doc.specialty,
@@ -74,7 +77,7 @@ export default function Page() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <Home />
     </>

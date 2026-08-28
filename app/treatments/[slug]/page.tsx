@@ -9,6 +9,7 @@ import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
 import BookingLink from '@/components/BookingLink';
 import { TREATMENTS, DOCTORS, SITE, CONTENT_UPDATED } from '@/lib/copy';
+import { jsonLdScript } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -129,7 +130,7 @@ export default async function TreatmentDetailPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <PageHeader title={tx.ko} src={src} alt={`${tx.ko} 이미지`} />
 

@@ -5,6 +5,7 @@ import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import { TREATMENTS } from '@/lib/copy';
+import { jsonLdScript } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -54,7 +55,7 @@ export default function TreatmentsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
       <PageHeader title="진료과목" src="/media/images/treatment-room/treatment-01.jpg" alt="아트에이치치과 진료실" />
 
