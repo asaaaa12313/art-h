@@ -8,8 +8,8 @@ import type { ReactNode } from 'react';
 
 const C = {
   navy: '#1A2647',
-  blue: '#2E6FD4',
-  blueL: '#6BAEE8',
+  blue: '#0B7A6A',
+  blueL: '#5FE0C5',
   white: '#FFFFFF',
   gum: '#F3EBE0',
   bone: '#ECE4D6',

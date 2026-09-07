@@ -120,7 +120,7 @@ export default function DoctorPage() {
 
         {DOCTORS.map((doc, i) => (
           <div key={doc.name} className="docBlock" data-reverse={i % 2 === 1} data-doc-block>
-            <Reveal variant="blur-up" duration="1.1s" from="translateY(24px)">
+            <Reveal variant="wipe-up" duration="1.15s">
               <div className="docSticky">
                 <DoctorPhoto
                   src={doc.photo}
@@ -154,7 +154,7 @@ export default function DoctorPage() {
               <Reveal delay={0.25} duration="0.7s">
                 <p className="docFocus">{doc.focus}</p>
               </Reveal>
-              <Reveal delay={0.3} duration="0.9s">
+              <Reveal variant="fold" delay={0.3} duration="0.95s">
                 <div className="docQuote">
                   <p>{doc.quote}</p>
                 </div>
@@ -177,7 +177,7 @@ export default function DoctorPage() {
                     </p>
                   </Reveal>
                   {group.items.map((c, j) => (
-                    <Reveal key={c} delay={0.42 + gi * 0.06 + j * 0.03} duration="0.45s">
+                    <Reveal key={c} variant="slide-right" delay={0.42 + gi * 0.06 + j * 0.035} duration="0.5s">
                       <p className="docCareer">
                         {c.startsWith('보건복지부') && <CertBadge />}
                         <span>{c}</span>
@@ -279,7 +279,7 @@ export default function DoctorPage() {
         @media (hover: hover) {
           .docQuote:hover {
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.18);
+            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.18);
           }
         }
         .docQuote p {
@@ -328,7 +328,7 @@ export default function DoctorPage() {
         .docVideoInner { max-width: 900px; margin: 0 auto; text-align: center; }
         .docVideoEyebrow {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 4px;
-          color: var(--c-gold-d); margin: 0 0 14px;
+          color: var(--c-accent-t); margin: 0 0 14px;
         }
         .docVideoTitle {
           font-family: var(--f-heading); font-size: clamp(24px,3vw,34px);
@@ -344,7 +344,7 @@ export default function DoctorPage() {
         @media (hover: hover) {
           .docVideoFrame:hover {
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.18);
+            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.18);
           }
         }
         .docVideoFrame iframe {

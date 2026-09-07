@@ -56,7 +56,7 @@ export default function AboutPage() {
               </p>
             </Reveal>
             {GREETING.body.map((paragraph, i) => (
-              <Reveal key={i} delay={0.3 + i * 0.1} duration="0.9s">
+              <Reveal key={i} variant="slide-right" delay={0.3 + i * 0.1} duration="0.85s">
                 <p className="greetPara">{paragraph}</p>
               </Reveal>
             ))}
@@ -98,7 +98,7 @@ export default function AboutPage() {
             {PROMISE_ITEMS.map((item, i) => {
               const icons = ['users', 'leaf', 'chat', 'home'] as const;
               return (
-                <Reveal key={item.no} delay={0.15 + i * 0.08} duration="0.8s" from="translateY(20px)">
+                <Reveal key={item.no} variant="fold" delay={0.15 + i * 0.1} duration="0.95s">
                   <article className="promiseCard">
                     <span className="promiseCardIcon" aria-hidden="true">
                       <AnimatedIcon name={icons[i]} size={30} stroke="var(--c-blue)" delay={0.25 + i * 0.08} />
@@ -115,8 +115,8 @@ export default function AboutPage() {
       </section>
 
       {/* CLOSING — 에필로그 */}
-      <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
-        <Reveal duration="1.1s">
+      <section style={{ background: 'var(--c-dark)', color: 'var(--c-text-on-dark)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
+        <Reveal variant="wipe-up" duration="1.1s">
           <div className="closing">
             <div className="closingDivider" />
             <p className="closingText">{GREETING.closing}</p>
@@ -220,7 +220,7 @@ export default function AboutPage() {
           .promiseCard:hover {
             background: #FCFAF5;
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(46, 111, 212, 0.22);
+            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.22);
           }
         }
         .promiseCardIcon {
@@ -246,11 +246,11 @@ export default function AboutPage() {
           display: flex; flex-direction: column; align-items: center; gap: 28px;
         }
         .closingDivider {
-          width: 36px; height: 1px; background: var(--c-navy);
+          width: 36px; height: 1px; background: var(--c-accent);
         }
         .closingText {
           font-family: var(--f-heading); font-size: clamp(16px, 1.9vw, 22px);
-          color: var(--c-navy); font-weight: 500; line-height: 1.9;
+          color: var(--c-text-on-dark); font-weight: 500; line-height: 1.9;
           letter-spacing: -0.02em; margin: 0;
         }
 
@@ -283,7 +283,7 @@ export default function AboutPage() {
           font-size: 13px;
           font-weight: 400;
           letter-spacing: 6px;
-          color: var(--c-gold-l);
+          color: var(--c-accent);
           text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
         }
         .ibsTitle {
@@ -291,7 +291,7 @@ export default function AboutPage() {
           font-size: clamp(40px, 6vw, 72px);
           font-weight: 400;
           letter-spacing: 6px;
-          color: var(--c-gold);
+          color: var(--c-accent-t);
           line-height: 1;
           text-shadow: 0 4px 28px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.45);
         }

@@ -3,11 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
+import BeforeAfter from '@/components/BeforeAfter';
 import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
 import BookingLink from '@/components/BookingLink';
+import MapEmbed from '@/components/MapEmbed';
 import Breadcrumb from '@/components/Breadcrumb';
 import { TREATMENTS, DOCTORS, SITE, REVIEWED_ON_DEFAULT } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
@@ -192,7 +194,7 @@ export default async function TreatmentDetailPage({
         {/* 담당 전문의 — 해당 과목을 직접 진료하는 전문의 (데이터는 DOCTORS 재사용) */}
         {specialist && (
           <section className="txSec txSpec txBandWarm">
-            <Reveal variant="blur-up" duration="1s" from="translateY(20px)">
+            <Reveal variant="wipe-up" duration="1s" from="translateY(20px)">
               <div className="txSpecPhoto">
                 <Photo
                   src={specialist.doc.photo}
@@ -203,14 +205,14 @@ export default async function TreatmentDetailPage({
               </div>
             </Reveal>
             <div className="txSpecBody">
-              <Reveal variant="fade">
+              <Reveal variant="wipe-up">
                 <p className="txLabel">{specialist.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[specialist.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="wipe-up" delay={0.12}>
                 <p className="txBlockDesc">{specialist.desc}</p>
               </Reveal>
-              <Reveal variant="fade" delay={0.18}>
+              <Reveal variant="wipe-up" delay={0.18}>
                 <div className="txSpecName">
                   <span className="txSpecNameKo">{specialist.doc.name} {specialist.doc.title}</span>
                   <span className="txSpecNameSpec">{specialist.doc.specialty}</span>
@@ -219,17 +221,17 @@ export default async function TreatmentDetailPage({
               {specialist.certs.length > 0 && (
                 <ul className="txSpecCerts">
                   {specialist.certs.map((c, i) => (
-                    <Reveal key={c} as="li" variant="fade" delay={0.24 + i * 0.05}>
+                    <Reveal key={c} as="li" variant="wipe-up" delay={0.24 + i * 0.05}>
                       <AnimatedIcon name="award" size={16} stroke="var(--c-blue)" delay={0.3 + i * 0.05} />
                       <span>{c}</span>
                     </Reveal>
                   ))}
                 </ul>
               )}
-              <Reveal variant="fade" delay={0.4}>
+              <Reveal variant="wipe-up" delay={0.4}>
                 <p className="txSpecQuote">{specialist.doc.quote}</p>
               </Reveal>
-              <Reveal variant="fade" delay={0.46}>
+              <Reveal variant="wipe-up" delay={0.46}>
                 <Link href="/doctor" className="txSpecLink">
                   의료진 소개 보기
                   <span aria-hidden="true">→</span>
@@ -243,17 +245,17 @@ export default async function TreatmentDetailPage({
         {tx.kinds && (
           <section className="txSec txKinds">
             <div className="txKindsHead">
-              <Reveal variant="fade">
+              <Reveal variant="fold">
                 <p className="txLabel">{tx.kinds.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.kinds.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="fold" delay={0.12}>
                 <p className="txBlockDesc">{tx.kinds.desc}</p>
               </Reveal>
             </div>
             <div className="txKindsGrid">
               {tx.kinds.items.map((k, i) => (
-                <Reveal key={k.name} variant="blur-up" delay={0.1 + i * 0.08} duration="0.8s">
+                <Reveal key={k.name} variant="fold" delay={0.1 + i * 0.08} duration="0.8s">
                   <div className="txKindCard">
                     {k.diagram ? (
                       <div className="txKindMedia">
@@ -280,14 +282,14 @@ export default async function TreatmentDetailPage({
         {tx.stepFigures && (
           <section className="txSec txFigs txBandWarm">
             <div className="txFigsHead">
-              <Reveal variant="fade">
+              <Reveal variant="wipe-left">
                 <p className="txLabel">STEP BY STEP</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정, 한눈에 보기']} delay={0.05} />
             </div>
             <ol className="txFigGrid">
               {tx.stepFigures.map((f, i) => (
-                <Reveal key={f.t} as="li" variant="blur-up" delay={0.08 + i * 0.06} duration="0.7s">
+                <Reveal key={f.t} as="li" variant="wipe-left" delay={0.08 + i * 0.06} duration="0.7s">
                   <div className="txFigCard">
                     <div className="txFigMedia">
                       <TxDiagram name={f.diagram} title={`${f.t} 모식도`} />
@@ -308,17 +310,17 @@ export default async function TreatmentDetailPage({
         {tx.showcase && (
           <section className="txSec txShowcase">
             <div className="txShowcaseHead">
-              <Reveal variant="fade">
+              <Reveal variant="zoom-out">
                 <p className="txLabel">{tx.showcase.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.showcase.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="zoom-out" delay={0.12}>
                 <p className="txBlockDesc">{tx.showcase.desc}</p>
               </Reveal>
             </div>
             <div className="txShowcaseGrid">
               {tx.showcase.items.map((item, i) => (
-                <Reveal key={item.name} variant="blur-up" delay={0.1 + i * 0.1} duration="0.8s">
+                <Reveal key={item.name} variant="zoom-out" delay={0.1 + i * 0.1} duration="0.8s">
                   <div className="txShowcaseCard">
                     <div className={item.imageFit === 'contain' ? 'txShowcaseMedia txShowcaseMediaContain' : 'txShowcaseMedia'}>
                       {item.video ? (
@@ -372,11 +374,11 @@ export default async function TreatmentDetailPage({
         {tx.tech && tx.techTitle && (
           <section className="txSec txTech">
             <div className="txTechHead">
-              <Reveal variant="fade">
+              <Reveal variant="slide-right">
                 <p className="txLabel">{tx.techTitle.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.techTitle.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="slide-right" delay={0.12}>
                 <p className="txBlockDesc">{tx.techTitle.desc}</p>
               </Reveal>
             </div>
@@ -405,18 +407,15 @@ export default async function TreatmentDetailPage({
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.beforeAfter.title]} delay={0.05} />
             </div>
-            <div className="txBAGrid">
-              <Reveal variant="blur-up" delay={0.1} duration="0.8s">
-                <div className="txBAImg">
-                  <Photo src={tx.beforeAfter.before} alt="상악동 거상술 원리 모식도" objectFit="contain" bg="#ffffff" sizes="(max-width: 768px) 100vw, 460px" />
-                </div>
-              </Reveal>
-              <Reveal variant="blur-up" delay={0.18} duration="0.8s">
-                <div className="txBAImg">
-                  <Photo src={tx.beforeAfter.after} alt="상악동 거상술 후 X-RAY" sizes="(max-width: 768px) 100vw, 460px" />
-                </div>
-              </Reveal>
-            </div>
+            {/* 두 장을 나란히 두면 눈이 옮겨 다녀야 해 차이가 안 읽힌다 — 겹쳐 두고 경계를 움직인다 */}
+            <Reveal variant="fade" delay={0.1} duration="0.8s">
+              <BeforeAfter
+                before={tx.beforeAfter.before}
+                after={tx.beforeAfter.after}
+                beforeAlt="상악동 거상술 원리 모식도"
+                afterAlt="상악동 거상술 후 X-RAY"
+              />
+            </Reveal>
             <Reveal delay={0.2} duration="0.7s">
               <p className="txBACaption">{tx.beforeAfter.caption}</p>
               <p className="txBlockDesc txBADesc">{tx.beforeAfter.d}</p>
@@ -428,7 +427,7 @@ export default async function TreatmentDetailPage({
         {!tx.stepFigures && (
           <section className="txSec txSplit txBandWarm">
             <div>
-              <Reveal variant="fade">
+              <Reveal variant="wipe-left">
                 <p className="txLabel">PROCESS</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={['치료 과정']} delay={0.05} />
@@ -453,11 +452,11 @@ export default async function TreatmentDetailPage({
         {tx.devices && tx.devicesTitle && (
           <section className="txSec txDevices">
             <div>
-              <Reveal variant="fade">
+              <Reveal variant="zoom-out">
                 <p className="txLabel">{tx.devicesTitle.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.devicesTitle.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="zoom-out" delay={0.12}>
                 <p className="txBlockDesc">{tx.devicesTitle.desc}</p>
               </Reveal>
             </div>
@@ -479,7 +478,7 @@ export default async function TreatmentDetailPage({
         {/* Features */}
         <section className="txSec txFeat txBandNavy">
           <div>
-            <Reveal variant="fade">
+            <Reveal variant="fold">
               <p className="txLabel">FEATURES</p>
             </Reveal>
             <TextReveal as="h3" className="txSectionTitle" lines={['아트에이치의 차별점']} delay={0.05} />
@@ -582,11 +581,11 @@ export default async function TreatmentDetailPage({
         {tx.targets && tx.targetsTitle && (
           <section className="txSec txTargets">
             <div className="txTargetsHead">
-              <Reveal variant="fade">
+              <Reveal variant="slide-right">
                 <p className="txLabel">{tx.targetsTitle.label}</p>
               </Reveal>
               <TextReveal as="h3" className="txSectionTitle" lines={[tx.targetsTitle.title]} delay={0.05} />
-              <Reveal variant="fade" delay={0.12}>
+              <Reveal variant="slide-right" delay={0.12}>
                 <p className="txBlockDesc">{tx.targetsTitle.desc}</p>
               </Reveal>
             </div>
@@ -707,6 +706,44 @@ export default async function TreatmentDetailPage({
           </Reveal>
         </section>
 
+        {/* 오시는 길 — 상세를 읽고 나면 다음 행동은 "언제 어디로 가나"다 */}
+        <section className="txSec txPlace">
+          <div className="txPlaceInfo">
+            <Reveal variant="fade">
+              <p className="txLabel">LOCATION</p>
+            </Reveal>
+            <TextReveal as="h3" className="txSectionTitle" lines={['오시는 길']} delay={0.05} />
+            <Reveal variant="fade" delay={0.12}>
+              <p className="txPlaceAddr">
+                {SITE.address}
+                <br />
+                {SITE.transit}
+              </p>
+            </Reveal>
+            <Reveal variant="slide-right" delay={0.18}>
+              <dl className="txPlaceHours">
+                {SITE.hours.map((h) => (
+                  <div key={h.day} data-hl={h.highlight}>
+                    <dt>{h.day}</dt>
+                    <dd>{h.time}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
+            <Reveal variant="fade" delay={0.26}>
+              <Link href="/location" className="txPlaceMore">
+                오시는 길 자세히
+                <span aria-hidden="true">→</span>
+              </Link>
+            </Reveal>
+          </div>
+          <Reveal variant="fade" delay={0.14} style={{ height: '100%' }}>
+            <div className="txPlaceMap">
+              <MapEmbed />
+            </div>
+          </Reveal>
+        </section>
+
         {/* Navigation */}
         <nav className="txNav" aria-label="다른 진료과목 보기">
           <Link href={`/treatments/${prev.slug}`} className="txNavLink txNavPrev">
@@ -722,11 +759,43 @@ export default async function TreatmentDetailPage({
       </article>
 
       <style>{`
-        .txDetail {
-          max-width: 1000px; margin: 0 auto;
-          padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
+        /* 오시는 길 스트립 */
+        .txPlace {
+          display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+          gap: clamp(24px, 4vw, 48px); align-items: stretch;
         }
-        .txSec { margin-bottom: clamp(60px, 8vw, 100px); }
+        .txPlaceAddr {
+          margin: 16px 0 0; font-size: 15px; line-height: 1.9; color: var(--c-text);
+          word-break: keep-all;
+        }
+        .txPlaceHours { margin: 22px 0 0; display: grid; gap: 10px; }
+        .txPlaceHours > div {
+          display: flex; justify-content: space-between; gap: 16px;
+          padding-bottom: 10px; border-bottom: 1px solid var(--c-line);
+          font-size: 14px;
+        }
+        .txPlaceHours dt { color: var(--c-text2); white-space: nowrap; }
+        .txPlaceHours dd { margin: 0; color: var(--c-text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .txPlaceHours > div[data-hl='true'] dt,
+        .txPlaceHours > div[data-hl='true'] dd { color: var(--c-accent-t); font-weight: 600; }
+        .txPlaceMore {
+          display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+          font-size: 14px; font-weight: 600; color: var(--c-accent-t); text-decoration: none;
+        }
+        .txPlaceMap {
+          height: 100%; min-height: 340px; border-radius: 3px; overflow: hidden;
+          display: flex; flex-direction: column;
+        }
+        @media (max-width: 860px) {
+          .txPlace { grid-template-columns: 1fr; }
+          .txPlaceMap { min-height: 300px; }
+        }
+
+        .txDetail {
+          max-width: 1060px; margin: 0 auto;
+          padding: clamp(72px,9vw,124px) clamp(24px,5vw,80px);
+        }
+        .txSec { margin-bottom: clamp(84px, 10vw, 140px); }
         .txSec:last-of-type { margin-bottom: 0; }
 
         /* 풀폭 배경 밴드 (하늘리더스식 리듬) — 콘텐츠 폭은 유지, 배경만 화면 끝까지 */
@@ -740,8 +809,8 @@ export default async function TreatmentDetailPage({
           box-shadow: 0 0 0 100vmax var(--c-warm);
         }
         .txBandNavy {
-          background: var(--c-navy);
-          box-shadow: 0 0 0 100vmax var(--c-navy);
+          background: var(--c-dark);
+          box-shadow: 0 0 0 100vmax var(--c-dark);
         }
         /* 네이비 밴드가 연달아 오면 틈 없이 이어 붙이고 얇은 구분선만 (선도 풀폭으로) */
         .txBandNavy { position: relative; }
@@ -787,32 +856,36 @@ export default async function TreatmentDetailPage({
         }
 
         /* 핵심 정보 요약 (AT A GLANCE) */
+        /* 표가 빽빽하면 훑기 어렵다 — 행 높이와 좌우 여백을 넉넉히 준다 */
         .txQuick {
           border: 1px solid var(--c-line);
-          border-top: 2px solid var(--c-navy);
-          border-radius: 2px;
-          padding: clamp(24px, 3vw, 32px) clamp(22px, 3vw, 34px);
+          border-top: 2px solid var(--c-accent-t);
+          border-radius: 3px;
+          padding: clamp(32px, 4vw, 46px) clamp(28px, 4vw, 48px);
           background: var(--c-white);
         }
         .txQuickLabel {
           font-family: var(--f-display); font-size: 12px;
-          color: var(--c-gold-text); letter-spacing: 3px;
-          margin: 0 0 18px;
+          color: var(--c-accent-t); letter-spacing: 3px;
+          margin: 0 0 26px;
         }
         .txQuickList { margin: 0; }
         .txQuickRow {
-          display: grid; grid-template-columns: 132px 1fr;
-          gap: 16px; padding: 12px 0;
+          display: grid; grid-template-columns: 164px 1fr;
+          gap: 28px; padding: 20px 0;
           border-top: 1px solid var(--c-line);
         }
         .txQuickRow:first-of-type { border-top: none; padding-top: 0; }
         .txQuickRow dt {
-          font-size: 13px; font-weight: 600; color: var(--c-navy);
-          letter-spacing: -0.01em; line-height: 1.7;
+          font-size: 13.5px; font-weight: 600; color: var(--c-text2);
+          letter-spacing: -0.01em; line-height: 1.8;
         }
         .txQuickRow dd {
-          margin: 0; font-size: 14px; font-weight: 400;
-          color: var(--c-text); line-height: 1.7;
+          margin: 0; font-size: 15px; font-weight: 400;
+          color: var(--c-text); line-height: 1.8; word-break: keep-all;
+        }
+        @media (max-width: 600px) {
+          .txQuickRow { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
         }
 
         /* 의료 콘텐츠 검수 표시 */
@@ -878,7 +951,7 @@ export default async function TreatmentDetailPage({
           margin-top: 26px; padding-bottom: 4px;
           font-size: 13.5px; font-weight: 600; color: var(--c-blue-text);
           letter-spacing: -0.01em;
-          border-bottom: 1px solid rgba(46, 111, 212, 0.35);
+          border-bottom: 1px solid rgba(11, 122, 106, 0.35);
           transition: gap .3s var(--ease-out), border-color .3s var(--ease-out);
         }
         @media (hover: hover) {
@@ -897,10 +970,10 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txTechCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
+          .txTechCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
         }
         .txTechNo {
-          font-family: var(--f-display); font-size: 26px; color: var(--c-gold-d);
+          font-family: var(--f-display); font-size: 26px; color: var(--c-accent-t);
           line-height: 1; margin-bottom: 16px;
         }
         .txTechName {
@@ -950,7 +1023,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
+          .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
         }
         .txDevNum {
           font-family: var(--f-display); font-size: 14px; color: var(--c-text3);
@@ -961,7 +1034,7 @@ export default async function TreatmentDetailPage({
           margin: 0 0 4px;
         }
         .txDevRole {
-          font-size: 13px; color: var(--c-gold-d); font-weight: 600;
+          font-size: 13px; color: var(--c-accent-t); font-weight: 600;
           margin: 0 0 14px;
         }
         .txDevD {
@@ -984,17 +1057,18 @@ export default async function TreatmentDetailPage({
         .txTargetCheck {
           display: inline-flex; align-items: center; justify-content: center;
           width: 30px; height: 30px; border-radius: 50%;
-          background: var(--c-navy); color: #fff;
+          background: var(--c-dark); color: #fff;
         }
 
         .txLabel {
-          font-size: 11px; color: var(--c-navy); opacity: 0.7;
-          letter-spacing: 4px; font-weight: 700; margin: 0 0 12px;
+          font-family: var(--f-display);
+          font-size: 12px; color: var(--c-accent-t); opacity: 1;
+          letter-spacing: 3.5px; font-weight: 400; margin: 0 0 16px;
         }
         .txSectionTitle {
-          font-family: var(--f-heading); font-size: clamp(22px,2.6vw,30px);
-          font-weight: 700; letter-spacing: -0.02em; color: var(--c-navy);
-          margin: 0;
+          font-family: var(--f-serif-ko); font-size: clamp(26px,3.4vw,40px);
+          font-weight: 400; letter-spacing: -0.025em; line-height: 1.34;
+          color: var(--c-text); margin: 0; word-break: keep-all;
         }
 
         .txSplit {
@@ -1053,7 +1127,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txShowcaseCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
+          .txShowcaseCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
         }
         .txShowcaseMedia {
           position: relative; aspect-ratio: 16 / 10;
@@ -1072,7 +1146,7 @@ export default async function TreatmentDetailPage({
           color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 4px;
         }
         .txShowcaseTag {
-          font-size: 12.5px; color: var(--c-gold-d); font-weight: 600;
+          font-size: 12.5px; color: var(--c-accent-t); font-weight: 600;
           margin: 0 0 14px;
         }
         .txShowcaseDesc {
@@ -1092,7 +1166,7 @@ export default async function TreatmentDetailPage({
         .txShowcaseCheck {
           display: inline-flex; align-items: center; justify-content: center;
           width: 22px; height: 22px; border-radius: 50%;
-          background: var(--c-navy); color: #fff; margin-top: 1px;
+          background: var(--c-dark); color: #fff; margin-top: 1px;
         }
 
         /* GBT 영상 + 장비·시술 사진 */
@@ -1218,7 +1292,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txKindCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(46,111,212,.2); }
+          .txKindCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
         }
         .txKindMedia {
           padding: 18px 28px 6px; background: #fff;
@@ -1233,7 +1307,7 @@ export default async function TreatmentDetailPage({
           color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 3px;
         }
         .txKindTag {
-          font-size: 12.5px; color: var(--c-gold-d); font-weight: 600;
+          font-size: 12.5px; color: var(--c-accent-t); font-weight: 600;
           margin: 0 0 12px;
         }
         .txKindD {
@@ -1256,7 +1330,7 @@ export default async function TreatmentDetailPage({
         .txFigBody { padding: 12px 18px 18px; }
         .txFigNo {
           font-family: var(--f-display); font-size: 13px;
-          color: var(--c-gold-d); letter-spacing: 1px;
+          color: var(--c-accent-t); letter-spacing: 1px;
         }
         .txFigT {
           font-family: var(--f-heading); font-size: 16px; font-weight: 700;
@@ -1325,7 +1399,7 @@ export default async function TreatmentDetailPage({
         }
         .txCareNo {
           font-family: var(--f-display); font-size: 18px;
-          color: var(--c-gold-d); line-height: 1.2;
+          color: var(--c-accent-t); line-height: 1.2;
         }
         .txCareCard p {
           margin: 0; font-size: 14px; color: var(--c-text);

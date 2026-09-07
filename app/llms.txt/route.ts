@@ -1,4 +1,4 @@
-import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
+import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED, HOME_DEFINE, PRICING, CERTIFICATE_FEES, PRICING_UPDATED } from '@/lib/copy';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -26,7 +26,7 @@ export function GET() {
 
   const body = `# ${SITE.name} (Art H Dental Clinic)
 
-> 인천 송도 IBS타워 업무동 8층에 있는 치과입니다. 구강악안면외과 전문의와 치과보존과 전문의가 함께 진료하며, 한 분에게 충분한 시간을 드리는 진료를 지향합니다.
+> ${HOME_DEFINE}
 
 ## 기본 정보
 - 병원명: ${SITE.name}
@@ -36,6 +36,17 @@ export function GET() {
 - 네이버 플레이스: ${SITE.naverPlace}
 - 사업자 정보: ${SITE.business.legalName}(${SITE.business.category}) · 대표 ${SITE.business.ceo} · 사업자등록번호 ${SITE.business.regNo}
 - 최종 갱신일: ${CONTENT_UPDATED}
+
+## 이런 분들이 찾으십니다
+- 치과가 무섭거나 진료 중 통증이 걱정되는 분 — 충분한 설명 후 진행하며, 의식하진정(수면치료)을 선택할 수 있습니다.
+- 구역질 반사가 심해 치료가 어려웠던 분 — 진정 상태에서 치료를 진행할 수 있습니다.
+- 사랑니·임플란트 같은 수술이 부담되는 분 — 구강악안면외과 전문의가 직접 집도하며 진정을 병행할 수 있습니다.
+- 여러 치아를 한 번에 치료해야 해 내원 횟수를 줄이고 싶은 분
+
+## 진료비
+- 비급여 진료비와 제증명 수수료를 홈페이지에 게시합니다(의료법 제45조): ${SITE_URL}/pricing
+- 게시 항목 수: 비급여 ${PRICING.length}건, 제증명 ${CERTIFICATE_FEES.length}건 (기준일 ${PRICING_UPDATED})
+- 실제 비용은 구강 상태와 치료 범위에 따라 달라지며, 검사 후 상담에서 안내합니다.
 
 ## 진료시간
 ${hours}

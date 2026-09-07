@@ -69,6 +69,7 @@ export const NAV_ABOUT_ITEMS = [
   { href: '/doctor', label: '의료진' },
   { href: '/facility', label: '시설' },
   { href: '/location', label: '오시는길' },
+  { href: '/pricing', label: '진료비 안내' },
 ] as const;
 
 export const NAV_TREATMENT_ITEMS = [
@@ -175,6 +176,8 @@ export type Treatment = {
   specialist?: TxSpecialist;
   /** 이 페이지 내용을 검수한 의료진 (DOCTORS 인덱스). 확인된 과목에만 표기한다. */
   reviewedBy?: number;
+  /** 의식하진정을 함께 진행할 수 있는 과목인지 — 홈 카드의 「진정 병행」 칩. */
+  sedationOk?: boolean;
   /** 이 과목을 의료진이 마지막으로 검수한 날(YYYY-MM-DD). 없으면 REVIEWED_ON_DEFAULT. */
   reviewedOn?: string;
   gallery?: TxGalleryItem[];
@@ -183,7 +186,8 @@ export type Treatment = {
 export const TREATMENTS: Treatment[] = [
   {
     en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
-    card: '/media/images/implant/implant-surgery-01.jpg',
+    sedationOk: true,
+    card: '/media/images/still/implant-plan.jpg',
     d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.',
     summary: '상실된 자연치아의 자리를, 가장 가깝게 회복합니다.',
     intro: '임플란트는 상실된 자연치아를 대체하는 대표적인 방법입니다. 아트에이치치과는 구강악안면외과 전문의가 직접 계획하고 수술합니다. 3D CT로 골량과 신경 위치를 정밀하게 파악하고, 디지털 가이드를 제작해 예측 가능한 식립을 지향합니다.',
@@ -207,13 +211,13 @@ export const TREATMENTS: Treatment[] = [
       '구강악안면외과 전문의가 수술 집도',
       '독립 수술실에서 무균 환경 유지',
       '뼈이식 · 상악동 거상 등 고난도 케이스 대응',
-      '치과 공포가 있는 분은 의식하진정(수면마취) 병행 가능',
+      '치과 공포가 있는 분은 의식하진정(수면치료) 병행 가능',
     ],
     faqs: [
       { q: '임플란트 수술 시간은 얼마나 걸리나요?', a: '일반적으로 1개당 약 30분~1시간입니다. 뼈이식이 필요하거나 여러 개를 식립하는 경우 더 오래 걸릴 수 있습니다.' },
       { q: '수술 당일에 바로 씹을 수 있나요?', a: '식립 직후에는 임플란트가 뼈에 고정될 시간이 필요하므로, 일반적으로 2–4개월 뒤에 최종 보철물을 장착합니다. 케이스에 따라 즉시 보철이 가능한 경우도 있습니다.' },
       { q: '임플란트는 평생 유지되나요?', a: '정기 검진과 구강 위생 관리를 꾸준히 한다면 오래 사용할 수 있습니다. 잇몸 염증(임플란트 주위염) 예방이 가장 중요합니다.' },
-      { q: '임플란트 수술은 많이 아픈가요?', a: '마취 후 진행되므로 수술 중 통증은 거의 없습니다. 치과 공포가 큰 분은 의식하진정(수면마취)을 병행해 편안하게 받으실 수 있습니다.' },
+      { q: '임플란트 수술은 많이 아픈가요?', a: '마취 후 진행되므로 수술 중 통증은 거의 없습니다. 치과 공포가 큰 분은 의식하진정(수면치료)을 병행해 편안하게 받으실 수 있습니다.' },
       { q: '나이가 많아도 수술할 수 있나요?', a: '연령보다 전신 상태와 골량이 중요합니다. 고혈압·당뇨 등 기저질환이 있어도 조절이 잘 되면 대부분 치료할 수 있으며, 전문의가 3D CT 진단 후 정확히 안내해 드립니다.' },
     ],
     showcase: {
@@ -352,13 +356,14 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
-      { src: '/media/images/implant/implant-surgery-01.jpg', alt: '독립 수술실에서 진행되는 임플란트 수술', caption: '구강악안면외과 전문의가 직접 집도하는 수술' },
+      { src: '/media/images/still/implant-plan.jpg', alt: '3D CT 영상으로 식립 위치를 계획하는 장면', caption: '3D 영상으로 신경·뼈 상태를 확인한 뒤 계획합니다' },
       { src: '/media/images/implant/implant-kit.jpg', alt: '정품 임플란트 키트 트레이', caption: '정품 임플란트 키트와 멸균 수술 기구' },
       { src: '/media/images/implant/implant-ct-check.jpg', alt: '태블릿과 3D CT 영상으로 식립 계획을 확인하는 의료진', caption: '3D CT 영상으로 식립 계획을 확인합니다' },
     ],
   },
   {
     en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
+    sedationOk: true,
     card: '/media/images/endo/endo-kit-01.jpg',
     d: '근관을 정밀하게 처치하여 자연치아를 최대한 보존합니다.',
     summary: '살릴 수 있는 치아는 끝까지 살립니다.',
@@ -495,14 +500,16 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
-      { src: '/media/images/treatment-room/treatment-01.jpg', alt: '신경치료가 이뤄지는 진료실', caption: '치료에 집중할 수 있는 진료 공간' },
-      { src: '/media/images/xray/xray-02.jpg', alt: '치아 뿌리를 확인하는 영상 진단 장비', caption: '치아 뿌리 상태를 확인하는 영상 진단' },
-      { src: '/media/images/treatment-room/treatment-03.jpg', alt: '위생적으로 관리되는 진료실', caption: '체계적인 멸균 · 위생 관리' },
+      { src: '/media/images/endo/endo-files-01.jpg', alt: '길이별로 정리된 니티 파일 키트 3세트', caption: '근관 길이와 굵기에 맞춰 준비하는 니티 파일' },
+      { src: '/media/images/endo/endo-wiz-01.jpg', alt: '근관 충전에 쓰는 ENDO-WIZ 장비', caption: '근관을 빈틈없이 채우는 충전 장비' },
+      { src: '/media/images/endo/endo-room-01.jpg', alt: '파노라마 영상을 띄운 진료실과 멸균 포 위 기구 세트', caption: '촬영본을 함께 보며 진행하는 신경치료' },
+      { src: '/media/images/endo/endo-motor-window.jpg', alt: '창가에 놓인 X-Smart Pro+ 엔도 모터', caption: '송도 전경이 보이는 진료실' },
     ],
   },
   {
     en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery', bg: V.equip,
-    card: '/media/images/surgery/or-fullset.jpg',
+    sedationOk: true,
+    card: '/media/images/still/or-fullset-wide.jpg',
     d: '3D CT 기반 정밀 진단. 매복 사랑니도 안전하게.',
     summary: '복잡한 매복 사랑니도, 안전하게.',
     intro: '사랑니는 위치와 방향에 따라 발치 난이도가 크게 달라집니다. 특히 신경관과 가까운 매복 사랑니는 3D CT 진단이 필수입니다. 구강악안면외과 전문의가 3D 영상 분석 후 안전한 경로로 발치합니다.',
@@ -596,12 +603,12 @@ export const TREATMENTS: Treatment[] = [
     gallery: [
       { src: '/media/images/surgery/wisdom-surgery-01.jpg', alt: '전문의가 집도하는 사랑니 발치 수술', caption: '구강악안면외과 전문의가 직접 집도합니다' },
       { src: '/media/images/surgery/surgery-tools.jpg', alt: '멸균 포 위에 준비된 발치 수술 기구', caption: '케이스별로 준비하는 멸균 수술 기구' },
-      { src: '/media/images/surgery/or-fullset.jpg', alt: '수술 준비를 마친 독립 수술실', caption: '일반 진료와 분리된 독립 수술실' },
+      { src: '/media/images/still/or-fullset-wide.jpg', alt: '수술 준비를 마친 독립 수술실', caption: '일반 진료와 분리된 독립 수술실' },
     ],
   },
   {
     en: 'TMJ', ko: '턱관절치료', slug: 'tmj', bg: V.scan,
-    card: '/media/images/tmj/tmj-tmd-monitor.jpg',
+    card: '/media/images/still/explain-screen.jpg',
     d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.',
     summary: '턱의 통증과 불편감, 원인부터 찾습니다.',
     intro: '턱관절 장애는 교합·습관·스트레스 등 복합적 원인에서 발생합니다. 일상에 지장을 주는 소리·통증·개구 장애가 지속된다면 조기 진단이 중요합니다. 영상 검사와 근육 검사를 통해 원인을 파악하고, 비수술적·보존적 치료를 우선합니다.',
@@ -731,17 +738,19 @@ export const TREATMENTS: Treatment[] = [
       poster: '/media/video/tmj-care-poster.jpg',
     },
     gallery: [
-      { src: '/media/images/tmj/tmj-tmd-monitor.jpg', alt: '3D 해부 영상으로 턱관절 구조를 설명하는 의료진', caption: '3D 영상으로 이해하기 쉽게 설명해 드립니다' },
+      { src: '/media/images/still/explain-screen.jpg', alt: '3D 해부 영상으로 턱관절 구조를 설명하는 의료진', caption: '3D 영상으로 이해하기 쉽게 설명해 드립니다' },
       { src: '/media/images/tmj/tmj-laser.jpg', alt: 'PHL-15 힐링 레이저 시술 장면', caption: '힐링 레이저로 통증 부위를 관리합니다' },
       { src: '/media/images/tmj/tmj-physio.jpg', alt: '턱관절 물리치료 장비', caption: '물리치료 장비를 활용한 근육 이완 치료' },
+      { src: '/media/images/tmj/splint-01.jpg', alt: '환자 본을 떠 제작한 투명 교합안정장치와 치아 모형', caption: '본을 떠 개인에 맞춰 제작하는 교합안정장치' },
+      { src: '/media/images/tmj/splint-02.jpg', alt: '치아 모형에 맞춰 본 교합안정장치', caption: '모형에 맞춰 높이와 접촉을 조정합니다' },
     ],
   },
   {
     en: 'Sedation', ko: '의식하진정', slug: 'sedation', bg: V.surg,
-    card: '/media/images/sedation/bm1-live.jpg',
-    d: '수면마취 하 편안한 진료. 치과 공포가 있는 분도 안심하고 치료받으실 수 있습니다.',
-    summary: '불안 없이, 편안한 잠처럼 받는 진료.',
-    intro: '의식하진정(Conscious Sedation)은 환자가 의식은 유지하되 긴장과 불안은 크게 줄어든 상태에서 치료받을 수 있게 하는 방법입니다. 치과 공포가 심한 분, 복잡한 임플란트 수술, 장시간 치료가 필요한 분에게 특히 권장됩니다.',
+    card: '/media/images/still/sedation-care.jpg',
+    d: '구강악안면외과 전문의가 진행하는 의식하진정(수면치료). 치과 공포로 진료를 미뤄오신 분들이 선택하는 방법입니다.',
+    summary: '무섭다면, 진정 상태로 받는 방법이 있습니다.',
+    intro: '의식하진정(Conscious Sedation)은 의식은 유지하되 긴장과 불안이 크게 줄어든 상태에서 치료받는 방법입니다. 아트에이치치과에서는 구강악안면외과 전문의가 진정과 수술을 함께 담당합니다. 치료 중에는 환자감시장치로 산소포화도·혈압·맥박을 계속 확인하고, 시린지펌프로 진정제 용량을 조절하며, 회복을 확인한 뒤 귀가를 안내합니다. 치과 공포가 크신 분, 구역질 반사가 심한 분, 여러 치아를 한 번에 치료해야 하는 분께 도움이 됩니다.',
     reviewedBy: 0,
     quickFacts: [
       { k: '담당', v: '구강악안면외과 전문의 (최종원 대표원장)' },
@@ -758,15 +767,21 @@ export const TREATMENTS: Treatment[] = [
       '보호자 동반 귀가',
     ],
     features: [
-      '실시간 활력징후 모니터링',
-      '구강악안면외과 전문의가 진행',
-      '치과 공포 · 구역 반사가 심한 분에게 적합',
-      '치료 시간이 짧게 느껴지는 장점',
+      '구강악안면외과 전문의가 진정과 수술을 함께 담당',
+      '환자감시장치로 산소포화도 · 혈압 · 맥박 실시간 확인',
+      '시린지펌프로 진정제 용량을 정밀하게 조절',
+      '회복 상태를 확인한 뒤 보호자와 함께 귀가 안내',
+      '치과 공포 · 구역질 반사가 심한 분, 장시간 치료가 필요한 분에게 도움',
     ],
     faqs: [
       { q: '의식하진정과 전신마취는 어떻게 다른가요?', a: '의식하진정은 의식이 있는 상태로, 간단한 지시에 반응 가능합니다. 전신마취에 비해 회복이 빠른 편이며, 의식이 유지되는 방식입니다.' },
       { q: '혼자 내원해도 되나요?', a: '진정 후에는 판단력과 운동 반응이 느려지므로, 반드시 보호자 동반으로 내원·귀가해주셔야 합니다.' },
       { q: '식사는 언제부터 가능한가요?', a: '완전히 깨어난 후 가벼운 음식부터 시작하세요. 시술 부위에 따라 별도 안내드립니다.' },
+      { q: '치과가 너무 무서운데 진정 치료를 받을 수 있나요?', a: '치과 공포로 진료를 미뤄오신 분들이 실제로 많이 선택하시는 방법입니다. 먼저 상담에서 어떤 점이 가장 불안한지 여쭙고, 건강 상태와 복용 중인 약을 확인한 뒤 가능 여부를 판단합니다.' },
+      { q: '진정 중에 완전히 잠드나요?', a: '깊이 잠드는 전신마취와 달리 의식이 남아 있어 부르면 반응하실 수 있습니다. 다만 시간이 짧게 느껴지고 치료 과정이 잘 기억나지 않는 경우가 많습니다.' },
+      { q: '누구나 받을 수 있나요?', a: '심장·호흡기 질환, 복용 중인 약, 알레르기, 임신 여부에 따라 권하지 않거나 대학병원 협진이 필요할 수 있습니다. 사전 문진에서 반드시 알려주셔야 합니다.' },
+      { q: '비용은 얼마인가요?', a: '의식하진정(수면치료)은 비급여 항목으로 1회 500,000원입니다. 함께 받는 치료 비용은 별도이며, 전체 금액은 진료비 안내 페이지에서 확인하실 수 있습니다.' },
+      { q: '진정 치료에 위험은 없나요?', a: '진정 중에는 호흡이 얕아지거나 혈압·맥박이 변할 수 있어 활력징후를 계속 감시합니다. 깨어난 뒤 어지럼·메스꺼움·졸림이 남을 수 있고, 반응과 회복 속도에는 개인차가 큽니다. 안내된 금식 시간을 지키지 않거나 복용 중인 약·질환을 알리지 않으면 위험이 커질 수 있으니 사전 문진에서 꼭 말씀해 주세요.' },
     ],
     showcase: {
       label: 'SAFETY MONITORING SYSTEM',
@@ -790,7 +805,7 @@ export const TREATMENTS: Treatment[] = [
     kinds: {
       label: 'WHEN SEDATION HELPS',
       title: '이런 치료에 의식하진정을 활용합니다',
-      desc: '의식하진정(수면마취)은 긴장이 크거나 시간이 오래 걸리는 치료에서 특히 도움이 됩니다.',
+      desc: '의식하진정(수면치료)은 긴장이 크거나 시간이 오래 걸리는 치료에서 특히 도움이 됩니다.',
       items: [
         {
           name: '임플란트 수술',
@@ -874,8 +889,8 @@ export const TREATMENTS: Treatment[] = [
     ],
     targetsTitle: {
       label: 'PAINLESS GBT',
-      title: '시리지 않은 편안한 무통증 GBT',
-      desc: '파우더로 섬세하게 세균을 관리하고, 초슬림팁으로 부드럽게 치석을 제거합니다. 자극은 줄이고 편안함은 높여 부담 없이 받으실 수 있는 잇몸 케어입니다.',
+      title: '자극을 줄인 GBT 잇몸 케어',
+      desc: '파우더로 세균막을 씻어내고 초슬림팁으로 치석을 제거합니다. 기구가 닿는 자극과 진동을 줄이는 방식이라, 스케일링이 부담스러워 미뤄오신 분들도 받아보실 만합니다.',
     },
     targets: [
       '스케일링이 아파서 미뤄오신 분',
@@ -931,14 +946,14 @@ export const TREATMENTS: Treatment[] = [
       ],
     },
     gallery: [
-      { src: '/media/images/perio/gbt-treatment.jpg', alt: 'GBT 에어플로우 케어를 진행하는 의료진', caption: 'GBT 프로토콜에 따라 진행하는 잇몸 케어' },
+      { src: '/media/images/still/gbt-care.jpg', alt: 'GBT 에어플로우 케어를 진행하는 의료진', caption: 'GBT 프로토콜에 따라 진행하는 잇몸 케어' },
       { src: '/media/images/perio/scaling-closeup.jpg', alt: '초슬림팁으로 진행하는 스케일링 클로즈업', caption: '초슬림팁으로 부드럽게 치석을 제거합니다' },
       { src: '/media/images/perio/airflow-device.jpg', alt: 'EMS 에어플로우 프로필락시스 마스터 장비', caption: '스위스 EMS 에어플로우 장비' },
     ],
   },
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
-    card: '/media/images/whitening/whitening-bluelight.jpg',
+    card: '/media/images/still/whitening-care.jpg',
     reviewedBy: 0,
     reviewedOn: '2026-09-07',
     d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.',
@@ -1048,7 +1063,7 @@ export const DOCTORS = [
     name: '최종원',
     title: '대표원장',
     specialty: '구강악안면외과 전문의',
-    focus: '임플란트 · 사랑니 발치 · 턱관절 · 의식하진정(수면마취)',
+    focus: '임플란트 · 사랑니 발치 · 턱관절 · 의식하진정(수면치료)',
     photo: '/media/images/doctor/doctor-choi-profile.jpg',
     objectPosition: 'center 20%',
     quote: '"한 분 한 분의 치아를 소중하게 대합니다."',
@@ -1157,11 +1172,346 @@ export const DOCTORS = [
 // 호환 alias (기존 참조 유지)
 export const DOCTOR = DOCTORS[0];
 
-export const SYSTEM_ITEMS = [
-  { t: '멸균 시스템', d: '중앙공급실 방식의 Class B 고압증기멸균 시스템. 기구 세척부터 멸균, 진료수 관리까지 9단계 감염 관리 프로토콜로 눈에 보이지 않는 곳까지 철저하게.' },
-  { t: '독립 수술실', d: '임플란트 수술은 완전히 분리된 1인 수술실에서 진행합니다. 외부 소음 차단, 감염 위험 최소화.' },
-  { t: '치료 보증제', d: '진료 보증서를 발급하고, 정기 검진을 통해 치료받은 치아를 오래 유지할 수 있도록 끝까지 책임집니다.' },
+
+
+
+// ── 지역 안내 페이지 (2026-09 개편, plan §6-D·§6-E)
+//   "송도치과" 같은 지역 검색과 AI 질의에 답하는 페이지다.
+//   같은 문장을 지역명만 바꿔 찍어내면 문지기 페이지(doorway)가 되므로,
+//   각 페이지는 그 지역에서 오는 경로·소요 시간·주변 지형처럼 실제로 다른 정보만 담는다.
+export type LocalPage = {
+  slug: string;
+  area: string;
+  title: string;
+  lead: string;
+  /** 이 지역에서만 통하는 소개 문장 — 공통 정의문을 그대로 쓰면 세 페이지가 같은 글이 된다 */
+  intro: string;
+  routes: { k: string; v: string }[];
+  /** 길 찾을 때 눈으로 짚는 것들 */
+  landmarks: string[];
+  notes: string[];
+  /** 그 지역에서 실제로 많이 받는 질문 */
+  faqs: { q: string; a: string }[];
+};
+
+export const LOCAL_PAGES: LocalPage[] = [
+  {
+    slug: 'songdo',
+    area: '송도국제도시',
+    title: '송도국제도시에서 오시는 길',
+    lead: '아트에이치치과는 송도국제업무단지 IBS타워 업무동 8층에 있습니다. 송도 안에서는 대부분 15분 안에 닿습니다.',
+    intro:
+      '송도는 직장과 집이 같은 생활권 안에 있어, 점심시간이나 퇴근 직후에 치과를 찾는 분이 많습니다. 아트에이치치과는 그 시간대에 맞춰 월·목요일 야간진료를 운영하고, 여러 치아를 한 번에 정리해 내원 횟수를 줄이는 방식으로 계획을 세웁니다. 수술이나 진정이 필요한 치료도 구강악안면외과 전문의가 원내에서 진행합니다.',
+    routes: [
+      { k: '인천1호선', v: '국제업무지구역 5번 출구에서 470m (G타워 방면 도보 7분)' },
+      { k: '센트럴파크 방면', v: '센트럴로를 따라 남쪽으로 차량 5분' },
+      { k: '송도 1·2공구', v: '차량 10분 이내' },
+      { k: '주차', v: 'IBS타워 지하주차장 이용' },
+    ],
+    landmarks: [
+      'G타워(UN 기구가 입주한 원통형 건물) 남쪽 길 건너편',
+      '센트럴파크에서 남쪽으로 한 블록',
+      '포스코타워송도(구 동북아무역센터)에서 도보 10분 거리',
+    ],
+    notes: [
+      '점심시간(14:00~15:00)에는 진료가 없습니다. 직장인 분들은 월·목요일 야간진료(20:30까지)를 이용하시면 편합니다.',
+      '수술이나 의식하진정(수면치료)을 받으시는 날은 보호자와 함께 오셔야 하며, 직접 운전은 피해주세요.',
+    ],
+    faqs: [
+      { q: '점심시간에 잠깐 들러 치료받을 수 있나요?', a: '스케일링이나 간단한 처치는 가능하지만 본원 점심시간이 14시부터 15시까지라 그 시간은 피해 주셔야 합니다. 예약 시 남은 시간을 말씀해 주시면 그 안에 끝낼 수 있는 범위로 계획을 잡아 드립니다.' },
+      { q: '퇴근하고 갈 수 있는 요일이 있나요?', a: '월요일과 목요일은 20시 30분까지 진료합니다. 그 외 평일은 18시 30분, 토요일은 14시까지입니다.' },
+      { q: '주차는 어디에 하나요?', a: 'IBS타워 지하주차장을 이용하시면 됩니다. 내원 시 데스크에 차량 번호를 알려주세요.' },
+    ],
+  },
+  {
+    slug: 'gukje-business-district',
+    area: '국제업무지구역',
+    title: '국제업무지구역에서 오시는 길',
+    lead: '인천1호선 국제업무지구역 5번 출구에서 470m입니다. 지상으로 나와 G타워 방향으로 걸으면 IBS타워가 보입니다.',
+    intro:
+      '역에서 걸어오시는 분이 많아, 오시는 길을 헷갈리지 않도록 정리해 두었습니다. 5번 출구로 나와 큰길을 따라 7분쯤 걸으면 도착하며, 오르막이 없어 유모차나 휠체어로도 이동하실 수 있습니다. 지하철로 오시면 진정 치료 후 대중교통으로 귀가하기도 수월합니다(직접 운전은 피해 주세요).',
+    routes: [
+      { k: '5번 출구', v: '지상으로 나와 G타워 방면 직진 도보 7분' },
+      { k: '지하 연결', v: '별도 지하 연결 통로는 없습니다. 지상 보도를 이용하세요.' },
+      { k: '건물 진입', v: 'IBS타워 업무동 로비에서 8층' },
+      { k: '버스', v: 'IBS타워·G타워 인근 정류장 하차' },
+    ],
+    landmarks: [
+      '5번 출구로 나오면 정면에 보이는 큰길이 센트럴로입니다',
+      '길 왼편으로 원통형 G타워가 보이면 방향이 맞습니다',
+      'IBS타워는 업무동과 오피스텔 동으로 나뉩니다 — 업무동 로비로 들어오세요',
+    ],
+    notes: [
+      '역에서 병원까지 오르막이 없어 유모차·휠체어로도 이동하실 수 있습니다.',
+      '처음 오시는 분은 오피스텔 동이 아니라 업무동 로비로 들어오셔야 합니다. 헷갈리시면 전화 주세요.',
+    ],
+    faqs: [
+      { q: '5번 출구에서 얼마나 걸리나요?', a: '470m로 성인 걸음 기준 7분 정도입니다. 신호를 한 번 건너면 바로 IBS타워가 보입니다.' },
+      { q: '지하로 연결된 통로가 있나요?', a: '별도의 지하 연결 통로는 없습니다. 지상 보도를 이용해 주세요.' },
+      { q: '진정 치료를 받고 지하철로 돌아가도 되나요?', a: '보호자와 함께라면 가능합니다. 다만 진정 후에는 판단력과 반응이 느려지므로 혼자 이동하시거나 직접 운전하시는 것은 피해 주세요.' },
+    ],
+  },
+  {
+    slug: 'yeonsu',
+    area: '연수구',
+    title: '연수구에서 오시는 길',
+    lead: '연수구 내에서는 인천1호선 한 번으로 오실 수 있습니다. 동춘·연수·원인재 방면에서 차량으로 20분 안팎입니다.',
+    intro:
+      '연수구 구도심에서 송도까지는 차로 15~25분 거리입니다. 사랑니 발치나 재신경치료처럼 다른 곳에서 큰 병원을 권유받으셨던 경우에도, 구강악안면외과 전문의와 치과보존과 전문의가 함께 있어 원내에서 진행하는 편입니다. 다만 전신질환 등으로 협진이 필요한 상태라면 그 사실을 정확히 말씀드립니다.',
+    routes: [
+      { k: '인천1호선', v: '연수·원인재·동춘역에서 국제업무지구역까지 환승 없이 이동' },
+      { k: '동춘동·연수동', v: '차량 15~20분 (아암대로 경유)' },
+      { k: '옥련동·청학동', v: '차량 20~25분' },
+      { k: '주차', v: 'IBS타워 지하주차장 이용' },
+    ],
+    landmarks: [
+      '아암대로를 타고 송도 방면으로 들어오면 센트럴로로 이어집니다',
+      '인천1호선은 연수·원인재·동춘역에서 국제업무지구역까지 환승 없이 연결됩니다',
+      '건물은 G타워 맞은편 IBS타워, 업무동 8층입니다',
+    ],
+    notes: [
+      '매복 사랑니나 재신경치료처럼 까다로운 경우도 원내에서 진행합니다. 전신질환 등으로 협진이 필요하면 그 사실을 정확히 안내해 드립니다.',
+      '치과가 무서워 미뤄오셨다면 의식하진정(수면치료)을 함께 상담하실 수 있습니다.',
+    ],
+    faqs: [
+      { q: '연수동에서 차로 얼마나 걸리나요?', a: '아암대로를 이용해 15~20분 정도입니다. 출퇴근 시간대에는 조금 더 걸릴 수 있습니다.' },
+      { q: '다른 치과에서 큰 병원으로 가라고 했는데 가능한가요?', a: '어떤 이유로 그런 안내를 받으셨는지에 따라 다릅니다. 매복 사랑니·재신경치료처럼 난이도 때문이라면 원내에서 진행하는 경우가 많고, 전신질환이나 전신마취가 필요한 경우라면 대학병원 협진을 안내해 드립니다. 먼저 검사 후 판단합니다.' },
+      { q: '아이도 진료받을 수 있나요?', a: '연령과 상태에 따라 다릅니다. 진료 가능 여부는 전화로 미리 확인해 주시면 안내해 드리겠습니다.' },
+    ],
+  },
 ];
+
+// ── 비급여 진료비·제증명 수수료 (원장님 제공 2026-09-07)
+//   의료법 제45조·시행규칙 제42조의2에 따라 홈페이지에 게시한다.
+//   금액은 원본 표 그대로다. 고칠 일이 생기면 원본을 먼저 받고 PRICING_UPDATED를 같이 올린다.
+export const PRICING_UPDATED = '2026-09-07';
+
+export type PriceRow = { group: string; item: string; detail: string; price: number; unit: string };
+
+export const PRICING: PriceRow[] = [
+  { group: '임플란트', item: '임플란트', detail: '국산 오스템 KS SA', price: 1000000, unit: '치아 1개 기준' },
+  { group: '임플란트', item: '임플란트', detail: '국산 오스템 KS BA', price: 1300000, unit: '치아 1개 기준' },
+  { group: '임플란트', item: '임플란트', detail: '수입 SIC', price: 1800000, unit: '치아 1개 기준' },
+  { group: '임플란트', item: '뼈이식', detail: 'GBR 간단', price: 300000, unit: '치아 1개 부위당' },
+  { group: '임플란트', item: '뼈이식', detail: 'GBR 복잡', price: 500000, unit: '치아 1개 부위당' },
+  { group: '임플란트', item: '상악동 뼈이식', detail: 'Crestal', price: 700000, unit: '한 악당' },
+  { group: '임플란트', item: '상악동 뼈이식', detail: 'Lateral', price: 1000000, unit: '한 악당' },
+  { group: '보철', item: '구치부 크라운', detail: '지르코니아', price: 550000, unit: '1개당' },
+  { group: '보철', item: '전치부 크라운', detail: '지르코니아', price: 650000, unit: '1개당' },
+  { group: '보철', item: '인레이', detail: '하이브리드 인레이', price: 350000, unit: '1개당' },
+  { group: '틀니', item: '완전틀니', detail: '금속상 완전틀니', price: 2000000, unit: '한 악당' },
+  { group: '틀니', item: '부분틀니', detail: '부분틀니', price: 1500000, unit: '한 악당' },
+  { group: '틀니', item: '임시틀니', detail: '임시틀니', price: 200000, unit: '한 악당' },
+  { group: '틀니', item: '플리퍼', detail: '플리퍼', price: 100000, unit: '한 악당' },
+  { group: '틀니', item: '프로비져널 틀니', detail: '본원 임플란트 틀니', price: 500000, unit: '한 악당' },
+  { group: '보존 치료', item: '레진', detail: '단순 레진', price: 100000, unit: '한 개당' },
+  { group: '보존 치료', item: '레진', detail: 'Diastema', price: 200000, unit: '한 면당' },
+  { group: '보존 치료', item: '레진', detail: '써비컬 레진', price: 70000, unit: '한 개당' },
+  { group: '보존 치료', item: '레진', detail: '레진코어', price: 50000, unit: '한 개당' },
+  { group: '보존 치료', item: '레진', detail: '포스트코어', price: 100000, unit: '한 개당' },
+  { group: '보존 치료', item: '레진', detail: '캐스팅 포스트코어', price: 150000, unit: '한 개당' },
+  { group: '보존 치료', item: '레진', detail: '반점치 아이콘', price: 100000, unit: '한 개당' },
+  { group: '소아 치료', item: '레진', detail: '유치 레진', price: 50000, unit: '한 개당' },
+  { group: '소아 치료', item: '크라운', detail: 'ss 크라운', price: 100000, unit: '한 개당' },
+  { group: '소아 치료', item: '크라운', detail: '지르코니아 유치 크라운', price: 150000, unit: '한 개당' },
+  { group: '소아 치료', item: '홈메우기', detail: '실런트 (비급여)', price: 30000, unit: '한 개당' },
+  { group: '소아 치료', item: '불소', detail: '불소도포', price: 30000, unit: '1회당' },
+  { group: '예방 치료', item: '비급여 스케일링', detail: '비급여 스케일링', price: 50000, unit: '1회당' },
+  { group: '교정 치료', item: '유지장치', detail: '유지장치 재제작', price: 300000, unit: '한 악당' },
+  { group: '교정 치료', item: '유지장치', detail: '제거/재부착', price: 50000, unit: '한 개당' },
+  { group: '교정 치료', item: '스플린트', detail: '스플린트 (RWS)', price: 50000, unit: '한 개당' },
+  { group: '교정 치료', item: '공간 유지장치', detail: '공간 유지장치', price: 100000, unit: '한 개당' },
+  { group: '기타 치료', item: '이갈이 장치', detail: '이갈이 장치', price: 700000, unit: '한 악당' },
+  { group: '기타 치료', item: '세데이션', detail: '의식하진정치료(수면치료)', price: 500000, unit: '1회당' },
+  { group: '기타 치료', item: '턱관절 장치', detail: '턱관절 장치', price: 700000, unit: '한 악당' },
+  { group: '미용 치료', item: '미백', detail: '전문가미백 (3싸이클 기준)', price: 600000, unit: '1회당 / 부가세 별도' },
+  { group: '미용 치료', item: '미백', detail: '자가미백', price: 300000, unit: '한달치 / 부가세 별도' },
+  { group: '미용 치료', item: '미백', detail: '전문가미백+자가미백', price: 700000, unit: '1회당·한달치 / 부가세 별도' },
+  { group: '미용 치료', item: '보톡스', detail: '국산 (코어톡스, 100유닛)', price: 150000, unit: '부가세 별도' },
+  { group: '미용 치료', item: '보톡스', detail: '수입 보톡스', price: 200000, unit: '부가세 별도' },
+];
+
+/** 제증명 수수료는 의료법 시행규칙 제1조의3이 따로 정한 항목이라 표를 분리한다. price 0 = 무료. */
+export const CERTIFICATE_FEES: { name: string; price: number; unit: string }[] = [
+  { name: '진료비 계산서 영수증', price: 0, unit: '' },
+  { name: '진료비 세부산정 내역서', price: 0, unit: '' },
+  { name: '치료확인서 / 수술확인서 / 통원확인서', price: 3000, unit: '1부 기준' },
+  { name: '차트사본', price: 1000, unit: '장 추가 300원씩' },
+  { name: '파노라마 출력용', price: 10000, unit: '1장 기준' },
+  { name: 'CT (3D USB 백업)', price: 10000, unit: '1장 기준' },
+  { name: '소견서', price: 10000, unit: '1부 기준' },
+  { name: '진단서', price: 20000, unit: '1부 기준' },
+  { name: '사보험양식 치과치료 확인서', price: 10000, unit: '1부 기준' },
+  { name: '상해 진단서', price: 20000, unit: '1부 기준' },
+];
+
+/** 표 위에 함께 붙이는 고지 — 금액만 적고 조건을 안 적으면 오해가 생긴다. */
+export const PRICING_NOTES = [
+  '미백·보톡스 항목은 부가가치세가 별도로 부과됩니다. 그 밖의 치료 목적 진료는 부가가치세가 붙지 않습니다.',
+  '실제 비용은 구강 상태와 치료 범위, 사용하는 재료에 따라 달라질 수 있습니다. 정확한 금액은 검사 후 상담에서 안내해 드립니다.',
+  '건강보험이 적용되는 항목은 이 표에 포함되지 않습니다.',
+];
+
+
+/** 홈 — 「아트에이치의 특별함」 4가지.
+ *  기존 STORY 밴드·보증제·멸균 서술을 한 묶음으로 정리했다(같은 사실을 여러 섹션에 흩어 놓지 않는다). */
+export const HOME_SPECIAL = {
+  label: 'WHAT MAKES US DIFFERENT',
+  title: '아트에이치의 특별함',
+  desc: '장비를 갖췄다는 말보다, 그 장비로 무엇을 어떻게 하는지가 중요하다고 생각합니다.',
+  items: [
+    {
+      no: '01',
+      t: '전문의가 직접 계획하고 집도합니다',
+      d: '임플란트·사랑니 같은 수술은 구강악안면외과 전문의가, 신경치료는 치과보존과 전문의가 맡습니다. 진단부터 마무리까지 같은 사람이 봅니다.',
+      img: '/media/images/still/consult-tablet.jpg',
+      alt: '3D 영상을 함께 확인하며 수술을 준비하는 의료진',
+      href: '/doctor',
+      link: '의료진 보기',
+      points: [
+        '구강악안면외과 전문의 — 임플란트 · 사랑니 · 턱관절',
+        '치과보존과 전문의 — 신경치료 · 자연치아 보존',
+        '3D CT로 신경관과 뼈를 먼저 확인',
+        '진단부터 마무리까지 같은 의료진이 담당',
+      ],
+    },
+    {
+      no: '02',
+      t: '일반 진료와 분리된 독립 수술실',
+      d: '수술은 별도의 1인 수술실에서 진행합니다. Class B 고압증기멸균을 포함한 9단계 감염 관리로 기구 세척부터 진료수까지 관리합니다.',
+      img: '/media/images/still/or-fullset-wide.jpg',
+      alt: '수술 준비를 마친 독립 수술실',
+      href: '/facility',
+      link: '시설 보기',
+    },
+    {
+      no: '03',
+      t: '무섭다면 진정 상태로 받을 수 있습니다',
+      d: '의식하진정(수면치료)은 구강악안면외과 전문의가 진정과 수술을 함께 담당하고, 환자감시장치로 활력징후를 계속 확인하며 진행합니다.',
+      img: '/media/images/still/sedation-care.jpg',
+      alt: '활력징후를 확인하며 진행하는 의식하진정',
+      href: '/treatments/sedation',
+      link: '의식하진정 보기',
+    },
+    {
+      no: '04',
+      t: '치료가 끝나도 관리는 계속됩니다',
+      d: '진료 보증서를 문서로 발급하고, 정기 검진으로 치료받은 치아를 함께 살핍니다. 불편한 점이 생기면 진료시간 중 언제든 연락 주세요.',
+      img: '/media/images/still/explain-screen.jpg',
+      alt: '치료 후 관리 방법을 설명하는 원장',
+      href: '/treatments',
+      link: '진료과목 보기',
+    },
+  ],
+};
+
+/** 홈 — 장비. 과목 상세에 흩어져 있던 것을 홈에서 한 번에 보여준다(하늘리더스 구조). */
+export const HOME_EQUIPMENT = {
+  label: 'EQUIPMENT',
+  title: '진료에 쓰는 장비',
+  desc: '이름을 나열하기보다, 그 장비가 환자에게 무엇을 바꾸는지를 적었습니다.',
+  items: [
+    {
+      n: 'X-Smart Pro+ · ProTaper Next',
+      e: '엔도 모터 · 니티 파일',
+      d: '근관의 길이와 굽은 정도에 맞춰 회전을 조절합니다. 치과보존과 전문의가 근관 하나하나를 정밀하게 성형합니다.',
+      img: '/media/images/endo/endo-kit-01.jpg',
+      alt: '니티 파일 키트와 X-Smart Pro+ 엔도 모터',
+      href: '/treatments/root-canal',
+    },
+    {
+      n: 'BM1 · Agilia SP',
+      e: '환자감시장치 · 시린지펌프',
+      d: '진정 치료 중 산소포화도·혈압·맥박을 실시간으로 보고, 진정제 용량을 정밀하게 조절합니다.',
+      img: '/media/images/still/sedation-care.jpg',
+      alt: '환자감시장치와 시린지펌프',
+      href: '/treatments/sedation',
+    },
+    {
+      n: 'EMS AIRFLOW',
+      e: 'GBT 프로토콜 잇몸 케어',
+      d: '파우더로 세균막을 씻어내고 초슬림팁으로 치석을 제거합니다. 기구가 닿는 자극과 진동을 줄이는 방식입니다.',
+      img: '/media/images/still/gbt-care.jpg',
+      alt: 'GBT 에어플로우로 진행하는 잇몸 케어',
+      href: '/treatments/periodontics',
+    },
+    {
+      n: '3D CT · 파노라마',
+      e: '영상 진단',
+      d: '신경관과 뼈 상태를 3차원으로 확인한 뒤 식립 위치와 발치 경로를 정합니다. 화면을 함께 보며 설명드립니다.',
+      img: '/media/images/still/implant-plan.jpg',
+      alt: '3D CT 영상으로 식립 위치를 계획하는 장면',
+      href: '/treatments/implant',
+    },
+  ],
+};
+
+// ── 2026-09 개편 — 브랜드 메시지 축 (원장님 컨셉, plan §0-3)
+//   ① 불안을 가라앉힌다 → ② 통증과 시간을 줄여 치료한다 → ③ 사후관리를 꼼꼼히 한다
+//   홈 섹션 순서·카피·CTA는 전부 이 축에 대조한다.
+//   표현 규칙: 환자가 검색하는 말("안 아픈")과 우리가 쓰는 말("통증을 줄이는 방법")을 분리한다.
+//   "무통·전혀 안 아픈·완벽한 안전" 같은 단정은 의료법 제56조 위반이라 쓰지 않는다.
+
+/** 히어로 카피 — 축 선언 */
+export const HERO_COPY = {
+  eyebrow: 'SONGDO · ART H DENTAL',
+  title: '마음이 편안해진 뒤에,\n진료를 시작합니다',
+  sub: '불안한 마음부터 가라앉히고,\n통증과 시간을 줄여 치료한 뒤, 사후관리까지 함께합니다.',
+  ctas: [
+    { href: '/treatments/sedation', label: '겁이 나신다면' },
+    { href: '/treatments', label: '진료과목' },
+    { href: '/pricing', label: '진료비 안내' },
+  ],
+};
+
+/** 정의문 — AI 검색이 그대로 인용할 수 있게 「누가·어디서·무엇을·어떻게 편안하게」를 200자 안에 담는다.
+ *  llms.txt 서두와 같은 문장을 쓴다(화면과 기계가 읽는 답이 어긋나지 않도록). */
+export const HOME_DEFINE =
+  '아트에이치치과는 인천 송도 IBS타워에 있는 치과의원입니다. 구강악안면외과 전문의와 치과보존과 전문의가 진료하며, 치과가 무섭거나 통증에 예민한 분을 위해 충분한 설명과 의식하진정(수면치료), 통증을 줄이는 마취 방법을 함께 운영합니다.';
+
+/** 축 ① — 불안을 가라앉히는 방법 3가지 */
+export const HOME_CALM = {
+  label: 'BEFORE TREATMENT',
+  title: '진료보다\n먼저 하는 일이 있습니다',
+  desc: '치과가 무서운 건 아플까 봐, 그리고 무슨 일이 벌어질지 몰라서입니다. 그래서 저희는 치료를 시작하기 전에 설명하고, 선택지를 드리고, 통증을 줄일 방법을 먼저 준비합니다.',
+  cards: [
+    {
+      no: '01',
+      t: '먼저 설명하고, 동의를 구합니다',
+      d: '지금 입안이 어떤 상태인지, 오늘 무엇을 할지, 왜 필요한지를 영상과 모형으로 보여드립니다. 궁금한 점이 남아 있으면 치료를 시작하지 않습니다.',
+    },
+    {
+      no: '02',
+      t: '무섭다면, 잠든 듯 받는 방법이 있습니다',
+      d: '의식하진정(수면치료)은 진정제로 긴장을 낮춘 상태에서 치료받는 방법입니다. 구강악안면외과 전문의가 환자감시장치로 활력징후를 계속 확인하며 진행합니다.',
+      href: '/treatments/sedation',
+      link: '의식하진정 알아보기',
+    },
+    {
+      no: '03',
+      t: '통증과 시간을 함께 줄입니다',
+      d: '검사 결과를 미리 정리해 그날 할 일과 순서를 정한 뒤 시작합니다. 필요한 치료를 한 번에 묶어 내원 횟수와 의자에 앉아 계시는 시간을 줄이고, 진행 중에도 불편한 곳이 있으면 언제든 손을 들어 알려주시면 멈춥니다.',
+    },
+  ],
+  cta: { href: '/treatments/sedation', label: '겁이 많은 편이라면 이렇게 진행합니다' },
+};
+
+/** 축 ① 핵심 증거 — 전문의 × 의식하진정. 홈에서 풀블리드 밴드 하나를 통째로 쓴다.
+ *  원장님이 콕 집어 요청한 조합이다: [구강악안면외과 전문의] × [안전 장치를 갖춘 의식하진정]. */
+export const SEDATION_BAND = {
+  en: 'CONSCIOUS SEDATION',
+  title: '구강악안면외과 전문의가\n곁에서 지켜보는 의식하진정',
+  d: '진정 치료는 재우는 것보다 지켜보는 일이 중요합니다. 치료 중에는 환자감시장치로 산소포화도·혈압·맥박을 실시간으로 확인하고, 시린지펌프로 진정제 용량을 정밀하게 조절합니다. 치료가 끝나면 회복을 확인한 뒤 귀가를 안내합니다.',
+  img: '/media/images/sedation/bm1-live.jpg',
+  alt: 'BM1 환자감시장치로 활력징후를 확인하며 진행하는 의식하진정',
+  href: '/treatments/sedation',
+  link: '의식하진정 자세히 보기',
+  points: [
+    { t: '환자감시장치', d: '산소포화도·혈압·맥박 실시간 확인' },
+    { t: '시린지펌프', d: '진정제 용량을 정밀하게 조절' },
+    { t: '회복 확인 후 귀가', d: '깨어난 상태를 확인하고 주의사항 안내' },
+  ],
+};
 
 // ── 디자인 개편 2026-07-23 (plan-design-refresh P2·P3) ──
 
@@ -1172,15 +1522,16 @@ export const REVIEW_LINK = {
 };
 
 // P2. 치료 보증제 — 우리 약속만 단일 열로 (검수: 2단 비교는 의료법 간접 비교광고 소지 → 전환)
-export const WARRANTY = {
-  label: 'CARE GUARANTEE',
-  title: '치료가 끝나도, 관리는 계속됩니다',
+export const AFTERCARE = {
+  label: 'AFTER TREATMENT',
+  title: '치료가 끝나도,\n관리는 계속됩니다',
   desc: '아트에이치치과는 말이 아니라 문서로 약속합니다. 진료 보증서를 발급하고, 정기 검진으로 치료받은 치아를 오래 유지하도록 함께 관리합니다.',
   items: [
     { t: '진료 보증서 발급', d: '치료 내용과 보증 기준을 문서로 남겨 드립니다.' },
     { t: '정기 검진으로 함께 확인', d: '치료 후에도 정기 검진으로 치아 상태를 같이 살핍니다.' },
     { t: '오래 쓰도록 지속 관리', d: '치료받은 치아를 오래 사용하실 수 있도록 관리 방법까지 안내합니다.' },
   ],
+  contact: '치료 후 불편한 점이 생기면 진료시간 중 언제든 전화 주세요. 상태를 먼저 여쭤보고, 필요하면 바로 내원 일정을 잡아드립니다.',
 };
 
 // P3. 홈 스토리 3밴드 — 한 밴드 = 한 메시지, 07.21 실사 배경 + 과목 딥링크
@@ -1189,8 +1540,8 @@ export const STORY_BANDS = [
     en: 'SPECIALIST SURGERY',
     title: '수술은 처음부터 끝까지,\n구강악안면외과 전문의가 직접',
     d: '임플란트와 사랑니 발치 같은 수술은 구강악안면외과 전문의가 직접 계획하고 집도합니다. 고난도 케이스일수록 집도의의 경험이 중요하다고 믿기 때문입니다.',
-    img: '/media/images/surgery/wisdom-surgery-01.jpg',
-    alt: '독립 수술실에서 수술을 집도하는 구강악안면외과 전문의',
+    img: '/media/images/still/consult-tablet.jpg',
+    alt: '3D 영상을 함께 확인하며 수술을 준비하는 의료진',
     href: '/treatments/implant',
     link: '임플란트 자세히 보기',
   },
@@ -1198,19 +1549,19 @@ export const STORY_BANDS = [
     en: 'STERILE OPERATION ROOM',
     title: '독립 수술실,\n9단계 멸균 시스템',
     d: '수술은 일반 진료와 완전히 분리된 1인 수술실에서 진행합니다. Class B 고압증기멸균을 포함한 9단계 감염 관리로, 보이지 않는 곳까지 철저하게 지킵니다.',
-    img: '/media/images/surgery/or-fullset.jpg',
+    img: '/media/images/still/or-fullset-wide.jpg',
     alt: '수술 준비를 마친 아트에이치치과 독립 수술실',
     href: '/facility',
     link: '시설 둘러보기',
   },
   {
-    en: 'REAL-TIME MONITORING',
-    title: '의식하진정,\n잠든 동안에도 지켜봅니다',
-    d: '진정 치료 중에는 환자감시장치로 산소포화도·혈압·맥박을 실시간 확인하고, 시린지펌프로 진정제를 정밀하게 조절합니다. 치과 공포가 있는 분도 한결 편안하게 치료받으실 수 있도록 돕습니다.',
-    img: '/media/images/sedation/bm1-live.jpg',
-    alt: 'BM1 환자감시장치로 활력징후를 확인하는 의식하진정 치료',
-    href: '/treatments/sedation',
-    link: '의식하진정 자세히 보기',
+    en: 'SAVING NATURAL TEETH',
+    title: '살릴 수 있는 치아는\n끝까지 살립니다',
+    d: '치과보존과 전문의가 X-Smart Pro+ 엔도 모터와 ProTaper Next 파일로 근관 하나하나를 정밀하게 처치합니다. 뽑는 것이 빠른 길처럼 보여도, 남길 수 있는 치아는 남기는 편이 오래 갑니다.',
+    img: '/media/images/endo/endo-motor-01.jpg',
+    alt: '근관 성형에 쓰는 X-Smart Pro+ 엔도 모터와 핸드피스',
+    href: '/treatments/root-canal',
+    link: '신경치료 자세히 보기',
   },
 ];
 

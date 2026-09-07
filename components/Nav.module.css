@@ -1,19 +1,91 @@
+
+/* ===== 레퍼런스 구조 — 2단 헤더 =====
+   윗줄: 로고 심볼 + 이름 + 슬로건 3줄 + 언어 전환
+   아랫줄: 메뉴 가로 나열
+   히어로 위에서도 배경을 크림으로 깔아 둔다(레퍼런스는 헤더가 항상 불투명하다). */
+.topRow {
+  background: var(--c-cream);
+  border-bottom: 1px solid var(--c-line);
+}
+.topInner {
+  max-width: 1425px;
+  margin: 0 auto;
+  padding: 26px clamp(20px, 5vw, 100px);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+.brandMark { color: var(--c-navy); display: block; }
+.brandText {
+  font-family: var(--f-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--c-navy);
+}
+/* 로고 — 글자 안쪽으로 색이 아주 천천히 흐른다(레이아웃 계산 없음) */
+@media (prefers-reduced-motion: no-preference) {
+  .brandText {
+    background-image: linear-gradient(
+      100deg,
+      var(--c-navy) 0%,
+      var(--c-navy) 32%,
+      var(--c-navy-l) 46%,
+      #81A1D4 56%,
+      var(--c-navy) 72%,
+      var(--c-navy) 100%
+    );
+    background-size: 260% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brandFlow 14s linear infinite;
+  }
+}
+@keyframes brandFlow {
+  from { background-position: 120% 0; }
+  to { background-position: -60% 0; }
+}
+.tagline {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--c-navy);
+  word-break: keep-all;
+}
+.tagline em {
+  display: block;
+  font-family: var(--f-display);
+  font-style: normal;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+
+@media (max-width: 900px) {
+  .topRow { display: none; }
+}
 .nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background 0.4s, border-color 0.4s, backdrop-filter 0.4s;
+  background: var(--c-cream);
+  border-bottom: 1px solid var(--c-line);
+  transition: box-shadow 0.4s;
 }
 
 .nav[data-show='true'] {
-  background: rgba(253, 252, 250, 0.9);
-  backdrop-filter: blur(18px) saturate(1.1);
-  -webkit-backdrop-filter: blur(18px) saturate(1.1);
-  border-bottom-color: var(--c-line);
+  box-shadow: 0 1px 16px rgba(16, 65, 124, 0.08);
 }
 .nav[data-show='true'] .inner {
   height: var(--header-h-scrolled);
@@ -21,33 +93,15 @@
 
 .inner {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1425px;
   margin: 0 auto;
   height: var(--header-h);
-  padding: 0 clamp(20px, 3.5vw, 40px);
+  padding: 0 clamp(20px, 5vw, 100px);
   transition: height 0.4s var(--ease-out);
 }
 
-.brand {
-  display: inline-flex;
-}
-.brand span {
-  font-family: var(--f-display);
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #fff;
-  transition: color 0.4s;
-  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.4);
-}
-.nav[data-show='true'] .brand span {
-  text-shadow: none;
-}
-.nav[data-show='true'] .brand span {
-  color: var(--c-dark);
-}
 
 .desktop {
   display: flex;
@@ -80,11 +134,7 @@
   color: var(--c-navy) !important;
   font-weight: 800;
 }
-.nav:not([data-show='true']) .link[data-active='true'] {
-  color: var(--c-gold-l) !important;
-}
 .link:hover { color: var(--c-navy); }
-.nav:not([data-show='true']) .link:hover { color: var(--c-gold-l); }
 
 .drop { position: relative; }
 .caret {
@@ -130,6 +180,84 @@
 
 .cta { display: flex; align-items: center; margin-left: 8px; }
 
+
+.overlayLang {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.overlayLang a {
+  padding: 10px 16px;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-text2);
+  text-decoration: none;
+}
+
+.langWrap { position: relative; }
+.langBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--c-line);
+  border-radius: 3px;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-text);
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+.langBtn svg:last-child {
+  transition: transform 0.25s var(--ease-out);
+}
+.langBtn svg:last-child[data-open='true'] { transform: rotate(180deg); }
+.langBtn:hover, .langBtn:focus-visible {
+  border-color: var(--c-accent-t);
+  color: var(--c-accent-t);
+}
+/* 히어로 위(투명 헤더)에서는 흰 글자라야 읽힌다 */
+
+.langMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 156px;
+  padding: 6px;
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: 3px;
+  box-shadow: 0 14px 34px rgba(11, 18, 38, 0.14);
+  display: grid;
+  gap: 2px;
+  z-index: 10;
+}
+.langMenu a {
+  padding: 11px 14px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.langMenu a:hover, .langMenu a:focus-visible {
+  background: var(--c-warm);
+  color: var(--c-accent-t);
+}
+.langMenu a[data-on='true'] { color: var(--c-accent-t); font-weight: 700; }
+
+.overlayLang a[data-on='true'] {
+  border-color: var(--c-accent-t);
+  color: var(--c-accent-t);
+}
+
 .burger {
   display: none;
   flex-direction: column;
@@ -153,8 +281,7 @@
 .overlay {
   display: none;
   flex-direction: column;
-  background: rgba(253, 252, 250, 0.98);
-  backdrop-filter: blur(16px);
+  background: var(--c-bg);
   border-top: 1px solid var(--c-line);
   padding: 12px 0;
 }

@@ -40,7 +40,7 @@ export default function BookingLink({
 
   const variantStyle: CSSProperties =
     variant === 'gold'
-      ? { background: 'var(--c-gold)', color: '#fff' }
+      ? { background: 'var(--c-accent-t)', color: '#fff' }
       : {
           background: 'transparent',
           color: '#fff',

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
+import { TREATMENTS, LOCAL_PAGES, CONTENT_UPDATED } from '@/lib/copy';
+import { LOCALES } from '@/lib/i18n';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -12,6 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...TREATMENTS.map((t) => `/treatments/${t.slug}`),
     '/facility',
     '/location',
+    ...LOCAL_PAGES.map((p) => `/local/${p.slug}`),
+    ...LOCALES.map((l) => `/${l}`),
+    '/pricing',
     '/privacy',
   ];
   // 빌드 시각(new Date())을 쓰면 배포할 때마다 전 페이지 수정일이 갱신돼 신선도 신호가 왜곡된다.

@@ -42,7 +42,7 @@
   position: relative;
   transition: color 0.25s;
 }
-.links a:hover { color: var(--c-gold-l); }
+.links a:hover { color: var(--c-accent); }
 .links a::after {
   content: '';
   position: absolute;
@@ -50,7 +50,7 @@
   bottom: -3px;
   width: 0;
   height: 1px;
-  background: var(--c-gold-l);
+  background: var(--c-accent);
   transition: width 0.3s var(--ease-out);
 }
 .links a:hover::after,

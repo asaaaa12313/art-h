@@ -18,8 +18,12 @@ export default function Footer() {
           <div className={styles.links}>
             <Link href="/about">의원소개</Link>
             <Link href="/location">오시는길</Link>
+            <Link href="/pricing">진료비 안내</Link>
             <a href={`tel:${tel}`}>전화하기</a>
             <Link href="/privacy">개인정보처리방침</Link>
+            <Link href="/en" hrefLang="en">English</Link>
+            <Link href="/ja" hrefLang="ja">日本語</Link>
+            <Link href="/zh" hrefLang="zh-Hans">中文</Link>
           </div>
         </div>
         <dl className={styles.biz}>

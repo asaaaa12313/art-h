@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/treatments' },
   title: '진료과목',
   description:
-    '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면마취), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
+    '임플란트, 신경치료, 사랑니 발치, 턱관절, 의식하진정(수면치료), 잇몸·스케일링, 미백 — 아트에이치치과의 진료 영역.',
 };
 
 // 진료과목 slug별 라인 아이콘 매핑 (없는 slug는 tooth 기본)
@@ -65,7 +65,7 @@ export default function TreatmentsPage() {
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <Breadcrumb items={[{ label: '홈', href: '/' }, { label: '진료과목' }]} />
           {TREATMENTS.map((t, i) => (
-            <Reveal key={t.en} delay={0.03 + i * 0.04} duration="0.6s">
+            <Reveal key={t.en} variant="fold" delay={0.03 + i * 0.04} duration="0.6s">
               <Link href={`/treatments/${t.slug}`} className="txRow" aria-label={`${t.ko} 상세 보기`}>
                 <div className="txImg">
                   <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="200px" />

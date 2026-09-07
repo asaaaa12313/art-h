@@ -77,7 +77,7 @@
 }
 .thumb:hover { opacity: 0.9; }
 .thumb[data-active='true'] {
-  border-color: var(--c-gold-l);
+  border-color: var(--c-accent);
   opacity: 1;
 }
 

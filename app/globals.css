@@ -1,34 +1,70 @@
+/* 리디바탕 — 제목·인용 전용 한글 명조. SIL Open Font License 1.1(리디주식회사).
+   공식 OTF(1.4MB)를 현대 한글 11,172자 그대로 woff2(446KB)로 변환해 자체 호스팅한다.
+   서브셋하지 않은 이유: 제목 카피가 바뀌어도 글리프가 빠지지 않게 하기 위해서다.
+   swap이라 폰트가 늦어도 텍스트는 즉시 보인다(FOUT 허용, FOIT 금지). */
+@font-face {
+  font-family: 'RIDIBatang';
+  src: url('/fonts/RIDIBatang.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F, U+0020-007E, U+00B7, U+2018-201D, U+2026, U+00D7;
+}
+
 :root {
-  /* colors — Art H Dental Clinic 브랜드 컬러 (네이비 + 블루) */
-  --c-bg: #FDFCFA;
+  /* ── 색 — 레퍼런스(하늘리더스치과) 실측값을 그대로 따른다.
+     네이비 #10417C 하나로 본문·제목·아이콘을 통일하고, 섹션 번호·라벨만 보조 블루 #507DBC.
+     배경은 흰색과 아주 옅은 블루그레이 두 단. 다크 밴드는 최소로 쓴다. */
+
+  /* 라이트 — 기본 */
+  --c-bg: #FFFFFF;            /* 바탕 */
   --c-white: #FFFFFF;
-  --c-warm: #F5F2ED;
-  --c-dark: #1C1C1C;
-  --c-text: #2E2E2E;
-  --c-text2: #6B6B6B;
-  --c-text3: #9A9A9A;
+  --c-warm: #EBEEF7;          /* 한 단 짙은 면 — 옅은 블루그레이 */
+  --c-cream: #FEFDF9;         /* 크림 — 사진 밴드 사이 완충 */
+  --c-text: #10417C;          /* 본문·제목 (흰 바탕 10.15:1) */
+  --c-text2: #4A5F80;         /* 보조 본문 */
+  --c-text3: #777777;         /* 캡션 (흰 바탕 4.48:1) */
+  --c-line: rgba(16, 65, 124, 0.14);
 
-  /* Brand: Navy (로고 배경) */
-  --c-navy: #1A2647;         /* 메인 네이비 */
-  --c-navy-d: #0F1A35;       /* 더 짙은 네이비 */
-  --c-navy-l: #2D3B60;       /* 밝은 네이비 */
+  /* 다크 — 히어로 덮개와 밴드 하나 정도만 */
+  --c-dark: #0C2D57;
+  --c-dark-2: #10417C;
+  --c-dark-3: #1B5192;
+  --c-text-on-dark: #FFFFFF;
+  --c-text-on-dark-2: rgba(255, 255, 255, 0.82);
 
-  /* Brand: Blue accent (치과 — 청결·신뢰의 블루로 전환) */
-  --c-blue: #2E6FD4;          /* 메인 블루 액센트 */
-  --c-blue-l: #6BAEE8;        /* 밝은 블루 (다크 배경 텍스트·라인·글로우) */
-  --c-blue-text: #1F5AAE;     /* 밝은 배경 위 텍스트용 블루 — WCAG AA */
-  --c-blue-glow: rgba(46, 111, 212, 0.45);
+  /* 브랜드 앵커 — 로고 네이비 */
+  --c-navy: #10417C;
+  --c-navy-d: #0C2D57;
+  --c-navy-l: #507DBC;
 
-  /* 기존 골드 토큰 → 블루로 통합 (토큰명 유지, 값만 블루 = 전체 페이지 일괄 전환) */
-  --c-gold: var(--c-blue);
-  --c-gold-l: var(--c-blue-l);
-  --c-gold-d: var(--c-blue-text);
-  --c-gold-text: var(--c-blue-text);
+  /* 액센트 — 레퍼런스는 별도 액센트 색을 쓰지 않는다.
+     섹션 번호·영문 라벨에만 보조 블루를 쓰고, 나머지는 네이비 하나로 간다. */
+  --c-accent: #81A1D4;        /* 다크 위 강조 */
+  --c-accent-d: #507DBC;
+  --c-accent-t: #10417C;      /* 라이트 위 텍스트·버튼 */
+  --c-accent-sub: #507DBC;    /* 섹션 번호·영문 라벨 (큰 글자·굵게만) */
+  --c-accent-glow: rgba(80, 125, 188, 0.32);
 
-  --c-line: rgba(0, 0, 0, 0.07);
+  /* 예약 버튼 — 네이버 그린 */
+  --c-naver: #65CE8F;
+
+  /* 구 토큰 alias */
+  --c-blue: var(--c-accent-t);
+  --c-blue-l: var(--c-accent);
+  --c-blue-text: var(--c-accent-t);
+  --c-blue-glow: var(--c-accent-glow);
+  --c-gold: var(--c-accent-t);
+  --c-gold-l: var(--c-accent);
+  --c-gold-d: var(--c-accent-t);
+  --c-gold-text: var(--c-accent-t);
+
+  /* 버튼 모서리 — 레퍼런스는 알약형 */
+  --r-pill: 20px;
+  --r-card: 3px;
 
   /* gradient visuals */
-  --v-hero: linear-gradient(135deg, #1A2647 0%, #0F1A35 60%, #0A1230 100%);
+  --v-hero: linear-gradient(135deg, #10417C 0%, #0C2D57 60%, #08203E 100%);
   --v-clinic: linear-gradient(160deg, #e8e0d4 0%, #d4c5b0 50%, #c9b896 100%);
   --v-chair: linear-gradient(145deg, #dce3e8 0%, #b8c6d0 50%, #a3b5c4 100%);
   --v-doc: linear-gradient(170deg, #e0ddd8 0%, #c4bfb6 60%, #b0a999 100%);
@@ -39,14 +75,18 @@
   --v-consult: linear-gradient(160deg, #e4e0dc 0%, #ccc4b8 50%, #b8ac9c 100%);
   --v-equip: linear-gradient(135deg, #dee2e6 0%, #b8c4cc 50%, #98aab8 100%);
   --v-scan: linear-gradient(155deg, #e0e4e8 0%, #c4ccd4 50%, #aab8c4 100%);
-  --v-city: linear-gradient(145deg, #1A2647 0%, #2D3B60 40%, #0F1A35 100%);
+  --v-city: linear-gradient(145deg, #1B5192 0%, #10417C 40%, #0C2D57 100%);
   --v-white: linear-gradient(160deg, #f0ece4 0%, #e0d8cc 50%, #d4c8b4 100%);
 
+  /* 다크 밴드 위에 사진·영상을 깔 때 쓰는 오버레이 — 촬영본이 밝은 크림 조명이라
+     이걸 안 씌우면 흰 글자가 뜬다(plan §4-2 (c) ②). */
+  --v-overlay: linear-gradient(180deg, rgba(12, 45, 87, 0.28) 0%, rgba(12, 45, 87, 0.6) 55%, rgba(12, 45, 87, 0.84) 100%);
+
   /* fonts */
-  --f-display: 'DM Serif Display', 'Pretendard Variable', Pretendard, serif; /* 영문 전용 세리프 */
-  --f-serif-ko: 'Nanum Myeongjo', 'Pretendard Variable', serif; /* 한글 명조 — 프리미엄 제목 강조용 */
+  --f-display: 'DM Serif Display', 'RIDIBatang', serif;            /* 영문 전용 세리프 */
+  --f-serif-ko: 'RIDIBatang', 'Nanum Myeongjo', serif;             /* 한글 명조 — 제목·인용 전용, 본문 금지 */
   --f-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
-  --f-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; /* 한글 제목 */
+  --f-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
 
   /* easing */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -56,9 +96,15 @@
   --m-base: 0.8s;
   --m-slow: 1.1s;
   --m-dist: 28px;
-  --header-h: 72px;
+  /* 장식 모션 — 히어로 켄번스·패럴랙스처럼 "보는" 움직임은 길게 간다.
+     조작에 반응하는 UI 모션(hover·열림)은 위 --m-fast 이하를 쓴다. */
+  --m-kenburns: 14s;
+  --m-reveal: 0.9s;
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --header-h: 64px;        /* 메뉴 줄 */
+  --header-top-h: 104px;   /* 로고·슬로건 줄(레퍼런스 2단 헤더) */
   --header-h-scrolled: 60px;
-  --anchor-offset: 88px;
+  --anchor-offset: 180px;
 }
 
 /* 섹션 제목이 고정 헤더 밑에 안 깔리도록 앵커/점프 여백 확보 */
@@ -89,7 +135,7 @@ img { display: block; max-width: 100%; }
 a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible {
-  outline: 1px solid var(--c-gold);
+  outline: 1px solid var(--c-accent-t);
   outline-offset: 3px;
 }
 
@@ -108,11 +154,14 @@ button:focus-visible,
 .skip-link:focus { top: 12px; }
 
 /* 모바일 하단 고정 상담 바(FloatingCta)가 푸터를 가리지 않도록 여백 확보 */
-@media (max-width: 600px) {
+/* 하단 고정 상담 바가 뜨는 구간(<960px)에서 푸터가 가리지 않도록 그만큼 바닥을 비운다.
+   바 높이(60px)와 같은 값이어야 한다 — 어긋나면 사업자정보·방침 링크가 바 밑으로 들어간다. */
+@media (max-width: 959px) {
   body {
-    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
   }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -1,0 +1,156 @@
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--c-dark);
+}
+
+/* 장면 한 겹. 들어올 때와 나갈 때가 서로 다른 동작을 하므로 role로 갈라 준다. */
+.layer {
+  position: absolute;
+  inset: 0;
+  transform-origin: center center;
+  will-change: transform, clip-path, opacity;
+}
+
+/* 들어오는 장면 / 나가는 장면 — 회차마다 방식이 바뀐다(0 접힘 · 1 닦임 · 2 확대 · 3 밀림) */
+.layer[data-role='current'] { z-index: 2; }
+.layer[data-role='prev'] { z-index: 1; }
+
+.layer[data-role='current'][data-anim='0'] { animation: inFold 1.15s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.layer[data-role='prev'][data-anim='0']    { animation: outFold 1.05s cubic-bezier(0.55, 0, 0.35, 1) both; }
+
+.layer[data-role='current'][data-anim='1'] { animation: inWipe 1.2s cubic-bezier(0.76, 0, 0.24, 1) both; }
+.layer[data-role='prev'][data-anim='1']    { animation: outWipe 1.05s cubic-bezier(0.76, 0, 0.24, 1) both; }
+
+.layer[data-role='current'][data-anim='2'] { animation: inZoom 1.25s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.layer[data-role='prev'][data-anim='2']    { animation: outZoom 1s ease-in both; }
+
+.layer[data-role='current'][data-anim='3'] { animation: inSlide 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.layer[data-role='prev'][data-anim='3']    { animation: outSlide 1s cubic-bezier(0.55, 0, 0.35, 1) both; }
+
+.layer[data-static='true'] {
+  animation: none;
+}
+
+/* 0 — 접힘: 위아래로 눌린 상태에서 펼쳐진다 */
+@keyframes inFold {
+  0%   { clip-path: inset(46% 0 46% 0); transform: scale(1.12); opacity: 0.4; }
+  55%  { opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); transform: scale(1); opacity: 1; }
+}
+@keyframes outFold {
+  0%   { clip-path: inset(0 0 0 0); transform: scale(1) translateY(0); opacity: 1; }
+  100% { clip-path: inset(50% 0 50% 0); transform: scale(1.06) translateY(-3%); opacity: 0; }
+}
+
+/* 1 — 닦임: 왼쪽에서 오른쪽으로 쓸며 나타난다 */
+@keyframes inWipe {
+  0%   { clip-path: inset(0 100% 0 0); transform: scale(1.08); }
+  100% { clip-path: inset(0 0 0 0); transform: scale(1); }
+}
+@keyframes outWipe {
+  0%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+
+/* 2 — 확대: 앞 장면이 커지며 흐려지고, 뒤 장면이 뒤에서 다가온다 */
+@keyframes inZoom {
+  0%   { transform: scale(1.24); opacity: 0; filter: blur(14px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes outZoom {
+  0%   { transform: scale(1); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1.3); opacity: 0; filter: blur(10px); }
+}
+
+/* 3 — 밀림: 오른쪽에서 밀고 들어오며 앞 장면을 왼쪽으로 보낸다 */
+@keyframes inSlide {
+  0%   { transform: translateX(12%) scale(1.06); opacity: 0.5; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+@keyframes outSlide {
+  0%   { transform: translateX(0) scale(1); opacity: 1; }
+  100% { transform: translateX(-9%) scale(1.04); opacity: 0; }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* 현재 장면은 아주 느리게 밀고 들어간다 — 정지 화면처럼 굳어 보이지 않게 */
+.layer[data-role='current'] .media {
+  animation: heroDrift var(--m-kenburns, 14s) linear both;
+  animation-delay: 0.6s;
+}
+
+@keyframes heroDrift {
+  from { transform: scale(1); }
+  to { transform: scale(1.07); }
+}
+
+.dots {
+  position: absolute;
+  left: clamp(24px, 6vw, 100px);
+  bottom: 26px;
+  z-index: 4;
+  display: flex;
+  gap: 9px;
+}
+
+/* 폭을 늘리지 않고 안쪽 채움만 늘린다 — width 전환은 매 프레임 레이아웃을 다시 계산시킨다 */
+.dot {
+  position: relative;
+  width: 44px;
+  height: 3px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  overflow: hidden;
+}
+/* 영상 장면은 조금 더 길게 — 무엇이 영상인지 눈으로 구분되게 */
+.dot[data-kind='video'] { width: 62px; }
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s var(--ease-out);
+}
+.dot[data-on='true']::after { transform: scaleX(1); }
+.dot:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 5px;
+}
+
+@media (max-width: 600px) {
+  .dots { left: 24px; bottom: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .layer[data-role='current'],
+  .layer[data-role='prev'],
+  .layer[data-role='current'][data-anim='0'],
+  .layer[data-role='prev'][data-anim='0'],
+  .layer[data-role='current'][data-anim='1'],
+  .layer[data-role='prev'][data-anim='1'],
+  .layer[data-role='current'][data-anim='2'],
+  .layer[data-role='prev'][data-anim='2'],
+  .layer[data-role='current'][data-anim='3'],
+  .layer[data-role='prev'][data-anim='3'],
+  .layer[data-role='current'] .media {
+    animation: none;
+  }
+  .dot::after { transition: none; }
+}

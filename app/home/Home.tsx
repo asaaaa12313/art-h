@@ -5,44 +5,29 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
-import HeroVideo from '@/components/HeroVideo';
+import HeroStage, { type Slide } from '@/components/HeroStage';
 import CountUp from '@/components/CountUp';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
-import HeroIntro from '@/components/HeroIntro';
-import TxDiagram from '@/components/TxDiagram';
-import { SITE, TREATMENTS, DOCTORS, PROMISE_ITEMS, SYSTEM_ITEMS, REVIEW_LINK, WARRANTY, STORY_BANDS } from '@/lib/copy';
+import { SITE, TREATMENTS, DOCTORS, REVIEW_LINK, HERO_COPY, HOME_CALM, HOME_DEFINE, SEDATION_BAND, HOME_SPECIAL, HOME_EQUIPMENT } from '@/lib/copy';
 import styles from './Home.module.css';
-
-// Hero 사진 인트로 — 사진 3장(대기실·외관·상담실)을 줌+크로스페이드로 먼저 보여준 뒤 영상으로 전환.
-// 인사 문구는 사진 인트로에서만 노출되고, 영상으로 넘어가면 사라진다. CTA는 계속 유지.
-const HERO_PHOTOS = [
-  { src: '/media/images/waiting/waiting-01.jpg', alt: '아트에이치치과 대기실 라운지' },
-  { src: '/media/images/exterior/exterior-01.jpg', alt: '송도 IBS타워 외관' },
-  { src: '/media/images/consult/consult-01.jpg', alt: '아트에이치치과 상담실' },
-];
 
 // Hero 영상 — 사진 인트로 후 재생되는 시퀀스.
 // 휴게실(라운지)·복도는 제외하고 수술실 → 원장님 영상 2개 → 수술실 풀세팅(07.21 촬영) 순 4개 재생.
 // 시퀀스가 끝나면 영상 루프 대신 사진 인트로부터 다시 시작(Home의 cycle 참조).
-const HERO_VIDEOS = [
-  { mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4' }, // 진료실 유닛체어(수술실)
-  { mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4' }, // 원장님 덴티폼 상담
-  { mp4: '/media/video/hero-5.mp4', mp4Mobile: '/media/video/hero-5-720.mp4' }, // 원장님 미소
-  { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' }, // 수술실 풀세팅 짐벌(07.21 촬영)
+// 히어로 무대 — 사진과 영상을 번갈아 세운다.
+// 사진은 첫 화면을 가볍게 띄우는 역할(영상은 그때 아직 로드되지 않는다),
+// 영상은 사람과 공간이 실제로 움직이는 장면을 보여 주는 역할.
+// 순서는 「공간 → 사람(상담) → 진료 → 수술」로, 컨셉(불안을 가라앉힌 뒤 진료)을 따라간다.
+const HERO_SLIDES: Slide[] = [
+  { kind: 'photo', src: '/media/images/exterior/exterior-01.jpg', alt: '아트에이치치과가 있는 송도 IBS타워', hold: 3400, focus: 'center 34%' },
+  { kind: 'photo', src: '/media/images/still/explain-screen.jpg', alt: '화면을 보며 상태와 치료 계획을 설명하는 원장', hold: 3000 },
+  { kind: 'video', mp4: '/media/video/hero-3.mp4', mp4Mobile: '/media/video/hero-3-720.mp4', poster: '/media/video/hero-3-poster.jpg', alt: '덴티폼으로 치료 계획을 설명하는 원장' },
+  { kind: 'photo', src: '/media/images/still/consult-tablet.jpg', alt: '3D 영상을 함께 확인하며 치료 계획을 정하는 의료진', hold: 3000 },
+  { kind: 'video', mp4: '/media/video/hero-1.mp4', mp4Mobile: '/media/video/hero-1-720.mp4', poster: '/media/video/hero-1-poster.jpg', alt: '진료 준비를 마친 진료실' },
+  { kind: 'video', mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4', poster: '/media/video/hero-6-poster.jpg', alt: '수술 준비를 마친 독립 수술실' },
 ];
 
-// 신경치료 밴드 — 자체 제작 모식도 3종 + 장비/자격 요약 (copy.ts root-canal과 동일 사실)
-const ENDO_FIGS = [
-  { name: 'endo-1', caption: '근관장 측정' },
-  { name: 'endo-2', caption: '근관 성형' },
-  { name: 'endo-3', caption: '근관 충전' },
-];
-const ENDO_CHIPS = [
-  '보건복지부 인증 치과보존과 전문의 직접 진료',
-  'X-Smart Pro+ — 근관장 측정기 내장 엔도 모터',
-  'ProTaper Next — M-Wire® 니켈-티타늄 파일',
-];
 
 // 숫자 임팩트 — 전부 실재 사실 (copy.ts 근거)
 const STATS = [
@@ -52,16 +37,12 @@ const STATS = [
   { en: 'SONGDO IBS', num: '8', unit: '층', label: '국제업무지구역 IBS타워', icon: 'building' },
 ];
 
-// 약속·시스템 카드 라인 아이콘 (순서 = copy.ts 배열 순서)
-const PROMISE_ICONS = ['users', 'leaf', 'chat', 'home'];
-const SYSTEM_ICONS = ['shield', 'door', 'badge'];
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [heroPhase, setHeroPhase] = useState<'photos' | 'video'>('photos');
-  const [cycle, setCycle] = useState(0); // 사진→영상→사진 순환 카운터 (HeroIntro 리마운트용)
-  const inIntro = heroPhase === 'photos';
+  // 히어로 장면 도트 — 무대(배경 층)가 아니라 콘텐츠 층에서 그린다(배경은 시차로 밀려 잘린다)
+  const [heroState, setHeroState] = useState<{ index: number; total: number; goTo: (i: number) => void } | null>(null);
 
   useEffect(() => {
     const t = window.setTimeout(() => setLoaded(true), 150);
@@ -85,37 +66,48 @@ export default function Home() {
     <>
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
+        {/* 배경만 시차로 밀되(115%), 장면 선택 도트는 히어로 안에 남아야 해서 무대 밖으로 뺐다 */}
         <div className={styles.heroBg} style={{ transform: `translateY(${offset * 0.08}px)`, height: '115%' }}>
-          {heroPhase === 'video' && (
-            <HeroVideo
-              videos={HERO_VIDEOS}
-              poster="/media/video/hero-1-poster.jpg"
-              alt="아트에이치치과 병원 소개 영상"
-              onComplete={() => {
-                // 영상 시퀀스 종료 → 영상 루프 대신 사진 인트로부터 다시 시작
-                setHeroPhase('photos');
-                setCycle((c) => c + 1);
-              }}
-            />
-          )}
-          <HeroIntro key={cycle} photos={HERO_PHOTOS} perSlide={2500} onComplete={() => setHeroPhase('video')} />
+          <HeroStage slides={HERO_SLIDES} onState={setHeroState} />
         </div>
         <div className={styles.heroOverlay} aria-hidden="true" />
         <div className={styles.heroContent}>
-          <div className={styles.heroLine} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined} aria-hidden="true" />
-          <p className={styles.heroEyebrow} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>SONGDO · ART H DENTAL</p>
-          <h1 className={styles.heroTitle} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>
-            진료 너머,<br />사람의 고귀함을<br />생각합니다
+          <div className={styles.heroLine} data-loaded={loaded} aria-hidden="true" />
+          <p className={styles.heroEyebrow} data-loaded={loaded}>{HERO_COPY.eyebrow}</p>
+          <h1 className={styles.heroTitle} data-loaded={loaded}>
+            {HERO_COPY.title.split('\n').map((line, i) => (
+              <span key={line} className={styles.heroLineText} style={{ transitionDelay: `${0.55 + i * 0.12}s` }}>
+                {line}
+              </span>
+            ))}
           </h1>
-          <p className={styles.heroSub} data-loaded={loaded && inIntro} data-exit={!inIntro ? 'true' : undefined}>
-            한 분 한 분의 이야기에 귀 기울이며,<br />끝까지 책임지는 진료를 추구합니다.
+          <p className={styles.heroSub} data-loaded={loaded}>
+            {HERO_COPY.sub.split('\n').map((line, i) => (
+              <span key={line}>{line}{i === 0 && <br />}</span>
+            ))}
           </p>
           <div className={styles.heroCtas} data-loaded={loaded}>
-            <Link href="/about" className={styles.heroCta}>의원소개</Link>
-            <Link href="/treatments" className={styles.heroCta}>진료과목</Link>
-            <Link href="/location" className={styles.heroCta}>오시는길</Link>
+            {HERO_COPY.ctas.map((c) => (
+              <Link key={c.href} href={c.href} className={styles.heroCta}>{c.label}</Link>
+            ))}
             <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCtaPrimary}>전화하기</a>
           </div>
+          {heroState && heroState.total > 1 && (
+            <div className={styles.heroDots} role="tablist" aria-label="히어로 장면 선택">
+              {Array.from({ length: heroState.total }).map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === heroState.index}
+                  aria-label={`${i + 1}번째 장면 보기`}
+                  className={styles.heroDot}
+                  data-on={i === heroState.index}
+                  onClick={() => i !== heroState.index && heroState.goTo(i)}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className={styles.scrollHint} data-loaded={loaded} aria-hidden="true">
           <span>SCROLL</span>
@@ -123,256 +115,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== INTRO — 감성 1인칭 ===== */}
-      <section className={styles.intro}>
-        <div className={styles.introGrid}>
-          <div>
-            <Reveal duration="0.6s">
-              <span className={styles.label}><i />BEYOND TREATMENT</span>
-            </Reveal>
-            <Reveal delay={0.1} duration="0.8s">
-              <h2 className={styles.introTitle}>
-                치과는 늘 망설여지던 곳,<br />이제는 마음 편히<br />찾을 수 있는 곳으로.
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2} duration="0.9s">
-              <p className={styles.introBody}>
-                좋은 치과는 치료를 잘하는 곳이 아니라,<br className={styles.brPc} /> 다시 가고 싶은 곳이라 믿습니다.
-              </p>
-              <p className={styles.introBody}>
-                아트에이치치과는 처음 문을 여는 순간부터<br className={styles.brPc} /> 치료가 끝나고 일상으로 돌아가는 순간까지,<br className={styles.brPc} /> 머무시는 모든 시간을 세심하게 설계합니다.
-              </p>
-            </Reveal>
-            <Reveal delay={0.3} duration="0.6s">
-              <Link href="/about" className={styles.underline}>아트에이치 이야기</Link>
-            </Reveal>
-          </div>
-          <Reveal delay={0.15} duration="1.2s" from="translateX(40px)">
-            <div className={styles.introImg}>
-              <Photo
-                src="/media/images/waiting/waiting-01.jpg"
-                alt="아트에이치치과 대기실"
-                sizes="(max-width: 768px) 100vw, 48vw"
-              />
-            </div>
+      {/* ===== ABOUT CTA — 비주얼 다음에 병원 소개로 한 번 보내는 자리(레퍼런스 구조) ===== */}
+      <section className={styles.aboutCta}>
+        <div className={styles.inner}>
+          <Reveal variant="fade">
+            <p className={styles.aboutCtaEn}>ART H DENTAL CLINIC</p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ===== QUOTE — 풀블리드 에디토리얼 ===== */}
-      <section className={styles.quote}>
-        <div className={styles.quoteBg} style={{ transform: `translateY(${(offset - 900) * 0.04}px)` }}>
-          <Photo
-            src="/media/images/waiting/waiting-02.jpg"
-            alt="아트에이치치과 대기실 라운지"
-            sizes="100vw"
-            objectPosition="center 55%"
+          <TextReveal
+            as="p"
+            className={styles.aboutCtaText}
+            lines={['치과가 무서워 미뤄오셨다면,', '그 마음부터 듣고 시작하겠습니다.']}
+            delay={0.05}
           />
-          <div className={styles.quoteOverlay} aria-hidden="true" />
-        </div>
-        <div className={styles.quoteContent}>
-          <Reveal duration="0.7s">
-            <span className={styles.quoteCaption}>｜ A PLACE TO RETURN ｜</span>
-          </Reveal>
-          <Reveal delay={0.12} duration="0.9s">
-            <p className={styles.quoteText}>
-              충분한 시간을 드리는 것,<br />그것이 우리가 선택한 방식입니다.
-            </p>
+          <Reveal variant="fade" delay={0.2}>
+            <Link href="/about" className={styles.aboutCtaLink}>
+              아트에이치치과 자세히 알아보기
+              <span aria-hidden="true">→</span>
+            </Link>
           </Reveal>
         </div>
       </section>
 
-      {/* ===== STATS — 숫자 임팩트 ===== */}
-      <section className={styles.stats}>
+      {/* ===== CALM — 축① 진료 전에 불안을 가라앉히는 방법 ===== */}
+      <section className={styles.calm}>
         <div className={styles.inner}>
           <Reveal variant="fade">
-            <span className={styles.labelCenter}><i />WHY ART H</span>
+            <span className={styles.label}><i />{HOME_CALM.label}</span>
           </Reveal>
-          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['믿고 맡기실 수 있는 이유']} delay={0.05} />
-          <div className={styles.statsGrid}>
-            {STATS.map((s, i) => (
-              <Reveal key={s.en} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
-                <div className={styles.statItem}>
-                  <AnimatedIcon name={s.icon} size={34} stroke="var(--c-blue-text)" delay={0.1 + 0.08 * i} className={styles.statIcon} />
-                  <span className={styles.statEn}>{s.en}</span>
-                  <p className={styles.statNum}>
-                    <CountUp target={parseInt(s.num, 10)} /><em>{s.unit}</em>
-                  </p>
-                  <p className={styles.statLabel}>{s.label}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={0.2} duration="0.7s">
-            <div className={styles.reviewRow}>
-              <p className={styles.reviewText}>{REVIEW_LINK.d}</p>
-              <a
-                href={SITE.naverPlace}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.reviewBtn}
-                aria-label="네이버 플레이스 리뷰 보러가기 (새 창)"
-              >
-                <span className={styles.reviewDot} aria-hidden="true" />
-                {REVIEW_LINK.cta}
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ===== STORY — 왜 아트에이치인가, 풀블리드 3밴드 ===== */}
-      <section className={styles.story}>
-        <div className={`${styles.inner} ${styles.storyHead}`}>
-          <Reveal variant="fade">
-            <span className={styles.labelCenter}><i />HOW WE CARE</span>
-          </Reveal>
-          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['아트에이치가 진료를 대하는 방식']} delay={0.05} />
-        </div>
-        {STORY_BANDS.map((b, i) => (
-          <div key={b.en} className={styles.storyBand} data-flip={i % 2 === 1 ? 'true' : undefined}>
-            <div className={styles.storyBg}>
-              <Photo src={b.img} alt={b.alt} sizes="100vw" />
-            </div>
-            <div className={styles.storyShade} aria-hidden="true" />
-            <div className={styles.storyContent}>
-              <Reveal duration="0.7s">
-                <span className={styles.storyEn}>{b.en}</span>
-              </Reveal>
-              <Reveal delay={0.1} duration="0.9s">
-                <h3 className={styles.storyTitle}>
-                  {b.title.split('\n').map((line, li) => (
-                    <span key={line}>
-                      {li > 0 && <br />}
-                      {line}
-                    </span>
-                  ))}
-                </h3>
-              </Reveal>
-              <Reveal delay={0.18} duration="0.9s">
-                <p className={styles.storyDesc}>{b.d}</p>
-              </Reveal>
-              <Reveal delay={0.26} duration="0.6s">
-                <Link href={b.href} className={styles.storyLink}>{b.link}</Link>
-              </Reveal>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* ===== PROMISE — 약속 4 ===== */}
-      <section className={styles.promise}>
-        <div className={styles.inner}>
-          <Reveal variant="fade">
-            <span className={styles.label}><i />OUR PROMISE</span>
-          </Reveal>
-          <TextReveal as="h2" className={styles.sectionTitle} lines={['아트에이치치과의 네 가지 약속']} delay={0.05} />
-          <div className={styles.promiseGrid}>
-            {PROMISE_ITEMS.map((p, i) => (
-              <Reveal key={p.no} delay={0.08 * i} duration="0.8s" from="translateY(20px)" style={{ height: '100%' }}>
-                <div className={styles.promiseCard}>
-                  <div className={styles.promiseTop}>
-                    <span className={styles.promiseNo}>{p.no}</span>
-                    <AnimatedIcon name={PROMISE_ICONS[i % PROMISE_ICONS.length]} size={26} stroke="var(--c-blue)" delay={0.2} className={styles.promiseIcon} />
-                  </div>
-                  <h3 className={styles.promiseT}>{p.t}</h3>
-                  <p className={styles.promiseD}>{p.d}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== TREATMENTS — 7개 ===== */}
-      <section className={styles.tx}>
-        <span className={styles.txWatermark} aria-hidden="true">ART H SPECIAL</span>
-        <div className={styles.inner}>
-          <Reveal>
-            <div className={styles.sectionHead}>
-              <div>
-                <span className={styles.label}><i />TREATMENTS</span>
-                <h2 className={styles.sectionTitle}>진료과목</h2>
-              </div>
-              <Link href="/treatments" className={styles.moreLink}>전체보기</Link>
-            </div>
-          </Reveal>
-          <div className={styles.txGrid}>
-            {TREATMENTS.map((t, i) => (
-              <Reveal key={t.slug} delay={0.05 + (i % 3) * 0.08} duration="0.9s" from="scale(0.97)" style={{ height: '100%' }}>
-                <Link href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
-                  <div className={styles.txImg}>
-                    <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
-                    <div className={styles.txOverlay} aria-hidden="true" />
-                    <span className={styles.txNo}>{String(i + 1).padStart(2, '0')}</span>
-                  </div>
-                  <div className={styles.txLabel}>
-                    <span className={styles.txEn}>{t.en}</span>
-                    <span className={styles.txKo}>{t.ko}</span>
-                    <span className={styles.txSummary}>{t.summary}</span>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== ENDODONTICS — 신경치료 전문의 · 엔도 시스템 ===== */}
-      <section className={styles.endo}>
-        <div className={styles.inner}>
-          <div className={styles.endoGrid}>
-            <Reveal variant="blur-up" duration="0.9s" from="translateY(20px)">
-              <div className={styles.endoMedia}>
-                <div className={styles.endoPhoto}>
-                  {/* Photo 대신 next/image를 직접 쓴다 — Photo는 object-position을 인라인 style로 고정해
-                      화면폭별 초점 이동(세로 원본을 가로 프레임에 맞추는 데 필요)을 CSS로 줄 수 없다. */}
-                  <Image
-                    src="/media/images/endo/endo-motor-01.jpg"
-                    alt="근관 성형에 쓰는 X-Smart Pro+ 엔도 모터와 핸드피스"
-                    fill
-                    sizes="(max-width: 900px) 92vw, 35vw"
-                  />
-                </div>
-                <div className={styles.endoFigs}>
-                  {ENDO_FIGS.map((f) => (
-                    <figure key={f.name} className={styles.endoFig}>
-                      <TxDiagram name={f.name} title={`${f.caption} 모식도`} />
-                      <figcaption>{f.caption}</figcaption>
-                    </figure>
-                  ))}
-                </div>
-              </div>
+          <div className={styles.calmHead}>
+            <TextReveal as="h2" className={styles.sectionTitle} lines={HOME_CALM.title.split('\n')} delay={0.05} />
+            <Reveal variant="fade" delay={0.15}>
+              <p className={styles.calmDesc}>{HOME_CALM.desc}</p>
             </Reveal>
-            <div className={styles.endoBody}>
-              <Reveal>
-                <span className={styles.label}><i />ENDODONTICS</span>
+          </div>
+          {/* 정의문 — 화면과 AI 답변이 같은 문장을 쓰도록 llms.txt와 같은 문장을 노출한다 */}
+          <Reveal variant="fade" delay={0.2}>
+            <p className={styles.calmDefine}>{HOME_DEFINE}</p>
+          </Reveal>
+          <div className={styles.calmGrid}>
+            {HOME_CALM.cards.map((c, i) => (
+              <Reveal key={c.no} variant="fold" delay={0.1 + i * 0.1} duration="0.95s" style={{ height: '100%' }}>
+                <article className={styles.calmCard}>
+                  <span className={styles.calmNo}>{c.no}</span>
+                  <h3>{c.t}</h3>
+                  <p>{c.d}</p>
+                  {c.href && (
+                    <Link href={c.href} className={styles.calmLink}>
+                      {c.link}
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  )}
+                </article>
               </Reveal>
-              <Reveal delay={0.06}>
-                <h2 className={styles.sectionTitle}>신경치료,<br />치과보존과 전문의가</h2>
-              </Reveal>
-              <Reveal delay={0.12}>
-                <p className={styles.endoDesc}>
-                  감염된 신경을 제거하고 자연치아를 살리는 진료입니다.
-                  아트에이치치과는 보건복지부 인증 치과보존과 전문의가
-                  X-Smart Pro+ 엔도 모터와 ProTaper Next 파일로 근관 하나하나를 정밀하게 처치합니다.
-                </p>
-              </Reveal>
-              <ul className={styles.endoChips}>
-                {ENDO_CHIPS.map((c, i) => (
-                  <Reveal key={c} as="li" delay={0.18 + i * 0.06}>
-                    <AnimatedIcon name="badge" size={15} stroke="var(--c-blue-l)" delay={0.24 + i * 0.06} />
-                    <span>{c}</span>
-                  </Reveal>
-                ))}
-              </ul>
-              <Reveal delay={0.4}>
-                <Link href="/treatments/root-canal" className={styles.endoLink}>
-                  신경치료 자세히 보기
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </Reveal>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -391,7 +186,7 @@ export default function Home() {
           </Reveal>
           <div className={styles.doctorGrid}>
             {DOCTORS.map((d, i) => (
-              <Reveal key={d.name} delay={0.1 * i} duration="0.9s" from="translateY(24px)" style={{ height: '100%' }}>
+              <Reveal key={d.name} variant="wipe-up" delay={0.12 * i} duration="1.1s" style={{ height: '100%' }}>
                 <div className={styles.doctorCard}>
                   <div className={styles.doctorPhoto}>
                     <Photo
@@ -425,53 +220,157 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== SYSTEM — 진료 시스템 4 (네이비) ===== */}
-      <section className={styles.system}>
+      {/* ===== TREATMENTS — 7개 ===== */}
+      <section className={styles.tx}>
         <div className={styles.inner}>
           <Reveal variant="fade">
-            <span className={styles.label}><i />CARE SYSTEM</span>
+            <span className={styles.labelCenter}><i />TREATMENTS</span>
           </Reveal>
-          <TextReveal as="h2" className={styles.sectionTitle} lines={['믿고 맡기실 수 있는 진료 시스템']} delay={0.05} />
-          <div className={styles.systemGrid}>
-            {SYSTEM_ITEMS.map((s, i) => (
-              <Reveal key={s.t} delay={0.07 * i} duration="0.8s" from="translateY(18px)" style={{ height: '100%' }}>
-                <div className={styles.systemRow}>
-                  <span className={styles.systemNo}>{String(i + 1).padStart(2, '0')}</span>
-                  <div className={styles.systemBody}>
-                    <h3 className={styles.systemT}>{s.t}</h3>
-                    <p className={styles.systemD}>{s.d}</p>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['아트에이치치과 진료과목']} delay={0.05} />
+          <Reveal variant="fade" delay={0.14}>
+            <p className={styles.sectionLeadCenter}>
+              불편함을 덜고 일상으로 돌아가실 수 있도록, 진단부터 사후관리까지 한 곳에서 진행합니다.
+            </p>
+          </Reveal>
+          <div className={styles.txGrid}>
+            {TREATMENTS.map((t, i) => (
+              <Reveal key={t.slug} variant="zoom-out" delay={0.05 + (i % 3) * 0.09} duration="1s" style={{ height: '100%' }}>
+                <Link href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
+                  <div className={styles.txImg}>
+                    <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 50vw, 33vw" />
+                    <div className={styles.txOverlay} aria-hidden="true" />
+                    <span className={styles.txNo}>{String(i + 1).padStart(2, '0')}</span>
                   </div>
-                  <AnimatedIcon name={SYSTEM_ICONS[i % SYSTEM_ICONS.length]} size={30} stroke="var(--c-blue-l)" delay={0.1 + 0.07 * i} className={styles.systemIcon} />
-                </div>
+                  <div className={styles.txLabel}>
+                    <span className={styles.txEn}>{t.en}</span>
+                    <span className={styles.txKo}>{t.ko}</span>
+                    <span className={styles.txSummary}>{t.summary}</span>
+                    {t.sedationOk && (
+                      <span className={styles.txChip}>의식하진정 병행 가능</span>
+                    )}
+                  </div>
+                </Link>
               </Reveal>
             ))}
+          </div>
+          <Reveal variant="fade" delay={0.3}>
+            <Link href="/treatments" className={styles.txMore}>
+              진료과목 전체보기
+              <span aria-hidden="true">→</span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== SPECIAL — 아트에이치의 특별함 01~04 (레퍼런스의 「특별함」 구조) ===== */}
+      <section className={styles.special}>
+        <div className={styles.inner}>
+          <Reveal variant="fade">
+            <span className={styles.labelCenter}><i />{HOME_SPECIAL.label}</span>
+          </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={[HOME_SPECIAL.title]} delay={0.05} />
+          <Reveal variant="fade" delay={0.14}>
+            <p className={styles.sectionLeadCenter}>{HOME_SPECIAL.desc}</p>
+          </Reveal>
+        </div>
+        <div className={styles.specialList}>
+          {HOME_SPECIAL.items.map((it, i) => (
+            <div key={it.no} className={styles.specialRow} data-flip={i % 2 === 1 ? 'true' : undefined}>
+              <Reveal variant="zoom-out" duration="1s" style={{ height: '100%' }}>
+                <div className={styles.specialImg}>
+                  <Photo src={it.img} alt={it.alt} sizes="(max-width: 900px) 100vw, 50vw" />
+                </div>
+              </Reveal>
+              <div className={styles.specialBody}>
+                <Reveal variant="fade">
+                  <span className={styles.specialNo}>{it.no}</span>
+                </Reveal>
+                <Reveal variant="wipe-left" delay={0.08} duration="1s">
+                  <h3>{it.t}</h3>
+                </Reveal>
+                <Reveal variant="fade" delay={0.18}>
+                  <p>{it.d}</p>
+                </Reveal>
+                {'points' in it && Array.isArray(it.points) && (
+                  <ul className={styles.specialPoints}>
+                    {it.points.map((pt, pi) => (
+                      <li key={pt}>
+                        <b>{pi + 1}</b>
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <Reveal variant="fade" delay={0.26}>
+                  <Link href={it.href} className={styles.specialLink}>
+                    {it.link}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </Reveal>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== SEDATION — 축① 핵심 증거: 전문의 × 의식하진정 (원장님 지정 조합) ===== */}
+      <section className={styles.sedation}>
+        <div className={styles.sedationBg} aria-hidden="true">
+          <Photo src={SEDATION_BAND.img} alt="" sizes="100vw" />
+          <div className={styles.sedationVeil} />
+        </div>
+        <div className={styles.inner}>
+          <div className={styles.sedationBody}>
+            <Reveal variant="fade">
+              <span className={styles.labelOnDark}><i />{SEDATION_BAND.en}</span>
+            </Reveal>
+            <TextReveal as="h2" className={styles.sedationTitle} lines={SEDATION_BAND.title.split('\n')} delay={0.06} />
+            <Reveal variant="fade" delay={0.16}>
+              <p className={styles.sedationDesc}>{SEDATION_BAND.d}</p>
+            </Reveal>
+            <ul className={styles.sedationPoints}>
+              {SEDATION_BAND.points.map((pt, i) => (
+                <Reveal key={pt.t} as="li" variant="slide-right" delay={0.24 + i * 0.08} duration="0.75s">
+                  <AnimatedIcon name="badge" size={18} stroke="var(--c-accent)" delay={0.3 + i * 0.07} />
+                  <strong>{pt.t}</strong>
+                  <span>{pt.d}</span>
+                </Reveal>
+              ))}
+            </ul>
+            <Reveal variant="fade" delay={0.44}>
+              <Link href={SEDATION_BAND.href} className={styles.sedationLink}>
+                {SEDATION_BAND.link}
+                <span aria-hidden="true">→</span>
+              </Link>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ===== WARRANTY — 치료 보증제 (우리 약속만 단일 카드) ===== */}
-      <section className={styles.warranty}>
+      {/* ===== EQUIPMENT — 장비를 한자리에(레퍼런스 구조) ===== */}
+      <section className={styles.equip}>
         <div className={styles.inner}>
           <Reveal variant="fade">
-            <span className={styles.labelCenter}><i />{WARRANTY.label}</span>
+            <span className={styles.labelCenter}><i />{HOME_EQUIPMENT.label}</span>
           </Reveal>
-          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={[WARRANTY.title]} delay={0.05} />
-          <Reveal variant="fade" delay={0.15}>
-            <p className={styles.sectionLeadCenter}>{WARRANTY.desc}</p>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={[HOME_EQUIPMENT.title]} delay={0.05} />
+          <Reveal variant="fade" delay={0.14}>
+            <p className={styles.sectionLeadCenter}>{HOME_EQUIPMENT.desc}</p>
           </Reveal>
-          <Reveal delay={0.1} duration="0.8s" from="translateY(20px)">
-            <div className={styles.warrantyCard}>
-              <span className={styles.warrantyBadge}>ART H</span>
-              <ul className={styles.warrantyList}>
-                {WARRANTY.items.map((it) => (
-                  <li key={it.t}>
-                    <strong>{it.t}</strong>
-                    <span>{it.d}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+          <div className={styles.equipGrid}>
+            {HOME_EQUIPMENT.items.map((it, i) => (
+              <Reveal key={it.n} variant="fold" delay={0.08 + i * 0.09} duration="0.95s" style={{ height: '100%' }}>
+                <Link href={it.href} className={styles.equipCard}>
+                  <div className={styles.equipImg}>
+                    <Photo src={it.img} alt={it.alt} sizes="(max-width: 900px) 50vw, 25vw" />
+                  </div>
+                  <span className={styles.equipEn}>{it.e}</span>
+                  <strong className={styles.equipName}>{it.n}</strong>
+                  <p className={styles.equipDesc}>{it.d}</p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -513,13 +412,52 @@ export default function Home() {
               { src: '/media/images/treatment-room/treatment-03.jpg', label: '진료실 Treatment' },
               { src: '/media/images/exterior/exterior-01.jpg', label: '외관 Exterior' },
             ].map((f, i) => (
-              <Reveal key={f.src} delay={0.08 * i} duration="0.9s" from="translateY(18px)" style={{ overflow: 'hidden' }}>
+              <Reveal key={f.src} variant="zoom-out" delay={0.09 * i} duration="1s" style={{ overflow: 'hidden' }}>
                 <div className={styles.facilityCell}>
                   <Photo src={f.src} label={f.label} alt={f.label} sizes="(max-width: 768px) 50vw, 25vw" />
                 </div>
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== STATS — 숫자 임팩트 ===== */}
+      <section className={styles.stats}>
+        <div className={styles.inner}>
+          <Reveal variant="fade">
+            <span className={styles.labelCenter}><i />WHY ART H</span>
+          </Reveal>
+          <TextReveal as="h2" className={styles.sectionTitleCenter} lines={['믿고 맡기실 수 있는 이유']} delay={0.05} />
+          <div className={styles.statsGrid}>
+            {STATS.map((s, i) => (
+              <Reveal key={s.en} delay={0.08 * i} duration="0.8s" from="translateY(20px)">
+                <div className={styles.statItem}>
+                  <AnimatedIcon name={s.icon} size={34} stroke="var(--c-blue-text)" delay={0.1 + 0.08 * i} className={styles.statIcon} />
+                  <span className={styles.statEn}>{s.en}</span>
+                  <p className={styles.statNum}>
+                    <CountUp target={parseInt(s.num, 10)} /><em>{s.unit}</em>
+                  </p>
+                  <p className={styles.statLabel}>{s.label}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.2} duration="0.7s">
+            <div className={styles.reviewRow}>
+              <p className={styles.reviewText}>{REVIEW_LINK.d}</p>
+              <a
+                href={SITE.naverPlace}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.reviewBtn}
+                aria-label="네이버 플레이스 리뷰 보러가기 (새 창)"
+              >
+                <span className={styles.reviewDot} aria-hidden="true" />
+                {REVIEW_LINK.cta}
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 

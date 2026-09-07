@@ -212,7 +212,7 @@ export default function PrivacyPage() {
         }
         .pvEyebrow {
           font-family: var(--f-display); font-size: 13px;
-          color: var(--c-gold-text); letter-spacing: 4px; margin: 0 0 14px;
+          color: var(--c-accent-t); letter-spacing: 4px; margin: 0 0 14px;
         }
         .pvTitle {
           font-family: var(--f-serif-ko); font-size: clamp(28px, 4vw, 42px);

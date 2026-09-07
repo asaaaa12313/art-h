@@ -3,7 +3,8 @@ import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import MapEmbed from '@/components/MapEmbed';
-import { SITE } from '@/lib/copy';
+import Link from 'next/link';
+import { SITE, LOCAL_PAGES } from '@/lib/copy';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/location' },
@@ -120,7 +121,7 @@ export default function LocationPage() {
                     }}
                   >
                     <span style={{ color: 'var(--c-text)' }}>{h.day}</span>
-                    <span style={{ color: h.highlight ? 'var(--c-gold)' : 'var(--c-text)', fontWeight: h.highlight ? 600 : 400 }}>
+                    <span style={{ color: h.highlight ? 'var(--c-accent-t)' : 'var(--c-text)', fontWeight: h.highlight ? 600 : 400 }}>
                       {h.time}
                     </span>
                   </div>
@@ -182,7 +183,35 @@ export default function LocationPage() {
         @media (max-width: 768px) {
           .locGrid { grid-template-columns: 1fr; }
         }
+        .locLocal {
+          max-width: 1200px; margin: 0 auto;
+          padding: 0 clamp(24px, 5vw, 40px) clamp(64px, 8vw, 96px);
+        }
+        .locLocal h2 {
+          margin: 0 0 14px; font-family: var(--f-serif-ko);
+          font-size: clamp(19px, 2.2vw, 23px); font-weight: 400; letter-spacing: -0.02em;
+          color: var(--c-text);
+        }
+        .locLocalLinks { display: flex; flex-wrap: wrap; gap: 10px; }
+        .locLocalLinks a {
+          padding: 12px 20px; border: 1px solid var(--c-line); border-radius: 999px;
+          font-size: 13.5px; font-weight: 600; color: var(--c-text2); text-decoration: none;
+          transition: border-color .25s ease, color .25s ease;
+        }
+        .locLocalLinks a:hover, .locLocalLinks a:focus-visible {
+          border-color: var(--c-accent-t); color: var(--c-accent-t);
+        }
       `}</style>
+
+      {/* 지역별 안내 — 사는 곳에 따라 오는 경로가 달라 따로 정리해 둔다 */}
+      <section className="locLocal">
+        <h2>지역별로 오시는 길</h2>
+        <div className="locLocalLinks">
+          {LOCAL_PAGES.map((p) => (
+            <Link key={p.slug} href={`/local/${p.slug}`}>{p.area}에서 오시는 길</Link>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

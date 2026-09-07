@@ -72,7 +72,7 @@ export default function FacilityPage() {
       {/* 살균수 — 노바케어(HOCL) 수관관리 */}
       <section className="novaSec">
         <div className="novaInner">
-          <Reveal variant="blur-up" duration="1s">
+          <Reveal variant="zoom-out" duration="1s">
             <div className="novaImgWrap">
               <Photo
                 src="/media/images/equipment/novacare.jpg"
@@ -103,7 +103,7 @@ export default function FacilityPage() {
                 ))}
               </ul>
             </Reveal>
-            <Reveal variant="blur-up" delay={0.1}>
+            <Reveal variant="zoom-out" delay={0.1}>
               <div className="novaRange">
                 <div className="novaRangeImg">
                   <Photo
@@ -149,7 +149,7 @@ export default function FacilityPage() {
               </ul>
             </Reveal>
           </div>
-          <Reveal variant="blur-up" delay={0.1} duration="1s">
+          <Reveal variant="zoom-out" delay={0.1} duration="1s">
             <div className="gbtImgWrap">
               <Photo
                 src="/media/images/equipment/gbt-airflow.jpg"
@@ -164,7 +164,7 @@ export default function FacilityPage() {
       {/* 프라임스캔 — 디지털 구강스캐너 */}
       <section className="scanSec">
         <div className="scanInner">
-          <Reveal variant="blur-up" duration="1s">
+          <Reveal variant="zoom-out" duration="1s">
             <div className="scanImgCol">
               <div className="scanImgWrap">
                 <Photo
@@ -249,13 +249,13 @@ export default function FacilityPage() {
         }
         .roomE {
           font-family: var(--f-display); font-size: 11px;
-          color: var(--c-gold-l); letter-spacing: 2px;
+          color: var(--c-accent); letter-spacing: 2px;
         }
         .roomK { font-size: 20px; color: #fff; font-weight: 700; letter-spacing: -0.02em; }
 
         /* 살균수 — 노바케어(HOCL) */
         .novaSec {
-          background: var(--c-navy);
+          background: var(--c-dark);
           padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
         }
         .novaInner {
@@ -269,7 +269,7 @@ export default function FacilityPage() {
         }
         .novaEyebrow {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
-          color: var(--c-gold-l); margin: 0 0 18px;
+          color: var(--c-accent); margin: 0 0 18px;
         }
         .novaTitleRow {
           display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
@@ -281,7 +281,7 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .novaSystem {
-          font-size: 15px; color: var(--c-gold-l); font-weight: 600; margin: 0 0 24px;
+          font-size: 15px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
         }
         .novaDesc {
           font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
@@ -289,7 +289,7 @@ export default function FacilityPage() {
         }
         .novaHighlight {
           font-family: var(--f-heading); font-size: clamp(17px,2vw,21px);
-          font-weight: 700; color: var(--c-gold-l); line-height: 1.5;
+          font-weight: 700; color: var(--c-accent); line-height: 1.5;
           letter-spacing: -0.02em; margin: 0 0 28px;
         }
         .novaChips {
@@ -314,7 +314,7 @@ export default function FacilityPage() {
           font-size: 13.5px; color: rgba(255,255,255,0.72);
           line-height: 1.75; font-weight: 400; margin: 0; flex: 1; min-width: 200px;
         }
-        .novaRangeCap strong { color: var(--c-gold-l); font-weight: 700; }
+        .novaRangeCap strong { color: var(--c-accent); font-weight: 700; }
 
         /* GBT — 시리지 않은 스케일링 */
         .gbtSec {
@@ -328,7 +328,7 @@ export default function FacilityPage() {
         }
         .gbtEyebrow {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
-          color: var(--c-gold-d); margin: 0 0 18px;
+          color: var(--c-accent-t); margin: 0 0 18px;
         }
         .gbtTitleRow {
           display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
@@ -340,7 +340,7 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .gbtSystem {
-          font-size: 15px; color: var(--c-gold-d); font-weight: 600; margin: 0 0 24px;
+          font-size: 15px; color: var(--c-accent-t); font-weight: 600; margin: 0 0 24px;
         }
         .gbtDesc {
           font-size: 15px; color: var(--c-text); line-height: 1.95;
@@ -362,7 +362,7 @@ export default function FacilityPage() {
 
         /* 프라임스캔 — 디지털 구강스캐너 (이미지 좌 / 텍스트 우, 네이비) */
         .scanSec {
-          background: var(--c-navy);
+          background: var(--c-dark);
           padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
         }
         .scanInner {
@@ -383,7 +383,7 @@ export default function FacilityPage() {
         }
         .scanEyebrow {
           font-family: var(--f-display); font-size: 12px; letter-spacing: 3px;
-          color: var(--c-gold-l); margin: 0 0 18px;
+          color: var(--c-accent); margin: 0 0 18px;
         }
         .scanTitleRow {
           display: flex; align-items: flex-start; gap: 12px; margin: 0 0 16px;
@@ -395,7 +395,7 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .scanSystem {
-          font-size: 15px; color: var(--c-gold-l); font-weight: 600; margin: 0 0 24px;
+          font-size: 15px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
         }
         .scanDesc {
           font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
@@ -403,7 +403,7 @@ export default function FacilityPage() {
         }
         .scanHighlight {
           font-family: var(--f-heading); font-size: clamp(17px,2vw,21px);
-          font-weight: 700; color: var(--c-gold-l); line-height: 1.5;
+          font-weight: 700; color: var(--c-accent); line-height: 1.5;
           letter-spacing: -0.02em; margin: 0 0 28px;
         }
         .scanChips {
