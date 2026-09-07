@@ -9,7 +9,7 @@ import AnimatedIcon from '@/components/AnimatedIcon';
 import TxDiagram from '@/components/TxDiagram';
 import BookingLink from '@/components/BookingLink';
 import Breadcrumb from '@/components/Breadcrumb';
-import { TREATMENTS, DOCTORS, SITE, CONTENT_UPDATED } from '@/lib/copy';
+import { TREATMENTS, DOCTORS, SITE, REVIEWED_ON_DEFAULT } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
@@ -60,9 +60,10 @@ export default async function TreatmentDetailPage({
         }
       : null;
 
-  // 검수 표시 — 담당이 확인된 과목에만 붙인다(잇몸·미백은 검수자 미확정이라 표기하지 않음)
+  // 검수 표시 — 7과목 모두 담당 의료진이 확정돼 있다(잇몸·미백은 2026-09-07 원장님 회신으로 확정).
   const reviewer = tx.reviewedBy !== undefined ? DOCTORS[tx.reviewedBy] : undefined;
-  const reviewedOn = `${CONTENT_UPDATED.slice(0, 4)}년 ${Number(CONTENT_UPDATED.slice(5, 7))}월 ${Number(CONTENT_UPDATED.slice(8, 10))}일`;
+  const reviewedDate = tx.reviewedOn ?? REVIEWED_ON_DEFAULT;
+  const reviewedOn = `${reviewedDate.slice(0, 4)}년 ${Number(reviewedDate.slice(5, 7))}월 ${Number(reviewedDate.slice(8, 10))}일`;
 
   // 구조화 데이터 — 검색엔진·생성형 검색이 과목/시술/담당의/경로를 그대로 인용할 수 있게 한 묶음으로 제공
   const pageUrl = `${SITE_URL}/treatments/${tx.slug}`;
@@ -89,7 +90,7 @@ export default async function TreatmentDetailPage({
         name: `${tx.ko} | ${SITE.name}`,
         description: tx.summary || tx.d,
         inLanguage: 'ko-KR',
-        lastReviewed: CONTENT_UPDATED,
+        lastReviewed: reviewedDate,
         about: { '@id': `${pageUrl}#procedure` },
         // 화면 하단의 검수 표시와 동일한 사실 (구조화 데이터는 보이는 내용을 설명하는 수단)
         ...(reviewer

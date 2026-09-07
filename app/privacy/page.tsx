@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Breadcrumb from '@/components/Breadcrumb';
 import Reveal from '@/components/Reveal';
-import { SITE, PRIVACY_EFFECTIVE } from '@/lib/copy';
+import { SITE, PRIVACY_EFFECTIVE, PRIVACY_PROCESSORS, PRIVACY_HISTORY } from '@/lib/copy';
 import { jsonLdScript } from '@/lib/jsonld';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
@@ -9,7 +9,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.examp
 export const metadata: Metadata = {
   alternates: { canonical: '/privacy' },
   title: '개인정보처리방침',
-  description: '아트에이치치과의 개인정보 수집·이용 목적, 보유기간, 정보주체의 권리와 개인정보 보호책임자 안내.',
+  description: '아트에이치치과의 개인정보 수집·이용 목적, 보유기간, 처리 위탁, 정보주체의 권리와 개인정보 보호책임자 안내.',
 };
 
 const effective = `${PRIVACY_EFFECTIVE.slice(0, 4)}년 ${Number(PRIVACY_EFFECTIVE.slice(5, 7))}월 ${Number(PRIVACY_EFFECTIVE.slice(8, 10))}일`;
@@ -128,6 +128,11 @@ export default function PrivacyPage() {
             개인정보의 안전한 관리에 관한 사항을 문서로 정하고, 수탁자가 개인정보를 안전하게 처리하는지 감독합니다.
             위탁 업무의 내용과 수탁자가 변경될 경우 본 방침을 통해 공개합니다.
           </p>
+          <dl className="pvDl">
+            {PRIVACY_PROCESSORS.map((w) => (
+              <div key={w.name}><dt>{w.name}</dt><dd>{w.tasks} · 보유·이용 기간: {w.period}</dd></div>
+            ))}
+          </dl>
         </section>
 
         <section className="pvSec">
@@ -183,12 +188,18 @@ export default function PrivacyPage() {
           </dl>
         </section>
 
+
         <section className="pvSec">
           <h2>제9조 (방침의 변경)</h2>
           <p>
             이 방침은 {effective}부터 적용됩니다. 법령이나 병원의 정책에 따라 내용이 추가·삭제·수정될 경우
             시행 7일 전부터 홈페이지에 공지합니다.
           </p>
+          <dl className="pvDl">
+            {PRIVACY_HISTORY.map((h) => (
+              <div key={h.date}><dt>{h.date}</dt><dd>{h.summary}</dd></div>
+            ))}
+          </dl>
         </section>
 
         <p className="pvEffective">시행일 {effective}</p>

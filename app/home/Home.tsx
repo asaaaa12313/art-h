@@ -16,9 +16,6 @@ import styles from './Home.module.css';
 
 // Hero 사진 인트로 — 사진 3장(대기실·외관·상담실)을 줌+크로스페이드로 먼저 보여준 뒤 영상으로 전환.
 // 인사 문구는 사진 인트로에서만 노출되고, 영상으로 넘어가면 사라진다. CTA는 계속 유지.
-// TODO(엔도 촬영본 입고 시): X-Smart Pro+ 사용 장면을 4번째 슬라이드로 추가한다.
-//   { src: '/media/images/endo/endo-motor-01.jpg', alt: 'X-Smart Pro+ 엔도 모터로 진행하는 신경치료' }
-//   제조사(덴츠플라이시로나) 제품 이미지는 저작권 문제로 사용하지 않는다 — 원내 촬영본만.
 const HERO_PHOTOS = [
   { src: '/media/images/waiting/waiting-01.jpg', alt: '아트에이치치과 대기실 라운지' },
   { src: '/media/images/exterior/exterior-01.jpg', alt: '송도 IBS타워 외관' },
@@ -326,13 +323,25 @@ export default function Home() {
         <div className={styles.inner}>
           <div className={styles.endoGrid}>
             <Reveal variant="blur-up" duration="0.9s" from="translateY(20px)">
-              <div className={styles.endoFigs}>
-                {ENDO_FIGS.map((f) => (
-                  <figure key={f.name} className={styles.endoFig}>
-                    <TxDiagram name={f.name} title={`${f.caption} 모식도`} />
-                    <figcaption>{f.caption}</figcaption>
-                  </figure>
-                ))}
+              <div className={styles.endoMedia}>
+                <div className={styles.endoPhoto}>
+                  {/* Photo 대신 next/image를 직접 쓴다 — Photo는 object-position을 인라인 style로 고정해
+                      화면폭별 초점 이동(세로 원본을 가로 프레임에 맞추는 데 필요)을 CSS로 줄 수 없다. */}
+                  <Image
+                    src="/media/images/endo/endo-motor-01.jpg"
+                    alt="근관 성형에 쓰는 X-Smart Pro+ 엔도 모터와 핸드피스"
+                    fill
+                    sizes="(max-width: 900px) 92vw, 35vw"
+                  />
+                </div>
+                <div className={styles.endoFigs}>
+                  {ENDO_FIGS.map((f) => (
+                    <figure key={f.name} className={styles.endoFig}>
+                      <TxDiagram name={f.name} title={`${f.caption} 모식도`} />
+                      <figcaption>{f.caption}</figcaption>
+                    </figure>
+                  ))}
+                </div>
               </div>
             </Reveal>
             <div className={styles.endoBody}>

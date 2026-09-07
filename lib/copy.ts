@@ -1,11 +1,40 @@
 import { V } from './visuals';
 
-/** 콘텐츠 기준 최종 갱신일 — sitemap lastModified·JSON-LD lastReviewed 공용.
+/** 콘텐츠 기준 최종 갱신일 — sitemap lastModified용.
  *  빌드 시각(new Date())을 쓰면 매 배포마다 전 페이지 수정일이 바뀌어 신선도 신호가 왜곡된다. */
-export const CONTENT_UPDATED = '2026-08-28';
+export const CONTENT_UPDATED = '2026-09-07';
 
-/** 개인정보처리방침 시행일 — 내용을 고칠 때마다 갱신하고, 변경 이력은 방침 하단에 남긴다. */
-export const PRIVACY_EFFECTIVE = '2026-08-28';
+/** 과목별 검수일의 기본값 — 의료진이 실제로 검수한 날. 콘텐츠 갱신일과 절대 묶지 않는다.
+ *  글 한 줄만 고쳐도 갱신일은 바뀌지만 검수일은 의료진이 다시 본 날에만 바뀌기 때문이다.
+ *  과목별로 다르면 Treatment.reviewedOn으로 덮어쓴다. */
+export const REVIEWED_ON_DEFAULT = '2026-08-28';
+
+/** 개인정보처리방침 시행일 — 내용을 고칠 때마다 갱신하고, 변경 이력은 방침 하단(PRIVACY_HISTORY)에 남긴다.
+ *  방침의 "시행 7일 전 공지"는 정보주체에게 불리한 변경에 대한 예고 규정이다.
+ *  수탁자 공개처럼 투명성을 늘리는 개정은 즉시 시행해야 현행 방침이 공백 없이 게시된다. */
+export const PRIVACY_EFFECTIVE = '2026-09-07';
+
+/** 개인정보 처리 위탁 현황 — 개인정보보호법 제26조는 수탁자와 위탁 업무를 공개하도록 한다.
+ *  원장님 회신(2026-09-07): 차트·예약 문자 모두 덴트웹 사용.
+ *  ※ '덴트웹'이 서비스명인지 법인명인지 미확인 — 법인명 확인되면 name 한 줄만 정정한다. */
+export const PRIVACY_PROCESSORS: { name: string; tasks: string; period: string }[] = [
+  {
+    name: '덴트웹',
+    tasks: '전자차트(전자의무기록) 운영, 예약 안내 문자 발송',
+    period: '위탁 계약 종료 시까지',
+  },
+];
+
+/* 영상정보처리기기(CCTV) 조항은 아직 올리지 않는다.
+ * 원장님 회신(2026-09-07)으로 "설치되어 있다"는 사실만 확인됐고, 개인정보보호법 제25조가 요구하는
+ * 설치 대수·촬영 범위·촬영 시간·보관 기간·보관 장소는 미회신 상태다.
+ * 법조문을 인용한 조항을 필수 기재 없이 게시하는 것보다, 회신을 받아 완성본으로 한 번에 올린다. */
+
+/** 방침 변경 이력 — 최신이 위. 화면 하단에 시행일과 함께 노출한다. */
+export const PRIVACY_HISTORY: { date: string; summary: string }[] = [
+  { date: '2026-09-07', summary: '개인정보 처리 위탁(제4조)에 수탁자와 위탁 업무 명시' },
+  { date: '2026-08-28', summary: '최초 시행' },
+];
 
 export const SITE = {
   name: '아트에이치치과',
@@ -146,6 +175,8 @@ export type Treatment = {
   specialist?: TxSpecialist;
   /** 이 페이지 내용을 검수한 의료진 (DOCTORS 인덱스). 확인된 과목에만 표기한다. */
   reviewedBy?: number;
+  /** 이 과목을 의료진이 마지막으로 검수한 날(YYYY-MM-DD). 없으면 REVIEWED_ON_DEFAULT. */
+  reviewedOn?: string;
   gallery?: TxGalleryItem[];
 };
 
@@ -328,7 +359,7 @@ export const TREATMENTS: Treatment[] = [
   },
   {
     en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
-    card: '/media/images/equipment/equipment-02.jpg',
+    card: '/media/images/endo/endo-kit-01.jpg',
     d: '근관을 정밀하게 처치하여 자연치아를 최대한 보존합니다.',
     summary: '살릴 수 있는 치아는 끝까지 살립니다.',
     intro: '신경치료는 충치가 깊어 치수(신경)까지 감염된 경우, 감염된 조직을 제거하고 근관을 소독·밀폐하여 자연치아를 보존하는 치료입니다. 아트에이치치과는 치과보존과 전문의가 직접 진료하며, X-Smart Pro+ 엔도 모터와 ProTaper Next 파일로 근관 하나하나를 정밀하게 처치합니다.',
@@ -811,6 +842,8 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,
     card: '/media/images/treatment-room/treatment-02.jpg',
+    reviewedBy: 0,
+    reviewedOn: '2026-09-07',
     d: '에어플로우 스케일링과 체계적 치주 관리.',
     summary: '치아의 집, 잇몸부터 건강하게.',
     intro: '잇몸 질환은 성인의 치아 상실 원인 1위입니다. 초기에는 증상이 거의 없어 정기 검진이 중요합니다. GBT(Guided Biofilm Therapy) 프로토콜에 따라 에어플로우로 치태와 착색을 부드럽게 제거하고, 체계적인 치주 관리를 제공합니다.',
@@ -906,6 +939,8 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
     card: '/media/images/whitening/whitening-bluelight.jpg',
+    reviewedBy: 0,
+    reviewedOn: '2026-09-07',
     d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.',
     summary: '자연스러운 결, 밝아진 미소.',
     intro: '치아 변색은 식습관·흡연·노화·약물 등 다양한 원인에서 발생합니다. 치아 상태에 따라 오피스 미백(내원)과 홈 미백(자가)을 병행해 자연스러운 밝기를 찾아갑니다.',

@@ -479,6 +479,24 @@
   gap: clamp(32px, 5vw, 72px);
   align-items: center;
 }
+.endoMedia {
+  display: grid;
+  gap: 12px;
+}
+/* 원내 촬영 실사 — 세로 원본(1440×1920)을 가로 프레임에 cover로 넣는다.
+   가로는 항상 꽉 차서 X 오프셋은 효과가 없고, 넘치는 세로만 Y로 조절한다.
+   30% = 장비 상단·화면·핸드피스가 모두 들어오는 지점. */
+.endoPhoto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.3);
+}
+.endoPhoto img {
+  object-fit: cover;
+  object-position: 50% 30%;
+}
 .endoFigs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -716,6 +734,8 @@
 @media (max-width: 900px) {
   .promiseGrid { grid-template-columns: repeat(2, 1fr); }
   .endoGrid { grid-template-columns: 1fr; gap: 36px; }
+  .endoPhoto { aspect-ratio: 16 / 10; }
+  .endoPhoto img { object-position: 50% 50%; }
   .systemGrid { grid-template-columns: 1fr; }
   .statsGrid { grid-template-columns: repeat(2, 1fr); border-top: none; }
   .statItem { border-left: none; border-top: 1px solid var(--c-line); padding-top: 32px; padding-bottom: 8px; }
