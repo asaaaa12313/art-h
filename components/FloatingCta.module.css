@@ -3,7 +3,9 @@
    (아이콘만으로는 무엇인지 모르는 이용자가 생긴다). ===== */
 .rail {
   position: fixed;
-  right: max(12px, env(safe-area-inset-right));
+  /* 스크롤바를 늘 보이게 쓰는 환경에서도 오른쪽이 붙어 보이지 않도록 여유를 둔다
+     (html의 scrollbar-gutter와 함께 동작한다) */
+  right: max(14px, env(safe-area-inset-right));
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
