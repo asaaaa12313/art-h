@@ -184,7 +184,7 @@ export default function LocationPage() {
           .locGrid { grid-template-columns: 1fr; }
         }
         .locLocal {
-          max-width: 1200px; margin: 0 auto;
+          max-width: 1300px; margin: 0 auto;
           padding: 0 clamp(24px, 5vw, 40px) clamp(64px, 8vw, 96px);
         }
         .locLocal h2 {

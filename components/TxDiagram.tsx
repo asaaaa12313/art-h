@@ -7,13 +7,13 @@ import type { ReactNode } from 'react';
  */
 
 const C = {
-  navy: '#1A2647',
-  blue: '#0B7A6A',
-  blueL: '#5FE0C5',
+  navy: '#0C2D57',
+  blue: '#10417C',
+  blueL: '#81A1D4',
   white: '#FFFFFF',
-  gum: '#F3EBE0',
-  bone: '#ECE4D6',
-  dot: '#D9CFBC',
+  gum: '#E8EDF6',
+  bone: '#DCE4F0',
+  dot: '#C2CFE4',
   bad: '#C05A45', // 충치·염증 표시용
 };
 

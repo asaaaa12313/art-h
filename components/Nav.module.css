@@ -8,9 +8,9 @@
   border-bottom: 1px solid var(--c-line);
 }
 .topInner {
-  max-width: 1425px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 26px clamp(20px, 5vw, 100px);
+  padding: 26px clamp(20px, 2.8vw, 40px);
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -95,10 +95,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1425px;
+  max-width: 1440px;
   margin: 0 auto;
   height: var(--header-h);
-  padding: 0 clamp(20px, 5vw, 100px);
+  padding: 0 clamp(20px, 2.8vw, 40px);
   transition: height 0.4s var(--ease-out);
 }
 
@@ -334,4 +334,25 @@
     max-height: calc(100dvh - var(--header-h));
     overflow-y: auto;
   }
+}
+
+/* 좁은 화면 전용 로고 — 윗줄(로고·슬로건)이 접히는 900px 이하에서만 보인다 */
+.brandCompact { display: none; }
+@media (max-width: 900px) {
+  .brandCompact {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--c-navy);
+    text-decoration: none;
+  }
+  .brandCompact svg { display: block; }
+  .brandCompact b {
+    font-family: var(--f-display);
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  /* 로고는 왼쪽, 햄버거는 오른쪽 */
+  .inner { justify-content: space-between; }
 }

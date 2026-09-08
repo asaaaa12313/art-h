@@ -144,7 +144,7 @@ export default function AboutPage() {
       <style>{`
         /* Greeting */
         .greetGrid {
-          max-width: 1100px; margin: 0 auto;
+          max-width: 1300px; margin: 0 auto;
           display: grid; grid-template-columns: 4fr 5fr;
           gap: clamp(40px, 5vw, 80px); align-items: center;
         }
@@ -220,7 +220,7 @@ export default function AboutPage() {
           .promiseCard:hover {
             background: #FCFAF5;
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.22);
+            box-shadow: 0 22px 46px rgba(12, 45, 87, 0.22);
           }
         }
         .promiseCardIcon {

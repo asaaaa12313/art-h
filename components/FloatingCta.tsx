@@ -14,10 +14,11 @@ const BOOKING_URL =
 // 카카오톡 채널은 아직 개설 전이다. 주소가 생기면 이 환경변수만 채우면 레일에 항목이 붙는다.
 const KAKAO_URL = process.env.NEXT_PUBLIC_KAKAO_CHANNEL_URL || '';
 
-// 플로팅 상담 레일 (2026-09 개편, plan §4-9)
-// 데스크톱: 우측 고정 세로 레일 — 폭 96px·아이콘 28px·항목 84px.
-//   크림 바탕 + 네이비 아이콘이라 다크 밴드 위에서도 레일이 배경에 묻히지 않는다.
-//   전화가 유일하게 채워진 버튼(민트)이고 나머지는 비움 — 시선이 한 곳으로 모이게.
+// 플로팅 상담 레일 (2026-09 개편 — 레퍼런스 실측 형태)
+// 데스크톱: 우측 고정 파란 상자 — 폭 68px·아이콘 26px, 흰 아이콘만 세로로 쌓고
+//   맨 아래 전화 칸에는 번호를 세로 3줄로 적는다(누르지 않아도 번호가 읽힌다).
+//   아이콘만으로 뜻이 안 잡히는 이용자를 위해 이름은 hover·focus에서 왼쪽으로 펼친다.
+//   TOP은 상자 밖 흰 원형 버튼(레퍼런스와 같은 위치).
 // 모바일(<960): 하단 고정 바 3열 — 엄지 도달 거리 최우선.
 export default function FloatingCta() {
   const [pastHero, setPastHero] = useState(false);
@@ -55,16 +56,6 @@ export default function FloatingCta() {
       {/* 데스크톱 — 우측 세로 레일 */}
       <aside className={styles.rail} data-solid={pastHero} aria-label="빠른 상담">
         <div className={styles.railBox}>
-          <a
-            href={phoneHref}
-            className={`${styles.railBtn} ${styles.railPrimary}`}
-            aria-label={`전화하기 ${SITE.phone}`}
-          >
-            {phoneIcon}
-            <span className={styles.railLabel}>전화상담</span>
-            <span className={styles.railFly} aria-hidden="true">{SITE.phone}</span>
-          </a>
-
           <a
             href={BOOKING_URL}
             target="_blank"
@@ -138,6 +129,20 @@ export default function FloatingCta() {
             </svg>
             <span className={styles.railLabel}>오시는길</span>
           </Link>
+
+          {/* 전화 — 레퍼런스처럼 번호를 세로로 적는다 */}
+          <a
+            href={phoneHref}
+            className={`${styles.railBtn} ${styles.railPrimary}`}
+            aria-label={`전화하기 ${SITE.phone}`}
+          >
+            {phoneIcon}
+            <span className={styles.railPhoneNum} aria-hidden="true">
+              {SITE.phone.split('-').map((seg) => (
+                <span key={seg}>{seg}</span>
+              ))}
+            </span>
+          </a>
         </div>
 
         <button
@@ -151,7 +156,6 @@ export default function FloatingCta() {
           <svg viewBox="0 0 24 24" className={styles.icon} aria-hidden="true">
             <path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
           </svg>
-          <span className={styles.railLabel}>TOP</span>
         </button>
       </aside>
 

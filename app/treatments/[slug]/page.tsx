@@ -792,9 +792,12 @@ export default async function TreatmentDetailPage({
         }
 
         .txDetail {
-          max-width: 1060px; margin: 0 auto;
-          padding: clamp(72px,9vw,124px) clamp(24px,5vw,80px);
+          max-width: 1300px; margin: 0 auto;
+          padding: clamp(64px,7vw,100px) clamp(20px,3vw,50px);
         }
+        /* 폭을 레퍼런스에 맞춰 넓혔으므로, 읽는 글줄만 따로 묶어 둔다 —
+           한 줄이 1200px까지 늘어나면 다음 줄 첫 글자를 눈이 못 찾는다. */
+        .txIntro, .txBlockDesc, .txLead, .txNote, .txSummary { max-width: 860px; }
         .txSec { margin-bottom: clamp(84px, 10vw, 140px); }
         .txSec:last-of-type { margin-bottom: 0; }
 
@@ -951,7 +954,7 @@ export default async function TreatmentDetailPage({
           margin-top: 26px; padding-bottom: 4px;
           font-size: 13.5px; font-weight: 600; color: var(--c-blue-text);
           letter-spacing: -0.01em;
-          border-bottom: 1px solid rgba(11, 122, 106, 0.35);
+          border-bottom: 1px solid rgba(12, 45, 87, 0.35);
           transition: gap .3s var(--ease-out), border-color .3s var(--ease-out);
         }
         @media (hover: hover) {
@@ -970,7 +973,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txTechCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
+          .txTechCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, .2); }
         }
         .txTechNo {
           font-family: var(--f-display); font-size: 26px; color: var(--c-accent-t);
@@ -1023,7 +1026,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
+          .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, .2); }
         }
         .txDevNum {
           font-family: var(--f-display); font-size: 14px; color: var(--c-text3);
@@ -1127,7 +1130,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txShowcaseCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
+          .txShowcaseCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, .2); }
         }
         .txShowcaseMedia {
           position: relative; aspect-ratio: 16 / 10;
@@ -1292,7 +1295,7 @@ export default async function TreatmentDetailPage({
           transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
         @media (hover: hover) {
-          .txKindCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, .2); }
+          .txKindCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, .2); }
         }
         .txKindMedia {
           padding: 18px 28px 6px; background: #fff;

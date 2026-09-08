@@ -279,7 +279,7 @@ export default function DoctorPage() {
         @media (hover: hover) {
           .docQuote:hover {
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.18);
+            box-shadow: 0 22px 46px rgba(12, 45, 87, 0.18);
           }
         }
         .docQuote p {
@@ -344,7 +344,7 @@ export default function DoctorPage() {
         @media (hover: hover) {
           .docVideoFrame:hover {
             transform: translateY(-4px);
-            box-shadow: 0 22px 46px rgba(11, 122, 106, 0.18);
+            box-shadow: 0 22px 46px rgba(12, 45, 87, 0.18);
           }
         }
         .docVideoFrame iframe {

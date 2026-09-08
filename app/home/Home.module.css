@@ -1,9 +1,9 @@
 /* ===== 공통 ===== */
 /* 레퍼런스 실측 — 콘텐츠 1225px, 바깥 1425px(좌우 여백 100px) */
 .inner {
-  max-width: 1425px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 100px);
+  padding: 0 clamp(20px, 2.8vw, 40px);
 }
 
 /* 영문 라벨 + 블루 라인 디테일 */
@@ -23,7 +23,7 @@
   position: relative;
   justify-content: center;
   width: 100%;
-  padding-top: 118px;
+  padding-top: 128px;
 }
 .labelCenter::before {
   content: '';
@@ -31,9 +31,9 @@
   top: 0;
   left: 50%;
   width: 1px;
-  height: 96px;
+  height: 90px;
   background: var(--c-navy-l);
-  opacity: 0.55;
+  opacity: 0.65;
 }
 /* 가운데 정렬 블록에서는 좌우 선 장식을 쓰지 않는다(레퍼런스에 없다) */
 .labelCenter i { display: none; }
@@ -129,7 +129,7 @@
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   text-align: center;
   padding: 0 clamp(24px, 6vw, 100px) clamp(56px, 8vh, 96px);
-  max-width: 1425px; margin: 0 auto;
+  max-width: 1440px; margin: 0 auto;
 }
 .heroLine {
   width: 0; height: 2px; background: var(--c-blue-l);
@@ -212,29 +212,35 @@
   bottom: 26px;
   transform: translateX(-50%);
   display: flex;
-  gap: 9px;
+  align-items: center;
+  gap: 14px;
 }
+/* 레퍼런스와 같은 동그란 점. 누르는 면적은 눈에 보이는 점보다 넓게 잡는다 */
 .heroDot {
   position: relative;
-  width: 44px;
-  height: 3px;
+  width: 22px;
+  height: 22px;
   padding: 0;
   border: 0;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.3);
+  background: none;
   cursor: pointer;
-  overflow: hidden;
 }
-.heroDot::after {
+.heroDot::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: var(--c-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.45s var(--ease-out);
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  transition: background 0.35s ease, transform 0.45s var(--ease-out);
 }
-.heroDot[data-on='true']::after { transform: scaleX(1); }
+.heroDot[data-on='true']::before {
+  background: #fff;
+  transform: scale(1.5);
+}
 .heroDot:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 5px; }
 
 .scrollHint {
@@ -275,7 +281,7 @@
 /* 수치 — 레퍼런스는 밝은 면 위에 네이비 숫자를 크게 놓는다 */
 .stats {
   background: var(--c-warm);
-  padding: clamp(88px, 10vw, 148px) 0;
+  padding: 0 0 clamp(88px, 10vw, 148px);
 }
 .stats .sectionTitleCenter, .stats .sectionTitle { color: var(--c-text); }
 .stats .labelCenter, .stats .label { color: var(--c-accent-sub); }
@@ -440,7 +446,7 @@
 @media (hover: hover) {
   .promiseCard:hover {
     transform: translateY(-5px);
-    box-shadow: 0 22px 48px rgba(11, 122, 106, 0.26);
+    box-shadow: 0 22px 48px rgba(12, 45, 87, 0.26);
   }
   .promiseCard:hover::before { transform: scaleX(1); }
 }
@@ -452,41 +458,70 @@
 .tx {
   position: relative;
   background: var(--c-warm);
-  padding: clamp(76px, 9vw, 130px) 0;
+  padding: 0 0 clamp(60px, 7vw, 100px);
+}
+.tx .inner { display: flex; flex-direction: column; }
+
+/* 카드 줄 — 레퍼런스 실측: 카드 334×500, 간격 28, 모서리 8, 화면 양끝으로 흘러나간다 */
+.txRail { margin: clamp(44px, 5vw, 70px) 0 clamp(30px, 4vw, 46px); }
+.txCard {
+  position: relative;
+  display: block;
+  flex: 0 0 334px;
+  height: 500px;
+  border-radius: 8px;
   overflow: hidden;
+  background: var(--c-dark);
+  text-decoration: none;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s ease;
 }
-/* 대형 영문 워터마크 — 세리프, 3% 투명도 (루센트 구조를 우리 폰트로) */
-.txWatermark {
-  position: absolute; top: clamp(20px, 3vw, 44px); left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--f-display);
-  font-size: clamp(88px, 16vw, 230px);
-  line-height: 1; white-space: nowrap;
-  color: var(--c-navy); opacity: 0.03;
-  letter-spacing: 0.04em;
-  pointer-events: none; user-select: none;
+@media (hover: hover) {
+  .txCard:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(12, 45, 87, 0.28); }
+  .txCard:hover .txImg :global(img) { transform: scale(1.07); }
+  .txCard:hover .txSummary { opacity: 1; max-height: 60px; }
 }
-.tx .inner { position: relative; z-index: 1; }
-/* 진료과목 — 레퍼런스 실측: 카드 340×500(2:3에 가까운 세로), 모서리 30px,
-   사진을 카드 전체로 깔고 그 위에 흰 명조 제목 + 한 줄 설명을 얹는다. 가로 7칸, 간격 25px. */
-.txGrid {
-  margin-top: clamp(44px, 5vw, 70px);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
+.txImg { position: absolute; inset: 0; }
+.txImg :global(img) { transition: transform 1.1s var(--ease-out); }
+/* 사진 위 글자라 아래쪽을 깊게 눌러 준다 */
+.txOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12, 45, 87, 0.10) 0%, rgba(12, 45, 87, 0.26) 44%, rgba(12, 45, 87, 0.84) 100%);
 }
-@media (min-width: 1500px) {
-  /* 레퍼런스는 7개를 한 줄에 세운다 */
-  .txGrid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
-  .txKo { font-size: 19px; }
-  .txSummary { font-size: 13px; }
+.txNo {
+  position: absolute; top: 22px; left: 24px; z-index: 2;
+  font-family: var(--f-display); font-size: 13px; color: rgba(255,255,255,0.9);
+  letter-spacing: 2px;
 }
-/* 전체보기 — 레퍼런스는 알약 테두리 버튼을 가운데 둔다 */
+.txLabel {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+  padding: 0 26px 30px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+}
+.txEn {
+  font-family: var(--f-display); font-size: 11.5px; color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 2px; display: block;
+}
+.txKo {
+  font-family: var(--f-serif-ko); font-size: 23px; font-weight: 400;
+  color: #fff; display: block; letter-spacing: -0.02em;
+}
+/* 한 줄 설명은 평소 접어 두고 hover에서 편다 — 레퍼런스도 카드 위에 제목만 남긴다 */
+.txSummary {
+  font-size: 14px; color: rgba(255, 255, 255, 0.86); line-height: 1.6;
+  font-weight: 400; display: block; word-break: keep-all;
+  opacity: 0; max-height: 0; overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.5s var(--ease-out);
+}
+@media (hover: none) {
+  .txSummary { opacity: 1; max-height: 60px; }
+}
+
+/* 전체보기 — 알약 테두리 버튼을 가운데 둔다 */
 .txMore {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin: clamp(36px, 4vw, 52px) auto 0;
+  margin: 0 auto;
   padding: 14px 30px;
   border: 1px solid var(--c-navy);
   border-radius: var(--r-pill);
@@ -501,16 +536,9 @@
   .txMore:hover { background: var(--c-navy); color: #fff; }
   .txMore:hover span { transform: translateX(4px); }
 }
-.tx .inner { display: flex; flex-direction: column; }
-.tx .txGrid { width: 100%; }
-.txCard {
-  position: relative;
-  display: block;
-  aspect-ratio: 34 / 50;
-  border-radius: 30px;
-  overflow: hidden;
-  background: var(--c-dark);
-  transition: transform 0.45s var(--ease-out), box-shadow 0.45s;
+
+@media (max-width: 1023px) {
+  .txCard { flex: 0 0 min(78vw, 320px); height: min(70vh, 460px); }
 }
 @media (hover: hover) {
   .txCard:hover { transform: translateY(-6px); box-shadow: 0 26px 54px rgba(16, 65, 124, 0.26); }
@@ -582,7 +610,7 @@
   transition: transform 0.35s var(--ease-out), box-shadow 0.35s;
 }
 @media (hover: hover) {
-  .doctorCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 122, 106, 0.18); }
+  .doctorCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, 0.18); }
 }
 .doctorPhoto { position: relative; aspect-ratio: 16/11; overflow: hidden; }
 .doctorInfo { padding: 28px 28px 32px; }
@@ -727,7 +755,6 @@
   }
   .storyBand[data-flip='true'] .storyContent { align-items: flex-start; text-align: left; }
   .storyContent { padding-top: 48px; padding-bottom: 44px; }
-  .txGrid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .doctorGrid { grid-template-columns: 1fr; }
   .doctorPhoto { aspect-ratio: 16/10; }
   .facilityVideoWrap { height: clamp(360px, 64vh, 520px); }
@@ -748,7 +775,6 @@
 @media (max-width: 480px) {
   .promiseGrid { grid-template-columns: 1fr; }
   .statsGrid { grid-template-columns: 1fr; }
-  .txGrid { grid-template-columns: 1fr; }
   .facilityGrid { grid-template-columns: 1fr; }
   .locCardGrid { grid-template-columns: 1fr; }
   .locCard { min-height: auto; }
@@ -1010,14 +1036,10 @@
 }
 
 
-/* 우측 상담 레일(96px + 여백) 회피 — 콘텐츠 폭에만 준다.
-   main에 padding을 주면 섹션 배경까지 같이 줄어들고,
-   풀블리드 밴드의 margin-left: calc(-50vw + 50%)가 좁아진 기준으로 계산돼 좌우가 어긋난다. */
-@media (min-width: 960px) and (max-width: 1559px) {
-  .inner { padding-right: calc(clamp(24px, 5vw, 48px) + 116px); }
-}
-@media (min-width: 960px) and (max-width: 1279px) {
-  .inner { padding-right: calc(clamp(24px, 5vw, 48px) + 96px); }
+/* 상담 레일은 레퍼런스처럼 콘텐츠 위에 뜬다 — 전체 콘텐츠를 밀지 않는다.
+   대신 레일과 실제로 겹치는 우측 단(특별함 본문)에만 그만큼 여백을 준다. */
+@media (min-width: 960px) {
+  .specialRow:not([data-flip='true']) .specialBody { padding-right: 92px; }
 }
 
 
@@ -1064,7 +1086,7 @@
 
 /* 특별함 — 사진과 글이 좌우로 번갈아 놓인다(레퍼런스와 같은 리듬) */
 .special {
-  padding: clamp(88px, 11vw, 150px) 0;
+  padding: 0 0 clamp(88px, 11vw, 150px);
   background: var(--c-warm);
 }
 .specialList {
@@ -1072,39 +1094,43 @@
   display: grid;
   border-top: 1px solid var(--c-navy-l);
 }
-/* 항목마다 좌우가 뒤바뀌고, 가운데로 세로 구분선이 지난다 */
+/* 항목마다 좌우가 뒤바뀐다. 사진은 화면 끝까지 나가고,
+   두 단 사이를 세로 실선 하나가 지난다(레퍼런스 실측 구조).
+   구분선은 글 단의 왼쪽 테두리로 그린다 — 단 비율을 바꿔도 선이 늘 경계에 붙는다. */
 .specialRow {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(28px, 5vw, 80px);
-  align-items: center;
-  padding: clamp(40px, 5vw, 64px) 0;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+  align-items: stretch;
   border-bottom: 1px solid var(--c-navy-l);
 }
-.specialRow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: var(--c-navy-l);
-  opacity: 0.5;
-}
+.specialRow[data-flip='true'] { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); }
 .specialRow[data-flip='true'] .specialImg { order: 2; }
-.specialRow[data-flip='true'] .specialBody { order: 1; padding-left: clamp(20px, 5vw, 90px); }
-.specialBody { padding-right: clamp(20px, 4vw, 60px); }
-.specialRow[data-flip='true'] .specialBody { padding-right: 0; }
-/* 사진은 한쪽 모서리만 크게 둥글다 — 레퍼런스의 비대칭 라운드 */
+.specialRow[data-flip='true'] .specialBody { order: 1; }
+
+/* 사진 — 바깥쪽은 화면 끝까지 직각으로, 안쪽 모서리만 크게 둥글다 */
 .specialImg {
   position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: 0 0 90px 0;
+  min-height: clamp(340px, 40vw, 540px);
+  border-radius: 0 64px 64px 0;
   overflow: hidden;
 }
-.specialRow[data-flip='true'] .specialImg { border-radius: 0 0 0 90px; }
-.specialBody { display: grid; gap: 12px; align-content: center; }
+.specialRow[data-flip='true'] .specialImg { border-radius: 64px 0 0 64px; }
+
+.specialBody {
+  display: grid;
+  gap: 12px;
+  align-content: center;
+  padding: clamp(44px, 5.5vw, 82px) clamp(24px, 3vw, 44px) clamp(44px, 5.5vw, 82px) clamp(28px, 3.4vw, 48px);
+  border-left: 1px solid var(--c-navy-l);
+}
+.specialRow[data-flip='true'] .specialBody {
+  border-left: 0;
+  border-right: 1px solid var(--c-navy-l);
+  padding-left: clamp(24px, 3vw, 44px);
+  padding-right: clamp(28px, 3.4vw, 48px);
+  text-align: left;
+}
 /* 번호 목록 — 흰 알약 박스에 번호 + 문구(레퍼런스 1~4) */
 .specialPoints {
   list-style: none;
@@ -1172,7 +1198,7 @@
 
 /* 장비 — 4열 카드 */
 .equip {
-  padding: clamp(88px, 11vw, 150px) 0;
+  padding: 0 0 clamp(88px, 11vw, 150px);
   background: var(--c-bg);
 }
 .equipGrid {
@@ -1193,8 +1219,8 @@
 }
 .equipImg {
   position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: 3px;
+  aspect-ratio: 3 / 4;
+  border-radius: 8px;
   overflow: hidden;
   margin-bottom: 6px;
 }
@@ -1232,12 +1258,15 @@
   .equipGrid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
-  .specialRow { grid-template-columns: 1fr; padding: 34px 0; }
+  .specialRow,
+  .specialRow[data-flip='true'] { grid-template-columns: 1fr; }
   .specialRow::before { display: none; }
   .specialRow[data-flip='true'] .specialImg { order: 0; }
-  .specialRow[data-flip='true'] .specialBody { order: 1; padding-left: 0; }
-  .specialBody { padding-right: 0; }
-  .specialImg, .specialRow[data-flip='true'] .specialImg { border-radius: 0 0 60px 0; }
+  .specialRow[data-flip='true'] .specialBody { order: 1; }
+  .specialBody,
+  .specialRow[data-flip='true'] .specialBody { padding: 28px 20px 40px; border-left: 0; border-right: 0; }
+  .specialImg,
+  .specialRow[data-flip='true'] .specialImg { min-height: 0; aspect-ratio: 4 / 3; border-radius: 0 0 60px 0; }
 }
 @media (max-width: 560px) {
   .equipGrid { grid-template-columns: 1fr; }
@@ -1247,4 +1276,61 @@
   .aboutCtaLink, .aboutCtaLink span, .specialLink span, .equipCard, .equipImg :global(img) {
     transition: none;
   }
+}
+
+
+/* ===== 스크롤에 물린 카메라 움직임 (CF 느낌)
+   스크롤 진행에 애니메이션을 직접 묶는 방식이라(animation-timeline: view())
+   스크롤 이벤트로 계산하지 않는다 — 손을 멈추면 화면도 그 자리에 멈추고, 끊기지 않는다.
+   이 기능이 없는 브라우저(사파리 등)에서는 아무 일도 일어나지 않고 사진만 정상 표시된다. ===== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+    /* 특별함 사진 — 화면을 지나는 동안 아주 천천히 밀려 올라오며 축소된다 */
+    .specialImg :global(img) {
+      animation: photoDrift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    /* 시설 그리드·장비 사진 — 같은 원리로 폭만 다르게 */
+    .equipImg :global(img),
+    .facilityCell :global(img) {
+      animation: photoDriftSoft linear both;
+      animation-timeline: view();
+      animation-range: entry 10% exit 90%;
+    }
+    /* 의식하진정 배경 — 밴드가 지나는 동안 서서히 당겨진다 */
+    .sedationBg :global(img) {
+      animation: bandPull linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes photoDrift {
+  from { transform: scale(1.16) translateY(-2.4%); }
+  to { transform: scale(1.02) translateY(2.4%); }
+}
+@keyframes photoDriftSoft {
+  from { transform: scale(1.1) translateY(-1.6%); }
+  to { transform: scale(1) translateY(1.6%); }
+}
+@keyframes bandPull {
+  from { transform: scale(1.18); }
+  to { transform: scale(1.02); }
+}
+
+/* 히어로 제목 — 글자 단위 등장(읽기에서는 aria-label로 문장을 통째로 준다) */
+.heroChar {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  transition: opacity 0.7s var(--ease-soft), transform 0.9s var(--ease-soft);
+}
+.heroTitle[data-loaded='true'] .heroChar {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroChar { opacity: 1; transform: none; transition: none; }
 }

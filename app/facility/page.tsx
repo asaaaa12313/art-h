@@ -259,7 +259,7 @@ export default function FacilityPage() {
           padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
         }
         .novaInner {
-          max-width: 1100px; margin: 0 auto;
+          max-width: 1300px; margin: 0 auto;
           display: grid; grid-template-columns: 300px 1fr;
           gap: clamp(36px,5vw,72px); align-items: center;
         }
@@ -322,7 +322,7 @@ export default function FacilityPage() {
           padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
         }
         .gbtInner {
-          max-width: 1100px; margin: 0 auto;
+          max-width: 1300px; margin: 0 auto;
           display: grid; grid-template-columns: 1fr 360px;
           gap: clamp(36px,5vw,72px); align-items: center;
         }
@@ -366,7 +366,7 @@ export default function FacilityPage() {
           padding: clamp(60px,8vw,100px) clamp(24px,5vw,80px);
         }
         .scanInner {
-          max-width: 1100px; margin: 0 auto;
+          max-width: 1300px; margin: 0 auto;
           display: grid; grid-template-columns: 1.1fr 0.9fr;
           gap: clamp(36px,5vw,72px); align-items: start;
         }
