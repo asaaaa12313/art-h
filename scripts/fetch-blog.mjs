@@ -35,6 +35,11 @@ const UA =
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/** 응답이 없으면 20초에 끊는다 — 안 그러면 주간 작업이 몇 시간씩 매달려 있는다 */
+function fetchWithTimeout(url, opts = {}, ms = 20000) {
+  return fetch(url, { ...opts, signal: AbortSignal.timeout(ms) });
+}
+
 /* ── 본문에 남길 태그와 속성 ───────────────────────────────
    네이버 에디터가 붙이는 style·class·data-*는 우리 디자인과 충돌하므로 전부 버린다.
    남기는 건 글의 뼈대(문단·제목·목록·표)와 사진·링크뿐이다. */
@@ -43,6 +48,23 @@ const ALLOWED_TAGS = new Set([
   'ul', 'ol', 'li', 'blockquote', 'figure', 'figcaption',
   'img', 'br', 'a', 'hr', 'table', 'thead', 'tbody', 'tr', 'td', 'th',
 ]);
+/** 본문 링크에 허용하는 주소 — 이 밖의 스킴(javascript:, data: 등)은 링크를 벗긴다 */
+const SAFE_HREF = /^(https?:\/\/|mailto:|tel:)/i;
+
+/** 사진을 가져올 수 있는 곳 — next.config.mjs의 images.remotePatterns와 같은 목록이어야 한다.
+ *  여기 없는 곳의 사진을 대표사진으로 저장하면, 배포할 때 next/image가 막아 빌드가 통째로 실패한다.
+ *  주 1회 자동으로 도는 작업이라 사람이 없는 시각에 터진다. */
+const ALLOWED_IMG_HOSTS = [
+  'blogthumb.pstatic.net',
+  'mblogthumb-phinf.pstatic.net',
+  'postfiles.pstatic.net',
+  'phinf.pstatic.net',
+];
+
+function imgHostOk(url) {
+  try { return ALLOWED_IMG_HOSTS.includes(new URL(url).hostname); } catch { return false; }
+}
+
 const ALLOWED_ATTRS = {
   img: ['src', 'alt'],
   a: ['href'],
@@ -87,8 +109,14 @@ function normalizeSrc(src) {
   let s = src;
   if (s.startsWith('//')) s = `https:${s}`;
   if (s.startsWith('/')) s = `https://m.blog.naver.com${s}`;
-  const small = /blogthumb\.pstatic\.net/i.test(s);
-  const want = small ? 'w3' : 'w773';
+  if (!imgHostOk(s)) return null;   // 모르는 곳의 사진은 아예 쓰지 않는다
+  const host = new URL(s).hostname;
+  // 크기 값을 바꿔도 되는 곳만 바꾼다. 다른 서버(phinf 등)는 우리가 아는 값이 없어
+  // 임의로 w773을 붙이면 404가 나고 사진이 통째로 사라진다 — 원래 주소를 그대로 둔다.
+  const want =
+    host === 'blogthumb.pstatic.net' ? 'w3' :
+    host === 'mblogthumb-phinf.pstatic.net' ? 'w773' : null;
+  if (!want) return s;
   if (/([?&])type=/i.test(s)) return s.replace(/([?&])type=[^&]*/i, `$1type=${want}`);
   return `${s}${s.includes('?') ? '&' : '?'}type=${want}`;
 }
@@ -161,8 +189,10 @@ function sanitize($, $root, title) {
     }
 
     if (tag === 'a') {
-      const href = el.attribs?.href || '';
-      if (!href || href.startsWith('#')) { $el.replaceWith($el.contents()); return; }
+      const href = (el.attribs?.href || '').trim();
+      // 스킴을 확인하지 않으면 원문에 섞인 javascript: 링크가 우리 도메인에서 실행된다.
+      // 허용 목록 방식으로만 통과시키고, 나머지는 링크를 벗겨 글자만 남긴다.
+      if (!href || !SAFE_HREF.test(href)) { $el.replaceWith($el.contents()); return; }
       el.attribs = { href, rel: 'nofollow noopener', target: '_blank' };
       return;
     }
@@ -206,7 +236,7 @@ const toText = (html) =>
 
 async function fetchBody(logNo, title) {
   const url = `https://m.blog.naver.com/${BLOG_ID}/${logNo}`;
-  const res = await fetch(url, { headers: { 'user-agent': UA } });
+  const res = await fetchWithTimeout(url, { headers: { 'user-agent': UA } });
   if (!res.ok) throw new Error(`본문 ${res.status}`);
   const $ = load(await res.text());
   const $root =
@@ -224,13 +254,34 @@ async function fetchBody(logNo, title) {
   return { bodyHtml, bodyText, images };
 }
 
+/* ── 의료광고 금칙 표현 검사 ────────────────────────────
+   블로그 글이 검수 없이 홈페이지 본문이 되는 구조라, 의료법 제56조가 금지하는
+   표현(최상급·보장·비교·환자 유인)이 섞이면 병원이 그대로 책임을 진다.
+   걸린 글은 홈페이지에 싣지 않고 `needsReview`로 표시해 두었다가 사람이 확인한다. */
+const BANNED = [
+  /최고(의|급)?\s*(치과|기술|의료진)?/, /유일(한|무이)/, /최초(로)?\s*(도입|개발)/,
+  /100\s*%/, /완치/, /부작용\s*(이)?\s*(전혀)?\s*없/, /보장(합니다|해\s*드립니다|해드립니다)/,
+  /(무통|안\s*아픈)\s*(치료|시술)\s*(보장|약속)/,
+  /타\s*(병원|치과)\s*(보다|대비)/, /(가장|제일)\s*(저렴|싼|빠른|좋은)/,
+  /(이벤트|할인|무료\s*시술|사은품|경품)/, /(치료|시술)\s*후기/,
+  /전문\s*병원/,
+];
+function screenAd(text) {
+  const hits = [];
+  for (const re of BANNED) {
+    const m = String(text || '').match(re);
+    if (m) hits.push(m[0].trim());
+  }
+  return hits;
+}
+
 async function main() {
   // 이미 받아 둔 것 읽기 — 지워진 글도 홈페이지에서는 남겨 둔다(주소가 죽지 않게)
   let prev = [];
   try { prev = JSON.parse(await fs.readFile(OUT, 'utf8')).posts || []; } catch { /* 첫 실행 */ }
   const byId = new Map(prev.map((p) => [p.id, p]));
 
-  const res = await fetch(RSS_URL, { headers: { 'user-agent': UA } });
+  const res = await fetchWithTimeout(RSS_URL, { headers: { 'user-agent': UA } });
   if (!res.ok) throw new Error(`RSS ${res.status}`);
   const xml = await res.text();
   const items = xml.match(/<item>[\s\S]*?<\/item>/gi) || [];
@@ -273,6 +324,13 @@ async function main() {
       post.summary = b.bodyText.slice(0, 150);
       post.wordCount = b.bodyText.length;
       post.fetchedAt = new Date().toISOString();
+      const hits = screenAd(`${title} ${b.bodyText}`);
+      if (hits.length) {
+        post.needsReview = hits;
+        console.warn(`  ⚠︎ 광고 표현 검토 필요(홈페이지에 싣지 않음): ${title.slice(0, 26)}… — ${hits.join(', ')}`);
+      } else {
+        delete post.needsReview;
+      }
       bodies += 1;
       console.log(`  본문 받음: ${title.slice(0, 34)}…  (${b.bodyText.length}자)`);
     } catch (e) {
@@ -281,14 +339,17 @@ async function main() {
     await sleep(DELAY);
   }
 
+  const flagged = [...byId.values()].filter((p) => p.needsReview?.length).length;
   const posts = [...byId.values()]
     .filter((p) => p.bodyHtml)                       // 본문이 없는 글은 페이지를 만들지 않는다
+    .filter((p) => !p.needsReview?.length)           // 광고 표현이 걸린 글은 사람이 볼 때까지 뺀다
     .sort((a, b) => (a.date < b.date ? 1 : -1))
     .slice(0, MAX_POSTS);
 
   await fs.mkdir(path.dirname(OUT), { recursive: true });
   await fs.writeFile(OUT, `${JSON.stringify({ blogId: BLOG_ID, updatedAt: new Date().toISOString(), posts }, null, 2)}\n`);
-  console.log(`저장 완료: ${posts.length}건 (새 글 ${added} · 본문 새로 받음 ${bodies}) → ${OUT}`);
+  console.log(`저장 완료: ${posts.length}건 (새 글 ${added} · 본문 새로 받음 ${bodies}` +
+    `${flagged ? ` · 광고 표현으로 보류 ${flagged}` : ''}) → ${OUT}`);
 }
 
 main().catch((e) => { console.error('실패:', e.message); process.exit(1); });

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { SITE } from '@/lib/copy';
 import Reveal from '@/components/Reveal';
 import styles from './Footer.module.css';
-import { BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/channels';
 
 export default function Footer() {
   const tel = SITE.phone.replace(/-/g, '');

@@ -5,6 +5,12 @@ import Breadcrumb from '@/components/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import { getAllPosts, getPost, getOtherPosts, BLOG_URL } from '@/lib/blog';
+
+/** 주소가 잘못 인코딩돼 있으면(예: /blog/%%%) decodeURIComponent가 오류를 던져 500이 된다.
+ *  그런 주소는 그냥 없는 글로 취급한다. */
+function safeDecode(v: string): string {
+  try { return decodeURIComponent(v); } catch { return v; }
+}
 import { jsonLdScript } from '@/lib/jsonld';
 import { SITE } from '@/lib/copy';
 
@@ -20,7 +26,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(decodeURIComponent(slug));
+  const post = getPost(safeDecode(slug));
   if (!post) return {};
   return {
     title: post.title,
@@ -38,7 +44,7 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(decodeURIComponent(slug));
+  const post = getPost(safeDecode(slug));
   if (!post) notFound();
 
   const others = getOtherPosts(post.slug, 3);

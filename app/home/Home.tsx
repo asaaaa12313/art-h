@@ -128,14 +128,14 @@ export default function Home({ posts = [] }: { posts?: BlogPost[] }) {
             </svg>
           </div>
 
+          {/* tab 규약(패널·화살표 이동)을 갖추지 않았으므로 tablist로 알리지 않는다 */}
           {heroState && heroState.total > 1 && (
-            <div className={styles.heroDots} role="tablist" aria-label="히어로 장면 선택">
+            <div className={styles.heroDots} role="group" aria-label="첫 화면 장면 선택">
               {Array.from({ length: heroState.total }).map((_, i) => (
                 <button
                   key={i}
                   type="button"
-                  role="tab"
-                  aria-selected={i === heroState.index}
+                  aria-current={i === heroState.index ? 'true' : undefined}
                   aria-label={`${i + 1}번째 장면 보기`}
                   className={styles.heroDot}
                   data-on={i === heroState.index}

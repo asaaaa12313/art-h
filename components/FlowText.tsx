@@ -28,7 +28,10 @@ type Props = {
  */
 export default function FlowText({ text, className, step = 0.07, cycle = 5, offset = 0, style }: Props) {
   return (
-    <span className={`${styles.flow} ${className || ''}`} aria-label={text} style={style}>
+    <span className={`${styles.flow} ${className || ''}`} style={style}>
+      {/* span에 붙인 aria-label은 읽기 도구에 따라 무시된다.
+          그래서 진짜 문장을 눈에만 안 보이게 함께 두고, 쪼갠 글자는 읽기에서 감춘다. */}
+      <span className={styles.sr}>{text}</span>
       {[...text].map((ch, i) => (
         <span
           key={i}

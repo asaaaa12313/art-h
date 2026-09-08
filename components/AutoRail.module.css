@@ -56,3 +56,31 @@
   .wrap::before,
   .wrap::after { width: 40px; }
 }
+
+/* 멈춤 단추 — 카드 줄 오른쪽 아래. 마우스가 없는 기기에서 유일한 멈춤 수단이다 */
+.pause {
+  position: absolute;
+  right: 20px;
+  bottom: 16px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 13px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--c-navy);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.pause:hover,
+.pause:focus-visible { background: var(--c-navy); color: #fff; border-color: var(--c-navy); }
+
+@media (max-width: 767px) {
+  .pause { right: 12px; bottom: 10px; height: 30px; padding: 0 11px; font-size: 12px; }
+}

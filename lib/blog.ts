@@ -26,9 +26,7 @@ export type BlogPost = {
   fetchedAt?: string;
 };
 
-export const BLOG_ID = 'lovenpositive';
-export const BLOG_URL = `https://blog.naver.com/${BLOG_ID}`;
-export const INSTAGRAM_URL = 'https://www.instagram.com/arthdental';
+export { BLOG_ID, BLOG_URL, INSTAGRAM_URL } from './channels';
 
 const ALL = (data.posts as BlogPost[]) || [];
 

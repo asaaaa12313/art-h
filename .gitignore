@@ -11,3 +11,6 @@ next-env.d.ts
 
 # 촬영 원본 소스 (웹 배포 제외 — public/media로 가공본만 반영)
 raw-assets/
+
+# 환경변수 백업 — 실수로 올라가면 안 된다
+.env*.bak*

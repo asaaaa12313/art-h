@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
-import { BLOG_URL, INSTAGRAM_URL, type BlogPost } from '@/lib/blog';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/channels';
+import type { BlogPost } from '@/lib/blog';
 import styles from './BlogBand.module.css';
 
 /**

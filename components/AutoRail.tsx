@@ -25,6 +25,8 @@ type Props = {
 export default function AutoRail({ children, seconds = 46, className, label }: Props) {
   const [still, setStill] = useState(false);
   const [paused, setPaused] = useState(false);
+  /** 멈춤 단추로 붙잡아 둔 상태 — 마우스를 떼도 풀리지 않는다 */
+  const [held, setHeld] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function AutoRail({ children, seconds = 46, className, label }: P
       ref={wrapRef}
       className={`${styles.wrap} ${className || ''}`}
       data-still={still}
-      data-paused={paused}
+      data-paused={paused || held}
       role="group"
       aria-label={label}
       onMouseEnter={() => setPaused(true)}
@@ -50,13 +52,38 @@ export default function AutoRail({ children, seconds = 46, className, label }: P
     >
       <div className={styles.track} style={{ animationDuration: `${seconds}s` }}>
         <div className={styles.set}>{children}</div>
-        {/* 두 번째 벌은 이음매를 메우기 위한 복제라 읽기에서는 감춘다 */}
+        {/* 두 번째 벌은 이음매를 메우기 위한 복제다.
+            읽기에서 감추는 것만으로는 부족하다 — inert를 함께 걸지 않으면
+            키보드 Tab이 화면에 읽히지도 않는 링크로 들어가 갇힌다. */}
         {!still && (
-          <div className={styles.set} aria-hidden="true">
+          <div className={styles.set} aria-hidden="true" inert>
             {children}
           </div>
         )}
       </div>
+
+      {/* 멈춤 단추 — 마우스가 없는 기기에는 멈출 방법이 아예 없었다.
+          5초 넘게 저절로 움직이는 것에는 멈출 수단이 있어야 한다(WCAG 2.2.2). */}
+      {!still && (
+        <button
+          type="button"
+          className={styles.pause}
+          aria-pressed={held}
+          onClick={() => setHeld((v) => !v)}
+        >
+          {held ? (
+            <>
+              <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z" /></svg>
+              다시 흐르게
+            </>
+          ) : (
+            <>
+              <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z" /></svg>
+              멈춤
+            </>
+          )}
+        </button>
+      )}
     </div>
   );
 }

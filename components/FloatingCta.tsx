@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { SITE } from '@/lib/copy';
-import { BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/channels';
 import styles from './FloatingCta.module.css';
 
 // 네이버 예약 URL 우선, 없으면 플레이스로 폴백

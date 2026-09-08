@@ -1,5 +1,5 @@
 .wrap {
-  position: fixed; inset: 0; z-index: 1000;
+  position: fixed; inset: 0; z-index: 1500;  /* 상담 레일(1200)보다 위 — 전체화면 모달이 가려지면 안 된다 */
   background: rgba(10, 18, 48, 0.92);
   backdrop-filter: blur(8px);
   display: flex; flex-direction: column;

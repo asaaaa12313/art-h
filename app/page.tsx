@@ -6,7 +6,12 @@ import { getRecentPosts, BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
 
 // 홈 canonical — layout에 두면 하위 페이지가 상속받아 전부 '/'가 되므로 페이지마다 명시한다.
 export const metadata: Metadata = {
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    // 각 언어판이 서로를 가리켜야 검색엔진이 같은 병원의 다른 언어로 인정한다.
+    // 한쪽만 선언하면 hreflang 묶음이 통째로 무시된다.
+    languages: { ko: '/', en: '/en', ja: '/ja', 'zh-Hans': '/zh' },
+  },
 };
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';

@@ -8,7 +8,7 @@ import { LOCALES, LOCALE_LABEL, LOCALE_HTML_LANG } from '@/lib/i18n';
 
 import styles from './Nav.module.css';
 import FlowText from './FlowText';
-import { BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/channels';
 
 export default function Nav() {
   const pathname = usePathname();
