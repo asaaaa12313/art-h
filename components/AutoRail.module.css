@@ -13,10 +13,12 @@
 }
 .wrap[data-paused='true'] .track { animation-play-state: paused; }
 
+/* 위아래 여백은 마우스를 올렸을 때 커지는 카드가 잘리지 않게 비워 둔 자리다
+   (가로만 자르고 세로는 열어 둘 수 없어서, 잘리는 대신 자리를 만든다) */
 .set {
   display: flex;
   gap: 28px;
-  padding: 0 14px;
+  padding: 46px 14px;
 }
 
 @keyframes railFlow {
@@ -50,7 +52,7 @@
 .wrap::after { right: 0; background: linear-gradient(270deg, var(--c-warm), rgba(235, 238, 247, 0)); }
 
 @media (max-width: 767px) {
-  .set { gap: 16px; padding: 0 10px; }
+  .set { gap: 16px; padding: 20px 10px; }
   .wrap::before,
   .wrap::after { width: 40px; }
 }

@@ -3,9 +3,10 @@
    (아이콘만으로는 무엇인지 모르는 이용자가 생긴다). ===== */
 .rail {
   position: fixed;
-  /* 스크롤바를 늘 보이게 쓰는 환경에서도 오른쪽이 붙어 보이지 않도록 여유를 둔다
-     (html의 scrollbar-gutter와 함께 동작한다) */
-  right: max(14px, env(safe-area-inset-right));
+  /* 오른쪽 여백을 화면 폭에 비례해 넉넉히 잡는다.
+     스크롤바 자리·브라우저 확대 배율에 따라 몇 십 픽셀이 먹히는 경우가 있어,
+     고정값(12·14px)으로는 큰 화면에서 상자가 화면 끝에 붙어 잘려 보였다. */
+  right: max(clamp(16px, 2vw, 40px), env(safe-area-inset-right));
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
