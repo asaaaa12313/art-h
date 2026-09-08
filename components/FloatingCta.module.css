@@ -3,7 +3,7 @@
    (아이콘만으로는 무엇인지 모르는 이용자가 생긴다). ===== */
 .rail {
   position: fixed;
-  right: 10px;
+  right: max(12px, env(safe-area-inset-right));
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
@@ -16,8 +16,9 @@
 .railBox {
   display: flex;
   flex-direction: column;
-  width: 76px;
-  overflow: hidden;
+  width: auto;
+  min-width: 78px;
+  max-width: calc(100vw - 28px);
   background: var(--c-accent-sub);
   border-radius: 8px;
   box-shadow: 0 14px 34px rgba(12, 45, 87, 0.28);
@@ -34,13 +35,15 @@ button.railBtn {
 }
 .railBtn {
   position: relative;
+  /* 칸이 줄어들면 전화번호 아랫줄이 잘린다 — 절대 줄어들지 않게 못 박는다 */
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  height: 74px;
-  padding: 0 4px;
+  gap: 6px;
+  height: 66px;
+  padding: 0 9px;
   color: #fff;
   text-decoration: none;
   cursor: pointer;
@@ -59,9 +62,17 @@ button.railBtn {
   outline-offset: -3px;
 }
 
+/* 상자에 overflow:hidden을 걸면 진료시간 팝오버가 상자 밖으로 못 나와 통째로 사라진다.
+   그래서 자르지 않고, 맨 위·맨 아래 칸에만 둥근 모서리를 직접 준다. */
+.railBox > *:first-child,
+.railBox > *:first-child .railBtn { border-radius: 8px 8px 0 0; }
+.railBox > *:last-child,
+.railBox > *:last-child .railBtn { border-radius: 0 0 8px 8px; }
+
 /* 전화 — 레퍼런스처럼 번호를 세로 3줄로 적어 둔다(누르지 않아도 번호가 읽힌다) */
 .railPrimary {
   height: auto;
+  min-height: 0;
   padding: 16px 4px 18px;
   gap: 8px;
 }
@@ -168,6 +179,38 @@ button.railBtn {
   flex-shrink: 0;
 }
 
+/* 인스타 뱃지 — 공식 색 그대로(보라→분홍→주황). 글리프는 흰색으로 얹는다 */
+.instaBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  color: #fff;
+  background: radial-gradient(circle at 28% 106%, #FDD776 0%, #F7913C 18%, #E8483F 38%, #CE2F84 60%, #8A3AB9 82%, #5A55C6 100%);
+  flex-shrink: 0;
+}
+.instaBadge svg { display: block; }
+
+/* 네이버 블로그 뱃지 — 블로그 고유 초록색 */
+.blogBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  background: #03c75a;
+  color: #fff;
+  font-family: var(--f-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 /* 카카오 뱃지 — 채널 주소가 생기면 노출된다 */
 .kakaoBadge {
   width: 26px;
@@ -219,8 +262,10 @@ button.railBtn {
 
 /* 좁은 데스크톱 — 규격 한 단 축소 */
 @media (max-width: 1279px) {
-  .railBox { width: 68px; }
-  .railBtn { height: 66px; }
+  .railBox { min-width: 70px; }
+  .railBtn { height: 60px; }
+  /* 전화 칸만은 고정 높이를 다시 풀어 준다 — 번호 세 줄이 들어가야 한다 */
+  .railBox .railPrimary { height: auto; padding: 13px 6px 15px; }
   .icon,
   .naverBadge,
   .kakaoBadge { width: 23px; height: 23px; }

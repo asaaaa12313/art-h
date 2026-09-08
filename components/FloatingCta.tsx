@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { SITE } from '@/lib/copy';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
 import styles from './FloatingCta.module.css';
 
 // 네이버 예약 URL 우선, 없으면 플레이스로 폴백
@@ -86,6 +87,34 @@ export default function FloatingCta() {
               <span className={styles.railLabel}>카톡상담</span>
             </a>
           )}
+
+          <a
+            href={BLOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.railBtn}
+            aria-label="네이버 블로그 (새 창)"
+          >
+            <span className={styles.blogBadge} aria-hidden="true">blog</span>
+            <span className={styles.railLabel}>블로그</span>
+          </a>
+
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.railBtn}
+            aria-label="인스타그램 (새 창)"
+          >
+            <span className={styles.instaBadge} aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5.4" fill="none" stroke="currentColor" strokeWidth="2" />
+                <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" strokeWidth="2" />
+                <circle cx="17.3" cy="6.7" r="1.35" fill="currentColor" />
+              </svg>
+            </span>
+            <span className={styles.railLabel}>인스타</span>
+          </a>
 
           {/* 진료시간 — hover로도 열리지만, 터치·키보드에서는 hover가 없으므로 상태로도 연다 */}
           {/* 목록을 버튼 안에 넣으면 무효 마크업이 된다 — 팝오버는 형제로 두고 감싸는 층에서 hover를 받는다 */}

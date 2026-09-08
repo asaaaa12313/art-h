@@ -391,3 +391,55 @@
   /* 로고는 왼쪽, 햄버거는 오른쪽 */
   .inner { justify-content: space-between; }
 }
+
+/* 메뉴 끝의 바깥 채널 — 메뉴 글자와 섞이지 않게 선으로 한 번 끊고 아이콘만 둔다 */
+.snsWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  padding-left: 14px;
+  border-left: 1px solid var(--c-line);
+}
+.snsLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  color: var(--c-dark);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.snsLink:hover,
+.snsLink:focus-visible { background: var(--c-warm); color: var(--c-accent-t); }
+.snsN {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 4px;
+  background: #03c75a;
+  color: #fff;
+  font-family: var(--f-display);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+}
+@media (max-width: 1279px) {
+  .snsWrap { margin-left: 2px; padding-left: 10px; }
+}
+
+/* 인스타 — 공식 색 그대로(보라→분홍→주황) */
+.snsInsta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 6px;
+  color: #fff;
+  background: radial-gradient(circle at 28% 106%, #FDD776 0%, #F7913C 18%, #E8483F 38%, #CE2F84 60%, #8A3AB9 82%, #5A55C6 100%);
+}
+.snsInsta svg { display: block; }

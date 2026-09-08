@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Home from './home/Home';
 import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
-import { getBlogPosts, BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
+import { getRecentPosts, BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
 
 // 홈 canonical — layout에 두면 하위 페이지가 상속받아 전부 '/'가 되므로 페이지마다 명시한다.
 export const metadata: Metadata = {
@@ -82,9 +82,9 @@ const jsonLd = {
   ],
 };
 
-export default async function Page() {
-  // 네이버 블로그 최신 글 — 서버에서 읽어 넘긴다(6시간마다 갱신, 실패하면 빈 배열)
-  const posts = await getBlogPosts(3);
+export default function Page() {
+  // 저장해 둔 블로그 글 중 최신 3건 (수집은 매주 월요일 자동 실행)
+  const posts = getRecentPosts(3);
 
   return (
     <>

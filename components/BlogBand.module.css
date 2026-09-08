@@ -144,6 +144,7 @@
   gap: 12px;
   margin-top: clamp(38px, 4.5vw, 56px);
 }
+.linkAll,
 .linkBlog,
 .linkInsta {
   display: inline-flex;
@@ -157,10 +158,15 @@
   text-decoration: none;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+.linkAll em,
 .linkBlog em,
 .linkInsta em {
   font-style: normal;
   transition: transform 0.3s var(--ease-out);
+}
+.linkAll {
+  background: var(--c-dark);
+  color: #fff;
 }
 .linkBlog {
   background: var(--c-naver);
@@ -190,8 +196,10 @@
 .badgeI { color: currentColor; }
 
 @media (hover: hover) {
+  .linkAll:hover,
   .linkBlog:hover,
   .linkInsta:hover { background: var(--c-navy); color: #fff; border-color: var(--c-navy); }
+  .linkAll:hover em,
   .linkBlog:hover em,
   .linkInsta:hover em { transform: translateX(4px); }
 }

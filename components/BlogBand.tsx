@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 import { BLOG_URL, INSTAGRAM_URL, type BlogPost } from '@/lib/blog';
@@ -29,13 +30,7 @@ export default function BlogBand({ posts }: { posts: BlogPost[] }) {
           <ul className={styles.list}>
             {posts.map((p, i) => (
               <Reveal key={p.link} as="li" variant="fold" delay={0.1 + i * 0.09} duration="0.9s" style={{ height: '100%' }}>
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.card}
-                  aria-label={`블로그 글 — ${p.title} (새 창)`}
-                >
+                <Link href={`/blog/${encodeURIComponent(p.slug)}`} className={styles.card} aria-label={`${p.title} 읽기`}>
                   <span className={styles.thumb}>
                     {p.thumb ? (
                       <Image src={p.thumb} alt="" fill sizes="(max-width: 900px) 100vw, 420px" style={{ objectFit: 'cover' }} />
@@ -47,7 +42,7 @@ export default function BlogBand({ posts }: { posts: BlogPost[] }) {
                   <strong className={styles.cardTitle}>{p.title}</strong>
                   <span className={styles.summary}>{p.summary}</span>
                   <span className={styles.more} aria-hidden="true">글 보기 →</span>
-                </a>
+                </Link>
               </Reveal>
             ))}
           </ul>
@@ -55,6 +50,10 @@ export default function BlogBand({ posts }: { posts: BlogPost[] }) {
 
         <Reveal variant="fade" delay={0.3}>
           <div className={styles.links}>
+            <Link href="/blog" className={styles.linkAll}>
+              글 전체 보기
+              <em aria-hidden="true">→</em>
+            </Link>
             <a href={BLOG_URL} target="_blank" rel="noopener noreferrer" className={styles.linkBlog}>
               <span className={styles.badgeN} aria-hidden="true">N</span>
               네이버 블로그

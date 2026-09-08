@@ -2,12 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    // 네이버 블로그 최신 글의 대표 사진 — 우리 서버에 없는 이미지라 출처를 열어 둬야 한다.
-    // 이 두 곳만 허용한다(아무 주소나 열면 우리 도메인이 남의 이미지 배달에 쓰인다).
-    remotePatterns: [
-      { protocol: 'https', hostname: 'blogthumb.pstatic.net' },
-      { protocol: 'https', hostname: 'postfiles.pstatic.net' },
-    ],
+    // 블로그 글의 대표 사진 — 네이버 이미지 서버에 있다.
+    // 서버 이름이 글마다 조금씩 다르므로(blogthumb / mblogthumb-phinf / phinf …)
+    // 네이버 CDN 도메인만 통째로 열어 둔다. 다른 곳은 열지 않는다 —
+    // 아무 주소나 허용하면 우리 도메인이 남의 이미지 배달에 쓰인다.
+    remotePatterns: [{ protocol: 'https', hostname: '**.pstatic.net' }],
   },
 };
 

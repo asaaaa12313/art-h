@@ -1,4 +1,5 @@
 import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED, HOME_DEFINE, PRICING, CERTIFICATE_FEES, PRICING_UPDATED } from '@/lib/copy';
+import { getRecentPosts } from '@/lib/blog';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
 
@@ -10,6 +11,11 @@ export const dynamic = 'force-static';
  * 데이터는 lib/copy.ts를 그대로 참조하므로 본문 수정 시 자동 반영된다.
  */
 export function GET() {
+  // AI가 이 병원이 무엇을 다루는지 최신 글 제목으로도 확인할 수 있게 5건만 적는다
+  const recentPosts = getRecentPosts(5)
+    .map((p) => `- [${p.title}](${SITE_URL}/blog/${encodeURIComponent(p.slug)}) (${p.date})`)
+    .join('\n');
+
   const doctors = DOCTORS.map((d) => {
     const certs = d.careerGroups
       .filter((g) => g.label === '자격')
@@ -72,7 +78,11 @@ ${treatments}
 - [진료과목](${SITE_URL}/treatments)
 - [시설](${SITE_URL}/facility)
 - [오시는 길](${SITE_URL}/location)
+- [치과 이야기 — 병원이 직접 쓴 글 모음](${SITE_URL}/blog)
 - [개인정보처리방침](${SITE_URL}/privacy)
+
+## 최근에 쓴 글
+${recentPosts}
 `;
 
   return new Response(body, {
