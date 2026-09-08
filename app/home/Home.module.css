@@ -491,6 +491,18 @@
 }
 .txImg { position: absolute; inset: 0; }
 .txImg :global(img) { transition: transform 0.85s cubic-bezier(0.16, 0.84, 0.28, 1); }
+/* 사진 위에 겹쳐 두고, 재생될 때만 서서히 나타난다(툭 바뀌지 않게) */
+.txVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.txVideo[data-on='true'] { opacity: 1; }
 /* 사진 위 글자라 아래쪽을 깊게 눌러 준다 */
 .txOverlay {
   position: absolute; inset: 0;

@@ -7,14 +7,22 @@
      스크롤바 자리·브라우저 확대 배율에 따라 몇 십 픽셀이 먹히는 경우가 있어,
      고정값(12·14px)으로는 큰 화면에서 상자가 화면 끝에 붙어 잘려 보였다. */
   right: max(clamp(16px, 2vw, 40px), env(safe-area-inset-right));
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 50;
+
+  /* 레일은 언제나 맨 위에 뜬다.
+     이전에는 헤더(z-index 999)보다 아래라, 창이 낮으면 레일 윗부분이
+     헤더에 덮여 잘려 보였다. 헤더보다 위로 올리고,
+     자리 자체도 헤더 아래에서 시작하도록 잡아 겹칠 일을 없앤다. */
+  z-index: 1200;
+  top: calc(var(--header-top-h) + var(--header-h) + 12px);
+  bottom: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 14px;
+  pointer-events: none;   /* 빈 칸은 통과시키고, 실제 버튼만 받는다 */
 }
+.rail > * { pointer-events: auto; }
 
 .railBox {
   display: flex;
@@ -335,4 +343,33 @@ button.railBtn {
   .railTop {
     transition: none;
   }
+}
+
+
+/* 창 높이가 낮을 때 — 칸을 줄여 여섯 개가 모두 화면에 들어오게 한다.
+   줄이지 않으면 위아래가 잘리거나 TOP 버튼이 화면 밖으로 나간다. */
+@media (max-height: 820px) {
+  .railBtn { height: 58px; }
+  .railLabel { font-size: 10.5px; }
+  .railPrimary { padding: 12px 6px 14px; }
+  .railPhoneNum { font-size: 14px; }
+}
+@media (max-height: 720px) {
+  .railBtn { height: 50px; gap: 4px; }
+  .icon,
+  .naverBadge,
+  .blogBadge,
+  .instaBadge,
+  .kakaoBadge { width: 22px; height: 22px; }
+  .blogBadge { font-size: 9px; }
+  .railLabel { font-size: 10px; }
+  .railPhoneNum { font-size: 12.5px; }
+  .railTop { width: 46px; height: 46px; }
+  .railTop .icon { width: 22px; height: 22px; }
+  .rail { gap: 10px; }
+}
+@media (max-height: 620px) {
+  /* 더 낮아지면 이름을 접는다 — 아이콘만으로도 자리를 지키는 편이 잘리는 것보다 낫다 */
+  .railLabel { display: none; }
+  .railBtn { height: 44px; }
 }

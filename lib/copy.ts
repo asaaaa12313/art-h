@@ -151,6 +151,9 @@ export type Treatment = {
   bg: string;
   /** 진료과목 카드·목록·상세헤더 공통 대표 이미지 (v1.56 단일화) */
   card: string;
+  /** 홈 카드에 마우스를 올렸을 때 재생할 촬영본. 없으면 사진만 쓴다.
+   *  자동 재생하지 않고 hover에서만 켜기 때문에 첫 로딩에는 영향이 없다. */
+  cardVideo?: { mp4: string; mp4Mobile?: string };
   d: string;
   summary: string;
   intro: string;
@@ -188,6 +191,7 @@ export const TREATMENTS: Treatment[] = [
     en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
     sedationOk: true,
     card: '/media/images/still/implant-plan.jpg',
+    cardVideo: { mp4: '/media/video/implant-diag.mp4', mp4Mobile: '/media/video/implant-diag-720.mp4' },
     d: '디지털 가이드를 활용한 정밀 식립. 뼈이식·상악동거상 등 고난도 케이스도 안전하게.',
     summary: '상실된 자연치아의 자리를, 가장 가깝게 회복합니다.',
     intro: '임플란트는 상실된 자연치아를 대체하는 대표적인 방법입니다. 아트에이치치과는 구강악안면외과 전문의가 직접 계획하고 수술합니다. 3D CT로 골량과 신경 위치를 정밀하게 파악하고, 디지털 가이드를 제작해 예측 가능한 식립을 지향합니다.',
@@ -510,6 +514,7 @@ export const TREATMENTS: Treatment[] = [
     en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery', bg: V.equip,
     sedationOk: true,
     card: '/media/images/still/or-fullset-wide.jpg',
+    cardVideo: { mp4: '/media/video/oral-surgery-clinic.mp4', mp4Mobile: '/media/video/oral-surgery-clinic-720.mp4' },
     d: '3D CT 기반 정밀 진단. 매복 사랑니도 안전하게.',
     summary: '복잡한 매복 사랑니도, 안전하게.',
     intro: '사랑니는 위치와 방향에 따라 발치 난이도가 크게 달라집니다. 특히 신경관과 가까운 매복 사랑니는 3D CT 진단이 필수입니다. 구강악안면외과 전문의가 3D 영상 분석 후 안전한 경로로 발치합니다.',
@@ -609,6 +614,7 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'TMJ', ko: '턱관절치료', slug: 'tmj', bg: V.scan,
     card: '/media/images/still/explain-screen.jpg',
+    cardVideo: { mp4: '/media/video/tmj-care.mp4', mp4Mobile: '/media/video/tmj-care-720.mp4' },
     d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.',
     summary: '턱의 통증과 불편감, 원인부터 찾습니다.',
     intro: '턱관절 장애는 교합·습관·스트레스 등 복합적 원인에서 발생합니다. 일상에 지장을 주는 소리·통증·개구 장애가 지속된다면 조기 진단이 중요합니다. 영상 검사와 근육 검사를 통해 원인을 파악하고, 비수술적·보존적 치료를 우선합니다.',
@@ -748,6 +754,7 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'Sedation', ko: '의식하진정', slug: 'sedation', bg: V.surg,
     card: '/media/images/still/sedation-care.jpg',
+    cardVideo: { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' },
     d: '구강악안면외과 전문의가 진행하는 의식하진정(수면치료). 치과 공포로 진료를 미뤄오신 분들이 선택하는 방법입니다.',
     summary: '무섭다면, 진정 상태로 받는 방법이 있습니다.',
     intro: '의식하진정(Conscious Sedation)은 의식은 유지하되 긴장과 불안이 크게 줄어든 상태에서 치료받는 방법입니다. 아트에이치치과에서는 구강악안면외과 전문의가 진정과 수술을 함께 담당합니다. 치료 중에는 환자감시장치로 산소포화도·혈압·맥박을 계속 확인하고, 시린지펌프로 진정제 용량을 조절하며, 회복을 확인한 뒤 귀가를 안내합니다. 치과 공포가 크신 분, 구역질 반사가 심한 분, 여러 치아를 한 번에 치료해야 하는 분께 도움이 됩니다.',
@@ -857,6 +864,7 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,
     card: '/media/images/treatment-room/treatment-02.jpg',
+    cardVideo: { mp4: '/media/video/gbt-clinic.mp4', mp4Mobile: '/media/video/gbt-clinic-720.mp4' },
     reviewedBy: 0,
     reviewedOn: '2026-09-07',
     d: '에어플로우 스케일링과 체계적 치주 관리.',
@@ -954,6 +962,7 @@ export const TREATMENTS: Treatment[] = [
   {
     en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
     card: '/media/images/still/whitening-care.jpg',
+    cardVideo: { mp4: '/media/video/whitening-care.mp4', mp4Mobile: '/media/video/whitening-care-720.mp4' },
     reviewedBy: 0,
     reviewedOn: '2026-09-07',
     d: '전문가 오피스 미백으로 밝은 미소를 되찾아 드립니다.',

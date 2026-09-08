@@ -11,6 +11,7 @@ import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
 import AutoRail from '@/components/AutoRail';
 import Magnetic from '@/components/Magnetic';
+import HoverVideo from '@/components/HoverVideo';
 import BlogBand from '@/components/BlogBand';
 import type { BlogPost } from '@/lib/blog';
 import { SITE, TREATMENTS, DOCTORS, REVIEW_LINK, HERO_COPY, HOME_CALM, HOME_DEFINE, SEDATION_BAND, HOME_SPECIAL, HOME_EQUIPMENT } from '@/lib/copy';
@@ -277,6 +278,15 @@ export default function Home({ posts = [] }: { posts?: BlogPost[] }) {
             <Link key={t.slug} href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
               <div className={styles.txImg}>
                 <Photo src={t.card} alt={`${t.ko} 이미지`} sizes="(max-width: 768px) 78vw, 340px" />
+                {/* 촬영본이 있는 과목은 마우스를 올리면 사진 위에서 영상이 재생된다 */}
+                {t.cardVideo && (
+                  <HoverVideo
+                    mp4={t.cardVideo.mp4}
+                    mp4Mobile={t.cardVideo.mp4Mobile}
+                    poster={t.card}
+                    className={styles.txVideo}
+                  />
+                )}
                 <div className={styles.txOverlay} aria-hidden="true" />
                 <span className={styles.txNo}>{String(i + 1).padStart(2, '0')}</span>
               </div>
