@@ -24,6 +24,10 @@ export type BlogPost = {
   images?: { src: string; alt: string }[];
   wordCount?: number;
   fetchedAt?: string;
+  /** 글쓴이가 매긴 소제목을 그대로 옮긴 목차 (수집 때 뽑는다) */
+  keyPoints?: string[];
+  /** 이 글이 다루는 진료과목 slug — 관련 진료 안내를 붙이는 데 쓴다 */
+  topic?: string | null;
 };
 
 export { BLOG_ID, BLOG_URL, INSTAGRAM_URL } from './channels';

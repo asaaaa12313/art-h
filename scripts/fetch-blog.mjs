@@ -275,6 +275,98 @@ function screenAd(text) {
   return hits;
 }
 
+/* ── 글에서 뼈대 뽑기 ────────────────────────────────────
+   문장을 새로 쓰지 않는다. 글쓴이가 쓴 소제목과 문장을 그대로 옮겨 담을 뿐이다.
+   의료 내용이라 없는 말을 지어내면 그 순간 잘못된 의료 정보가 되기 때문이다.
+   여기서 만드는 것은 「이 글의 핵심」 목록과, 이 글이 어느 진료과목 이야기인지뿐이다.
+   문답은 만들지 않는다(아래 폐기 사유 참고). */
+
+const textOf = (html) => String(html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+/** 「🩺 1. 치료 전에는 …」 같은 번호 소제목. 글쓴이가 직접 나눈 목차다 */
+const HEAD_RE = /^[^\w가-힣]{0,4}\s*(\d{1,2})[.)]\s*(.{4,60})$/;
+
+/** 앞머리 장식 제거 — 이모지·번호(「🩺 3. 」)와 「Q. 」 같은 표식은 문장이 아니다.
+ *  Q는 \w라서 기호 제거 정규식에 걸리지 않으므로 따로 떼어 낸다. */
+function stripLead(t) {
+  return String(t)
+    .replace(/^[^\w가-힣]+/, '')
+    .replace(/^[QAqa][.)]\s*/, '')
+    .replace(/^\d{1,2}[.)]\s*/, '')
+    .trim();
+}
+
+/** 끝맺은 문장인지 — 소제목이 두 줄로 나뉘면 앞 조각만 잡혀 말이 끊긴다.
+ *  종결형으로 끝나지 않으면 「핵심」으로 쓰지 않는다. */
+const ENDS_OK = /(다|요|까|함|음|죠|네|\?|!|\.)\s*$/;
+const DANGLING = /(며|고|서|는|을|를|와|과|의|및|등|나|이|가|로|에|한|된|,)\s*$/;
+function isWholeLine(t) {
+  return t.length >= 8 && ENDS_OK.test(t) && !DANGLING.test(t);
+}
+
+function outline(bodyHtml) {
+  const paras = [...bodyHtml.matchAll(/<p>([\s\S]*?)<\/p>/g)].map((m) => textOf(m[1])).filter(Boolean);
+
+  // 1순위 — 글쓴이가 매긴 번호 소제목
+  const heads = [];
+  for (const t of paras) {
+    const m = t.match(HEAD_RE);
+    if (m) {
+      const t = stripLead(m[2]);
+      if (isWholeLine(t)) heads.push(t);
+    }
+  }
+  if (heads.length >= 3) return heads.slice(0, 5);
+
+  // 2순위 — 소제목이 없는 글: 스스로 던진 질문을 목차로 쓴다
+  const asks = paras
+    .map((t) => stripLead(t))
+    .filter((t) => t.endsWith('?') && t.length >= 12 && t.length <= 80);
+  if (asks.length >= 3) return asks.slice(0, 5);
+
+  // 셋 다 아니면 목록을 만들지 않는다.
+  // 아무 문장이나 「핵심」으로 올리면(생일파티 글의 「…바쁘게 하루를 보내지만,」)
+  // 읽는 사람에게 아무 정보도 주지 못하면서 글의 품질만 깎는다.
+  return [];
+}
+
+/* 글 안의 문답을 뽑아 쓰는 방식은 폐기했다.
+   네이버 에디터는 문장 중간에서 문단(<p>)을 끊기 때문에, 어디서 잘라도
+   「…반드시 발치해야 하는 것은 아닙니다. 다만, 다음과 같은 경우에는」처럼
+   조건이 사라진 채 끝나 뜻이 뒤집힌다(실측 99쌍 중 34쌍이 종결어미 없이 잘림).
+   의료 내용에서 이런 잘림은 잘못된 정보와 같으므로, 문답은 우리가 검수해 둔
+   과목별 FAQ(lib/copy.ts)만 쓴다. */
+
+/** 이 글이 어느 진료과목 이야기인지 — 관련 진료 안내를 붙이기 위해서다.
+ *  lib/copy.ts의 slug와 같은 값을 쓴다(화면에서 그 과목 정보를 찾아 보여 준다). */
+const TOPIC_KEYS = [
+  ['implant', ['임플란트', '뼈이식', '상악동', '골이식']],
+  // oral-surgery 페이지는 '사랑니 발치'다. '구강외과'는 진료과 이름일 뿐이라
+  // 구취·소개 글까지 끌어와 「사랑니 발치」 카드를 붙이게 되므로 판정에서 뺀다.
+  // '발치'도 임플란트·외상 글에 흔한 일반어라 제목 판정용(앞 3개)에서 제외한다.
+  ['oral-surgery', ['사랑니', '매복', '지치', '발치']],
+  ['root-canal', ['신경치료', '근관', '치수', '크라운']],
+  ['tmj', ['턱관절', '이갈이', '악관절', '턱에서']],
+  ['sedation', ['의식하진정', '수면치료', '수면마취', '치과공포', '진정치료']],
+  ['periodontics', ['잇몸', '치주', '스케일링', '치석', '풍치']],
+  ['whitening', ['미백', '화이트닝']],
+];
+/** 본문 빈도만 보면 「금간 치아」 글이 턱관절로, 「소아 충치」 글이 신경치료로 붙는다.
+ *  (실측 44건 중 8건 오분류) 그래서 **제목에 그 과목의 대표 낱말이 있을 때만** 연결한다.
+ *  애매하면 아무것도 붙이지 않는다 — 엉뚱한 과목 문답을 붙이는 것보다 없는 편이 낫다. */
+function topicOf(title, text) {
+  let best = null;
+  let bestN = 0;
+  for (const [slug, keys] of TOPIC_KEYS) {
+    // 제목에 대표 낱말(앞 3개)이 들어 있어야 후보가 된다
+    const inTitle = keys.slice(0, 3).some((k) => title.includes(k));
+    if (!inTitle) continue;
+    let n = 0;
+    for (const k of keys) n += (`${title} ${title} ${text.slice(0, 1500)}`.split(k).length - 1);
+    if (n > bestN) { bestN = n; best = slug; }
+  }
+  return bestN >= 3 ? best : null;
+}
+
 async function main() {
   // 이미 받아 둔 것 읽기 — 지워진 글도 홈페이지에서는 남겨 둔다(주소가 죽지 않게)
   let prev = [];
@@ -324,6 +416,9 @@ async function main() {
       post.summary = b.bodyText.slice(0, 150);
       post.wordCount = b.bodyText.length;
       post.fetchedAt = new Date().toISOString();
+      post.keyPoints = outline(b.bodyHtml);
+      delete post.selfQnA;   // 폐기한 항목이 예전 수집분에 남아 있을 수 있다
+      post.topic = topicOf(title, b.bodyText);
       const hits = screenAd(`${title} ${b.bodyText}`);
       if (hits.length) {
         post.needsReview = hits;
