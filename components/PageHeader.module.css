@@ -61,7 +61,7 @@
 
 .title {
   margin: 0;
-  font-size: 17px;
+  font-size: 18.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: #fff;
@@ -80,7 +80,7 @@
 @media (max-width: 600px) {
   .band { height: 220px; }
   .bar { height: 56px; }
-  .title { font-size: 15.5px; }
+  .title { font-size: 17px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bgInner,

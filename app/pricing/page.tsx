@@ -182,7 +182,7 @@ export default function PricingPage() {
           padding: clamp(56px, 7vw, 88px) clamp(24px, 5vw, 40px) clamp(72px, 9vw, 110px);
         }
         .prIntro {
-          margin: 28px 0 0; font-size: 15.5px; line-height: 1.95;
+          margin: 28px 0 0; font-size: 17px; line-height: 1.95;
           color: var(--c-text); word-break: keep-all;
         }
         .prNotes {
@@ -191,7 +191,7 @@ export default function PricingPage() {
           display: grid; gap: 10px;
         }
         .prNotes li {
-          font-size: 14.5px; line-height: 1.85; color: var(--c-text2); word-break: keep-all;
+          font-size: 16px; line-height: 1.85; color: var(--c-text2); word-break: keep-all;
         }
         .prJump {
           margin: 34px 0 0; display: flex; flex-wrap: wrap; gap: 8px;
@@ -209,13 +209,13 @@ export default function PricingPage() {
           color: var(--c-text);
         }
         .prLead {
-          margin: 0 0 18px; font-size: 14.5px; line-height: 1.85;
+          margin: 0 0 18px; font-size: 16px; line-height: 1.85;
           color: var(--c-text2); word-break: keep-all;
         }
         /* 표는 좁은 화면에서 가로로만 스크롤한다 — 본문이 옆으로 밀리지 않게 */
         .prScroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         .prTable {
-          width: 100%; border-collapse: collapse; font-size: 14.5px;
+          width: 100%; border-collapse: collapse; font-size: 16px;
           min-width: 520px;
         }
         .prTable th, .prTable td {
@@ -246,13 +246,13 @@ export default function PricingPage() {
           color: #fff; word-break: keep-all;
         }
         .prAsk p {
-          margin: 0 0 22px; font-size: 14.5px; line-height: 1.9;
+          margin: 0 0 22px; font-size: 16px; line-height: 1.9;
           color: var(--c-text-on-dark-2); word-break: keep-all;
         }
         .prCall {
           display: inline-flex; align-items: center; gap: 9px;
           padding: 14px 28px; background: var(--c-accent); color: var(--c-navy);
-          font-family: var(--f-display); font-size: 19px; letter-spacing: 1px;
+          font-family: var(--f-display); font-size: 20.5px; letter-spacing: 1px;
           text-decoration: none; border-radius: 3px;
         }
         @media (max-width: 600px) {

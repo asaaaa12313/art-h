@@ -281,10 +281,10 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .novaSystem {
-          font-size: 15px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
+          font-size: 16.5px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
         }
         .novaDesc {
-          font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
+          font-size: 16.5px; color: rgba(255,255,255,0.82); line-height: 1.95;
           font-weight: 400; margin: 0 0 20px; max-width: 540px;
         }
         .novaHighlight {
@@ -340,10 +340,10 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .gbtSystem {
-          font-size: 15px; color: var(--c-accent-t); font-weight: 600; margin: 0 0 24px;
+          font-size: 16.5px; color: var(--c-accent-t); font-weight: 600; margin: 0 0 24px;
         }
         .gbtDesc {
-          font-size: 15px; color: var(--c-text); line-height: 1.95;
+          font-size: 16.5px; color: var(--c-text); line-height: 1.95;
           font-weight: 400; margin: 0 0 28px; max-width: 540px;
         }
         .gbtChips {
@@ -395,10 +395,10 @@ export default function FacilityPage() {
           line-height: 1.35; margin: 0;
         }
         .scanSystem {
-          font-size: 15px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
+          font-size: 16.5px; color: var(--c-accent); font-weight: 600; margin: 0 0 24px;
         }
         .scanDesc {
-          font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.95;
+          font-size: 16.5px; color: rgba(255,255,255,0.82); line-height: 1.95;
           font-weight: 400; margin: 0 0 20px; max-width: 540px;
         }
         .scanHighlight {

@@ -167,13 +167,13 @@ export default function LocationPage() {
           .infoItem:hover { transform: none; }
         }
         .locText {
-          font-size: 14.5px; color: var(--c-text); font-weight: 400;
+          font-size: 16px; color: var(--c-text); font-weight: 400;
           margin: 0; line-height: 1.85;
         }
         .hourRow {
           display: flex; justify-content: space-between;
           padding: 10px 0; border-bottom: 1px solid var(--c-line);
-          font-size: 14px;
+          font-size: 15.5px;
         }
         .mapBox {
           border-radius: 2px; overflow: hidden;

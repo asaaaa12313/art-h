@@ -160,7 +160,7 @@ export default async function LocalePage({ params }: { params: Promise<{ locale:
           letter-spacing: -0.02em; color: var(--c-text); word-break: keep-all;
         }
         .lgLead {
-          margin: 18px 0 0; font-size: 15.5px; line-height: 1.95; color: var(--c-text2);
+          margin: 18px 0 0; font-size: 17px; line-height: 1.95; color: var(--c-text2);
           word-break: keep-all;
         }
         .lgSec { margin-top: clamp(40px, 5vw, 62px); }
@@ -169,17 +169,17 @@ export default async function LocalePage({ params }: { params: Promise<{ locale:
           font-size: clamp(20px, 2.4vw, 25px); font-weight: 400; letter-spacing: -0.02em;
           color: var(--c-text);
         }
-        .lgBody { margin: 0; font-size: 15px; line-height: 1.95; color: var(--c-text2); word-break: keep-all; }
+        .lgBody { margin: 0; font-size: 16.5px; line-height: 1.95; color: var(--c-text2); word-break: keep-all; }
         .lgRows { margin: 0; display: grid; gap: 14px; }
         .lgRows > div {
           display: grid; grid-template-columns: 190px 1fr; gap: 20px;
           padding-bottom: 14px; border-bottom: 1px solid var(--c-line);
         }
-        .lgRows dt { font-size: 14px; font-weight: 600; color: var(--c-text2); }
-        .lgRows dd { margin: 0; font-size: 15px; line-height: 1.8; color: var(--c-text); word-break: keep-all; }
+        .lgRows dt { font-size: 15.5px; font-weight: 600; color: var(--c-text2); }
+        .lgRows dd { margin: 0; font-size: 16.5px; line-height: 1.8; color: var(--c-text); word-break: keep-all; }
         .lgList { margin: 0; padding: 0; list-style: none; display: grid; gap: 11px; }
         .lgList li {
-          position: relative; padding-left: 18px; font-size: 15px; line-height: 1.85;
+          position: relative; padding-left: 18px; font-size: 16.5px; line-height: 1.85;
           color: var(--c-text); word-break: keep-all;
         }
         .lgList li::before {
@@ -192,12 +192,12 @@ export default async function LocalePage({ params }: { params: Promise<{ locale:
         .lgCall {
           display: inline-flex; align-items: center; height: 52px; padding: 0 26px;
           background: var(--c-accent-t); color: #fff; border-radius: 3px;
-          font-size: 14.5px; font-weight: 700; text-decoration: none;
+          font-size: 16px; font-weight: 700; text-decoration: none;
         }
         .lgGhost {
           display: inline-flex; align-items: center; height: 52px; padding: 0 22px;
           border: 1px solid var(--c-line); border-radius: 3px;
-          font-size: 14px; font-weight: 600; color: var(--c-text2); text-decoration: none;
+          font-size: 15.5px; font-weight: 600; color: var(--c-text2); text-decoration: none;
         }
         .lgGhost:hover, .lgGhost:focus-visible { border-color: var(--c-accent-t); color: var(--c-accent-t); }
         .lgNote { margin: 22px 0 0; font-size: 13px; color: var(--c-text2); }

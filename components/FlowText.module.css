@@ -1,0 +1,23 @@
+.flow { display: inline-block; }
+
+.ch {
+  display: inline-block;
+  color: var(--c-dark);
+  animation-name: chHue;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: color;
+}
+
+/* 남색 → 밝은 파랑 → 남색. 팔레트 안에서만 움직여 색이 튀지 않는다 */
+@keyframes chHue {
+  0%, 100% { color: #0C2D57; }
+  25% { color: #10417C; }
+  45% { color: #507DBC; }
+  60% { color: #81A1D4; }
+  80% { color: #10417C; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ch { animation: none; color: var(--c-dark); }
+}

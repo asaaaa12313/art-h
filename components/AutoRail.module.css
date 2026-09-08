@@ -1,0 +1,56 @@
+.wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation-name: railFlow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.wrap[data-paused='true'] .track { animation-play-state: paused; }
+
+.set {
+  display: flex;
+  gap: 28px;
+  padding: 0 14px;
+}
+
+@keyframes railFlow {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* 「동작 줄이기」 — 흐르지 않고 손으로 미는 가로 스크롤이 된다 */
+.wrap[data-still='true'] {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.wrap[data-still='true']::-webkit-scrollbar { display: none; }
+.wrap[data-still='true'] .track { animation: none; }
+.wrap[data-still='true'] .set > * { scroll-snap-align: center; }
+
+/* 양 끝을 옅게 흐려 화면 밖으로 이어진다는 느낌을 준다 */
+.wrap::before,
+.wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+.wrap::before { left: 0; background: linear-gradient(90deg, var(--c-warm), rgba(235, 238, 247, 0)); }
+.wrap::after { right: 0; background: linear-gradient(270deg, var(--c-warm), rgba(235, 238, 247, 0)); }
+
+@media (max-width: 767px) {
+  .set { gap: 16px; padding: 0 10px; }
+  .wrap::before,
+  .wrap::after { width: 40px; }
+}

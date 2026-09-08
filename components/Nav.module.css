@@ -8,13 +8,15 @@
   border-bottom: 1px solid var(--c-line);
 }
 .topInner {
+  position: relative;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 26px clamp(20px, 2.8vw, 40px);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  padding: 22px clamp(20px, 2.8vw, 40px);
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: clamp(20px, 3vw, 44px);
+  min-height: 116px;
 }
 .brand {
   display: inline-flex;
@@ -25,7 +27,7 @@
 .brandMark { color: var(--c-navy); display: block; }
 .brandText {
   font-family: var(--f-display);
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--c-navy);
@@ -35,39 +37,67 @@
   .brandText {
     background-image: linear-gradient(
       100deg,
-      var(--c-navy) 0%,
-      var(--c-navy) 32%,
-      var(--c-navy-l) 46%,
-      #81A1D4 56%,
-      var(--c-navy) 72%,
-      var(--c-navy) 100%
+      #0C2D57 0%,
+      #10417C 14%,
+      #507DBC 26%,
+      #81A1D4 34%,
+      #B9CBE8 40%,
+      #81A1D4 46%,
+      #507DBC 56%,
+      #10417C 70%,
+      #0C2D57 100%
     );
-    background-size: 260% 100%;
+    background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: brandFlow 14s linear infinite;
+    animation: brandFlow 7s linear infinite;
   }
+  /* 심볼도 같은 주기로 함께 밝아졌다 어두워진다 */
+  .brandMark { animation: markPulse 7s ease-in-out infinite; }
+}
+@keyframes markPulse {
+  0%, 100% { color: #0C2D57; }
+  40% { color: #81A1D4; }
+  60% { color: #507DBC; }
 }
 @keyframes brandFlow {
   from { background-position: 120% 0; }
   to { background-position: -60% 0; }
 }
+/* 가운데 문구 — 로고·언어 버튼과 겹치지 않게 절대 배치로 화면 한가운데에 세운다
+   (격자의 가운데 칸에 두면 로고 폭에 따라 중심이 밀린다) */
 .tagline {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   margin: 0;
-  font-size: 15px;
-  line-height: 1.72;
-  color: var(--c-navy);
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  text-align: center;
+  line-height: 1.42;
   word-break: keep-all;
+  white-space: nowrap;
+  pointer-events: none;
 }
-.tagline em {
-  display: block;
+.taglineEn {
   font-family: var(--f-display);
-  font-style: normal;
-  font-size: 17px;
+  font-size: clamp(18px, 1.7vw, 24px);
   font-weight: 700;
   letter-spacing: 0.02em;
   margin-bottom: 2px;
+}
+.taglineKo {
+  font-family: var(--f-serif-ko);
+  font-size: clamp(17px, 1.55vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+/* 좁은 화면에서는 로고·언어 버튼과 부딪히므로 접는다 */
+@media (max-width: 1180px) {
+  .tagline { display: none; }
 }
 
 @media (max-width: 900px) {
@@ -117,18 +147,13 @@
   border: 0;
   cursor: pointer;
   font-family: inherit;
-  font-size: 15px;
-  color: #fff;
+  font-size: 17px;
+  color: var(--c-dark);
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: -0.01em;
   transition: color 0.3s;
   padding: 6px 2px;
-  text-shadow: 0 1px 8px rgba(15, 26, 53, 0.45);
   white-space: nowrap;
-}
-.nav[data-show='true'] .link {
-  color: var(--c-dark);
-  text-shadow: none;
 }
 .link[data-active='true'] {
   color: var(--c-navy) !important;
@@ -202,12 +227,12 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 40px;
-  padding: 0 14px;
+  height: 46px;
+  padding: 0 17px;
   border: 1px solid var(--c-line);
   border-radius: 3px;
   background: none;
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--c-text);
@@ -238,10 +263,20 @@
   gap: 2px;
   z-index: 10;
 }
+/* 버튼과 메뉴 사이 8px 틈을 투명 다리로 메운다 —
+   마우스가 그 틈을 지나는 순간 hover가 끊겨 메뉴가 닫히던 문제 */
+.langMenu::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
 .langMenu a {
-  padding: 11px 14px;
+  padding: 12px 16px;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--c-text);
   text-decoration: none;
@@ -267,14 +302,14 @@
   height: 32px;
   padding: 4px;
 }
+/* 헤더 바탕이 늘 크림이라 흰 막대는 보이지 않는다 — 항상 남색으로 둔다 */
 .burger span {
   display: block;
-  width: 20px;
-  height: 1px;
-  background: #fff;
-  transition: transform 0.3s, background 0.4s;
+  width: 22px;
+  height: 2px;
+  background: var(--c-dark);
+  transition: transform 0.3s;
 }
-.nav[data-show='true'] .burger span { background: var(--c-dark); }
 .burger span[data-open='true']:nth-child(1) { transform: translateY(3px) rotate(45deg); }
 .burger span[data-open='true']:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
 

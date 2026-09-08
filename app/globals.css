@@ -102,7 +102,7 @@
   --m-reveal: 0.9s;
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
   --header-h: 64px;        /* 메뉴 줄 */
-  --header-top-h: 104px;   /* 로고·슬로건 줄(레퍼런스 2단 헤더) */
+  --header-top-h: 116px;   /* 로고 + 가운데 문구 줄 (문구를 키우면서 한 단 높였다) */
   --header-h-scrolled: 60px;
   --anchor-offset: 180px;
 }
@@ -160,6 +160,12 @@ button:focus-visible,
   body {
     padding-bottom: calc(60px + env(safe-area-inset-bottom));
   }
+}
+
+/* 좁은 화면에서는 헤더 윗줄(로고·문구)이 접힌다 —
+   그만큼 본문을 밀어 두면 첫 화면 위에 빈 띠가 남으므로 0으로 되돌린다. */
+@media (max-width: 900px) {
+  :root { --header-top-h: 0px; }
 }
 
 

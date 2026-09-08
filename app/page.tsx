@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Home from './home/Home';
 import { SITE, DOCTORS, TREATMENTS, CONTENT_UPDATED } from '@/lib/copy';
 import { jsonLdScript, doctorNodeId } from '@/lib/jsonld';
+import { getBlogPosts, BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
 
 // 홈 canonical — layout에 두면 하위 페이지가 상속받아 전부 '/'가 되므로 페이지마다 명시한다.
 export const metadata: Metadata = {
@@ -33,7 +34,8 @@ const jsonLd = {
       url: SITE_URL,
       telephone: SITE.phone,
       image: `${SITE_URL}/media/images/waiting/waiting-02.jpg`,
-      sameAs: [SITE.naverPlace],
+      // 같은 병원의 공식 채널임을 알린다 — 검색·AI가 블로그 글을 이 병원 것으로 묶는다
+      sameAs: [SITE.naverPlace, BLOG_URL, INSTAGRAM_URL],
       hasMap: SITE.naverPlace,
       address,
       geo: { '@type': 'GeoCoordinates', latitude: 37.3856, longitude: 126.6438 },
@@ -80,14 +82,17 @@ const jsonLd = {
   ],
 };
 
-export default function Page() {
+export default async function Page() {
+  // 네이버 블로그 최신 글 — 서버에서 읽어 넘긴다(6시간마다 갱신, 실패하면 빈 배열)
+  const posts = await getBlogPosts(3);
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
       />
-      <Home />
+      <Home posts={posts} />
     </>
   );
 }

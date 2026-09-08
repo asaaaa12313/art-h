@@ -1457,6 +1457,8 @@ export const HERO_COPY = {
   eyebrow: 'SONGDO · ART H DENTAL',
   title: '마음이 편안해진 뒤에,\n진료를 시작합니다',
   sub: '불안한 마음부터 가라앉히고,\n통증과 시간을 줄여 치료한 뒤, 사후관리까지 함께합니다.',
+  /** 히어로 아래쪽에 호를 그리며 놓이는 한 줄(레퍼런스의 곡선 글씨 자리) */
+  arc: '오늘의 불편함이 내일의 편안함이 되도록',
   ctas: [
     { href: '/treatments/sedation', label: '겁이 나신다면' },
     { href: '/treatments', label: '진료과목' },

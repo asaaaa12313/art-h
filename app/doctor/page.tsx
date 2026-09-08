@@ -257,11 +257,11 @@ export default function DoctorPage() {
           letter-spacing: -0.02em;
         }
         .docNameRole {
-          font-size: 14px; color: var(--c-text3); font-weight: 400;
+          font-size: 15.5px; color: var(--c-text3); font-weight: 400;
         }
         .docSpec {
           display: flex; align-items: center; gap: 8px;
-          font-size: 15px; color: var(--c-text); font-weight: 500;
+          font-size: 16.5px; color: var(--c-text); font-weight: 500;
           margin: 0 0 8px;
         }
         .docSpecIcon { flex-shrink: 0; }
@@ -283,7 +283,7 @@ export default function DoctorPage() {
           }
         }
         .docQuote p {
-          font-size: 15px; color: var(--c-text2); line-height: 2;
+          font-size: 16.5px; color: var(--c-text2); line-height: 2;
           font-weight: 300; margin: 0; white-space: pre-line;
         }
         .docDivider {
@@ -303,7 +303,7 @@ export default function DoctorPage() {
         .careerLabelIcon { flex-shrink: 0; opacity: 0.85; }
         .docCareer {
           display: flex; align-items: center; gap: 8px;
-          font-size: 14px; color: var(--c-text2); font-weight: 400;
+          font-size: 15.5px; color: var(--c-text2); font-weight: 400;
           margin: 0 0 8px; padding-left: 14px; border-left: 2px solid var(--c-line);
           line-height: 1.6;
         }

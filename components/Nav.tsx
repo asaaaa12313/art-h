@@ -7,6 +7,7 @@ import { NAV_ABOUT_ITEMS, NAV_TREATMENT_ITEMS } from '@/lib/copy';
 import { LOCALES, LOCALE_LABEL, LOCALE_HTML_LANG } from '@/lib/i18n';
 
 import styles from './Nav.module.css';
+import FlowText from './FlowText';
 
 export default function Nav() {
   const pathname = usePathname();
@@ -65,11 +66,11 @@ export default function Nav() {
             <span className={styles.brandText}>Art H</span>
           </Link>
 
+          {/* 가운데 문구 — 글자 색이 왼쪽에서 오른쪽으로 차례로 옮겨 간다 */}
           <p className={styles.tagline}>
-            <em>Before Treatment</em>
-            마음이 편안해진 뒤에,
-            <br />
-            진료를 시작하는 아트에이치치과
+            <FlowText text="Before Treatment" className={styles.taglineEn} step={0.06} cycle={5} />
+            <FlowText text="마음이 편안해진 뒤에," className={styles.taglineKo} step={0.06} cycle={5} offset={16} />
+            <FlowText text="진료를 시작하는 아트에이치치과" className={styles.taglineKo} step={0.06} cycle={5} offset={28} />
           </p>
 
           <div className={styles.langWrap} onMouseLeave={() => setLangOpen(false)}>

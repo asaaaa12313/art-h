@@ -220,18 +220,18 @@ export default function PrivacyPage() {
           line-height: 1.3; margin: 0 0 24px;
         }
         .pvIntro {
-          font-size: 15px; line-height: 1.95; color: var(--c-text);
+          font-size: 16.5px; line-height: 1.95; color: var(--c-text);
           font-weight: 400; margin: 0 0 8px; word-break: keep-all;
         }
         .pvSec { margin-top: clamp(40px, 5vw, 56px); }
         .pvSec h2 {
-          font-family: var(--f-heading); font-size: 17px; font-weight: 700;
+          font-family: var(--f-heading); font-size: 18.5px; font-weight: 700;
           color: var(--c-navy); letter-spacing: -0.02em;
           margin: 0 0 14px; padding-bottom: 12px;
           border-bottom: 1px solid var(--c-line);
         }
         .pvSec p {
-          font-size: 14.5px; line-height: 1.9; color: var(--c-text);
+          font-size: 16px; line-height: 1.9; color: var(--c-text);
           font-weight: 400; margin: 0 0 12px; word-break: keep-all;
         }
         .pvSec p:last-child { margin-bottom: 0; }
@@ -244,7 +244,7 @@ export default function PrivacyPage() {
         .pvNote strong { font-weight: 600; color: var(--c-navy); }
         .pvList { margin: 0 0 12px; padding-left: 18px; }
         .pvList li {
-          font-size: 14.5px; line-height: 1.9; color: var(--c-text);
+          font-size: 16px; line-height: 1.9; color: var(--c-text);
           font-weight: 400; word-break: keep-all; margin-bottom: 4px;
         }
         .pvTableWrap { overflow-x: auto; margin: 0 0 12px; }
@@ -270,7 +270,7 @@ export default function PrivacyPage() {
         .pvDl > div:last-child { border-bottom: none; }
         .pvDl dt { font-size: 13.5px; font-weight: 600; color: var(--c-navy); }
         .pvDl dd {
-          margin: 0; font-size: 14px; color: var(--c-text);
+          margin: 0; font-size: 15.5px; color: var(--c-text);
           font-weight: 400; word-break: keep-all;
         }
         .pvEffective {

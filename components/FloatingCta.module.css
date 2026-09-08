@@ -16,7 +16,7 @@
 .railBox {
   display: flex;
   flex-direction: column;
-  width: 68px;
+  width: 76px;
   overflow: hidden;
   background: var(--c-accent-sub);
   border-radius: 8px;
@@ -38,8 +38,8 @@ button.railBtn {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  height: 76px;
+  gap: 7px;
+  height: 74px;
   padding: 0 4px;
   color: #fff;
   text-decoration: none;
@@ -84,28 +84,14 @@ button.railBtn {
   flex-shrink: 0;
 }
 
-/* 아이콘만 두되, 이름은 hover·focus에서 왼쪽으로 펼친다 */
+/* 아이콘 밑에 이름을 짧게 적는다 — 아이콘만으로는 무엇인지 모르는 이용자가 생긴다 */
 .railLabel {
-  position: absolute;
-  right: calc(100% + 10px);
-  top: 50%;
-  transform: translateY(-50%) translateX(6px);
-  padding: 7px 13px;
-  border-radius: 3px;
-  background: var(--c-dark);
-  color: var(--c-text-on-dark);
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: #fff;
   white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s var(--ease-out);
-}
-.railBtn:hover .railLabel,
-.railBtn:focus-visible .railLabel {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
 }
 
 /* 진료시간 팝오버 — hover·focus로 펼친다 */
@@ -233,7 +219,7 @@ button.railBtn {
 
 /* 좁은 데스크톱 — 규격 한 단 축소 */
 @media (max-width: 1279px) {
-  .railBox { width: 60px; }
+  .railBox { width: 68px; }
   .railBtn { height: 66px; }
   .icon,
   .naverBadge,

@@ -110,9 +110,9 @@ export default function TreatmentsPage() {
           transition: color 0.3s, transform 0.3s var(--ease-out);
         }
         .txIcon svg { stroke: currentColor; }
-        .txEn { font-family: var(--f-display); font-size: 18px; color: var(--c-navy); transition: color 0.3s; }
-        .txKo { font-size: 15px; color: var(--c-text2); font-weight: 500; }
-        .txD { font-size: 14px; color: var(--c-text); line-height: 1.75; font-weight: 400; margin: 0; }
+        .txEn { font-family: var(--f-display); font-size: 19.5px; color: var(--c-navy); transition: color 0.3s; }
+        .txKo { font-size: 16.5px; color: var(--c-text2); font-weight: 500; }
+        .txD { font-size: 15.5px; color: var(--c-text); line-height: 1.75; font-weight: 400; margin: 0; }
         .txArrow {
           padding-right: 28px; font-size: 22px; color: var(--c-text3);
           transition: transform 0.3s var(--ease-out), color 0.3s;

@@ -765,14 +765,14 @@ export default async function TreatmentDetailPage({
           gap: clamp(24px, 4vw, 48px); align-items: stretch;
         }
         .txPlaceAddr {
-          margin: 16px 0 0; font-size: 15px; line-height: 1.9; color: var(--c-text);
+          margin: 16px 0 0; font-size: 16.5px; line-height: 1.9; color: var(--c-text);
           word-break: keep-all;
         }
         .txPlaceHours { margin: 22px 0 0; display: grid; gap: 10px; }
         .txPlaceHours > div {
           display: flex; justify-content: space-between; gap: 16px;
           padding-bottom: 10px; border-bottom: 1px solid var(--c-line);
-          font-size: 14px;
+          font-size: 15.5px;
         }
         .txPlaceHours dt { color: var(--c-text2); white-space: nowrap; }
         .txPlaceHours dd { margin: 0; color: var(--c-text); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -780,7 +780,7 @@ export default async function TreatmentDetailPage({
         .txPlaceHours > div[data-hl='true'] dd { color: var(--c-accent-t); font-weight: 600; }
         .txPlaceMore {
           display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
-          font-size: 14px; font-weight: 600; color: var(--c-accent-t); text-decoration: none;
+          font-size: 15.5px; font-weight: 600; color: var(--c-accent-t); text-decoration: none;
         }
         .txPlaceMap {
           height: 100%; min-height: 340px; border-radius: 3px; overflow: hidden;
@@ -839,7 +839,7 @@ export default async function TreatmentDetailPage({
 
         .txHead { max-width: 720px; }
         .txEyebrow {
-          font-family: var(--f-display); font-size: 14px;
+          font-family: var(--f-display); font-size: 15.5px;
           color: var(--c-navy); opacity: 0.7;
           letter-spacing: 4px; margin: 0 0 16px;
         }
@@ -849,12 +849,12 @@ export default async function TreatmentDetailPage({
           line-height: 1.35; margin: 0 0 28px;
         }
         .txIntro {
-          font-size: 16px; color: var(--c-text); font-weight: 400;
+          font-size: 17.5px; color: var(--c-text); font-weight: 400;
           line-height: 2; margin: 0;
         }
 
         .txBlockDesc {
-          font-size: 15px; color: var(--c-text2); line-height: 1.9;
+          font-size: 16.5px; color: var(--c-text2); line-height: 1.9;
           font-weight: 400; margin: 16px 0 0; max-width: 760px;
         }
 
@@ -884,7 +884,7 @@ export default async function TreatmentDetailPage({
           letter-spacing: -0.01em; line-height: 1.8;
         }
         .txQuickRow dd {
-          margin: 0; font-size: 15px; font-weight: 400;
+          margin: 0; font-size: 16.5px; font-weight: 400;
           color: var(--c-text); line-height: 1.8; word-break: keep-all;
         }
         @media (max-width: 600px) {
@@ -940,11 +940,11 @@ export default async function TreatmentDetailPage({
         .txSpecCerts { list-style: none; margin: 18px 0 0; padding: 0; }
         .txSpecCerts li {
           display: flex; align-items: center; gap: 9px;
-          font-size: 14px; color: var(--c-text); font-weight: 400;
+          font-size: 15.5px; color: var(--c-text); font-weight: 400;
           line-height: 1.7; margin-bottom: 8px;
         }
         .txSpecQuote {
-          font-family: var(--f-serif-ko); font-size: 15.5px;
+          font-family: var(--f-serif-ko); font-size: 17px;
           color: var(--c-navy); line-height: 1.95; white-space: pre-line;
           margin: 24px 0 0; padding-left: 16px;
           border-left: 2px solid var(--c-blue);
@@ -980,7 +980,7 @@ export default async function TreatmentDetailPage({
           line-height: 1; margin-bottom: 16px;
         }
         .txTechName {
-          font-family: var(--f-heading); font-size: 18px; font-weight: 700;
+          font-family: var(--f-heading); font-size: 19.5px; font-weight: 700;
           color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 12px;
           line-height: 1.4;
         }
@@ -990,7 +990,7 @@ export default async function TreatmentDetailPage({
           padding: 9px 12px; margin: 0 0 12px; line-height: 1.5;
         }
         .txTechD {
-          font-size: 14px; color: var(--c-text); line-height: 1.75;
+          font-size: 15.5px; color: var(--c-text); line-height: 1.75;
           font-weight: 400; margin: 0 0 16px; flex: 1;
         }
         .txTechTarget {
@@ -1009,7 +1009,7 @@ export default async function TreatmentDetailPage({
         }
         .txBACaption {
           text-align: center; font-family: var(--f-heading);
-          font-size: 17px; font-weight: 700; color: var(--c-navy);
+          font-size: 18.5px; font-weight: 700; color: var(--c-navy);
           letter-spacing: -0.01em; margin: 28px 0 0;
         }
         .txBADesc { text-align: center; margin-left: auto; margin-right: auto; }
@@ -1029,11 +1029,11 @@ export default async function TreatmentDetailPage({
           .txDevCard:hover { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(12, 45, 87, .2); }
         }
         .txDevNum {
-          font-family: var(--f-display); font-size: 14px; color: var(--c-text3);
+          font-family: var(--f-display); font-size: 15.5px; color: var(--c-text3);
           position: absolute; top: 22px; right: 22px;
         }
         .txDevName {
-          font-family: var(--f-display); font-size: 19px; color: var(--c-navy);
+          font-family: var(--f-display); font-size: 20.5px; color: var(--c-navy);
           margin: 0 0 4px;
         }
         .txDevRole {
@@ -1041,7 +1041,7 @@ export default async function TreatmentDetailPage({
           margin: 0 0 14px;
         }
         .txDevD {
-          font-size: 14px; color: var(--c-text); line-height: 1.75;
+          font-size: 15.5px; color: var(--c-text); line-height: 1.75;
           font-weight: 400; margin: 0;
         }
 
@@ -1054,7 +1054,7 @@ export default async function TreatmentDetailPage({
         .txTargetItem {
           display: grid; grid-template-columns: 30px 1fr; align-items: center;
           gap: 14px; padding: 18px 22px; background: var(--c-warm);
-          border-radius: 2px; font-size: 15px; color: var(--c-text);
+          border-radius: 2px; font-size: 16.5px; color: var(--c-text);
           font-weight: 500;
         }
         .txTargetCheck {
@@ -1089,14 +1089,14 @@ export default async function TreatmentDetailPage({
           border-radius: 2px;
         }
         .txStepNo {
-          font-family: var(--f-display); font-size: 15px;
+          font-family: var(--f-display); font-size: 16.5px;
           color: var(--c-navy); font-weight: 400;
           letter-spacing: 1px; align-self: center;
           display: flex; flex-direction: column; align-items: center; gap: 6px;
         }
         .txStepIcon { opacity: 0.85; }
         .txStepText {
-          font-size: 15px; color: var(--c-text); line-height: 1.7;
+          font-size: 16.5px; color: var(--c-text); line-height: 1.7;
           font-weight: 500;
         }
 
@@ -1114,7 +1114,7 @@ export default async function TreatmentDetailPage({
           width: 28px; height: 28px; border-radius: 50%;
           background: var(--c-blue); color: #fff;
         }
-        .txFeatCard p { margin: 0; font-size: 14px; color: #fff; line-height: 1.7; font-weight: 500; }
+        .txFeatCard p { margin: 0; font-size: 15.5px; color: #fff; line-height: 1.7; font-weight: 500; }
 
         /* 장비·브랜드 쇼케이스 */
         .txShowcaseHead { max-width: 760px; margin-bottom: 36px; }
@@ -1153,7 +1153,7 @@ export default async function TreatmentDetailPage({
           margin: 0 0 14px;
         }
         .txShowcaseDesc {
-          font-size: 14px; color: var(--c-text); line-height: 1.8;
+          font-size: 15.5px; color: var(--c-text); line-height: 1.8;
           font-weight: 400; margin: 0 0 18px;
         }
         .txShowcasePoints {
@@ -1208,12 +1208,12 @@ export default async function TreatmentDetailPage({
           display: grid; grid-template-columns: 28px 1fr 24px;
           gap: 16px; align-items: center;
           padding: 20px 24px; cursor: pointer;
-          list-style: none; font-size: 15px; color: var(--c-text);
+          list-style: none; font-size: 16.5px; color: var(--c-text);
           font-weight: 500;
         }
         .txFaqItem summary::-webkit-details-marker { display: none; }
         .txFaqQ {
-          font-family: var(--f-display); font-size: 16px;
+          font-family: var(--f-display); font-size: 17.5px;
           color: var(--c-navy); font-weight: 400;
         }
         .txFaqArrow {
@@ -1223,7 +1223,7 @@ export default async function TreatmentDetailPage({
         .txFaqItem[open] .txFaqArrow { transform: rotate(45deg); color: var(--c-navy); }
         .txFaqA {
           padding: 0 24px 22px 68px; margin: 0;
-          font-size: 14px; color: var(--c-text2); line-height: 2;
+          font-size: 15.5px; color: var(--c-text2); line-height: 2;
           font-weight: 400;
         }
 
@@ -1238,7 +1238,7 @@ export default async function TreatmentDetailPage({
           word-break: keep-all;
         }
         .txCtaDesc {
-          font-size: 14px; color: rgba(255, 255, 255, 0.78);
+          font-size: 15.5px; color: rgba(255, 255, 255, 0.78);
           margin: 0 0 28px; line-height: 1.8;
         }
         .txCtaBtns {
@@ -1247,11 +1247,11 @@ export default async function TreatmentDetailPage({
         .txCtaCall {
           display: inline-flex; align-items: center; gap: 9px;
           background: var(--c-blue-l); color: var(--c-navy-d);
-          font-weight: 700; font-size: 14px; padding: 13px 26px; border-radius: 2px;
+          font-weight: 700; font-size: 15.5px; padding: 13px 26px; border-radius: 2px;
           transition: background 0.3s, transform 0.3s var(--ease-out);
         }
         .txCtaCall:hover { background: #fff; transform: translateY(-1px); }
-        .txCtaNum { font-family: var(--f-display); font-size: 15px; letter-spacing: 1px; }
+        .txCtaNum { font-family: var(--f-display); font-size: 16.5px; letter-spacing: 1px; }
 
         .txNav {
           display: grid; grid-template-columns: 1fr auto 1fr;
@@ -1268,7 +1268,7 @@ export default async function TreatmentDetailPage({
           font-size: 11px; color: var(--c-text3); letter-spacing: 2px; font-weight: 500;
         }
         .txNavTitle {
-          font-size: 15px; color: var(--c-navy); font-weight: 600;
+          font-size: 16.5px; color: var(--c-navy); font-weight: 600;
         }
         .txNavLink:hover { opacity: 0.7; }
         .txNavList {
@@ -1306,7 +1306,7 @@ export default async function TreatmentDetailPage({
         }
         .txKindBody { padding: 20px 24px 24px; }
         .txKindName {
-          font-family: var(--f-heading); font-size: 18px; font-weight: 700;
+          font-family: var(--f-heading); font-size: 19.5px; font-weight: 700;
           color: var(--c-navy); letter-spacing: -0.02em; margin: 0 0 3px;
         }
         .txKindTag {
@@ -1314,7 +1314,7 @@ export default async function TreatmentDetailPage({
           margin: 0 0 12px;
         }
         .txKindD {
-          font-size: 14px; color: var(--c-text); line-height: 1.8;
+          font-size: 15.5px; color: var(--c-text); line-height: 1.8;
           font-weight: 400; margin: 0;
         }
 
@@ -1336,7 +1336,7 @@ export default async function TreatmentDetailPage({
           color: var(--c-accent-t); letter-spacing: 1px;
         }
         .txFigT {
-          font-family: var(--f-heading); font-size: 16px; font-weight: 700;
+          font-family: var(--f-heading); font-size: 17.5px; font-weight: 700;
           color: var(--c-navy); letter-spacing: -0.02em; margin: 4px 0 8px;
         }
         .txFigD {
@@ -1360,7 +1360,7 @@ export default async function TreatmentDetailPage({
           letter-spacing: 1px; margin: 0 0 8px;
         }
         .txInsV {
-          font-size: 14.5px; color: #fff; line-height: 1.7;
+          font-size: 16px; color: #fff; line-height: 1.7;
           font-weight: 400; margin: 0;
         }
         .txInsNotes {
@@ -1401,11 +1401,11 @@ export default async function TreatmentDetailPage({
           height: 100%;
         }
         .txCareNo {
-          font-family: var(--f-display); font-size: 18px;
+          font-family: var(--f-display); font-size: 19.5px;
           color: var(--c-accent-t); line-height: 1.2;
         }
         .txCareCard p {
-          margin: 0; font-size: 14px; color: var(--c-text);
+          margin: 0; font-size: 15.5px; color: var(--c-text);
           line-height: 1.75; font-weight: 400;
         }
 

@@ -9,8 +9,10 @@ import HeroStage, { type Slide } from '@/components/HeroStage';
 import CountUp from '@/components/CountUp';
 import AnimatedIcon from '@/components/AnimatedIcon';
 import TextReveal from '@/components/TextReveal';
-import PinnedRail from '@/components/PinnedRail';
+import AutoRail from '@/components/AutoRail';
 import Magnetic from '@/components/Magnetic';
+import BlogBand from '@/components/BlogBand';
+import type { BlogPost } from '@/lib/blog';
 import { SITE, TREATMENTS, DOCTORS, REVIEW_LINK, HERO_COPY, HOME_CALM, HOME_DEFINE, SEDATION_BAND, HOME_SPECIAL, HOME_EQUIPMENT } from '@/lib/copy';
 import styles from './Home.module.css';
 
@@ -40,7 +42,7 @@ const STATS = [
 ];
 
 
-export default function Home() {
+export default function Home({ posts = [] }: { posts?: BlogPost[] }) {
   const [loaded, setLoaded] = useState(false);
   const [offset, setOffset] = useState(0);
   // 히어로 장면 도트 — 무대(배경 층)가 아니라 콘텐츠 층에서 그린다(배경은 시차로 밀려 잘린다)
@@ -111,6 +113,20 @@ export default function Home() {
               <a href={`tel:${SITE.phone.replace(/-/g, '')}`} className={styles.heroCtaPrimary}>전화하기</a>
             </Magnetic>
           </div>
+          {/* 호를 그리며 놓이는 한 줄 — 레퍼런스의 곡선 글씨 자리 */}
+          <div className={styles.heroArc} data-loaded={loaded} aria-hidden="true">
+            <svg viewBox="0 0 900 200" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <path id="heroArcPath" d="M30,182 Q450,14 870,182" fill="none" />
+              </defs>
+              <text>
+                <textPath href="#heroArcPath" startOffset="50%" textAnchor="middle">
+                  {HERO_COPY.arc}
+                </textPath>
+              </text>
+            </svg>
+          </div>
+
           {heroState && heroState.total > 1 && (
             <div className={styles.heroDots} role="tablist" aria-label="히어로 장면 선택">
               {Array.from({ length: heroState.total }).map((_, i) => (
@@ -255,8 +271,8 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* 카드가 화면에 붙은 채 옆으로 흐른다 — 레퍼런스의 진료과목 구간과 같은 방식 */}
-        <PinnedRail count={TREATMENTS.length} label="진료과목 목록" className={styles.txRail}>
+        {/* 카드가 스스로 옆으로 흐른다(휠은 평소대로 페이지를 내린다). 마우스를 올리면 멈춘다 */}
+        <AutoRail seconds={54} label="진료과목 목록" className={styles.txRail}>
           {TREATMENTS.map((t, i) => (
             <Link key={t.slug} href={`/treatments/${t.slug}`} className={styles.txCard} aria-label={`${t.ko} 자세히 보기`}>
               <div className={styles.txImg}>
@@ -274,7 +290,7 @@ export default function Home() {
               </div>
             </Link>
           ))}
-        </PinnedRail>
+        </AutoRail>
 
         <div className={styles.inner}>
           <Reveal variant="fade" delay={0.1}>
@@ -487,6 +503,9 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ===== JOURNAL — 블로그 최신 글 · SNS ===== */}
+      <BlogBand posts={posts} />
 
       {/* ===== LOCATION ===== */}
       <section className={styles.location}>

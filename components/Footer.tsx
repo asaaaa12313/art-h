@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { SITE } from '@/lib/copy';
 import Reveal from '@/components/Reveal';
 import styles from './Footer.module.css';
+import { BLOG_URL, INSTAGRAM_URL } from '@/lib/blog';
 
 export default function Footer() {
   const tel = SITE.phone.replace(/-/g, '');
@@ -21,6 +22,8 @@ export default function Footer() {
             <Link href="/pricing">진료비 안내</Link>
             <a href={`tel:${tel}`}>전화하기</a>
             <Link href="/privacy">개인정보처리방침</Link>
+            <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">네이버 블로그</a>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">인스타그램</a>
             <Link href="/en" hrefLang="en">English</Link>
             <Link href="/ja" hrefLang="ja">日本語</Link>
             <Link href="/zh" hrefLang="zh-Hans">中文</Link>

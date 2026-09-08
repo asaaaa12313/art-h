@@ -211,7 +211,7 @@ export default async function LocalPage({ params }: { params: Promise<{ slug: st
         .lcDefine {
           margin: 22px 0 0; padding: clamp(20px, 3vw, 28px);
           background: var(--c-warm); border-left: 2px solid var(--c-accent-t);
-          font-size: 14.5px; line-height: 1.9; color: var(--c-text2); word-break: keep-all;
+          font-size: 16px; line-height: 1.9; color: var(--c-text2); word-break: keep-all;
         }
         .lcSec { margin-top: clamp(44px, 5.5vw, 68px); }
         .lcSec h2 {
@@ -225,16 +225,16 @@ export default async function LocalPage({ params }: { params: Promise<{ slug: st
           padding-bottom: 12px; border-bottom: 1px solid var(--c-line);
         }
         .lcRoutes dt, .lcHours dt {
-          font-size: 14px; font-weight: 600; color: var(--c-text2);
+          font-size: 15.5px; font-weight: 600; color: var(--c-text2);
         }
         .lcRoutes dd, .lcHours dd {
-          margin: 0; font-size: 14.5px; line-height: 1.75; color: var(--c-text);
+          margin: 0; font-size: 16px; line-height: 1.75; color: var(--c-text);
           word-break: keep-all; font-variant-numeric: tabular-nums;
         }
         .lcHours > div[data-hl='true'] dt, .lcHours > div[data-hl='true'] dd { color: var(--c-accent-t); }
         .lcNotes { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
         .lcNotes li {
-          position: relative; padding-left: 18px; font-size: 14.5px; line-height: 1.9;
+          position: relative; padding-left: 18px; font-size: 16px; line-height: 1.9;
           color: var(--c-text2); word-break: keep-all;
         }
         .lcNotes li::before {
@@ -245,7 +245,7 @@ export default async function LocalPage({ params }: { params: Promise<{ slug: st
         .lcMarks li {
           position: relative; padding: 14px 18px 14px 40px;
           background: var(--c-white); border: 1px solid var(--c-line); border-radius: 4px;
-          font-size: 14.5px; line-height: 1.75; color: var(--c-text); word-break: keep-all;
+          font-size: 16px; line-height: 1.75; color: var(--c-text); word-break: keep-all;
         }
         .lcMarks li::before {
           content: ''; position: absolute; left: 18px; top: 21px;
@@ -253,23 +253,23 @@ export default async function LocalPage({ params }: { params: Promise<{ slug: st
         }
         .lcFaq { margin: 0; display: grid; gap: 20px; }
         .lcFaq dt {
-          font-size: 15.5px; font-weight: 600; color: var(--c-text);
+          font-size: 17px; font-weight: 600; color: var(--c-text);
           margin-bottom: 8px; word-break: keep-all;
         }
         .lcFaq dd {
           margin: 0; padding-left: 14px; border-left: 2px solid var(--c-line);
-          font-size: 14.5px; line-height: 1.9; color: var(--c-text2); word-break: keep-all;
+          font-size: 16px; line-height: 1.9; color: var(--c-text2); word-break: keep-all;
         }
         .lcDocs { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
         .lcDocs li {
           display: grid; gap: 4px; padding: 18px 20px;
           border: 1px solid var(--c-line); border-radius: 4px;
         }
-        .lcDocs strong { font-size: 16px; color: var(--c-text); }
-        .lcDocs span { font-size: 14px; color: var(--c-text2); }
+        .lcDocs strong { font-size: 17.5px; color: var(--c-text); }
+        .lcDocs span { font-size: 15.5px; color: var(--c-text2); }
         .lcFocus { color: var(--c-text2); }
         .lcAddr {
-          margin: 0 0 18px; font-size: 15px; line-height: 1.9; color: var(--c-text);
+          margin: 0 0 18px; font-size: 16.5px; line-height: 1.9; color: var(--c-text);
         }
         .lcMore, .lcSiblings {
           margin-top: clamp(40px, 5vw, 56px); display: flex; flex-wrap: wrap; gap: 10px;

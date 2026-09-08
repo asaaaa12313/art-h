@@ -164,11 +164,11 @@ export default function AboutPage() {
           line-height: 1.4; margin: 0 0 32px; white-space: pre-line;
         }
         .greetIntro {
-          font-size: 16px; color: var(--c-text); font-weight: 500;
+          font-size: 17.5px; color: var(--c-text); font-weight: 500;
           line-height: 1.9; margin: 0 0 20px;
         }
         .greetPara {
-          font-size: 15px; color: var(--c-text2); font-weight: 400;
+          font-size: 16.5px; color: var(--c-text2); font-weight: 400;
           line-height: 2.1; margin: 0 0 16px;
         }
         .greetSign {
@@ -182,7 +182,7 @@ export default function AboutPage() {
           margin: 0 0 4px; font-weight: 500;
         }
         .signName {
-          font-size: 17px; color: var(--c-navy); font-weight: 700;
+          font-size: 18.5px; color: var(--c-navy); font-weight: 700;
           letter-spacing: -0.01em; margin: 0;
         }
         .signName span {
@@ -202,7 +202,7 @@ export default function AboutPage() {
           margin: 0 0 18px;
         }
         .promiseLead {
-          font-size: 15px; color: var(--c-text2); line-height: 1.9;
+          font-size: 16.5px; color: var(--c-text2); line-height: 1.9;
           max-width: 520px; margin: 0 auto; font-weight: 400;
         }
         .promiseGrid {
@@ -227,7 +227,7 @@ export default function AboutPage() {
           display: inline-flex; margin-bottom: 2px;
         }
         .promiseNo {
-          font-family: var(--f-display); font-size: 15px; color: var(--c-navy);
+          font-family: var(--f-display); font-size: 16.5px; color: var(--c-navy);
           letter-spacing: 4px; font-weight: 400; opacity: 0.85;
         }
         .promiseCardTitle {
@@ -236,7 +236,7 @@ export default function AboutPage() {
           color: var(--c-navy); margin: 0;
         }
         .promiseCardDesc {
-          font-size: 14px; color: var(--c-text2); line-height: 1.9;
+          font-size: 15.5px; color: var(--c-text2); line-height: 1.9;
           font-weight: 400; margin: 0;
         }
 
