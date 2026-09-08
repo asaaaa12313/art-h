@@ -196,35 +196,6 @@ export default function Nav() {
             치과 이야기
           </Link>
 
-          {/* 원문이 있는 바깥 채널 — 메뉴 글자와 구분되게 아이콘으로 둔다 */}
-          <span className={styles.snsWrap}>
-            <a
-              href={BLOG_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.snsLink}
-              aria-label="네이버 블로그 (새 창)"
-              title="네이버 블로그"
-            >
-              <span className={styles.snsN} aria-hidden="true">N</span>
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.snsLink}
-              aria-label="인스타그램 (새 창)"
-              title="인스타그램"
-            >
-              <span className={styles.snsInsta} aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5.4" fill="none" stroke="currentColor" strokeWidth="2.2" />
-                  <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" strokeWidth="2.2" />
-                  <circle cx="17.3" cy="6.7" r="1.4" fill="currentColor" />
-                </svg>
-              </span>
-            </a>
-          </span>
         </div>
 
 
