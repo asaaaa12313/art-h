@@ -65,7 +65,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     datePublished: post.date,
     dateModified: post.fetchedAt?.slice(0, 10) || post.date,
     inLanguage: 'ko',
-    image: post.thumb,
+    // 사진은 우리 저장소의 상대 경로라 구조화 데이터에서는 절대 주소로 적는다
+    image: post.thumb ? (post.thumb.startsWith('http') ? post.thumb : `${SITE_URL}${post.thumb}`) : undefined,
     // 글쓴이와 발행 주체가 모두 이 병원임을 밝힌다 — AI가 출처를 병원으로 묶는다
     author: { '@id': `${SITE_URL}#clinic` },
     publisher: { '@id': `${SITE_URL}#clinic` },
@@ -155,7 +156,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="bpFoot">
           <p className="bpNote">
             이 글은 {SITE.name}가 직접 쓴 글입니다. 증상과 치료 방법은 사람마다 다르므로,
-            정확한 진단은 내원 후 검사로 확인하셔야 합니다.
+            정확한 진단은 내원 후 검사로 확인하셔야 합니다. 시술 효과와 회복 기간은 개인에 따라
+            차이가 있으며, 시술 후 부작용이 발생할 수 있습니다.
+            {post.images && post.images.length > 0 ? ' 본문의 치료 사진은 환자 동의를 받아 사용했습니다.' : ''}
           </p>
           <div className="bpLinks">
             <a href={post.link} target="_blank" rel="noopener noreferrer">네이버 블로그 원문 →</a>
