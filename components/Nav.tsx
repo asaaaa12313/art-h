@@ -8,6 +8,7 @@ import { LOCALES, LOCALE_LABEL, LOCALE_HTML_LANG } from '@/lib/i18n';
 
 import styles from './Nav.module.css';
 import FlowText from './FlowText';
+import ArtHEmblem from './ArtHEmblem';
 import { BLOG_URL, INSTAGRAM_URL } from '@/lib/channels';
 
 export default function Nav() {
@@ -54,17 +55,12 @@ export default function Nav() {
         <div className={styles.topInner}>
           <Link href="/" className={styles.brand} aria-label="Art H Dental 홈">
             <span className={styles.brandMark} aria-hidden="true">
-              <svg viewBox="0 0 64 64" width="52" height="52">
-                <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" strokeWidth="2" />
-                <path
-                  d="M32 17c-7 0-12 5-12 11 0 7 5 11 12 18 7-7 12-11 12-18 0-6-5-11-12-11z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
+              <ArtHEmblem size={54} />
             </span>
-            <span className={styles.brandText}>Art H</span>
+            <span className={styles.brandWord}>
+              <span className={styles.brandText}>Art H</span>
+              <span className={styles.brandSub}>DENTAL CLINIC</span>
+            </span>
           </Link>
 
           {/* 가운데 문구 — 글자 색이 왼쪽에서 오른쪽으로 차례로 옮겨 간다 */}
@@ -121,17 +117,7 @@ export default function Nav() {
         {/* 좁은 화면에서는 윗줄이 통째로 접히므로, 로고를 이 줄에 다시 세운다
             (로고가 없으면 홈으로 돌아갈 길이 사라진다) */}
         <Link href="/" className={styles.brandCompact} aria-label="Art H Dental 홈">
-          <span aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="30" height="30">
-              <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" strokeWidth="3" />
-              <path
-                d="M32 17c-7 0-12 5-12 11 0 7 5 11 12 18 7-7 12-11 12-18 0-6-5-11-12-11z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-              />
-            </svg>
-          </span>
+          <ArtHEmblem size={32} />
           <b>Art H</b>
         </Link>
         <div className={styles.desktop}>

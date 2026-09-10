@@ -24,10 +24,22 @@
   gap: 14px;
   text-decoration: none;
 }
-.brandMark { color: var(--c-navy); display: block; }
+.brandMark { display: block; flex-shrink: 0; }
+.brandWord {
+  display: grid;
+  gap: 1px;
+}
+.brandSub {
+  font-family: var(--f-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--c-navy-l);
+}
 .brandText {
   font-family: var(--f-display);
-  font-size: 32px;
+  font-size: 30px;
+  line-height: 1.05;
   font-weight: 700;
   letter-spacing: 1px;
   color: var(--c-navy);
@@ -53,14 +65,8 @@
     -webkit-text-fill-color: transparent;
     animation: brandFlow 7s linear infinite;
   }
-  /* 심볼도 같은 주기로 함께 밝아졌다 어두워진다 */
-  .brandMark { animation: markPulse 7s ease-in-out infinite; }
 }
-@keyframes markPulse {
-  0%, 100% { color: #0C2D57; }
-  40% { color: #81A1D4; }
-  60% { color: #507DBC; }
-}
+/* 심볼에는 색 순환을 걸지 않는다 — 실제 간판의 남색·금색이 병원의 고정 색이다 */
 @keyframes brandFlow {
   from { background-position: 120% 0; }
   to { background-position: -60% 0; }
