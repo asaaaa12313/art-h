@@ -30,7 +30,7 @@ export async function generateMetadata({
   if (!t) return { title: '진료과목' };
   return {
     title: t.ko,
-    description: t.summary || t.d,
+    description: t.metaDesc || t.summary || t.d,
     alternates: { canonical: `/treatments/${t.slug}` },
     openGraph: { images: [{ url: t.card }] },
   };
@@ -90,7 +90,7 @@ export default async function TreatmentDetailPage({
         '@id': pageUrl,
         url: pageUrl,
         name: `${tx.ko} | ${SITE.name}`,
-        description: tx.summary || tx.d,
+        description: tx.metaDesc || tx.summary || tx.d,
         inLanguage: 'ko-KR',
         lastReviewed: reviewedDate,
         about: { '@id': `${pageUrl}#procedure` },

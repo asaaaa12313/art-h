@@ -22,18 +22,30 @@ export default function BlogListPage() {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Blog',
-    '@id': `${SITE_URL}/blog`,
-    url: `${SITE_URL}/blog`,
-    name: `${SITE.name} 치과 이야기`,
-    inLanguage: 'ko',
-    publisher: { '@id': `${SITE_URL}#clinic` },
-    blogPost: posts.slice(0, 20).map((p) => ({
+    '@graph': [
+      {
+        // 화면에 그린 경로(홈 › 치과 이야기)를 기계도 읽을 수 있게 같은 내용으로 선언한다
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: '치과 이야기', item: `${SITE_URL}/blog` },
+        ],
+      },
+      {
+        '@type': 'Blog',
+        '@id': `${SITE_URL}/blog`,
+        url: `${SITE_URL}/blog`,
+        name: `${SITE.name} 치과 이야기`,
+        inLanguage: 'ko',
+        publisher: { '@id': `${SITE_URL}#clinic` },
+        blogPost: posts.slice(0, 20).map((p) => ({
       '@type': 'BlogPosting',
       headline: p.title,
       url: `${SITE_URL}/blog/${encodeURIComponent(p.slug)}`,
       datePublished: p.date,
-    })),
+        })),
+      },
+    ],
   };
 
   return (

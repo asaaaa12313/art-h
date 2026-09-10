@@ -53,6 +53,17 @@ export default function DoctorPage() {
             credentialCategory: '전문의 자격',
             name: c,
           })),
+        // 진료 장소·연락처를 의료진 노드에도 적는다.
+        // worksFor로 병원을 가리키고 있어도, 검색·AI 쪽에서는 이 두 값이 비면
+        // 「어디서 진료하는 의사인지 모른다」로 읽어 인용 대상에서 빠진다.
+        telephone: SITE.phone,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: '센트럴로 263 IBS타워 업무동 8층',
+          addressLocality: '연수구',
+          addressRegion: '인천광역시',
+          addressCountry: 'KR',
+        },
         worksFor: {
           '@type': 'Dentist',
           name: SITE.name,

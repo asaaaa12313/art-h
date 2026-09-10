@@ -53,24 +53,42 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // 글 본문에 없는 내용을 지어내지 않으면서도, 네이버 원문에는 없는 우리 페이지만의 정보가 된다.
   const tx = post.topic ? TREATMENTS.find((t) => t.slug === post.topic) : undefined;
   // 문답은 우리가 검수해 둔 과목별 FAQ만 쓴다.
-  // 글에서 뽑아 쓰는 방식은 문장이 잘려 뜻이 뒤집히는 사례가 많아 폐기했다(scripts/fetch-blog.mjs 주석).
+  // 글에서 문답을 뽑아 쓰는 방식은 문장이 잘려 뜻이 뒤집히는 사례가 많아 폐기했다.
   const clinicFaqs = tx ? tx.faqs.slice(0, 4) : [];
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    '@id': `${SITE_URL}/blog/${encodeURIComponent(post.slug)}`,
-    headline: post.title,
-    description: post.summary.slice(0, 200),
-    datePublished: post.date,
-    dateModified: post.fetchedAt?.slice(0, 10) || post.date,
-    inLanguage: 'ko',
-    // 사진은 우리 저장소의 상대 경로라 구조화 데이터에서는 절대 주소로 적는다
-    image: post.thumb ? (post.thumb.startsWith('http') ? post.thumb : `${SITE_URL}${post.thumb}`) : undefined,
-    // 글쓴이와 발행 주체가 모두 이 병원임을 밝힌다 — AI가 출처를 병원으로 묶는다
-    author: { '@id': `${SITE_URL}#clinic` },
-    publisher: { '@id': `${SITE_URL}#clinic` },
-    mainEntityOfPage: `${SITE_URL}/blog/${encodeURIComponent(post.slug)}`,
+    '@graph': [
+      {
+        // 화면 경로(홈 › 치과 이야기 › 글 제목)와 같은 내용
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: '치과 이야기', item: `${SITE_URL}/blog` },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: post.title,
+            item: `${SITE_URL}/blog/${encodeURIComponent(post.slug)}`,
+          },
+        ],
+      },
+      {
+        '@type': 'BlogPosting',
+        '@id': `${SITE_URL}/blog/${encodeURIComponent(post.slug)}`,
+        headline: post.title,
+        description: post.summary.slice(0, 200),
+        datePublished: post.date,
+        dateModified: post.fetchedAt?.slice(0, 10) || post.date,
+        inLanguage: 'ko',
+        // 사진은 우리 저장소의 상대 경로라 구조화 데이터에서는 절대 주소로 적는다
+        image: post.thumb ? (post.thumb.startsWith('http') ? post.thumb : `${SITE_URL}${post.thumb}`) : undefined,
+        // 글쓴이와 발행 주체가 모두 이 병원임을 밝힌다 — AI가 출처를 병원으로 묶는다
+        author: { '@id': `${SITE_URL}#clinic` },
+        publisher: { '@id': `${SITE_URL}#clinic` },
+        mainEntityOfPage: `${SITE_URL}/blog/${encodeURIComponent(post.slug)}`,
+      },
+    ],
   };
 
   /* FAQPage 구조화 데이터는 여기서 선언하지 않는다.
@@ -85,8 +103,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {/* 머리 사진은 병원 사진으로 고정한다 — 글의 대표 사진은 본문 첫머리에 그대로 나오므로
           같은 그림을 두 번 보여 주지 않기 위해서다 */}
+      {/* 이 페이지의 제목은 글 제목이다. 띠의 「치과 이야기」는 어느 구역인지 알리는 이름표라
+          h1로 두면 페이지에 h1이 둘이 되어 검색엔진이 주제를 못 정한다 → p로 낮춘다 */}
       <PageHeader
         title="치과 이야기"
+        titleAs="p"
         src="/media/images/still/consult-tablet.jpg"
         alt="상담실에서 치료 계획을 설명하는 모습"
       />
@@ -118,7 +139,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </Reveal>
         )}
 
-        {/* 본문은 수집할 때 허용 태그만 남기고 씻어 둔 것이다(scripts/fetch-blog.mjs) */}
+        {/* 본문은 data/blog-posts.json에 저장해 둔 것이다(허용 태그만 남긴 상태) */}
         <div className="bpBody" dangerouslySetInnerHTML={{ __html: post.bodyHtml || '' }} />
 
         {clinicFaqs.length > 0 && tx && (

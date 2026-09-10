@@ -151,6 +151,10 @@ export type Treatment = {
   bg: string;
   /** 진료과목 카드·목록·상세헤더 공통 대표 이미지 (v1.56 단일화) */
   card: string;
+  /** 검색 결과·AI 답변에 그대로 실리는 한 문단(50~160자).
+   *  summary는 화면용 짧은 슬로건이라 검색 결과에서는 정보가 되지 못한다.
+   *  없는 사실을 만들지 않도록 이 과목 intro·features에 이미 있는 내용만 압축했다. */
+  metaDesc?: string;
   /** 홈 카드에 마우스를 올렸을 때 재생할 촬영본. 없으면 사진만 쓴다.
    *  자동 재생하지 않고 hover에서만 켜기 때문에 첫 로딩에는 영향이 없다. */
   cardVideo?: { mp4: string; mp4Mobile?: string };
@@ -188,7 +192,9 @@ export type Treatment = {
 
 export const TREATMENTS: Treatment[] = [
   {
-    en: 'Implant', ko: '임플란트', slug: 'implant', bg: V.implant,
+    en: 'Implant', ko: '임플란트', slug: 'implant',
+    metaDesc:
+      '구강악안면외과 전문의가 3D CT로 골량과 신경 위치를 확인한 뒤 직접 계획하고 수술합니다. 뼈이식·상악동거상술이 필요한 경우와 만 65세 건강보험 적용까지 송도 아트에이치치과가 안내합니다.', bg: V.implant,
     sedationOk: true,
     card: '/media/images/still/implant-plan.jpg',
     cardVideo: { mp4: '/media/video/implant-diag.mp4', mp4Mobile: '/media/video/implant-diag-720.mp4' },
@@ -366,7 +372,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'Root Canal', ko: '신경치료', slug: 'root-canal', bg: V.gen,
+    en: 'Root Canal', ko: '신경치료', slug: 'root-canal',
+    metaDesc:
+      '치과보존과 전문의가 감염된 치수를 제거하고 근관을 소독·밀폐해 자연치아를 살립니다. 엔도 모터와 전용 파일로 근관을 하나씩 처치하며, 재신경치료가 필요한 경우도 진료합니다. 송도 아트에이치치과.', bg: V.gen,
     sedationOk: true,
     card: '/media/images/endo/endo-kit-01.jpg',
     d: '근관을 정밀하게 처치하여 자연치아를 최대한 보존합니다.',
@@ -511,7 +519,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery', bg: V.equip,
+    en: 'Oral Surgery', ko: '사랑니 발치', slug: 'oral-surgery',
+    metaDesc:
+      '신경관과 가까운 매복 사랑니는 3D CT로 위치를 확인한 뒤 발치합니다. 구강악안면외과 전문의가 영상을 분석해 안전한 경로를 잡고, 겁이 나신다면 의식하진정(수면치료)을 함께 받으실 수 있습니다.', bg: V.equip,
     sedationOk: true,
     card: '/media/images/still/or-fullset-wide.jpg',
     cardVideo: { mp4: '/media/video/oral-surgery-clinic.mp4', mp4Mobile: '/media/video/oral-surgery-clinic-720.mp4' },
@@ -612,7 +622,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'TMJ', ko: '턱관절치료', slug: 'tmj', bg: V.scan,
+    en: 'TMJ', ko: '턱관절치료', slug: 'tmj',
+    metaDesc:
+      '턱에서 나는 소리, 벌릴 때의 통증, 아침 턱 뻐근함의 원인을 영상·근육 검사로 먼저 찾습니다. 스플린트와 물리치료 같은 보존적 치료를 우선하며, 이갈이 습관까지 함께 봅니다. 송도 아트에이치치과.', bg: V.scan,
     card: '/media/images/still/explain-screen.jpg',
     cardVideo: { mp4: '/media/video/tmj-care.mp4', mp4Mobile: '/media/video/tmj-care-720.mp4' },
     d: '정확한 원인 진단, 물리치료와 보존적 치료로 근본 개선.',
@@ -752,7 +764,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'Sedation', ko: '의식하진정', slug: 'sedation', bg: V.surg,
+    en: 'Sedation', ko: '의식하진정', slug: 'sedation',
+    metaDesc:
+      '의식은 유지한 채 긴장을 낮춘 상태로 치료받는 방법입니다. 구강악안면외과 전문의가 진정과 수술을 함께 맡고, 산소포화도·혈압·맥박을 계속 확인하며 회복을 본 뒤 귀가를 안내합니다.', bg: V.surg,
     card: '/media/images/still/sedation-care.jpg',
     cardVideo: { mp4: '/media/video/hero-6.mp4', mp4Mobile: '/media/video/hero-6-720.mp4' },
     d: '구강악안면외과 전문의가 진행하는 의식하진정(수면치료). 치과 공포로 진료를 미뤄오신 분들이 선택하는 방법입니다.',
@@ -862,7 +876,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics', bg: V.white,
+    en: 'Periodontics', ko: '잇몸 · 스케일링', slug: 'periodontics',
+    metaDesc:
+      '잇몸 질환은 초기에 증상이 거의 없어 정기 검진이 중요합니다. GBT 프로토콜에 따라 에어플로우로 치태와 착색을 부드럽게 제거하고, 잇몸 상태에 맞춰 단계별로 관리합니다. 송도 아트에이치치과.', bg: V.white,
     card: '/media/images/treatment-room/treatment-02.jpg',
     cardVideo: { mp4: '/media/video/gbt-clinic.mp4', mp4Mobile: '/media/video/gbt-clinic-720.mp4' },
     reviewedBy: 0,
@@ -960,7 +976,9 @@ export const TREATMENTS: Treatment[] = [
     ],
   },
   {
-    en: 'Whitening', ko: '치아미백', slug: 'whitening', bg: V.consult,
+    en: 'Whitening', ko: '치아미백', slug: 'whitening',
+    metaDesc:
+      '식습관·흡연·노화 등 변색 원인과 치아 상태를 확인한 뒤, 내원해서 받는 오피스 미백과 집에서 하는 홈 미백을 함께 써 자연스러운 밝기를 찾아갑니다. 송도 아트에이치치과 치아미백 안내.', bg: V.consult,
     card: '/media/images/still/whitening-care.jpg',
     cardVideo: { mp4: '/media/video/whitening-care.mp4', mp4Mobile: '/media/video/whitening-care-720.mp4' },
     reviewedBy: 0,

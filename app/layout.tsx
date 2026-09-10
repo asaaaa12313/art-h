@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DM_Serif_Display } from 'next/font/google';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import FloatingCta from '@/components/FloatingCta';
@@ -6,6 +7,16 @@ import { SITE } from '@/lib/copy';
 import './globals.css';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
+
+/* 영문 세리프 — next/font가 빌드 때 폰트를 우리 서버로 가져와 심는다.
+   구글 서버로 나가는 stylesheet 요청이 사라져 첫 화면을 막지 않는다. */
+const dmSerif = DM_Serif_Display({
+  weight: '400',
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-dm-serif',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -41,10 +52,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // 일부 브라우저 확장이 <html>에 자기 속성을 붙여 서버·클라이언트 마크업이 어긋난 것처럼 보인다.
     // 우리 마크업 문제가 아니라 이 경고만 끈다.
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" className={dmSerif.variable} suppressHydrationWarning>
       <head>
         {/* 한글 명조는 자체 호스팅 리디바탕(globals.css @font-face) — 제목에 바로 쓰이므로 미리 받는다.
-            구글 폰트는 영문 세리프만 남긴다(Nanum Myeongjo는 리디바탕 폴백으로만 사용). */}
+            영문 세리프(DM Serif Display)는 next/font가 빌드 때 우리 서버로 가져와 심으므로
+            구글로 나가는 요청이 없다. */}
         <link
           rel="preload"
           href="/fonts/RIDIBatang.woff2"
@@ -52,10 +64,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
-        />
+        {/* 본문 한글 폰트 — 글자 묶음별로 쪼개져 있어 실제로 쓰는 조각만 받는다.
+            화면이 그려진 뒤에 붙이는 방법도 시도했으나 되돌렸다: 본문 글꼴이 페이지 전체를
+            지배해서, 자바스크립트가 다 뜬 뒤 바뀌면 글자가 한 번에 갈리며 줄이 밀린다.
+            먼저 연결을 터 두어 받는 시간을 줄이는 선에서 멈춘다. */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css"

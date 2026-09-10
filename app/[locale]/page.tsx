@@ -36,7 +36,14 @@ export async function generateMetadata({
         ...Object.fromEntries(LOCALES.map((l) => [LOCALE_HTML_LANG[l], `/${l}`])),
       },
     },
-    openGraph: { title: c.title, description: c.metaDescription, locale: LOCALE_HTML_LANG[locale] },
+    openGraph: {
+      title: c.title,
+      description: c.metaDescription,
+      locale: LOCALE_HTML_LANG[locale],
+      // openGraph를 통째로 덮어쓰면 루트에서 물려받던 대표 이미지(app/opengraph-image.jpg)가
+      // 함께 지워진다. 공유했을 때 그림 없는 링크가 되므로 여기서 다시 지정한다.
+      images: ['/opengraph-image.jpg'],
+    },
   };
 }
 

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { jsonLdScript } from '@/lib/jsonld';
+import Breadcrumb from '@/components/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
@@ -9,13 +11,62 @@ import { SITE, LOCAL_PAGES } from '@/lib/copy';
 export const metadata: Metadata = {
   alternates: { canonical: '/location' },
   title: '오시는길',
-  description: `${SITE.address} · ${SITE.phone}. 주차 · 대중교통 안내.`,
+  description:
+    `${SITE.address}. 인천1호선 국제업무지구역 5번 출구에서 걸어서 470m, G타워 방면입니다. ` +
+    `건물 지하 주차장을 이용하실 수 있고, 예약과 문의는 ${SITE.phone}입니다.`,
+};
+
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
+
+/* 이 페이지가 무엇에 관한 페이지이고 어느 병원 것인지 기계가 읽을 수 있게 적는다.
+   화면에 보이지 않는 값(가격·후기 등)은 넣지 않는다. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${SITE_URL}/location`,
+      url: `${SITE_URL}/location`,
+      name: '오시는길',
+      inLanguage: 'ko',
+      isPartOf: { '@id': `${SITE_URL}#clinic` },
+      about: { '@id': `${SITE_URL}#clinic` },
+    },
+      {
+        // 화면에 실제로 적혀 있는 주소·전화·약도만 옮긴다.
+        // @id를 홈의 병원 노드와 같게 두는 것이 핵심 — 없으면 같은 병원이
+        // 「홈의 병원」과 「이 페이지의 장소」 둘로 갈라져 주소·전화가 이중으로 나간다.
+        '@type': 'Place',
+        '@id': `${SITE_URL}#clinic`,
+        name: SITE.name,
+        address: {
+  '@type': 'PostalAddress',
+  streetAddress: '센트럴로 263 IBS타워 업무동 8층',
+  addressLocality: '연수구',
+  addressRegion: '인천광역시',
+  addressCountry: 'KR',
+},
+        telephone: SITE.phone,
+        hasMap: SITE.naverPlace,
+        geo: { '@type': 'GeoCoordinates', latitude: 37.3856, longitude: 126.6438 },
+      },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: '오시는길', item: `${SITE_URL}/location` },
+      ],
+    },
+  ],
 };
 
 export default function LocationPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <PageHeader title="오시는길" src="/media/images/exterior/exterior-02.jpg" alt="송도 IBS타워 외관" />
+      <Breadcrumb items={[{ href: '/', label: '홈' }, { label: '오시는길' }]} />
 
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>
         <div className="locGrid">

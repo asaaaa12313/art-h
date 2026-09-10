@@ -41,7 +41,7 @@ export const LOCALE_CONTENT: Record<Locale, LocaleContent> = {
   en: {
     title: 'Art H Dental Clinic — Songdo, Incheon',
     metaDescription:
-      'English guide to Art H Dental Clinic in Songdo IBS Tower, Incheon. Oral surgeon and endodontist on site, conscious sedation available, hours, directions and how to book.',
+      'English guide to Art H Dental Clinic in Songdo, Incheon. Oral surgeon and endodontist on site, conscious sedation available. Hours, directions and booking.',
     tagline: 'We settle your nerves first, then begin treatment.',
     lead:
       'Art H Dental Clinic is a dental clinic on the 8th floor of IBS Tower in Songdo International Business District, Incheon. An oral and maxillofacial surgeon and an endodontist treat patients here. For people who find dental visits stressful, we explain each step before starting and offer conscious sedation.',

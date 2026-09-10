@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { jsonLdScript } from '@/lib/jsonld';
+import Breadcrumb from '@/components/Breadcrumb';
 import PageHeader from '@/components/PageHeader';
 import Photo from '@/components/Photo';
 import Reveal from '@/components/Reveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedIcon from '@/components/AnimatedIcon';
-import { GREETING, PROMISE_ITEMS } from '@/lib/copy';
+import { GREETING, PROMISE_ITEMS, SITE } from '@/lib/copy';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/about' },
@@ -13,10 +15,39 @@ export const metadata: Metadata = {
     '진료 너머, 사람의 고귀함을 생각합니다. 구강악안면외과 · 치과보존과 전문의 협진으로 정교한 진료에 환자를 향한 깊은 시선을 더합니다.',
 };
 
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://art-h-dental.example.com';
+
+/* 이 페이지가 무엇에 관한 페이지이고 어느 병원 것인지 기계가 읽을 수 있게 적는다.
+   화면에 보이지 않는 값(가격·후기 등)은 넣지 않는다. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'AboutPage',
+      '@id': `${SITE_URL}/about`,
+      url: `${SITE_URL}/about`,
+      name: '의원소개',
+      inLanguage: 'ko',
+      isPartOf: { '@id': `${SITE_URL}#clinic` },
+      about: { '@id': `${SITE_URL}#clinic` },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: '홈', item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: '의원소개', item: `${SITE_URL}/about` },
+      ],
+    },
+  ],
+};
+
 export default function AboutPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }} />
       <PageHeader title="의원소개" src="/media/images/waiting/waiting-logo.jpg" alt="아트에이치치과 AH 로고" />
+      <Breadcrumb items={[{ href: '/', label: '홈' }, { label: '의원소개' }]} />
 
       {/* GREETING — 원장 인사말 */}
       <section style={{ background: 'var(--c-bg)', padding: 'clamp(80px,10vw,140px) clamp(24px,5vw,80px)' }}>

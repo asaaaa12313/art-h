@@ -83,7 +83,7 @@
   --v-overlay: linear-gradient(180deg, rgba(12, 45, 87, 0.28) 0%, rgba(12, 45, 87, 0.6) 55%, rgba(12, 45, 87, 0.84) 100%);
 
   /* fonts */
-  --f-display: 'DM Serif Display', 'RIDIBatang', serif;            /* 영문 전용 세리프 */
+  --f-display: var(--font-dm-serif), 'DM Serif Display', 'RIDIBatang', serif;  /* 영문 전용 세리프 (next/font로 자체 호스팅) */
   --f-serif-ko: 'RIDIBatang', 'Nanum Myeongjo', serif;             /* 한글 명조 — 제목·인용 전용, 본문 금지 */
   --f-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
   --f-heading: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
